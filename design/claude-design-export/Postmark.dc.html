@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&family=Kalam:wght@300;400;700&family=Caveat:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; font-family: 'DM Sans', system-ui, sans-serif; background: #E8DFCB; color: #2A2620; }
+  a, a:hover { color: #534AB7; }
+  /* stamp perforation mask */
+  .perf {
+    -webkit-mask:
+      radial-gradient(circle 4px at 50% 0, transparent 98%, #000 100%) 50% 0/12px 8px repeat-x,
+      radial-gradient(circle 4px at 50% 100%, transparent 98%, #000 100%) 50% 100%/12px 8px repeat-x,
+      radial-gradient(circle 4px at 0 50%, transparent 98%, #000 100%) 0 50%/8px 12px repeat-y,
+      radial-gradient(circle 4px at 100% 50%, transparent 98%, #000 100%) 100% 50%/8px 12px repeat-y,
+      linear-gradient(#000,#000);
+    -webkit-mask-composite: source-over, source-over, source-over, source-over, source-over;
+    mask:
+      radial-gradient(circle 4px at 50% 0, transparent 98%, #000 100%) 50% 0/12px 8px repeat-x,
+      radial-gradient(circle 4px at 50% 100%, transparent 98%, #000 100%) 50% 100%/12px 8px repeat-x,
+      radial-gradient(circle 4px at 0 50%, transparent 98%, #000 100%) 0 50%/8px 12px repeat-y,
+      radial-gradient(circle 4px at 100% 50%, transparent 98%, #000 100%) 100% 50%/8px 12px repeat-y,
+      linear-gradient(#000,#000);
+    mask-composite: exclude, exclude, exclude, exclude, add;
+  }
+  .perf-sm {
+    -webkit-mask:
+      radial-gradient(circle 2px at 50% 0, transparent 98%, #000 100%) 50% 0/6px 4px repeat-x,
+      radial-gradient(circle 2px at 50% 100%, transparent 98%, #000 100%) 50% 100%/6px 4px repeat-x,
+      radial-gradient(circle 2px at 0 50%, transparent 98%, #000 100%) 0 50%/4px 6px repeat-y,
+      radial-gradient(circle 2px at 100% 50%, transparent 98%, #000 100%) 100% 50%/4px 6px repeat-y,
+      linear-gradient(#000,#000);
+    mask:
+      radial-gradient(circle 2px at 50% 0, transparent 98%, #000 100%) 50% 0/6px 4px repeat-x,
+      radial-gradient(circle 2px at 50% 100%, transparent 98%, #000 100%) 50% 100%/6px 4px repeat-x,
+      radial-gradient(circle 2px at 0 50%, transparent 98%, #000 100%) 0 50%/4px 6px repeat-y,
+      radial-gradient(circle 2px at 100% 50%, transparent 98%, #000 100%) 100% 50%/4px 6px repeat-y,
+      linear-gradient(#000,#000);
+    mask-composite: exclude, exclude, exclude, exclude, add;
+  }
+  /* subtle paper grain via SVG data URL */
+  .grain {
+    background-image:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='4'/><feColorMatrix values='0 0 0 0 0.15 0 0 0 0 0.12 0 0 0 0 0.08 0 0 0 0.09 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+  .grain-strong {
+    background-image:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' seed='7'/><feColorMatrix values='0 0 0 0 0.15 0 0 0 0 0.12 0 0 0 0 0.08 0 0 0 0.18 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+  /* wobbly ink for postmarks */
+  @keyframes wob { 0%,100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+  .wob { animation: wob 6s ease-in-out infinite; }
+  /* phone frame */
+  .phone {
+    width: 390px; height: 844px; background: #F4EFE6; border-radius: 46px;
+    box-shadow: 0 0 0 10px #1a1815, 0 0 0 12px #3a342b, 0 40px 80px rgba(0,0,0,.35), 0 12px 24px rgba(0,0,0,.15);
+    position: relative; overflow: hidden; flex-shrink: 0;
+    color: #2A2620;
+  }
+  .notch {
+    position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+    width: 108px; height: 30px; background: #0d0b09; border-radius: 20px; z-index: 30;
+  }
+  .status {
+    position: absolute; top: 0; left: 0; right: 0; height: 54px; padding: 20px 32px 0;
+    display: flex; justify-content: space-between; align-items: center;
+    font: 600 15px 'DM Sans'; color: #2A2620; z-index: 20;
+  }
+  .tabbar {
+    position: absolute; bottom: 0; left: 0; right: 0; padding: 10px 12px 22px;
+    background: rgba(244, 239, 230, 0.92);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(42,38,32,0.08);
+    display: flex; justify-content: space-around; align-items: center; z-index: 20;
+  }
+  .tab { display: flex; flex-direction: column; align-items: center; gap: 3px; font: 500 10px 'DM Sans'; color: rgba(42,38,32,0.45); }
+  .tab.active { color: #534AB7; }
+  .tab svg { width: 22px; height: 22px; stroke-width: 1.6; }
+  /* label */
+  .screen-label { font: 500 12px/1.2 'JetBrains Mono', monospace; color: rgba(42,38,32,0.5); margin-bottom: 14px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .screen-title { font: 400 22px/1.1 'DM Serif Display'; color: #2A2620; margin: 0 0 4px; }
+</style>
+</helmet>
+
+<!-- ============ wrapper ============ -->
+<div style="min-height: 100vh; padding: 60px 80px; background:
+  radial-gradient(ellipse at 20% 10%, #EDE3CE 0%, transparent 50%),
+  radial-gradient(ellipse at 80% 90%, #DDD0B4 0%, transparent 60%),
+  #E4DAC2;">
+
+  <div style="max-width: 100%; margin-bottom: 48px;">
+    <div style="font: 500 12px 'JetBrains Mono'; letter-spacing: 0.14em; color: rgba(42,38,32,0.55); text-transform: uppercase; margin-bottom: 10px;">Postmark · concept design · 390×844</div>
+    <h1 style="font: 400 44px/1.05 'DM Serif Display'; margin: 0 0 8px; color: #2A2620;">A journaling app that turns each day into a postage stamp.</h1>
+    <p style="font: 400 15px/1.5 'DM Sans'; color: rgba(42,38,32,0.65); max-width: 640px; margin: 0;">Six screens — from writing a moment to receiving a month of sealed postcards. Warm cream paper, purple ink, and a handwritten voice throughout.</p>
+  </div>
+
+  <div style="display: flex; gap: 56px; align-items: flex-start; padding-bottom: 40px;">
+
+    <!-- =================== SCREEN 1: TODAY =================== -->
+    <div data-screen-label="01 Today">
+      <div class="screen-label">01 · Log a moment</div>
+      <h3 class="screen-title">Today</h3>
+      <div style="height: 18px;"></div>
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="status">
+          <span>9:41</span>
+          <span style="display: flex; align-items: center; gap: 5px;">
+            <svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor"><path d="M1 3.5C1 2.67 1.67 2 2.5 2H14.5C15.33 2 16 2.67 16 3.5V8.5C16 9.33 15.33 10 14.5 10H2.5C1.67 10 1 9.33 1 8.5V3.5Z" stroke="currentColor" fill="none"/><rect x="2.5" y="3.5" width="10" height="5" fill="currentColor"/></svg>
+          </span>
+        </div>
+
+        <div style="position: absolute; inset: 54px 0 82px; overflow-y: auto; padding: 20px 28px 40px;">
+          <!-- date + greeting -->
+          <div style="margin-top: 8px;">
+            <div style="font: 500 11px 'JetBrains Mono'; letter-spacing: 0.14em; color: rgba(83,74,183,0.7); text-transform: uppercase;">Tue · 24 Sept · 2026</div>
+            <h2 style="font: 400 30px/1.15 'DM Serif Display'; margin: 6px 0 0; color: #2A2620;">Good evening, <em style="font-style: italic;">Ananya</em></h2>
+            <p style="font: 400 14px/1.5 'DM Sans'; color: rgba(42,38,32,0.6); margin: 6px 0 0;">One stamp a day. That's the whole thing.</p>
+          </div>
+
+          <!-- paper text card -->
+          <div class="grain-strong" style="margin-top: 26px; background: #FBF6EA; border-radius: 6px; padding: 22px 20px; min-height: 220px; position: relative; box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 8px 24px -12px rgba(0,0,0,.08); border: 1px solid rgba(42,38,32,0.06); background-blend-mode: multiply;">
+            <div style="position: absolute; inset: 22px 20px; background-image: repeating-linear-gradient(to bottom, transparent 0 27px, rgba(83,74,183,0.08) 27px 28px); pointer-events: none;"></div>
+            <div style="font: 400 17px/1.75 'Kalam'; color: rgba(42,38,32,0.42); position: relative;">
+              What happened today?<br>
+              <span style="color: rgba(42,38,32,0.28); font-size: 14px;">Even a smell counts. Even a bus number.</span>
+            </div>
+            <!-- corner mark -->
+            <div style="position: absolute; top: 12px; right: 14px; font: 500 10px 'JetBrains Mono'; color: rgba(83,74,183,0.5); letter-spacing: 0.1em;">DAY 267</div>
+          </div>
+
+          <!-- attachments row -->
+          <div style="margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap;">
+            <div style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; background: rgba(255,255,255,0.7); border: 1px solid rgba(42,38,32,0.1); border-radius: 100px; font: 500 12px 'DM Sans'; color: #2A2620;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="2"><path d="M12 2C7.58 2 4 5.58 4 10c0 5.25 8 12 8 12s8-6.75 8-12c0-4.42-3.58-8-8-8z"/><circle cx="12" cy="10" r="2.5"/></svg>
+              Park Street, Kolkata
+            </div>
+            <div style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; background: rgba(255,255,255,0.7); border: 1px solid rgba(42,38,32,0.1); border-radius: 100px; font: 500 12px 'DM Sans'; color: #2A2620;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              Attach today's song
+            </div>
+            <div style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; background: rgba(255,255,255,0.7); border: 1px solid rgba(42,38,32,0.1); border-radius: 100px; font: 500 12px 'DM Sans'; color: rgba(42,38,32,0.5);">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+              Photo
+            </div>
+          </div>
+
+          <!-- palette preview strip -->
+          <div style="margin-top: 22px; display: flex; align-items: center; gap: 10px;">
+            <div style="font: 500 10px 'JetBrains Mono'; color: rgba(42,38,32,0.5); letter-spacing: 0.12em; text-transform: uppercase;">Today's palette</div>
+            <div style="flex: 1; height: 1px; background: rgba(42,38,32,0.08);"></div>
+          </div>
+          <div style="margin-top: 10px; display: flex; gap: 6px;">
+            <div style="flex:1; height: 40px; background: #5B6470; border-radius: 3px;"></div>
+            <div style="flex:1; height: 40px; background: #E39544; border-radius: 3px;"></div>
+            <div style="flex:1; height: 40px; background: #3A5771; border-radius: 3px;"></div>
+            <div style="flex:1; height: 40px; background: #E7C64B; border-radius: 3px;"></div>
+            <div style="flex:1; height: 40px; background: #B14126; border-radius: 3px;"></div>
+          </div>
+          <p style="font: 400 11px/1.4 'DM Sans'; color: rgba(42,38,32,0.5); margin: 8px 0 0;">Auto-mixed from your photo · <span style="color: #534AB7; text-decoration: underline; text-decoration-style: dotted;">edit</span></p>
+
+          <!-- Stamp it button -->
+          <button style="margin-top: 26px; width: 100%; padding: 0; border: none; background: transparent; cursor: pointer; display: block;">
+            <div style="position: relative; transform: rotate(-2deg); padding: 20px 24px; border: 3px solid #534AB7; border-radius: 8px; background: rgba(83,74,183,0.05); text-align: center; box-shadow: 2px 3px 0 rgba(83,74,183,0.15);">
+              <div class="grain" style="position: absolute; inset: 0; opacity: 0.5; mix-blend-mode: multiply; pointer-events: none; border-radius: 6px;"></div>
+              <div style="font: 500 10px 'JetBrains Mono'; color: #534AB7; letter-spacing: 0.3em; margin-bottom: 4px;">— PRESS —</div>
+              <div style="font: 400 26px 'DM Serif Display'; color: #534AB7; letter-spacing: 0.02em; font-style: italic;">Stamp it</div>
+              <div style="font: 500 10px 'JetBrains Mono'; color: #534AB7; letter-spacing: 0.15em; margin-top: 4px;">24 · IX · MMXXVI</div>
+            </div>
+          </button>
+        </div>
+
+        <!-- tabbar -->
+        <div class="tabbar">
+          <div class="tab active">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="6" width="16" height="14" rx="1.5"/><path d="M4 10h16M8 3v4M16 3v4"/></svg>
+            Today
+          </div>
+          <div class="tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg>
+            Calendar
+          </div>
+          <div class="tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 8l9 6 9-6"/><rect x="3" y="6" width="18" height="14" rx="1.5"/></svg>
+            Mailbox
+          </div>
+          <div class="tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="16" rx="1.5"/><rect x="6" y="8" width="4" height="4"/><rect x="14" y="8" width="4" height="4"/><rect x="6" y="14" width="4" height="4"/><rect x="14" y="14" width="4" height="4"/></svg>
+            Album
+          </div>
+          <div class="tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.42 3.58-8 8-8s8 3.58 8 8"/></svg>
+            You
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =================== SCREEN 2: STAMP REVEAL =================== -->
+    <div data-screen-label="02 Stamp reveal">
+      <div class="screen-label">02 · Freshly minted</div>
+      <h3 class="screen-title">Stamp reveal</h3>
+      <div style="height: 18px;"></div>
+      <div class="phone" style="background: #EFE7D2;">
+        <div class="notch"></div>
+        <div class="status"><span>9:42</span><span style="width:20px;height:10px;background:#2A2620;border-radius:2px;display:inline-block;"></span></div>
+
+        <div style="position: absolute; inset: 54px 0 82px; padding: 22px 26px; overflow: hidden;">
+          <!-- header -->
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <button style="background: none; border: none; padding: 0; font: 500 13px 'DM Sans'; color: rgba(42,38,32,0.55); display: flex; align-items: center; gap: 4px;">← Close</button>
+            <div style="font: 500 10px 'JetBrains Mono'; letter-spacing: 0.14em; color: rgba(42,38,32,0.5); text-transform: uppercase;">A stamp is born</div>
+            <div style="width: 30px;"></div>
+          </div>
+
+          <!-- fireworks / bits -->
+          <div style="position: absolute; top: 100px; left: 40px; width: 4px; height: 4px; background: #E39544; border-radius: 50%; opacity: 0.7;"></div>
+          <div style="position: absolute; top: 130px; right: 50px; width: 3px; height: 3px; background: #534AB7; border-radius: 50%; opacity: 0.6;"></div>
+          <div style="position: absolute; top: 200px; left: 30px; font: 400 20px 'DM Serif Display'; color: rgba(227,149,68,0.5); font-style: italic;">✦</div>
+          <div style="position: absolute; top: 230px; right: 30px; font: 400 14px 'DM Serif Display'; color: rgba(83,74,183,0.4);">✦</div>
+          <div style="position: absolute; top: 320px; right: 20px; font: 400 26px 'DM Serif Display'; color: rgba(177,65,38,0.35);">✦</div>
+
+          <!-- the stamp -->
+          <div style="margin-top: 46px; display: flex; justify-content: center; position: relative;">
+            <div style="transform: rotate(-4deg); filter: drop-shadow(0 12px 24px rgba(0,0,0,0.18)) drop-shadow(0 2px 4px rgba(0,0,0,0.12)); position: relative;">
+              <!-- perforated outer -->
+              <div class="perf" style="background: #FBF6EA; padding: 14px; width: 240px; height: 300px; box-sizing: border-box;">
+                <div class="grain" style="position: absolute; inset: 0; opacity: 0.6; mix-blend-mode: multiply; pointer-events: none;"></div>
+                <!-- artwork -->
+                <div style="width: 100%; height: 210px; background:
+                  linear-gradient(180deg, #3A5771 0 30%, transparent 30%),
+                  linear-gradient(180deg, transparent 30%, #5B6470 30% 42%, transparent 42%),
+                  linear-gradient(180deg, transparent 42%, #E7C64B 42% 55%, transparent 55%),
+                  linear-gradient(180deg, transparent 55%, #E39544 55% 72%, transparent 72%),
+                  linear-gradient(180deg, transparent 72%, #B14126 72% 100%);
+                  position: relative;">
+                  <!-- moon -->
+                  <div style="position: absolute; top: 18px; right: 24px; width: 26px; height: 26px; background: #FBF6EA; border-radius: 50%; box-shadow: -3px 3px 0 rgba(0,0,0,0.05);"></div>
+                  <!-- silhouettes -->
+                  <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 40px; background:
+                    linear-gradient(to right, transparent 0, transparent 20%, #2A2620 20% 22%, transparent 22% 30%, #2A2620 30% 34%, transparent 34% 60%, #2A2620 60% 63%, transparent 63% 70%, #2A2620 70% 76%, transparent 76%);
+                    mask: linear-gradient(to bottom, transparent 20%, black 40%);"></div>
+                </div>
+                <!-- caption -->
+                <div style="margin-top: 8px; text-align: center;">
+                  <div style="font: 500 8px 'JetBrains Mono'; letter-spacing: 0.2em; color: rgba(42,38,32,0.6); text-transform: uppercase;">Kolkata · IX · 24</div>
+                  <div style="font: italic 500 15px 'DM Serif Display'; color: #2A2620; margin-top: 4px; letter-spacing: 0.02em;">No. 267</div>
+                </div>
+              </div>
+              <!-- purple postmark on top-right corner -->
+              <div style="position: absolute; top: -22px; right: -28px; width: 118px; height: 118px; transform: rotate(14deg);">
+                <div class="grain-strong" style="position: absolute; inset: 0; border-radius: 50%; opacity: 0.7; mix-blend-mode: multiply; pointer-events: none;"></div>
+                <svg viewBox="0 0 120 120" style="width: 100%; height: 100%; filter: opacity(0.85);">
+                  <defs>
+                    <filter id="rough1"><feTurbulence baseFrequency="0.9" numOctaves="1"/><feDisplacementMap in="SourceGraphic" scale="1.5"/></filter>
+                  </defs>
+                  <g fill="none" stroke="#534AB7" stroke-width="2" filter="url(#rough1)">
+                    <circle cx="60" cy="60" r="55"/>
+                    <circle cx="60" cy="60" r="46"/>
+                    <circle cx="60" cy="60" r="20"/>
+                  </g>
+                  <path id="topArc" d="M 60 60 m -40 0 a 40 40 0 0 1 80 0" fill="none"/>
+                  <path id="botArc" d="M 60 60 m -40 0 a 40 40 0 0 0 80 0" fill="none"/>
+                  <text fill="#534AB7" style="font: 700 8px 'JetBrains Mono'; letter-spacing: 0.2em;">
+                    <textPath href="#topArc" startOffset="50%" text-anchor="middle">· KOLKATA · GPO ·</textPath>
+                  </text>
+                  <text fill="#534AB7" style="font: 700 7px 'JetBrains Mono'; letter-spacing: 0.15em;">
+                    <textPath href="#botArc" startOffset="50%" text-anchor="middle">24 · SEPT · 2026</textPath>
+                  </text>
+                  <!-- play triangle center -->
+                  <polygon points="55,52 55,68 70,60" fill="#534AB7"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- color names -->
+          <div style="margin-top: 28px;">
+            <div style="font: 500 10px 'JetBrains Mono'; letter-spacing: 0.14em; color: rgba(42,38,32,0.5); text-transform: uppercase; text-align: center; margin-bottom: 12px;">Today's five</div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px 14px; padding: 0 10px;">
+              <div style="display: flex; align-items: center; gap: 8px; font: 400 12px 'DM Serif Display'; font-style: italic;"><span style="width: 12px; height: 12px; background: #5B6470; border-radius: 2px;"></span>Late Tram Grey</div>
+              <div style="display: flex; align-items: center; gap: 8px; font: 400 12px 'DM Serif Display'; font-style: italic;"><span style="width: 12px; height: 12px; background: #E39544; border-radius: 2px;"></span>Jhalmuri Orange</div>
+              <div style="display: flex; align-items: center; gap: 8px; font: 400 12px 'DM Serif Display'; font-style: italic;"><span style="width: 12px; height: 12px; background: #3A5771; border-radius: 2px;"></span>Wet Alley Blue</div>
+              <div style="display: flex; align-items: center; gap: 8px; font: 400 12px 'DM Serif Display'; font-style: italic;"><span style="width: 12px; height: 12px; background: #E7C64B; border-radius: 2px;"></span>Kadam Yellow</div>
+              <div style="display: flex; align-items: center; gap: 8px; font: 400 12px 'DM Serif Display'; font-style: italic; grid-column: span 2; justify-content: center;"><span style="width: 12px; height: 12px; background: #B14126; border-radius: 2px;"></span>Puja Red</div>
+            </div>
+          </div>
+
+          <!-- song row -->
+          <div style="margin-top: 18px; display: flex; align-items: center; justify-content: center; gap: 8px; font: 400 12px 'DM Sans'; color: rgba(42,38,32,0.65);">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="#534AB7"><polygon points="6,4 20,12 6,20"/></svg>
+            <span style="font-style: italic;">"Ilish Rain"</span>
+            <span style="opacity: 0.5;">·</span>
+            <span>Anaya Sen</span>
+          </div>
+
+          <!-- flip hint + sealed badge -->
+          <div style="margin-top: 20px; display: flex; flex-direction: column; align-items: center; gap: 12px;">
+            <button style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; background: #2A2620; color: #F4EFE6; border: none; border-radius: 100px; font: 500 13px 'DM Sans'; letter-spacing: 0.02em;">
+              Flip to read
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h14M11 6l6 6-6 6"/></svg>
+            </button>
+            <div style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; background: rgba(83,74,183,0.08); border: 1px dashed rgba(83,74,183,0.35); border-radius: 100px; font: 500 11px 'DM Sans'; color: #534AB7;">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="5" y="11" width="14" height="10" rx="1"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+              Sealed until 1 Oct · 7 days
+            </div>
+          </div>
+        </div>
+
+        <div class="tabbar">
+          <div class="tab active">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="6" width="16" height="14" rx="1.5"/><path d="M4 10h16M8 3v4M16 3v4"/></svg>Today</div>
+          <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg>Calendar</div>
+          <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 8l9 6 9-6"/><rect x="3" y="6" width="18" height="14" rx="1.5"/></svg>Mailbox</div>
+          <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="16" rx="1.5"/><rect x="6" y="8" width="4" height="4"/><rect x="14" y="8" width="4" height="4"/><rect x="6" y="14" width="4" height="4"/><rect x="14" y="14" width="4" height="4"/></svg>Album</div>
+          <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.42 3.58-8 8-8s8 3.58 8 8"/></svg>You</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =================== SCREEN 3: POSTCARD BACK + DECORATE =================== -->
+    <div data-screen-label="03 Postcard back">
+      <div class="screen-label">03 · Decorate</div>
+      <h3 class="screen-title">Postcard back</h3>
+      <div style="height: 18px;"></div>
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="status"><span>9:44</span><span style="width:20px;height:10px;background:#2A2620;border-radius:2px;display:inline-block;"></span></div>
+
+        <div style="position: absolute; inset: 54px 0 260px; padding: 18px 26px 0; overflow: hidden;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <button style="background: none; border: none; font: 500 13px 'DM Sans'; color: rgba(42,38,32,0.55);">← Flip</button>
+            <div style="font: 500 10px 'JetBrains Mono'; letter-spacing: 0.14em; color: rgba(42,38,32,0.5); text-transform: uppercase;">Back of stamp · No. 267</div>
+            <button style="background: none; border: none; font: 500 13px 'DM Sans'; color: #534AB7;">Save</button>
+          </div>
+
+          <!-- postcard -->
+          <div style="margin-top: 22px; position: relative; transform: rotate(-1.5deg); filter: drop-shadow(0 10px 22px rgba(0,0,0,0.14));">
+            <div class="grain-strong" style="background: #FDF8EC; border-radius: 4px; padding: 22px 20px 60px; position: relative; overflow: hidden; border: 1px solid rgba(42,38,32,0.08); background-blend-mode: multiply;">
+              <!-- perforated top edge -->
+              <div style="position: absolute; top: -1px; left: 0; right: 0; height: 6px; background:
+                radial-gradient(circle 3px at 6px 0, #EFE7D2 3px, transparent 3.5px) 0 0/12px 6px repeat-x;"></div>
+
+              <!-- header row: stamp icon + address -->
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+                <div>
+                  <div style="font: 500 9px 'JetBrains Mono'; letter-spacing: 0.14em; color: rgba(83,74,183,0.6); text-transform: uppercase;">FROM · 24 SEPT</div>
+                  <div style="font: italic 400 15px 'DM Serif Display'; color: #2A2620; margin-top: 2px;">Ananya, to future Ananya</div>
+                </div>
+                <!-- small stamp -->
+                <div class="perf-sm" style="width: 40px; height: 48px; background: linear-gradient(180deg,#3A5771 0 40%, #E7C64B 40% 60%, #B14126 60% 100%); padding: 3px; box-sizing: border-box;">
+                  <div style="width:100%;height:100%;"></div>
+                </div>
+              </div>
+
+              <!-- vertical divider line -->
+              <div style="position: absolute; left: 50%; top: 66px; bottom: 60px; width: 1px; background: rgba(42,38,32,0.15); opacity: 0.6;"></div>
+
+              <!-- handwritten note -->
+              <div style="font: 400 15px/1.55 'Kalam'; color: #2A2620; padding-right: 4px; transform: rotate(-0.4deg);">
+                It rained in short shivers all afternoon, and the taxi at Elgin crossing wouldn't start. The driver laughed like he expected it. I ate jhalmuri in the doorway of a shut sari shop and watched the mustard-yellow cabs slide by like little suns.
+                <br><br>
+                <span style="color: #534AB7; font-weight: 700;">Puja is a week away.</span> The pandal near our building has begun to smell of bamboo and glue. I miss you already, today.
+                <br><br>
+                <span style="font-family: 'Caveat', cursive; font-size: 22px; color: #534AB7;">— A.</span>
+              </div>
+
+              <!-- washi tape corner -->
+              <div style="position: absolute; top: -6px; left: 14px; width: 78px; height: 22px; transform: rotate(-12deg); background:
+                repeating-linear-gradient(90deg, #E39544 0 6px, #F0B36A 6px 12px);
+                opacity: 0.85; box-shadow: 0 2px 4px rgba(0,0,0,0.08);"></div>
+
+              <!-- stickers -->
+              <!-- yellow taxi -->
+              <div style="position: absolute; bottom: 74px; right: 10px; transform: rotate(8deg); filter: drop-shadow(0 2px 3px rgba(0,0,0,0.15));">
+                <svg width="54" height="34" viewBox="0 0 54 34">
+                  <path d="M4 22 L4 15 Q4 12 8 12 L14 12 L20 5 L36 5 L42 12 L48 12 Q50 12 50 15 L50 22" fill="#E7B93E" stroke="#2A2620" stroke-width="1.5"/>
+                  <rect x="20" y="7" width="16" height="6" fill="#B14126" opacity="0.5"/>
+                  <rect x="4" y="22" width="46" height="4" fill="#2A2620"/>
+                  <circle cx="14" cy="26" r="4" fill="#2A2620"/>
+                  <circle cx="14" cy="26" r="1.5" fill="#FDF8EC"/>
+                  <circle cx="40" cy="26" r="4" fill="#2A2620"/>
+                  <circle cx="40" cy="26" r="1.5" fill="#FDF8EC"/>
+                  <text x="27" y="20" text-anchor="middle" font-family="JetBrains Mono" font-size="4" fill="#2A2620">TAXI</text>
+                </svg>
+              </div>
+              <!-- rain doodle -->
+              <div style="position: absolute; top: 84px; right: 14px; transform: rotate(-5deg);">
+                <svg width="34" height="42" viewBox="0 0 34 42">
+                  <path d="M6 12 Q6 4 14 4 Q22 2 26 10 Q32 10 30 18 Q28 22 20 20 L6 20 Q0 20 2 14 Q2 12 6 12 Z" fill="#B6C7D6" stroke="#3A5771" stroke-width="1.2"/>
+                  <path d="M10 24 L8 30 M16 24 L14 32 M22 24 L20 30 M28 24 L26 32" stroke="#3A5771" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+
+              <!-- wax seal -->
+              <div style="position: absolute; bottom: 12px; left: 20px; width: 46px; height: 46px; border-radius: 50%; background:
+                radial-gradient(circle at 35% 35%, #C55A3E, #8A2E1E 70%);
+                box-shadow: 0 3px 6px rgba(0,0,0,0.25), inset -2px -2px 4px rgba(0,0,0,0.3), inset 2px 2px 3px rgba(255,255,255,0.15);
+                display: flex; align-items: center; justify-content: center; color: #F4EFE6; font: italic 700 20px 'DM Serif Display'; transform: rotate(-6deg);">P</div>
+
+              <!-- postmark faded corner -->
+              <div style="position: absolute; bottom: 8px; right: 10px; width: 58px; height: 58px; opacity: 0.35; transform: rotate(10deg);">
+                <svg viewBox="0 0 60 60" style="width:100%;height:100%;">
+                  <g fill="none" stroke="#534AB7" stroke-width="1">
+                    <circle cx="30" cy="30" r="27"/>
+                    <circle cx="30" cy="30" r="22"/>
+                  </g>
+                  <text x="30" y="32" text-anchor="middle" font-family="JetBrains Mono" font-size="5" fill="#534AB7" letter-spacing="1">SEALED</text>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- sticker tray -->
+        <div style="position: absolute; bottom: 82px; left: 0; right: 0; background: #FBF6EA; border-top: 1px solid rgba(42,38,32,0.1); box-shadow: 0 -8px 24px rgba(0,0,0,0.06);">
+          <!-- grabber -->
+          <div style="width: 40px; height: 4px; background: rgba(42,38,32,0.2); border-radius: 2px; margin: 8px auto 0;"></div>
+          <!-- tabs -->
+          <div style="display: flex; gap: 6px; padding: 12px 16px 8px; overflow-x: auto;">
+            <div style="padding: 6px 12px; background: #2A2620; color: #F4EFE6; border-radius: 100px; font: 500 11px 'DM Sans'; white-space: nowrap;">Kolkata</div>
+            <div style="padding: 6px 12px; background: transparent; color: rgba(42,38,32,0.6); border-radius: 100px; font: 500 11px 'DM Sans'; white-space: nowrap;">Seals</div>
+            <div style="padding: 6px 12px; background: transparent; color: rgba(42,38,32,0.6); border-radius: 100px; font: 500 11px 'DM Sans'; white-space: nowrap;">Tape</div>
+            <div style="padding: 6px 12px; background: transparent; color: rgba(42,38,32,0.6); border-radius: 100px; font: 500 11px 'DM Sans'; white-space: nowrap;">Doodles</div>
+            <div style="padding: 6px 12px; background: transparent; color: rgba(42,38,32,0.6); border-radius: 100px; font: 500 11px 'DM Sans'; white-space: nowrap;">Shapes</div>
+          </div>
+          <!-- sticker items -->
+          <div style="display: flex; gap: 14px; padding: 4px 20px 14px; overflow-x: auto;">
+            <!-- taxi -->
+            <div style="flex-shrink: 0; width: 62px; height: 62px; background: #F4EFE6; border-radius: 8px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(42,38,32,0.08);">
+              <svg width="42" height="26" viewBox="0 0 54 34"><path d="M4 22 L4 15 Q4 12 8 12 L14 12 L20 5 L36 5 L42 12 L48 12 Q50 12 50 15 L50 22" fill="#E7B93E" stroke="#2A2620" stroke-width="1.5"/><rect x="4" y="22" width="46" height="4" fill="#2A2620"/><circle cx="14" cy="26" r="4" fill="#2A2620"/><circle cx="40" cy="26" r="4" fill="#2A2620"/></svg>
+            </div>
+            <!-- tram -->
+            <div style="flex-shrink: 0; width: 62px; height: 62px; background: #F4EFE6; border-radius: 8px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(42,38,32,0.08);">
+              <svg width="46" height="30" viewBox="0 0 50 30"><rect x="3" y="6" width="44" height="16" rx="2" fill="#B14126" stroke="#2A2620" stroke-width="1.4"/><rect x="7" y="10" width="8" height="6" fill="#FDF8EC"/><rect x="17" y="10" width="8" height="6" fill="#FDF8EC"/><rect x="27" y="10" width="8" height="6" fill="#FDF8EC"/><rect x="37" y="10" width="6" height="6" fill="#FDF8EC"/><line x1="25" y1="6" x2="25" y2="1" stroke="#2A2620" stroke-width="1"/><circle cx="12" cy="24" r="2.5" fill="#2A2620"/><circle cx="38" cy="24" r="2.5" fill="#2A2620"/></svg>
+            </div>
+            <!-- howrah bridge -->
+            <div style="flex-shrink: 0; width: 62px; height: 62px; background: #F4EFE6; border-radius: 8px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(42,38,32,0.08);">
+              <svg width="50" height="36" viewBox="0 0 60 40"><path d="M2 32 L30 8 L58 32" fill="none" stroke="#5B6470" stroke-width="1.8"/><path d="M8 32 L14 20 L20 32 L26 20 L30 32 L34 20 L40 32 L46 20 L52 32" fill="none" stroke="#5B6470" stroke-width="1.2"/><line x1="2" y1="32" x2="58" y2="32" stroke="#2A2620" stroke-width="2"/><rect x="6" y="6" width="4" height="26" fill="#5B6470"/><rect x="50" y="6" width="4" height="26" fill="#5B6470"/></svg>
+            </div>
+            <!-- rosogolla -->
+            <div style="flex-shrink: 0; width: 62px; height: 62px; background: #F4EFE6; border-radius: 8px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(42,38,32,0.08);">
+              <svg width="44" height="36" viewBox="0 0 54 44"><ellipse cx="27" cy="30" rx="24" ry="10" fill="#EFE7D2" stroke="#2A2620" stroke-width="1.3"/><circle cx="16" cy="24" r="7" fill="#FBF6EA" stroke="#2A2620" stroke-width="1.2"/><circle cx="27" cy="20" r="7.5" fill="#FBF6EA" stroke="#2A2620" stroke-width="1.2"/><circle cx="38" cy="24" r="7" fill="#FBF6EA" stroke="#2A2620" stroke-width="1.2"/></svg>
+            </div>
+            <!-- puja drum -->
+            <div style="flex-shrink: 0; width: 62px; height: 62px; background: #F4EFE6; border-radius: 8px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(42,38,32,0.08);">
+              <svg width="34" height="40" viewBox="0 0 40 46"><ellipse cx="20" cy="6" rx="16" ry="4" fill="#E7C64B" stroke="#2A2620" stroke-width="1.3"/><path d="M4 6 L4 40 Q4 44 20 44 Q36 44 36 40 L36 6" fill="#B14126" stroke="#2A2620" stroke-width="1.3"/><ellipse cx="20" cy="40" rx="16" ry="4" fill="#E7C64B" stroke="#2A2620" stroke-width="1.3"/><path d="M4 12 L36 12 M4 34 L36 34" stroke="#2A2620" stroke-width="0.8" opacity="0.5"/></svg>
+            </div>
+            <div style="flex-shrink: 0; width: 62px; height: 62px; background: #F4EFE6; border-radius: 8px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(42,38,32,0.08); font: italic 400 22px 'DM Serif Display'; color: rgba(42,38,32,0.5);">+</div>
+          </div>
+        </div>
+
+        <div class="tabbar">
+          <div class="tab active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="6" width="16" height="14" rx="1.5"/><path d="M4 10h16M8 3v4M16 3v4"/></svg>Today</div>
+          <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg>Calendar</div>
+          <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 8l9 6 9-6"/><rect x="3" y="6" width="18" height="14" rx="1.5"/></svg>Mailbox</div>
+          <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="16" rx="1.5"/><rect x="6" y="8" width="4" height="4"/><rect x="14" y="8" width="4" height="4"/><rect x="6" y="14" width="4" height="4"/><rect x="14" y="14" width="4" height="4"/></svg>Album</div>
+          <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.42 3.58-8 8-8s8 3.58 8 8"/></svg>You</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =================== SCREEN 4: CALENDAR =================== -->
+    <div data-screen-label="04 Calendar">
+      <div class="screen-label">04 · Month sheet</div>
+      <h3 class="screen-title">Calendar</h3>
+      <div style="height: 18px;"></div>
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="status"><span>9:47</span><span style="width:20px;height:10px;background:#2A2620;border-radius:2px;display:inline-block;"></span></div>
+
+        <div style="position: absolute; inset: 54px 0 82px; padding: 18px 22px 0; overflow: hidden;">
+          <!-- header -->
+          <div style="display: flex; justify-content: space-between; align-items: baseline;">
+            <div>
+              <div style="font: 500 10px 'JetBrains Mono'; letter-spacing: 0.14em; color: rgba(83,74,183,0.7); text-transform: uppercase;">2026</div>
+              <h2 style="font: 400 30px/1 'DM Serif Display'; margin: 4px 0 0; font-style: italic;">September</h2>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button style="width: 34px; height: 34px; background: rgba(255,255,255,0.6); border: 1px solid rgba(42,38,32,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2A2620" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></button>
+              <button style="width: 34px; height: 34px; background: rgba(255,255,255,0.6); border: 1px solid rgba(42,38,32,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2A2620" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></button>
+            </div>
+          </div>
+          <div style="font: 400 12px/1.5 'DM Sans'; color: rgba(42,38,32,0.6); margin-top: 6px;">21 stamps · 3 blanks · <span style="color: #B14126;">Durga Puja week</span></div>
+
+          <!-- weekday labels -->
+          <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin: 18px 0 6px;">
+            <div style="font: 500 9px 'JetBrains Mono'; text-align: center; color: rgba(42,38,32,0.4); text-transform: uppercase;">M</div>
+            <div style="font: 500 9px 'JetBrains Mono'; text-align: center; color: rgba(42,38,32,0.4); text-transform: uppercase;">T</div>
+            <div style="font: 500 9px 'JetBrains Mono'; text-align: center; color: rgba(42,38,32,0.4); text-transform: uppercase;">W</div>
+            <div style="font: 500 9px 'JetBrains Mono'; text-align: center; color: rgba(42,38,32,0.4); text-transform: uppercase;">T</div>
+            <div style="font: 500 9px 'JetBrains Mono'; text-align: center; color: rgba(42,38,32,0.4); text-transform: uppercase;">F</div>
+            <div style="font: 500 9px 'JetBrains Mono'; text-align: center; color: rgba(42,38,32,0.4); text-transform: uppercase;">S</div>
+            <div style="font: 500 9px 'JetBrains Mono'; text-align: center; color: rgba(42,38,32,0.4); text-transform: uppercase;">S</div>
+          </div>
+
+          <!-- stamp sheet -->
+          <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; position: relative;">
+            <!-- w1: 1,2,3,4,5,6,7 -->
+            <div class="perf-sm" style="aspect-ratio: 3/4; background: linear-gradient(180deg,#3A5771 0 45%, #E39544 45% 65%, #B14126 65% 100%); position: relative;"><div style="position: absolute; bottom: 1px; right: 2px; font: 500 6px 'JetBrains Mono'; color: #FDF8EC;">1</div></div>
+            <div class="perf-sm" style="aspect-ratio: 3/4; background: linear-gradient(180deg,#5B6470 0 40%, #B6C7D6 40% 55%, #E7C64B 55% 100%); position: relative;"><div style="position: absolute; bottom: 1px; right: 2px; font: 500 6px 'JetBrains Mono'; color: #2A2620;">2</div></div>
+            <div class="perf-sm" style="aspect-ratio: 3/4; background: linear-gradient(180deg,#B14126 0 35%, #E39544 35% 70%, #E7C64B 70% 100%); position: relative;"><div style="position: absolute; bottom: 1px; right: 2px; font: 500 6px 'JetBrains Mono'; color: #FDF8EC;">3</div></div>
+            <div class="perf-sm" style="aspect-ratio: 3/4; background: #EFE7D2; border: 1px dashed rgba(42,38,32,0.15); box-sizing: border-box; position: relative;"><div style="position: absolute; bottom: 1px; right: 2px; font: 500 6px 'JetBrains Mono'; color: rgba(42,38,32,0.35);">4</div></div>
+            <div class="perf-sm" style="aspect-ratio: 3/4; background: linear-gradient(180deg,#534AB7 0 50%, #B14126 50% 75%, #E7C64B 75% 100%); position: relative;"><div style="position: absolute; bottom: 1px; right: 2px; font: 500 6px 'JetBrains Mono'; color: #FDF8EC;">5</div></div>
+            <div class="perf-sm" style="aspect-ratio: 3/4; background: linear-gradient(180deg,#E39544 0 40%, #E7C64B 40% 60%, #B14126 60% 100%); position: relative;"><div style="position: absolute; bottom: 1px; right: 2px; font: 500 6px 'JetBrains Mono'; color: #FDF8EC;">6</div></div>
+            <div class="perf-sm" style="aspect-ratio: 3/4; background: linear-gradient(180deg,#3A5771 0 45%, #5B6470 45% 65%, #B6C7D6 65% 100%); position: relative;"><div style="position: absolute; bottom: 1px; right: 2px; font: 500 6px 'JetBrains Mono'; color: #FDF8EC;">7</div></div>
+            <!-- w2 -->
+            <div class="perf-sm" style="aspect-ratio: 3/4; background: linear-gradient(180deg,#B6C7D6 0 40%, #E7C64B 40% 70%, #B14126 70% 100%); position: relative;"><div style="position: absolute; bottom: 1px; right: 2px; font: 500 6px 'JetBrains Mono'; color: #2A2620;">8</div></div>
+            <div class="perf-sm" style="aspect-ratio: 3/4; background: linear-gradient(180deg,#B14126 0 30%, #E39544 30% 55%, #3A5771 55% 100%); position: relative;"><div style="position: absolute; bottom: 1px; right: 2px; font: 500 6px 'JetBrains Mono'; color: #FDF8EC;">9</div></div>
+            <div class="perf-sm" style="aspect-ratio: 3/4; background: #EFE7D2; border: 1px dashed rgba(42,38,32,0.15); box-sizing: border-box; position: relative;"><div style="position: absolute; bottom: 1px; right: 2px; font: 500 6px 'JetBrains Mono'; color: rgba(42,38,32,0.35);">10</div></div>
+            <!-- 11 with letter badge -->
+            <div style="position: relative;">
+              <div class="perf-sm" style="aspect-ratio: 3/4; background: linear-gradient(180deg,#5B6470 0 40%, #E7C64B 40% 60%, #E39544 60% 100%); position: relative;"><div style="position: absolute; bottom: 1px; right: 2px; font: 500 6px 'JetBrains Mono'; color: #FDF8EC;">11</div></div>
+              <div style="position: absolute; top: -6px; left: -6px; width: 20px; height: 15px; background: #FDF8EC; border: 1.2px solid #534AB7; transform: rotate(-8deg); z-index: 4;">
+                <div style="width: 100%; height: 100%; background: linear-gradient(135deg, transparent 45%, #534AB7 45% 52%, transparent 52%);"></div>
+              </div>
+            </div>
+            <div class="perf-sm" style="aspect-ratio: 3/4; background: linear-gradient(180deg,#3A5771 0 50%, #B6C7D6 50% 70%, #E7C64B 70% 100%); position: relative;"><div style="position: absolute; bottom: 1px; right: 2px; font: 500 6px 'JetBrains Mono'; color: #FDF8EC;">12</div></div>
+            <div class="perf-sm" style="aspect-ratio: 3/4; background: linear-gradient(180deg,#E7C64B 0 45%, #E39544 45% 70%, #B14126 70% 100%); position: relative;"><div style="position: absolute; bottom: 1px; right: 2px; font: 500 6px 'JetBrains Mono'; color: #2A2620;">13</div></div>
+            <div class="perf-sm" style="aspect-ratio: 3/4; background: linear-gradient(180deg,#534AB7 0 40%, #3A5771 40% 65%, #5B6470 65% 100%); position: relative;"><div style="position: absolute; bottom: 1px; right: 2px; font: 500 6px 'JetBrains Mono'; color: #FDF8EC;">14</div></div>
+            <!-- w3 -->
+            <div class="perf-sm" style="aspect-ratio: 3/4; background: linear-gradient(180deg,#B14126 0 40%, #E7C64B 40% 60%, #E39544 60% 100%); position: relative;"><div style="position: absolute; bottom: 1px; right: 2px; font: 500 6px 'JetBrains Mono'; color: #FDF8EC;">15</div></div>
+            <div class="perf-sm" style="aspect-ratio: 3/4; background: linear-gradient(180deg,#3A5771 0 50%, #E39544 50% 70%, #E7C64B 70% 100%); position: relative;"><div style="position: absolute; bottom: 1px; right: 2px; font: 500 6px 'JetBrains Mono'; color: #FDF8EC;">16</div></div>
+            <div class="perf-sm" style="aspect-ratio: 3/4; background: linear-gradient(180deg,#B6C7D6 0 45%, #5B6470 45% 65%, #3A5771 65% 100%); position: relative;"><div style="position: absolute; bottom: 1px; right: 2px; font: 500 6px 'JetBrains Mono'; color: #2A2620;">17</div></div>
+            <div class="perf-sm" style="aspect-ratio: 3/4; background: linear-gradient(180deg,#E39544 0 40%, #B14126 40% 60%, #5B6470 60% 100%); position: relative;"><div style="position: absolute; bottom: 1px; right: 2px; font: 500 6px 'JetBrains Mono'; color: #FDF8EC;">18</div></div>
+            <div class="perf-sm" style="aspect-ratio: 3/4; background: linear-gradient(180deg,#E7C64B 0 35%, #E39544 35% 60%, #B14126 60% 100%); position: relative;"><div style="position: absolute; bottom: 1px; right: 2px; font: 500 6px 'JetBrains Mono'; color: #2A2620;">19</div></div>
+            <div class="perf-sm" style="aspect-ratio: 3/4; background: linear-gradient(180deg,#3A5771 0 40%, #534AB7 40% 65%, #B14126 65% 100%); position: relative;"><div style="position: absolute; bottom: 1px; right: 2px; font: 500 6px 'JetBrains Mono'; color: #FDF8EC;">20</div></div>
+            <div class="perf-sm" style="aspect-ratio: 3/4; background: linear-gradient(180deg,#5B6470 0 30%, #B6C7D6 30% 60%, #E7C64B 60% 100%); position: relative;"><div style="position: absolute; bottom: 1px; right: 2px; font: 500 6px 'JetBrains Mono'; color: #FDF8EC;">21</div></div>
+            <!-- w4 -->
+            <div class="perf-sm" style="aspect-ratio: 3/4; background: linear-gradient(180deg,#3A5771 0 45%, #E39544 45% 65%, #E7C64B 65% 100%); position: relative;"><div style="position: absolute; bottom: 1px; right: 2px; font: 500 6px 'JetBrains Mono'; color: #FDF8EC;">22</div></div>
+            <div class="perf-sm" style="aspect-ratio: 3/4; background: linear-gradient(180deg,#B14126 0 35%, #E7C64B 35% 55%, #3A5771 55% 100%); position: relative;"><div style="position: absolute; bottom: 1px; right: 2px; font: 500 6px 'JetBrains Mono'; color: #FDF8EC;">23</div></div>
+            <div class="perf-sm" style="aspect-ratio: 3/4; background: linear-gradient(180deg,#3A5771 0 35%, #E7C64B 45% 60%, #B14126 65% 100%); position: relative; outline: 2px solid #534AB7; outline-offset: 1px; z-index: 2;"><div style="position: absolute; bottom: 1px; right: 2px; font: 500 6px 'JetBrains Mono'; color: #FDF8EC;">24</div></div>
+            <div class="perf-sm" style="aspect-ratio: 3/4; background: #EFE7D2; border: 1px dashed rgba(42,38,32,0.15); box-sizing: border-box; position: relative;"><div style="position: absolute; bottom: 1px; right: 2px; font: 500 6px 'JetBrains Mono'; color: rgba(42,38,32,0.35);">25</div></div>
+            <div class="perf-sm" style="aspect-ratio: 3/4; background: #EFE7D2; opacity: 0.35; border: 1px dashed rgba(42,38,32,0.15); box-sizing: border-box; position: relative;"><div style="position: absolute; bottom: 1px; right: 2px; font: 500 6px 'JetBrains Mono'; color: rgba(42,38,32,0.35);">26</div></div>
+            <div class="perf-sm" style="aspect-ratio: 3/4; background: #EFE7D2; opacity: 0.35; border: 1px dashed rgba(42,38,32,0.15); box-sizing: border-box; position: relative;"><div style="position: absolute; bottom: 1px; right: 2px; font: 500 6px 'JetBrains Mono'; color: rgba(42,38,32,0.35);">27</div></div>
+            <div class="perf-sm" style="aspect-ratio: 3/4; background: #EFE7D2; opacity: 0.35; border: 1px dashed rgba(42,38,32,0.15); box-sizing: border-box; position: relative;"><div style="position: absolute; bottom: 1px; right: 2px; font: 500 6px 'JetBrains Mono'; color: rgba(42,38,32,0.35);">28</div></div>
+            <!-- w5 -->
+            <div class="perf-sm" style="aspect-ratio: 3/4; background: #EFE7D2; opacity: 0.35; border: 1px dashed rgba(42,38,32,0.15); box-sizing: border-box; position: relative;"><div style="position: absolute; bottom: 1px; right: 2px; font: 500 6px 'JetBrains Mono'; color: rgba(42,38,32,0.35);">29</div></div>
+            <div class="perf-sm" style="aspect-ratio: 3/4; background: #EFE7D2; opacity: 0.35; border: 1px dashed rgba(42,38,32,0.15); box-sizing: border-box; position: relative;"><div style="position: absolute; bottom: 1px; right: 2px; font: 500 6px 'JetBrains Mono'; color: rgba(42,38,32,0.35);">30</div></div>
+
+            <!-- Puja ribbon spanning week -->
+            <div style="position: absolute; top: calc(2 * (100% / 5) + 4px); left: -6px; right: -6px; height: 22px; pointer-events: none; z-index: 3; display: none;"></div>
+          </div>
+
+          <!-- puja ribbon overlay via absolute positioned band -->
+          <div style="position: relative; margin-top: -84px; height: 0; z-index: 5;">
+            <div style="position: absolute; top: 0; left: -10px; right: -10px; transform: rotate(-1deg); background: linear-gradient(90deg, #B14126 0%, #C8582F 50%, #B14126 100%); padding: 4px 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.15); display: flex; align-items: center; justify-content: space-between; color: #FDF8EC;">
+              <span style="font: italic 500 12px 'DM Serif Display'; letter-spacing: 0.02em;">Durga Puja week</span>
+              <span style="font: 500 9px 'JetBrains Mono'; letter-spacing: 0.14em; opacity: 0.85;">15 → 21 SEPT</span>
+              <!-- ribbon tails -->
+              <div style="position: absolute; left: -8px; top: 0; bottom: 0; width: 10px; background: #8A2E1E; clip-path: polygon(0 0, 100% 50%, 0 100%);"></div>
+              <div style="position: absolute; right: -8px; top: 0; bottom: 0; width: 10px; background: #8A2E1E; clip-path: polygon(100% 0, 0 50%, 100% 100%);"></div>
+            </div>
+          </div>
+
+          <!-- postmark strip (playlist) -->
+          <div style="margin-top: 110px; padding-top: 14px; border-top: 1px solid rgba(42,38,32,0.1);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <div style="font: 500 10px 'JetBrains Mono'; letter-spacing: 0.14em; color: rgba(42,38,32,0.55); text-transform: uppercase;">September's playlist</div>
+              <div style="font: italic 400 11px 'DM Serif Display'; color: #534AB7;">21 tracks · play →</div>
+            </div>
+            <div style="display: flex; gap: 4px; align-items: center; height: 22px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="1.5" fill="#534AB7"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.5" style="opacity:0.85;"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.5" style="opacity:0.75;"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.5" style="opacity:0.65;"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.5" style="opacity:0.55;"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.5" style="opacity:0.5;"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.5" style="opacity:0.55;"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.5" style="opacity:0.45;"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.5" style="opacity:0.6;"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.5" style="opacity:0.7;"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.5" style="opacity:0.5;"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.5" style="opacity:0.4;"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/></svg>
+              <div style="font: 500 10px 'JetBrains Mono'; color: rgba(42,38,32,0.4); margin-left: 4px;">···</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tabbar">
+          <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="6" width="16" height="14" rx="1.5"/><path d="M4 10h16M8 3v4M16 3v4"/></svg>Today</div>
+          <div class="tab active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg>Calendar</div>
+          <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 8l9 6 9-6"/><rect x="3" y="6" width="18" height="14" rx="1.5"/></svg>Mailbox</div>
+          <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="16" rx="1.5"/><rect x="6" y="8" width="4" height="4"/><rect x="14" y="8" width="4" height="4"/><rect x="6" y="14" width="4" height="4"/><rect x="14" y="14" width="4" height="4"/></svg>Album</div>
+          <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.42 3.58-8 8-8s8 3.58 8 8"/></svg>You</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =================== SCREEN 5: MAILBOX =================== -->
+    <div data-screen-label="05 Mailbox">
+      <div class="screen-label">05 · Delivery day · 1 Oct</div>
+      <h3 class="screen-title">Mailbox</h3>
+      <div style="height: 18px;"></div>
+      <div class="phone" style="background: #F0E7D2;">
+        <div class="notch"></div>
+        <div class="status"><span>9:49</span><span style="width:20px;height:10px;background:#2A2620;border-radius:2px;display:inline-block;"></span></div>
+
+        <div style="position: absolute; inset: 54px 0 82px; padding: 18px 22px 0; overflow-y: auto;">
+          <!-- header -->
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div style="font: 500 10px 'JetBrains Mono'; letter-spacing: 0.14em; color: rgba(83,74,183,0.7); text-transform: uppercase;">1 October · Delivery day</div>
+              <h2 style="font: 400 26px/1.1 'DM Serif Display'; font-style: italic; margin: 4px 0 0;">Your September<br>has arrived.</h2>
+            </div>
+            <div style="width: 46px; height: 46px; border-radius: 50%; background: rgba(83,74,183,0.1); display: flex; align-items: center; justify-content: center; position: relative;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.8"><path d="M3 8l9 6 9-6"/><rect x="3" y="6" width="18" height="14" rx="1.5"/></svg>
+              <div style="position: absolute; top: -2px; right: -2px; width: 16px; height: 16px; background: #B14126; color: #FDF8EC; border-radius: 50%; font: 700 9px 'DM Sans'; display: flex; align-items: center; justify-content: center;">4</div>
+            </div>
+          </div>
+
+          <!-- Opened envelope card -->
+          <div style="margin-top: 22px; background: #FBF6EA; border-radius: 8px; padding: 16px; position: relative; box-shadow: 0 6px 18px rgba(0,0,0,0.08); border: 1px solid rgba(42,38,32,0.08);">
+            <div class="grain" style="position: absolute; inset: 0; opacity: 0.5; mix-blend-mode: multiply; pointer-events: none; border-radius: 8px;"></div>
+            <!-- opened flap on top -->
+            <div style="position: absolute; top: -22px; left: 20px; right: 20px; height: 44px;">
+              <svg viewBox="0 0 300 60" preserveAspectRatio="none" style="width: 100%; height: 100%; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.1));">
+                <path d="M0 0 L150 42 L300 0 L300 8 L150 50 L0 8 Z" fill="#EEE3C4" stroke="rgba(42,38,32,0.15)" stroke-width="0.5"/>
+              </svg>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-top: 8px;">
+              <div>
+                <div style="font: 500 10px 'JetBrains Mono'; letter-spacing: 0.12em; color: rgba(42,38,32,0.5); text-transform: uppercase;">Tue 24 · No. 267</div>
+                <div style="font: italic 400 16px 'DM Serif Display'; margin-top: 3px;">Ilish Rain on Park Street</div>
+              </div>
+              <!-- mini stamp -->
+              <div class="perf-sm" style="width: 42px; height: 52px; background: linear-gradient(180deg,#3A5771 0 40%, #E7C64B 40% 60%, #B14126 60% 100%); box-shadow: 0 2px 4px rgba(0,0,0,0.15); transform: rotate(3deg);"></div>
+            </div>
+
+            <!-- excerpt -->
+            <p style="font: 400 13px/1.5 'Kalam'; color: #2A2620; margin: 12px 0 14px;">It rained in short shivers all afternoon, and the taxi at Elgin crossing wouldn't start. The driver laughed like he expected it…</p>
+
+            <!-- mini song player -->
+            <div style="background: rgba(83,74,183,0.06); border-radius: 6px; padding: 10px 12px; display: flex; align-items: center; gap: 10px;">
+              <button style="width: 28px; height: 28px; border-radius: 50%; background: #534AB7; border: none; display: flex; align-items: center; justify-content: center;">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="#FDF8EC"><polygon points="6,4 20,12 6,20"/></svg>
+              </button>
+              <div style="flex: 1; min-width: 0;">
+                <div style="font: 500 12px 'DM Sans'; color: #2A2620; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">"Ilish Rain" · <span style="color: rgba(42,38,32,0.6);">Anaya Sen</span></div>
+                <div style="height: 3px; background: rgba(83,74,183,0.15); border-radius: 2px; margin-top: 6px; overflow: hidden;">
+                  <div style="width: 34%; height: 100%; background: #534AB7;"></div>
+                </div>
+              </div>
+              <div style="font: 500 10px 'JetBrains Mono'; color: rgba(83,74,183,0.7);">1:12</div>
+            </div>
+          </div>
+
+          <!-- Stack of sealed envelopes -->
+          <div style="margin-top: 22px;">
+            <div style="font: 500 10px 'JetBrains Mono'; letter-spacing: 0.14em; color: rgba(42,38,32,0.55); text-transform: uppercase; margin-bottom: 8px;">3 more to open</div>
+
+            <!-- envelope A -->
+            <div style="position: relative; height: 78px; margin-bottom: -18px; transform: rotate(-1.2deg);">
+              <div class="grain" style="position: absolute; inset: 0; background-color: #E8DFC6; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); border: 1px solid rgba(42,38,32,0.1); background-blend-mode: multiply; overflow: hidden;">
+                <!-- flap -->
+                <svg viewBox="0 0 300 78" preserveAspectRatio="none" style="position: absolute; inset: 0; width: 100%; height: 100%;">
+                  <path d="M0 0 L150 44 L300 0 Z" fill="#DBCFAF"/>
+                  <line x1="0" y1="0" x2="150" y2="44" stroke="rgba(42,38,32,0.15)"/>
+                  <line x1="300" y1="0" x2="150" y2="44" stroke="rgba(42,38,32,0.15)"/>
+                </svg>
+                <!-- wax seal -->
+                <div style="position: absolute; top: 30px; left: 50%; transform: translateX(-50%) rotate(-10deg); width: 34px; height: 34px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #C55A3E, #8A2E1E 70%); box-shadow: 0 2px 4px rgba(0,0,0,0.25), inset -1px -1px 3px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; color: #F4EFE6; font: italic 700 14px 'DM Serif Display';">P</div>
+                <!-- postmark corner -->
+                <div style="position: absolute; top: 44px; right: 14px; font: 500 9px 'JetBrains Mono'; color: rgba(83,74,183,0.7);">MON 23 · No. 266</div>
+              </div>
+            </div>
+
+            <!-- envelope B - blue wax -->
+            <div style="position: relative; height: 78px; margin-bottom: -18px; transform: rotate(0.8deg);">
+              <div class="grain" style="position: absolute; inset: 0; background-color: #E4DAC0; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); border: 1px solid rgba(42,38,32,0.1); background-blend-mode: multiply; overflow: hidden;">
+                <svg viewBox="0 0 300 78" preserveAspectRatio="none" style="position: absolute; inset: 0; width: 100%; height: 100%;">
+                  <path d="M0 0 L150 44 L300 0 Z" fill="#D6C9A5"/>
+                  <line x1="0" y1="0" x2="150" y2="44" stroke="rgba(42,38,32,0.15)"/>
+                  <line x1="300" y1="0" x2="150" y2="44" stroke="rgba(42,38,32,0.15)"/>
+                </svg>
+                <div style="position: absolute; top: 30px; left: 50%; transform: translateX(-50%) rotate(6deg); width: 34px; height: 34px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #4E6D8B, #263D57 70%); box-shadow: 0 2px 4px rgba(0,0,0,0.25), inset -1px -1px 3px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; color: #F4EFE6; font: italic 700 14px 'DM Serif Display';">P</div>
+                <div style="position: absolute; top: 44px; right: 14px; font: 500 9px 'JetBrains Mono'; color: rgba(83,74,183,0.7);">SUN 22 · No. 265</div>
+              </div>
+            </div>
+
+            <!-- envelope C - dusty / delayed -->
+            <div style="position: relative; height: 82px; margin-bottom: 6px; transform: rotate(-0.6deg);">
+              <div style="position: absolute; inset: 0; background-color: #C9BFA4; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); border: 1px solid rgba(42,38,32,0.15); overflow: hidden; opacity: 0.92;">
+                <!-- dust grain -->
+                <div class="grain-strong" style="position: absolute; inset: 0; opacity: 0.8; mix-blend-mode: multiply;"></div>
+                <svg viewBox="0 0 300 82" preserveAspectRatio="none" style="position: absolute; inset: 0; width: 100%; height: 100%;">
+                  <path d="M0 0 L150 44 L300 0 Z" fill="#B7AC90"/>
+                </svg>
+                <div style="position: absolute; top: 32px; left: 50%; transform: translateX(-50%) rotate(-4deg); width: 32px; height: 32px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #5A5040, #2E2820 70%); box-shadow: 0 2px 4px rgba(0,0,0,0.2), inset -1px -1px 3px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; color: #E8DFC6; font: italic 700 12px 'DM Serif Display';">P</div>
+                <!-- stamp: DELAYED -->
+                <div style="position: absolute; top: 8px; right: 8px; transform: rotate(-8deg); padding: 3px 6px; border: 1.5px solid #8A2E1E; color: #8A2E1E; font: 700 8px 'JetBrains Mono'; letter-spacing: 0.15em; background: rgba(139,46,30,0.06);">DELAYED IN TRANSIT</div>
+                <div style="position: absolute; bottom: 8px; left: 14px; font: 500 9px 'JetBrains Mono'; color: rgba(42,38,32,0.5); font-style: italic;">from July · finally here</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sticker pack unlocked -->
+          <div style="margin-top: 22px; background: linear-gradient(135deg, #3A5771 0%, #534AB7 100%); border-radius: 10px; padding: 18px 18px 20px; color: #FDF8EC; position: relative; overflow: hidden; box-shadow: 0 6px 16px rgba(58,87,113,0.3);">
+            <div class="grain" style="position: absolute; inset: 0; opacity: 0.4; mix-blend-mode: overlay; pointer-events: none;"></div>
+            <!-- rain streaks -->
+            <svg style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.25;" viewBox="0 0 300 130">
+              <g stroke="#FDF8EC" stroke-width="1" stroke-linecap="round">
+                <line x1="30" y1="10" x2="26" y2="30"/><line x1="80" y1="20" x2="76" y2="40"/><line x1="140" y1="8" x2="136" y2="28"/><line x1="200" y1="25" x2="196" y2="45"/><line x1="260" y1="15" x2="256" y2="35"/><line x1="50" y1="60" x2="46" y2="80"/><line x1="120" y1="50" x2="116" y2="70"/><line x1="180" y1="70" x2="176" y2="90"/><line x1="240" y1="55" x2="236" y2="75"/><line x1="90" y1="90" x2="86" y2="110"/>
+              </g>
+            </svg>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; position: relative;">
+              <div>
+                <div style="font: 500 10px 'JetBrains Mono'; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.7;">New pack unlocked</div>
+                <div style="font: italic 400 22px 'DM Serif Display'; margin-top: 4px;">Monsoon</div>
+                <div style="font: 400 12px/1.4 'DM Sans'; opacity: 0.75; margin-top: 4px; max-width: 200px;">12 stickers · umbrellas, ilish, wet buses, kadam flowers.</div>
+              </div>
+              <button style="background: #FDF8EC; color: #534AB7; border: none; padding: 8px 14px; border-radius: 100px; font: 600 11px 'DM Sans';">Open</button>
+            </div>
+          </div>
+          <div style="height: 20px;"></div>
+        </div>
+
+        <div class="tabbar">
+          <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="6" width="16" height="14" rx="1.5"/><path d="M4 10h16M8 3v4M16 3v4"/></svg>Today</div>
+          <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg>Calendar</div>
+          <div class="tab active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 8l9 6 9-6"/><rect x="3" y="6" width="18" height="14" rx="1.5"/></svg>Mailbox</div>
+          <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="16" rx="1.5"/><rect x="6" y="8" width="4" height="4"/><rect x="14" y="8" width="4" height="4"/><rect x="6" y="14" width="4" height="4"/><rect x="14" y="14" width="4" height="4"/></svg>Album</div>
+          <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.42 3.58-8 8-8s8 3.58 8 8"/></svg>You</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =================== SCREEN 6: ALBUM =================== -->
+    <div data-screen-label="06 Album">
+      <div class="screen-label">06 · Year in view</div>
+      <h3 class="screen-title">Album</h3>
+      <div style="height: 18px;"></div>
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="status"><span>9:51</span><span style="width:20px;height:10px;background:#2A2620;border-radius:2px;display:inline-block;"></span></div>
+
+        <div style="position: absolute; inset: 54px 0 82px; padding: 16px 22px 0; overflow-y: auto;">
+          <!-- album cover -->
+          <div style="position: relative; transform: rotate(-1deg); filter: drop-shadow(0 8px 20px rgba(0,0,0,0.15));">
+            <div class="grain-strong" style="background: #B14126; border-radius: 4px; padding: 22px 20px; position: relative; overflow: hidden; background-blend-mode: multiply;">
+              <!-- decorative corners -->
+              <div style="position: absolute; top: 8px; left: 8px; width: 22px; height: 22px; border-top: 1.5px solid #E7C64B; border-left: 1.5px solid #E7C64B;"></div>
+              <div style="position: absolute; top: 8px; right: 8px; width: 22px; height: 22px; border-top: 1.5px solid #E7C64B; border-right: 1.5px solid #E7C64B;"></div>
+              <div style="position: absolute; bottom: 8px; left: 8px; width: 22px; height: 22px; border-bottom: 1.5px solid #E7C64B; border-left: 1.5px solid #E7C64B;"></div>
+              <div style="position: absolute; bottom: 8px; right: 8px; width: 22px; height: 22px; border-bottom: 1.5px solid #E7C64B; border-right: 1.5px solid #E7C64B;"></div>
+
+              <div style="text-align: center; padding: 4px 0;">
+                <div style="font: 500 9px 'JetBrains Mono'; letter-spacing: 0.3em; color: #E7C64B; text-transform: uppercase;">Volume II</div>
+                <div style="font: italic 400 30px/1 'DM Serif Display'; color: #FDF8EC; margin: 6px 0 4px;">Two thousand<br>and twenty-six</div>
+                <div style="width: 30px; height: 1px; background: #E7C64B; margin: 8px auto;"></div>
+                <div style="font: 400 11px 'DM Sans'; color: rgba(253,248,236,0.75);">Ananya · Kolkata → the year so far</div>
+                <!-- year small stamp cluster -->
+                <div style="margin-top: 12px; display: flex; justify-content: center; gap: 3px;">
+                  <div class="perf-sm" style="width: 20px; height: 26px; background: linear-gradient(180deg,#3A5771,#E39544 60%,#B14126); transform: rotate(-4deg);"></div>
+                  <div class="perf-sm" style="width: 20px; height: 26px; background: linear-gradient(180deg,#E7C64B,#E39544 60%,#B14126); transform: rotate(2deg);"></div>
+                  <div class="perf-sm" style="width: 20px; height: 26px; background: linear-gradient(180deg,#534AB7,#3A5771 60%,#5B6470); transform: rotate(-1deg);"></div>
+                  <div class="perf-sm" style="width: 20px; height: 26px; background: linear-gradient(180deg,#B6C7D6,#5B6470 60%,#3A5771); transform: rotate(3deg);"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 365 square color quilt -->
+          <div style="margin-top: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
+              <div style="font: 500 10px 'JetBrains Mono'; letter-spacing: 0.14em; color: rgba(42,38,32,0.55); text-transform: uppercase;">267 days · color quilt</div>
+              <div style="font: italic 400 11px 'DM Serif Display'; color: rgba(42,38,32,0.5);">Jan → today</div>
+            </div>
+            <div id="quilt" style="display: grid; grid-template-columns: repeat(20, 1fr); gap: 2px;">
+              <!-- winter -->
+              <div style="aspect-ratio:1;background:#4C5F73;"></div><div style="aspect-ratio:1;background:#5C6E82;"></div><div style="aspect-ratio:1;background:#3E5468;"></div><div style="aspect-ratio:1;background:#657A8D;"></div><div style="aspect-ratio:1;background:#546A7E;"></div><div style="aspect-ratio:1;background:#7A8B9C;"></div><div style="aspect-ratio:1;background:#4C5F73;"></div><div style="aspect-ratio:1;background:#8FA0B0;"></div><div style="aspect-ratio:1;background:#5A6D80;"></div><div style="aspect-ratio:1;background:#3E5468;"></div><div style="aspect-ratio:1;background:#B6C7D6;"></div><div style="aspect-ratio:1;background:#7A8B9C;"></div><div style="aspect-ratio:1;background:#5B6470;"></div><div style="aspect-ratio:1;background:#8FA0B0;"></div><div style="aspect-ratio:1;background:#4C5F73;"></div><div style="aspect-ratio:1;background:#657A8D;"></div><div style="aspect-ratio:1;background:#8FA0B0;"></div><div style="aspect-ratio:1;background:#3E5468;"></div><div style="aspect-ratio:1;background:#5A6D80;"></div><div style="aspect-ratio:1;background:#7A8B9C;"></div>
+              <!-- late winter -->
+              <div style="aspect-ratio:1;background:#8FA0B0;"></div><div style="aspect-ratio:1;background:#B6C7D6;"></div><div style="aspect-ratio:1;background:#7A8B9C;"></div><div style="aspect-ratio:1;background:#C7D1DA;"></div><div style="aspect-ratio:1;background:#8FA0B0;"></div><div style="aspect-ratio:1;background:#B6C7D6;"></div><div style="aspect-ratio:1;background:#657A8D;"></div><div style="aspect-ratio:1;background:#E7C64B;"></div><div style="aspect-ratio:1;background:#B6C7D6;"></div><div style="aspect-ratio:1;background:#EFE7D2;"></div><div style="aspect-ratio:1;background:#C7D1DA;"></div><div style="aspect-ratio:1;background:#E39544;"></div><div style="aspect-ratio:1;background:#B6C7D6;"></div><div style="aspect-ratio:1;background:#EFE7D2;"></div><div style="aspect-ratio:1;background:#8FA0B0;"></div><div style="aspect-ratio:1;background:#E7C64B;"></div><div style="aspect-ratio:1;background:#C7D1DA;"></div><div style="aspect-ratio:1;background:#B6C7D6;"></div><div style="aspect-ratio:1;background:#E7C64B;"></div><div style="aspect-ratio:1;background:#EFE7D2;"></div>
+              <!-- spring -->
+              <div style="aspect-ratio:1;background:#E7C64B;"></div><div style="aspect-ratio:1;background:#E39544;"></div><div style="aspect-ratio:1;background:#EFE7D2;"></div><div style="aspect-ratio:1;background:#E7C64B;"></div><div style="aspect-ratio:1;background:#F0B36A;"></div><div style="aspect-ratio:1;background:#E39544;"></div><div style="aspect-ratio:1;background:#B14126;"></div><div style="aspect-ratio:1;background:#E7C64B;"></div><div style="aspect-ratio:1;background:#F0B36A;"></div><div style="aspect-ratio:1;background:#E39544;"></div><div style="aspect-ratio:1;background:#B14126;"></div><div style="aspect-ratio:1;background:#E7C64B;"></div><div style="aspect-ratio:1;background:#EFE7D2;"></div><div style="aspect-ratio:1;background:#F0B36A;"></div><div style="aspect-ratio:1;background:#E39544;"></div><div style="aspect-ratio:1;background:#E7C64B;"></div><div style="aspect-ratio:1;background:#B14126;"></div><div style="aspect-ratio:1;background:#E39544;"></div><div style="aspect-ratio:1;background:#E7C64B;"></div><div style="aspect-ratio:1;background:#F0B36A;"></div>
+              <!-- summer/premonsoon -->
+              <div style="aspect-ratio:1;background:#E39544;"></div><div style="aspect-ratio:1;background:#B14126;"></div><div style="aspect-ratio:1;background:#8A2E1E;"></div><div style="aspect-ratio:1;background:#E39544;"></div><div style="aspect-ratio:1;background:#B14126;"></div><div style="aspect-ratio:1;background:#E7C64B;"></div><div style="aspect-ratio:1;background:#F0B36A;"></div><div style="aspect-ratio:1;background:#B14126;"></div><div style="aspect-ratio:1;background:#8A2E1E;"></div><div style="aspect-ratio:1;background:#E39544;"></div><div style="aspect-ratio:1;background:#F0B36A;"></div><div style="aspect-ratio:1;background:#B14126;"></div><div style="aspect-ratio:1;background:#E7C64B;"></div><div style="aspect-ratio:1;background:#8A2E1E;"></div><div style="aspect-ratio:1;background:#B14126;"></div><div style="aspect-ratio:1;background:#E39544;"></div><div style="aspect-ratio:1;background:#F0B36A;"></div><div style="aspect-ratio:1;background:#E39544;"></div><div style="aspect-ratio:1;background:#B14126;"></div><div style="aspect-ratio:1;background:#8A2E1E;"></div>
+              <!-- monsoon transition -->
+              <div style="aspect-ratio:1;background:#B14126;"></div><div style="aspect-ratio:1;background:#5B6470;"></div><div style="aspect-ratio:1;background:#3A5771;"></div><div style="aspect-ratio:1;background:#B14126;"></div><div style="aspect-ratio:1;background:#5B6470;"></div><div style="aspect-ratio:1;background:#3A5771;"></div><div style="aspect-ratio:1;background:#4C5F73;"></div><div style="aspect-ratio:1;background:#5B6470;"></div><div style="aspect-ratio:1;background:#3A5771;"></div><div style="aspect-ratio:1;background:#657A8D;"></div><div style="aspect-ratio:1;background:#3A5771;"></div><div style="aspect-ratio:1;background:#4C5F73;"></div><div style="aspect-ratio:1;background:#5B6470;"></div><div style="aspect-ratio:1;background:#657A8D;"></div><div style="aspect-ratio:1;background:#3A5771;"></div><div style="aspect-ratio:1;background:#5B6470;"></div><div style="aspect-ratio:1;background:#4C5F73;"></div><div style="aspect-ratio:1;background:#3A5771;"></div><div style="aspect-ratio:1;background:#5B6470;"></div><div style="aspect-ratio:1;background:#657A8D;"></div>
+              <!-- monsoon deep -->
+              <div style="aspect-ratio:1;background:#3A5771;"></div><div style="aspect-ratio:1;background:#4C5F73;"></div><div style="aspect-ratio:1;background:#5B6470;"></div><div style="aspect-ratio:1;background:#3A5771;"></div><div style="aspect-ratio:1;background:#657A8D;"></div><div style="aspect-ratio:1;background:#4C5F73;"></div><div style="aspect-ratio:1;background:#3A5771;"></div><div style="aspect-ratio:1;background:#5B6470;"></div><div style="aspect-ratio:1;background:#4C5F73;"></div><div style="aspect-ratio:1;background:#3A5771;"></div><div style="aspect-ratio:1;background:#8FA0B0;"></div><div style="aspect-ratio:1;background:#5B6470;"></div><div style="aspect-ratio:1;background:#3A5771;"></div><div style="aspect-ratio:1;background:#657A8D;"></div><div style="aspect-ratio:1;background:#3A5771;"></div><div style="aspect-ratio:1;background:#4C5F73;"></div><div style="aspect-ratio:1;background:#5B6470;"></div><div style="aspect-ratio:1;background:#3A5771;"></div><div style="aspect-ratio:1;background:#657A8D;"></div><div style="aspect-ratio:1;background:#4C5F73;"></div>
+              <!-- late monsoon w/ warmth returning -->
+              <div style="aspect-ratio:1;background:#3A5771;"></div><div style="aspect-ratio:1;background:#5B6470;"></div><div style="aspect-ratio:1;background:#B14126;"></div><div style="aspect-ratio:1;background:#3A5771;"></div><div style="aspect-ratio:1;background:#E7C64B;"></div><div style="aspect-ratio:1;background:#5B6470;"></div><div style="aspect-ratio:1;background:#B14126;"></div><div style="aspect-ratio:1;background:#E39544;"></div><div style="aspect-ratio:1;background:#3A5771;"></div><div style="aspect-ratio:1;background:#B14126;"></div><div style="aspect-ratio:1;background:#E7C64B;"></div><div style="aspect-ratio:1;background:#5B6470;"></div><div style="aspect-ratio:1;background:#B14126;"></div><div style="aspect-ratio:1;background:#E39544;"></div><div style="aspect-ratio:1;background:#3A5771;"></div><div style="aspect-ratio:1;background:#E7C64B;"></div><div style="aspect-ratio:1;background:#B14126;"></div><div style="aspect-ratio:1;background:#5B6470;"></div><div style="aspect-ratio:1;background:#E39544;"></div><div style="aspect-ratio:1;background:#B14126;"></div>
+              <!-- current puja -->
+              <div style="aspect-ratio:1;background:#B14126;"></div><div style="aspect-ratio:1;background:#E7C64B;"></div><div style="aspect-ratio:1;background:#E39544;"></div><div style="aspect-ratio:1;background:#B14126;"></div><div style="aspect-ratio:1;background:#8A2E1E;"></div><div style="aspect-ratio:1;background:#E7C64B;"></div><div style="aspect-ratio:1;background:#3A5771;position:relative;outline:1.5px solid #534AB7;outline-offset:1px;"></div>
+              <!-- future/blank -->
+              <div style="aspect-ratio:1;background:#EFE7D2;border:0.5px dashed rgba(42,38,32,0.15);box-sizing:border-box;"></div><div style="aspect-ratio:1;background:#EFE7D2;border:0.5px dashed rgba(42,38,32,0.15);box-sizing:border-box;"></div><div style="aspect-ratio:1;background:#EFE7D2;border:0.5px dashed rgba(42,38,32,0.15);box-sizing:border-box;"></div><div style="aspect-ratio:1;background:#EFE7D2;border:0.5px dashed rgba(42,38,32,0.15);box-sizing:border-box;"></div><div style="aspect-ratio:1;background:#EFE7D2;border:0.5px dashed rgba(42,38,32,0.15);box-sizing:border-box;"></div><div style="aspect-ratio:1;background:#EFE7D2;border:0.5px dashed rgba(42,38,32,0.15);box-sizing:border-box;"></div><div style="aspect-ratio:1;background:#EFE7D2;border:0.5px dashed rgba(42,38,32,0.15);box-sizing:border-box;"></div><div style="aspect-ratio:1;background:#EFE7D2;border:0.5px dashed rgba(42,38,32,0.15);box-sizing:border-box;"></div><div style="aspect-ratio:1;background:#EFE7D2;border:0.5px dashed rgba(42,38,32,0.15);box-sizing:border-box;"></div><div style="aspect-ratio:1;background:#EFE7D2;border:0.5px dashed rgba(42,38,32,0.15);box-sizing:border-box;"></div><div style="aspect-ratio:1;background:#EFE7D2;border:0.5px dashed rgba(42,38,32,0.15);box-sizing:border-box;"></div><div style="aspect-ratio:1;background:#EFE7D2;border:0.5px dashed rgba(42,38,32,0.15);box-sizing:border-box;"></div><div style="aspect-ratio:1;background:#EFE7D2;border:0.5px dashed rgba(42,38,32,0.15);box-sizing:border-box;"></div>
+            </div>
+          </div>
+
+          <!-- Year in Postmarks -->
+          <div style="margin-top: 22px;">
+            <div style="font: 500 10px 'JetBrains Mono'; letter-spacing: 0.14em; color: rgba(42,38,32,0.55); text-transform: uppercase; margin-bottom: 10px;">Year in postmarks</div>
+            <div style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 4px; align-items: center;">
+              <!-- 12 ink circles, varying sizes/opacity -->
+              <div style="text-align:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.4"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/></svg><div style="font:500 7px 'JetBrains Mono';color:rgba(42,38,32,0.5);margin-top:2px;">J</div></div>
+              <div style="text-align:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.4" opacity="0.7"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/></svg><div style="font:500 7px 'JetBrains Mono';color:rgba(42,38,32,0.5);margin-top:2px;">F</div></div>
+              <div style="text-align:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.4"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/></svg><div style="font:500 7px 'JetBrains Mono';color:rgba(42,38,32,0.5);margin-top:2px;">M</div></div>
+              <div style="text-align:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.4" opacity="0.85"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/></svg><div style="font:500 7px 'JetBrains Mono';color:rgba(42,38,32,0.5);margin-top:2px;">A</div></div>
+              <div style="text-align:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.4"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/></svg><div style="font:500 7px 'JetBrains Mono';color:rgba(42,38,32,0.5);margin-top:2px;">M</div></div>
+              <div style="text-align:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.4" opacity="0.6"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/></svg><div style="font:500 7px 'JetBrains Mono';color:rgba(42,38,32,0.5);margin-top:2px;">J</div></div>
+              <div style="text-align:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.4"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/></svg><div style="font:500 7px 'JetBrains Mono';color:rgba(42,38,32,0.5);margin-top:2px;">J</div></div>
+              <div style="text-align:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.4" opacity="0.8"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/></svg><div style="font:500 7px 'JetBrains Mono';color:rgba(42,38,32,0.5);margin-top:2px;">A</div></div>
+              <div style="text-align:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="#534AB7"><circle cx="12" cy="12" r="10" fill="none" stroke="#534AB7" stroke-width="1.4"/><circle cx="12" cy="12" r="6" fill="#534AB7"/></svg><div style="font:600 7px 'JetBrains Mono';color:#534AB7;margin-top:2px;">S</div></div>
+              <div style="text-align:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(42,38,32,0.2)" stroke-width="1.4" stroke-dasharray="1.5 1.5"><circle cx="12" cy="12" r="10"/></svg><div style="font:500 7px 'JetBrains Mono';color:rgba(42,38,32,0.3);margin-top:2px;">O</div></div>
+              <div style="text-align:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(42,38,32,0.2)" stroke-width="1.4" stroke-dasharray="1.5 1.5"><circle cx="12" cy="12" r="10"/></svg><div style="font:500 7px 'JetBrains Mono';color:rgba(42,38,32,0.3);margin-top:2px;">N</div></div>
+              <div style="text-align:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(42,38,32,0.2)" stroke-width="1.4" stroke-dasharray="1.5 1.5"><circle cx="12" cy="12" r="10"/></svg><div style="font:500 7px 'JetBrains Mono';color:rgba(42,38,32,0.3);margin-top:2px;">D</div></div>
+            </div>
+          </div>
+
+          <!-- Share button -->
+          <button style="width: 100%; margin-top: 22px; padding: 14px; background: #2A2620; color: #F4EFE6; border: none; border-radius: 100px; font: 500 13px 'DM Sans'; display: flex; align-items: center; justify-content: center; gap: 8px; letter-spacing: 0.02em;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg>
+            Share my year
+          </button>
+          <div style="text-align: center; font: italic 400 11px 'DM Serif Display'; color: rgba(42,38,32,0.4); margin-top: 8px;">Prints on paper too. From ₹380.</div>
+          <div style="height: 20px;"></div>
+        </div>
+
+        <div class="tabbar">
+          <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="6" width="16" height="14" rx="1.5"/><path d="M4 10h16M8 3v4M16 3v4"/></svg>Today</div>
+          <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg>Calendar</div>
+          <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 8l9 6 9-6"/><rect x="3" y="6" width="18" height="14" rx="1.5"/></svg>Mailbox</div>
+          <div class="tab active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="16" rx="1.5"/><rect x="6" y="8" width="4" height="4"/><rect x="14" y="8" width="4" height="4"/><rect x="6" y="14" width="4" height="4"/><rect x="14" y="14" width="4" height="4"/></svg>Album</div>
+          <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.42 3.58-8 8-8s8 3.58 8 8"/></svg>You</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- footer note -->
+  <div style="margin-top: 40px; max-width: 780px; font: italic 400 13px/1.6 'DM Serif Display'; color: rgba(42,38,32,0.5);">
+    Content set in Kolkata during late monsoon → Durga Puja. All songs, place names, and postcard text are fictional samples.
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

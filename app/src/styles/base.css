@@ -1,0 +1,33 @@
+/* Placeholder. Real design tokens are copied from the mockup in Phase 1. */
+:root {
+  --paper: #f4efe6;
+  --ink: #534ab7;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--paper);
+  color: #2a2623;
+  font-family: -apple-system, system-ui, sans-serif;
+}
+
+.shell {
+  padding: max(24px, env(safe-area-inset-top)) max(24px, env(safe-area-inset-right))
+    max(24px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left));
+}
+
+.mono {
+  font-family: ui-monospace, monospace;
+  color: var(--ink);
+  font-size: 12px;
+}

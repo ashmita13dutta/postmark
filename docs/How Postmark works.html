@@ -1,0 +1,589 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>How Postmark works</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--paper:#EDF1F6;--ink:#1B2440;--muted:#56607A;--line:#C9D1DE;--card:#FFFFFF;--red:#C8323C;--blue:#2D5DA8;--purple:#534AB7}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#141A2B;--ink:#E7EBF3;--muted:#A3ACC2;--line:#2E3852;--card:#FFFFFF}}
+:root[data-theme="dark"]{--paper:#141A2B;--ink:#E7EBF3;--muted:#A3ACC2;--line:#2E3852;--card:#FFFFFF}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.55}
+.airmail{height:12px;background:repeating-linear-gradient(-45deg,var(--red) 0 14px,transparent 14px 22px,var(--blue) 22px 36px,transparent 36px 44px)}
+header{max-width:1180px;margin:0 auto;padding:48px 24px 8px}
+h1{font-family:"Instrument Serif",Georgia,serif;font-weight:400;font-size:clamp(2.6rem,6vw,4.4rem);line-height:1.02;margin:0 0 14px;letter-spacing:-0.01em}
+.lede{max-width:62ch;color:var(--muted);font-size:1.05rem;margin:0 0 24px}
+.key{display:flex;flex-wrap:wrap;gap:10px 18px;margin:0 0 22px;font-size:.9rem;color:var(--muted)}
+.key span{display:inline-flex;align-items:center;gap:8px}
+.key i{width:14px;height:14px;border-radius:3px;border:1.5px solid;display:inline-block}
+nav{display:flex;flex-wrap:wrap;gap:8px}
+nav a{color:var(--ink);text-decoration:none;font-size:.88rem;padding:6px 12px;border:1px solid var(--line);border-radius:999px}
+nav a:hover,nav a:focus-visible{border-color:var(--purple);outline:none;color:var(--purple)}
+main{max-width:1180px;margin:0 auto;padding:8px 24px 64px}
+section{padding-top:44px}
+h2{font-family:"Instrument Serif",Georgia,serif;font-weight:400;font-size:2rem;margin:0 0 6px;line-height:1.1}
+section>p{margin:0 0 16px;color:var(--muted);max-width:70ch}
+.sheet{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;overflow-x:auto;position:relative}
+.sheet::before{content:"";position:absolute;inset:0 0 auto 0;height:5px;border-radius:14px 14px 0 0;background:repeating-linear-gradient(-45deg,var(--red) 0 10px,#fff 10px 15px,var(--blue) 15px 25px,#fff 25px 30px)}
+pre.mermaid{margin:0;background:transparent;color:#1B2440;font-family:Helvetica,Arial,sans-serif;white-space:pre;min-width:min-content}
+pre.mermaid svg{max-width:none;height:auto;display:block;margin:0 auto}
+footer{max-width:1180px;margin:0 auto;padding:0 24px 48px;color:var(--muted);font-size:.9rem}
+@media (max-width:600px){.sheet{padding:16px}h2{font-size:1.6rem}}
+</style></head><body>
+<div class="airmail" aria-hidden="true"></div>
+<header>
+<h1>How Postmark works</h1>
+<p class="lede">A map of everything running inside the app: each screen, each server job, and the path one day's moment takes from a few typed words to a sealed postcard, a delivery, and a page in the year's album. Wide charts scroll sideways.</p>
+<div class="key">
+<span><i style="background:#EEEDFE;border-color:#534AB7"></i>In the app</span>
+<span><i style="background:#E1F5EE;border-color:#0F6E56"></i>On the server</span>
+<span><i style="background:#F1EFE8;border-color:#5F5E5A"></i>Stored or queued</span>
+<span><i style="background:#FAEEDA;border-color:#854F0B"></i>Outside service</span>
+<span><i style="background:#FBEAF0;border-color:#993556"></i>Animation</span>
+</div>
+<nav aria-label="Diagrams"><a href="#overview">The whole system</a><a href="#lifecycle">Life of one stamp</a><a href="#onboarding">Onboarding</a><a href="#today">Today: writing a moment</a><a href="#mint">Minting a stamp on the server</a><a href="#ai">AI engine</a><a href="#reveal">Stamp reveal</a><a href="#decorate">Decorating and sealing</a><a href="#scheduler">Mail scheduler</a><a href="#mailbox">Mailbox</a><a href="#calendar">Calendar month sheet</a><a href="#album">Album year view</a><a href="#you">You: profile and settings</a><a href="#data">Data model</a></nav>
+</header>
+<main><section id="overview"><h2>The whole system</h2><p>Every screen, service, store and outside API, and how they connect. Purple is what the user touches, green runs on the server, grey holds data, amber is outside services.</p><div class="sheet"><pre class="mermaid">%%{init: {"theme":"base","flowchart":{"useMaxWidth":false,"curve":"basis","nodeSpacing":36,"rankSpacing":44},"themeVariables":{"fontFamily":"Helvetica, Arial, sans-serif","fontSize":"14px","primaryColor":"#FFFFFF","primaryBorderColor":"#8A94A6","primaryTextColor":"#1B2440","lineColor":"#6B7590","clusterBkg":"#F6F8FB","clusterBorder":"#B8C1D1","edgeLabelBackground":"#FFFFFF","tertiaryColor":"#F6F8FB"}}}%%
+flowchart TB
+subgraph APP["Mobile app"]
+  direction LR
+  OB["Onboarding"] --&gt; TDY["Today"] --&gt; SR["Stamp reveal"] --&gt; DEC["Decorate"] --&gt; SEAL["Seal and send"]
+  CAL["Calendar"] ~~~ MB["Mailbox"] ~~~ ALB["Album"] ~~~ YOU["You"]
+end
+subgraph BE["Backend services"]
+  direction TB
+  API["Auth and API gateway"]
+  API --&gt; MS["Moment service"]
+  API --&gt; MED["Media service"]
+  API --&gt; STK["Stickers and rewards"]
+  API --&gt; ALS["Album and stats"]
+  MS --&gt; AIE["AI engine"]
+  SCH["Mail scheduler: daily job"] --&gt; NOTI["Notifications"]
+end
+subgraph DATA["Data"]
+  direction LR
+  DB[("Postgres database")] ~~~ FS[("File storage")] ~~~ Q[("Job queue")] ~~~ CA[("Cache")]
+end
+subgraph EXT["Outside services"]
+  direction LR
+  LLM["LLM API"] ~~~ SP["Spotify API"] ~~~ CUT["Background removal"] ~~~ GEO["Geocoding"] ~~~ PUSH["Push: FCM, APNs"]
+end
+APP == "every request goes through the API gateway" ==&gt; BE
+BE == "reads and writes" ==&gt; DATA
+BE == "calls" ==&gt; EXT
+EXT -. "push: delivery day, year-ago letter, reminder" .-&gt; APP
+class OB,TDY,SR,DEC,SEAL,CAL,MB,ALB,YOU app
+class API,MS,AIE,MED,STK,SCH,ALS,NOTI svc
+class DB,FS,Q,CA data
+class LLM,SP,CUT,GEO,PUSH ext
+
+classDef app fill:#EEEDFE,stroke:#534AB7,color:#26215C
+classDef svc fill:#E1F5EE,stroke:#0F6E56,color:#04342C
+classDef data fill:#F1EFE8,stroke:#5F5E5A,color:#2C2C2A
+classDef ext fill:#FAEEDA,stroke:#854F0B,color:#412402
+classDef anim fill:#FBEAF0,stroke:#993556,color:#4B1528
+classDef term fill:#1B2440,stroke:#1B2440,color:#FFFFFF</pre></div></section><section id="lifecycle"><h2>Life of one stamp</h2><p>The states a single day&#x27;s stamp moves through, from the first word typed to its place in a closed album.</p><div class="sheet"><pre class="mermaid">%%{init: {"theme":"base","themeVariables":{"fontFamily":"Helvetica, Arial, sans-serif","primaryColor":"#EEEDFE","primaryBorderColor":"#534AB7","primaryTextColor":"#26215C","lineColor":"#6B7590"}}}%%
+stateDiagram-v2
+  direction LR
+  [*] --&gt; Draft: start typing
+  Draft --&gt; Minted: Stamp it
+  Minted --&gt; Decorated: Flip and add stickers
+  Minted --&gt; Sealed: Seal and send
+  Decorated --&gt; Sealed: Seal and send
+  Sealed --&gt; Delivered: 1st of next month
+  Delivered --&gt; Opened: tap envelope
+  Opened --&gt; YearAgoLetter: same date next year
+  Opened --&gt; DelayedInTransit: random late re-delivery
+  YearAgoLetter --&gt; Opened
+  DelayedInTransit --&gt; Opened
+  Opened --&gt; Archived: 31 Dec, album closes
+  Archived --&gt; [*]</pre></div></section><section id="onboarding"><h2>Onboarding</h2><p>First launch teaches the idea by showing it, then collects the few things the app needs.</p><div class="sheet"><pre class="mermaid">%%{init: {"theme":"base","flowchart":{"useMaxWidth":false,"curve":"basis","nodeSpacing":36,"rankSpacing":44},"themeVariables":{"fontFamily":"Helvetica, Arial, sans-serif","fontSize":"14px","primaryColor":"#FFFFFF","primaryBorderColor":"#8A94A6","primaryTextColor":"#1B2440","lineColor":"#6B7590","clusterBkg":"#F6F8FB","clusterBorder":"#B8C1D1","edgeLabelBackground":"#FFFFFF","tertiaryColor":"#F6F8FB"}}}%%
+flowchart TD
+A(["First launch"]) --&gt; B["Every day becomes a stamp: demo stamp builds itself"]
+B --&gt; C["Your postcards go in the mail: envelope seals and flies"]
+C --&gt; D["Sign up or sign in"]
+D --&gt; E["Pick home city"]
+E --&gt; E1["Geocode city"] --&gt; E2["Unlock that city's sticker pack"]
+E2 --&gt; F{"Connect Spotify now?"}
+F --&gt;|"Yes"| F1["Spotify OAuth"] --&gt; G
+F --&gt;|"Later"| G["Ask permissions: location, photos, notifications"]
+G --&gt; H["Choose daily reminder time"]
+H --&gt; I(["Today screen: stamp first moment"])
+class B,C,D,E,G,H app
+class E1,E2 svc
+class F1 ext
+class A,I term
+
+classDef app fill:#EEEDFE,stroke:#534AB7,color:#26215C
+classDef svc fill:#E1F5EE,stroke:#0F6E56,color:#04342C
+classDef data fill:#F1EFE8,stroke:#5F5E5A,color:#2C2C2A
+classDef ext fill:#FAEEDA,stroke:#854F0B,color:#412402
+classDef anim fill:#FBEAF0,stroke:#993556,color:#4B1528
+classDef term fill:#1B2440,stroke:#1B2440,color:#FFFFFF</pre></div></section><section id="today"><h2>Today: writing a moment</h2><p>Everything that happens between opening the app and pressing Stamp it.</p><div class="sheet"><pre class="mermaid">%%{init: {"theme":"base","flowchart":{"useMaxWidth":false,"curve":"basis","nodeSpacing":36,"rankSpacing":44},"themeVariables":{"fontFamily":"Helvetica, Arial, sans-serif","fontSize":"14px","primaryColor":"#FFFFFF","primaryBorderColor":"#8A94A6","primaryTextColor":"#1B2440","lineColor":"#6B7590","clusterBkg":"#F6F8FB","clusterBorder":"#B8C1D1","edgeLabelBackground":"#FFFFFF","tertiaryColor":"#F6F8FB"}}}%%
+flowchart TD
+A(["Open Today tab"]) --&gt; B{"Letter from a year ago waiting?"}
+B --&gt;|"Yes"| B1["Show envelope banner: a letter from past you"] --&gt; C
+B --&gt;|"No"| C["Greeting, Day N, streak, delivery countdown"]
+C --&gt; D["Rotating prompt over lined writing box"]
+D --&gt; E["Write the moment by hand"]
+E --&gt; F["Location chip: auto from GPS"]
+F --&gt; F1{"Change location?"}
+F1 --&gt;|"Yes"| F2["Search a place"] --&gt; F3["Geocode to city"] --&gt; G
+F1 --&gt;|"No"| G{"Song: how to choose?"}
+G --&gt;|"Pick my song"| G1["Search title or artist"] --&gt; G9
+G --&gt;|"Suggest from my moment"| G2["AI reads the moment"] --&gt; G3["3 song suggestions"] --&gt; G4{"Like one?"}
+G4 --&gt;|"No"| G2
+G4 --&gt;|"Yes"| G9
+G --&gt;|"From liked songs, later"| G5["Spotify liked tracks"] --&gt; G9
+G9["Song attached with source tag"] --&gt; H{"Add a photo?"}
+H --&gt;|"No"| J
+H --&gt;|"Single photo"| H1["Take or pick photo"] --&gt; H3
+H --&gt;|"Film strip"| H2["Pick 3 to 4 photos, booth layout"] --&gt; H3
+H3{"Filter"} --&gt;|"Vintage photo booth"| H4["Grain, fade, warm tint"] --&gt; H6
+H3 --&gt;|"Vibrant day-out"| H5["Boosted color, contrast"] --&gt; H6
+H6["Adjust intensity slider"] --&gt; H7["Upload to media service"] --&gt; J
+J{"Palette source"} --&gt;|"From moment and song"| J1["AI makes 5 colors and names"] --&gt; K
+J --&gt;|"From photo, needs a photo"| J2["Extract 5 dominant colors"] --&gt; K
+K["5 swatches with live preview"] --&gt; K1{"Edit a swatch?"}
+K1 --&gt;|"Yes"| K2["Color picker"] --&gt; K
+K1 --&gt;|"No"| L["Tap Stamp it"]
+L --&gt; M["Stamper presses, ink print appears, fades in a few seconds"]
+M --&gt; N["Send moment to Moment service"]
+N --&gt; O(["Go to Stamp reveal"])
+class B1,C,D,E,F,F2,G1,G9,H1,H2,H4,H5,H6,K,K2,L app
+class F3,G2,G3,H7,J1,J2,N svc
+class G5 ext
+class M anim
+class A,O term
+
+classDef app fill:#EEEDFE,stroke:#534AB7,color:#26215C
+classDef svc fill:#E1F5EE,stroke:#0F6E56,color:#04342C
+classDef data fill:#F1EFE8,stroke:#5F5E5A,color:#2C2C2A
+classDef ext fill:#FAEEDA,stroke:#854F0B,color:#412402
+classDef anim fill:#FBEAF0,stroke:#993556,color:#4B1528
+classDef term fill:#1B2440,stroke:#1B2440,color:#FFFFFF</pre></div></section><section id="mint"><h2>Minting a stamp on the server</h2><p>What the Moment service does when Stamp it arrives. The note is saved but hidden until delivery.</p><div class="sheet"><pre class="mermaid">%%{init: {"theme":"base","flowchart":{"useMaxWidth":false,"curve":"basis","nodeSpacing":36,"rankSpacing":44},"themeVariables":{"fontFamily":"Helvetica, Arial, sans-serif","fontSize":"14px","primaryColor":"#FFFFFF","primaryBorderColor":"#8A94A6","primaryTextColor":"#1B2440","lineColor":"#6B7590","clusterBkg":"#F6F8FB","clusterBorder":"#B8C1D1","edgeLabelBackground":"#FFFFFF","tertiaryColor":"#F6F8FB"}}}%%
+flowchart TD
+A(["Moment received"]) --&gt; B["Check sign-in"]
+B --&gt; C{"Already stamped today?"}
+C --&gt;|"Yes"| C1["Offer to edit today's stamp instead"]
+C --&gt;|"No"| D["Save moment: text, location, song, palette, sources"]
+D --&gt; E["Resolve city"] --&gt; E1["Attach city sticker pack"]
+E1 --&gt; F["Build stamp art from palette bands"]
+F --&gt; G["Assign stamp number"]
+G --&gt; H["Write postmark: city, date, song"]
+H --&gt; I["Set sealed_until to 1st of next month"]
+I --&gt; J["Update streak"]
+J --&gt; K{"Streak milestone?"}
+K --&gt;|"Yes"| K1["Queue reward: golden stamp"] --&gt; L
+K --&gt;|"No"| L(["Return stamp art and postmark; note stays hidden"])
+class C1 app
+class B,D,E,E1,F,G,H,I,J,K1 svc
+class A,L term
+
+classDef app fill:#EEEDFE,stroke:#534AB7,color:#26215C
+classDef svc fill:#E1F5EE,stroke:#0F6E56,color:#04342C
+classDef data fill:#F1EFE8,stroke:#5F5E5A,color:#2C2C2A
+classDef ext fill:#FAEEDA,stroke:#854F0B,color:#412402
+classDef anim fill:#FBEAF0,stroke:#993556,color:#4B1528
+classDef term fill:#1B2440,stroke:#1B2440,color:#FFFFFF</pre></div></section><section id="ai"><h2>AI engine</h2><p>One request, structured output, checked before it reaches the screen.</p><div class="sheet"><pre class="mermaid">%%{init: {"theme":"base","flowchart":{"useMaxWidth":false,"curve":"basis","nodeSpacing":36,"rankSpacing":44},"themeVariables":{"fontFamily":"Helvetica, Arial, sans-serif","fontSize":"14px","primaryColor":"#FFFFFF","primaryBorderColor":"#8A94A6","primaryTextColor":"#1B2440","lineColor":"#6B7590","clusterBkg":"#F6F8FB","clusterBorder":"#B8C1D1","edgeLabelBackground":"#FFFFFF","tertiaryColor":"#F6F8FB"}}}%%
+flowchart LR
+A["Moment text, city, chosen song"] --&gt; B["Prompt builder"]
+B --&gt; C["LLM API, JSON only"]
+C --&gt; D{"Valid JSON?"}
+D --&gt;|"No, retry once"| C
+D --&gt;|"Still no"| D1["Fallback: mood preset palette"]
+D --&gt;|"Yes"| E["5 hex colors, 5 poetic names, 3 songs, mood tags"]
+E --&gt; F["Search Spotify to confirm songs exist"]
+F --&gt; G{"All songs found?"}
+G --&gt;|"No"| G1["Drop missing, refill from mood"] --&gt; H
+G --&gt;|"Yes"| H(["Return to app"])
+D1 --&gt; H
+class A app
+class B,D1,E,G1 svc
+class C,F ext
+class H term
+
+classDef app fill:#EEEDFE,stroke:#534AB7,color:#26215C
+classDef svc fill:#E1F5EE,stroke:#0F6E56,color:#04342C
+classDef data fill:#F1EFE8,stroke:#5F5E5A,color:#2C2C2A
+classDef ext fill:#FAEEDA,stroke:#854F0B,color:#412402
+classDef anim fill:#FBEAF0,stroke:#993556,color:#4B1528
+classDef term fill:#1B2440,stroke:#1B2440,color:#FFFFFF</pre></div></section><section id="reveal"><h2>Stamp reveal</h2><p>The roughly three-second reveal, then the two ways forward.</p><div class="sheet"><pre class="mermaid">%%{init: {"theme":"base","flowchart":{"useMaxWidth":false,"curve":"basis","nodeSpacing":36,"rankSpacing":44},"themeVariables":{"fontFamily":"Helvetica, Arial, sans-serif","fontSize":"14px","primaryColor":"#FFFFFF","primaryBorderColor":"#8A94A6","primaryTextColor":"#1B2440","lineColor":"#6B7590","clusterBkg":"#F6F8FB","clusterBorder":"#B8C1D1","edgeLabelBackground":"#FFFFFF","tertiaryColor":"#F6F8FB"}}}%%
+flowchart TD
+A(["Arrive from Today"]) --&gt; B["0.0s ink print slides to stamp corner"]
+B --&gt; C["0.3s stamp drops, bounces, settles tilted"]
+C --&gt; D["0.6s color bands pour in top to bottom"]
+D --&gt; E["1.0s postmark thumps down, ink splatter, haptic tap, song starts"]
+E --&gt; F["1.3s photo or strip slides out from behind"]
+F --&gt; G["1.5s sparkles, palette confetti, music notes, edge stickers"]
+G --&gt; H["2.0s today's five with source tag; song with source tag"]
+H --&gt; I["2.5s buttons slide up"]
+A -. "tap to skip" .-&gt; H
+I --&gt; J{"Song was suggested and not liked?"}
+J --&gt;|"Swap"| J1["Next suggestion, postmark redraws"] --&gt; K
+J --&gt;|"Keep"| K{"Next step"}
+K --&gt;|"Flip to read"| L(["Decorate postcard back"])
+K --&gt;|"Seal and send"| M(["Wax seal picker"])
+class B,C,D,E,F,G,H,I anim
+class J1 svc
+class A,L,M term
+
+classDef app fill:#EEEDFE,stroke:#534AB7,color:#26215C
+classDef svc fill:#E1F5EE,stroke:#0F6E56,color:#04342C
+classDef data fill:#F1EFE8,stroke:#5F5E5A,color:#2C2C2A
+classDef ext fill:#FAEEDA,stroke:#854F0B,color:#412402
+classDef anim fill:#FBEAF0,stroke:#993556,color:#4B1528
+classDef term fill:#1B2440,stroke:#1B2440,color:#FFFFFF</pre></div></section><section id="decorate"><h2>Decorating and sealing</h2><p>The back of the postcard: stickers, drawing, cutouts, the five-item limit and the seal.</p><div class="sheet"><pre class="mermaid">%%{init: {"theme":"base","flowchart":{"useMaxWidth":false,"curve":"basis","nodeSpacing":36,"rankSpacing":44},"themeVariables":{"fontFamily":"Helvetica, Arial, sans-serif","fontSize":"14px","primaryColor":"#FFFFFF","primaryBorderColor":"#8A94A6","primaryTextColor":"#1B2440","lineColor":"#6B7590","clusterBkg":"#F6F8FB","clusterBorder":"#B8C1D1","edgeLabelBackground":"#FFFFFF","tertiaryColor":"#F6F8FB"}}}%%
+flowchart TD
+A(["Flip to read"]) --&gt; B["3D flip; photo stays tucked, switches to opposite side"]
+B --&gt; C["Postcard back with handwritten note"]
+C --&gt; D{"Sticker tray tab"}
+D --&gt;|"City"| D1["Only the tagged city's landmark stickers"]
+D --&gt;|"Seals, Stamps, Tape, Doodles, Shapes"| D2["Unlocked aesthetic packs"]
+D --&gt;|"Draw"| D3["Pen tool, inks from today's palette"]
+D --&gt;|"Cutout"| D4{"Manual or auto?"}
+D4 --&gt;|"Manual"| D5["Trace around part of a photo"] --&gt; D7
+D4 --&gt;|"Auto"| D6["Background removal"] --&gt; D7
+D7["Saved as a custom sticker"] --&gt; E
+D1 &amp; D2 --&gt; E{"Fewer than 5 decorations?"}
+E --&gt;|"No"| E1["Nudge: your postcard is full"]
+E --&gt;|"Yes"| F["Drag, rotate, resize; slight random tilt"]
+D3 --&gt; F
+F --&gt; G["Save placement: sticker, x, y, rotation, scale, side"]
+G --&gt; H["Tap Seal and send"]
+R(["From reveal: Seal and send"]) --&gt; I
+H --&gt; I["Wax seal picker: color and emblem"]
+I --&gt; J["Postcard folds into envelope"]
+J --&gt; K["Wax seal presses down"]
+K --&gt; L["Envelope flies to Mailbox tab"]
+L --&gt; M(["Sealed until 1st of next month"])
+class B,C,D1,D2,D3,D5,D7,E1,F,H,I app
+class D6 ext
+class G svc
+class J,K,L anim
+class A,R,M term
+
+classDef app fill:#EEEDFE,stroke:#534AB7,color:#26215C
+classDef svc fill:#E1F5EE,stroke:#0F6E56,color:#04342C
+classDef data fill:#F1EFE8,stroke:#5F5E5A,color:#2C2C2A
+classDef ext fill:#FAEEDA,stroke:#854F0B,color:#412402
+classDef anim fill:#FBEAF0,stroke:#993556,color:#4B1528
+classDef term fill:#1B2440,stroke:#1B2440,color:#FFFFFF</pre></div></section><section id="scheduler"><h2>Mail scheduler</h2><p>The daily job that makes the mail feel real. It runs once a day per user, just after local midnight.</p><div class="sheet"><pre class="mermaid">%%{init: {"theme":"base","flowchart":{"useMaxWidth":false,"curve":"basis","nodeSpacing":36,"rankSpacing":44},"themeVariables":{"fontFamily":"Helvetica, Arial, sans-serif","fontSize":"14px","primaryColor":"#FFFFFF","primaryBorderColor":"#8A94A6","primaryTextColor":"#1B2440","lineColor":"#6B7590","clusterBkg":"#F6F8FB","clusterBorder":"#B8C1D1","edgeLabelBackground":"#FFFFFF","tertiaryColor":"#F6F8FB"}}}%%
+flowchart TD
+A(["Daily job at local midnight"]) --&gt; B{"Is today the 1st?"}
+B --&gt;|"Yes"| C1["Mark last month's postcards delivered"]
+C1 --&gt; C2["Build delivery bundle and count"]
+C2 --&gt; C3["Choose month sticker pack from mood and weather tags"]
+C3 --&gt; C4{"No blank days last month?"}
+C4 --&gt;|"Yes"| C5["Award complete-month badge"] --&gt; C6
+C4 --&gt;|"No"| C6["Check streak rewards"]
+C6 --&gt; C7["Queue push: your month has arrived"]
+C7 --&gt; D
+B --&gt;|"No"| D{"Stamp from this date last year?"}
+D --&gt;|"Yes"| D1["Create year-ago letter"] --&gt; D2["Calendar badge"] --&gt; D3["Queue push: a letter from past you"] --&gt; E
+D --&gt;|"No"| E{"Random roll: delayed in transit?"}
+E --&gt;|"Yes, about once a month"| E1["Pick an older opened postcard"] --&gt; E2["Re-deliver with torn corner and apology slip"] --&gt; F
+E --&gt;|"No"| F{"31 December?"}
+F --&gt;|"Yes"| F1["Close album, final wax seal, open next volume"] --&gt; Z
+F --&gt;|"No"| Z(["Done"])
+class C1,C2,C3,C5,C6,D1,E1,E2,F1 svc
+class C7,D3 data
+class D2 app
+class A,Z term
+
+classDef app fill:#EEEDFE,stroke:#534AB7,color:#26215C
+classDef svc fill:#E1F5EE,stroke:#0F6E56,color:#04342C
+classDef data fill:#F1EFE8,stroke:#5F5E5A,color:#2C2C2A
+classDef ext fill:#FAEEDA,stroke:#854F0B,color:#412402
+classDef anim fill:#FBEAF0,stroke:#993556,color:#4B1528
+classDef term fill:#1B2440,stroke:#1B2440,color:#FFFFFF</pre></div></section><section id="mailbox"><h2>Mailbox</h2><p>Delivery day, the opening ritual and what she sees between deliveries.</p><div class="sheet"><pre class="mermaid">%%{init: {"theme":"base","flowchart":{"useMaxWidth":false,"curve":"basis","nodeSpacing":36,"rankSpacing":44},"themeVariables":{"fontFamily":"Helvetica, Arial, sans-serif","fontSize":"14px","primaryColor":"#FFFFFF","primaryBorderColor":"#8A94A6","primaryTextColor":"#1B2440","lineColor":"#6B7590","clusterBkg":"#F6F8FB","clusterBorder":"#B8C1D1","edgeLabelBackground":"#FFFFFF","tertiaryColor":"#F6F8FB"}}}%%
+flowchart TD
+A(["Open Mailbox tab"]) --&gt; B{"Delivery waiting?"}
+B --&gt;|"No"| B1["Faint envelope silhouettes"] --&gt; B2(["Countdown: next delivery in N days"])
+B --&gt;|"Yes"| C["Your month has arrived, N postcards"]
+C --&gt; D["Progress: X of N opened"]
+D --&gt; E{"How to open"}
+E --&gt;|"In order"| E1["Queue by date"] --&gt; F
+E --&gt;|"Shuffle"| E2["Random queue"] --&gt; F
+E --&gt;|"Play my month"| E3["Auto slideshow, one song per card"] --&gt; G
+F["Tap an envelope"] --&gt; G["Wax seal cracks"]
+G --&gt; H["Flap opens, postcard slides out"]
+H --&gt; I["Stamp, peeking photo, note; song plays"]
+I --&gt; J["Save opened_at; card joins opened pile"]
+J --&gt; K{"Any left?"}
+K --&gt;|"Yes"| F
+K --&gt;|"No"| L["Rewards shelf: month pack, streak reward, complete-month badge"]
+C --&gt; S{"Special envelopes"}
+S --&gt;|"Year-ago letter"| S1["Aged paper"] --&gt; S2["Last year's stamp beside this year's"]
+S --&gt;|"Delayed in transit"| S3["Torn corner, extra postmarks"] --&gt; S4["Apology slip from the postal service"]
+class B1,C,D,E1,E2,F,I,J,L,S1,S2,S3,S4 app
+class E3,G,H anim
+class A,B2 term
+
+classDef app fill:#EEEDFE,stroke:#534AB7,color:#26215C
+classDef svc fill:#E1F5EE,stroke:#0F6E56,color:#04342C
+classDef data fill:#F1EFE8,stroke:#5F5E5A,color:#2C2C2A
+classDef ext fill:#FAEEDA,stroke:#854F0B,color:#412402
+classDef anim fill:#FBEAF0,stroke:#993556,color:#4B1528
+classDef term fill:#1B2440,stroke:#1B2440,color:#FFFFFF</pre></div></section><section id="calendar"><h2>Calendar month sheet</h2><p>How each day&#x27;s cell decides what to show, and what tapping does.</p><div class="sheet"><pre class="mermaid">%%{init: {"theme":"base","flowchart":{"useMaxWidth":false,"curve":"basis","nodeSpacing":36,"rankSpacing":44},"themeVariables":{"fontFamily":"Helvetica, Arial, sans-serif","fontSize":"14px","primaryColor":"#FFFFFF","primaryBorderColor":"#8A94A6","primaryTextColor":"#1B2440","lineColor":"#6B7590","clusterBkg":"#F6F8FB","clusterBorder":"#B8C1D1","edgeLabelBackground":"#FFFFFF","tertiaryColor":"#F6F8FB"}}}%%
+flowchart TD
+A(["Open Calendar"]) --&gt; B["Load month: moments, ribbons, month stickers"]
+B --&gt; C["Monday-first grid with correct weekday offset"]
+C --&gt; D["For each day"]
+D --&gt; E{"In the future?"}
+E --&gt;|"Yes"| E1["Empty cell"] --&gt; J
+E --&gt;|"No"| F{"Stamped?"}
+F --&gt;|"No"| F1["Faded perforated outline"] --&gt; J
+F --&gt;|"Yes"| G{"Still sealed?"}
+G --&gt;|"Yes"| G1["Color art with wax-seal dot"] --&gt; H
+G --&gt;|"No"| G2["Opened stamp with postmark"] --&gt; H
+H{"Has a photo?"} --&gt;|"Yes"| H1["Tiny photo corner peeking"] --&gt; I
+H --&gt;|"No"| I{"Year-ago letter today?"}
+I --&gt;|"Yes"| I1["Envelope badge"] --&gt; J
+I --&gt;|"No"| J["Place ribbons and month stickers in the gaps"]
+J --&gt; K["Header: streak and blanks to fill; playlist strip"]
+K --&gt; L{"She taps"}
+L --&gt;|"A stamp"| L1["Stamp lifts: art, postmark, play; note stays sealed"]
+L --&gt;|"An envelope badge"| L2["Year-ago side-by-side"]
+L --&gt;|"Playlist"| L3["Songs play in date order, each day highlights"]
+L --&gt;|"Add sticker"| L4["Festival ribbon, rosette, milestone label"]
+class C,E1,F1,G1,G2,H1,I1,J,K,L1,L2,L3,L4 app
+class B svc
+class A term
+
+classDef app fill:#EEEDFE,stroke:#534AB7,color:#26215C
+classDef svc fill:#E1F5EE,stroke:#0F6E56,color:#04342C
+classDef data fill:#F1EFE8,stroke:#5F5E5A,color:#2C2C2A
+classDef ext fill:#FAEEDA,stroke:#854F0B,color:#412402
+classDef anim fill:#FBEAF0,stroke:#993556,color:#4B1528
+classDef term fill:#1B2440,stroke:#1B2440,color:#FFFFFF</pre></div></section><section id="album"><h2>Album year view</h2><p>The year as a book: browsing, playing, comparing, sharing and closing it.</p><div class="sheet"><pre class="mermaid">%%{init: {"theme":"base","flowchart":{"useMaxWidth":false,"curve":"basis","nodeSpacing":36,"rankSpacing":44},"themeVariables":{"fontFamily":"Helvetica, Arial, sans-serif","fontSize":"14px","primaryColor":"#FFFFFF","primaryBorderColor":"#8A94A6","primaryTextColor":"#1B2440","lineColor":"#6B7590","clusterBkg":"#F6F8FB","clusterBorder":"#B8C1D1","edgeLabelBackground":"#FFFFFF","tertiaryColor":"#F6F8FB"}}}%%
+flowchart TD
+A(["Open Album"]) --&gt; B["Shelf of volumes, pull one out"]
+B --&gt; C["Decorated cover"]
+C --&gt; D["Color quilt, one square per day"] --&gt; D1["Tap a square: stamp lifts with photo and song"]
+C --&gt; E["Month sheets row"] --&gt; E1["Open that month's calendar"]
+C --&gt; F["Year in postmarks"] --&gt; F1["Medley plays; month's quilt row glows"]
+C --&gt; G{"Two or more volumes?"}
+G --&gt;|"Yes"| G1["This day across years, stamps side by side"]
+C --&gt; H["Aggregate the year"] --&gt; H1["AI writes the year-so-far story lines"]
+C --&gt; I{"Share my year"}
+I --&gt; I1["Quilt poster"]
+I --&gt; I2["Postmarks story card"]
+I --&gt; I3["Favorite stamp"]
+I --&gt; I4["Order printed album"]
+I1 &amp; I2 &amp; I3 --&gt; I5["Render image, cache it"]
+C --&gt; K["Add cover stickers"]
+class B,C,D,D1,E,E1,F,F1,G1,K,I1,I2,I3,I4 app
+class H,H1,I5 svc
+class A term
+
+classDef app fill:#EEEDFE,stroke:#534AB7,color:#26215C
+classDef svc fill:#E1F5EE,stroke:#0F6E56,color:#04342C
+classDef data fill:#F1EFE8,stroke:#5F5E5A,color:#2C2C2A
+classDef ext fill:#FAEEDA,stroke:#854F0B,color:#412402
+classDef anim fill:#FBEAF0,stroke:#993556,color:#4B1528
+classDef term fill:#1B2440,stroke:#1B2440,color:#FFFFFF</pre></div></section><section id="you"><h2>You: profile and settings</h2><p>Identity, collection, connections and the controls that change how the rest of the app behaves.</p><div class="sheet"><pre class="mermaid">%%{init: {"theme":"base","flowchart":{"useMaxWidth":false,"curve":"basis","nodeSpacing":36,"rankSpacing":44},"themeVariables":{"fontFamily":"Helvetica, Arial, sans-serif","fontSize":"14px","primaryColor":"#FFFFFF","primaryBorderColor":"#8A94A6","primaryTextColor":"#1B2440","lineColor":"#6B7590","clusterBkg":"#F6F8FB","clusterBorder":"#B8C1D1","edgeLabelBackground":"#FFFFFF","tertiaryColor":"#F6F8FB"}}}%%
+flowchart LR
+A(["Open You tab"]) --&gt; B["Postmaster card: name, city, member since"]
+A --&gt; C["Counts: stamps, longest streak, cities, packs"]
+A --&gt; D["Sticker collection, locked packs as silhouettes"]
+A --&gt; E["Connections"]
+E --&gt; E1["Spotify"]
+E --&gt; E2["Location"]
+E --&gt; E3["Photos"]
+A --&gt; F["Preferences"]
+F --&gt; F1["Default palette source"]
+F --&gt; F2["Default song mode"]
+F --&gt; F3["Delivery day: 1st or custom"]
+F --&gt; F4["Reveal animation on or off"]
+F --&gt; F5["Daily reminder time"]
+A --&gt; G["Privacy"]
+G --&gt; G1["App lock: fingerprint or PIN"]
+G --&gt; G2["Export journal"]
+G --&gt; G3["Backup"]
+F3 -.-&gt; S["Mail scheduler uses this date"]
+F5 -.-&gt; N["Notifications uses this time"]
+class B,C,D,E,F,G,E2,E3,F1,F2,F3,F4,F5,G1,G2,G3 app
+class S,N svc
+class E1 ext
+class A term
+
+classDef app fill:#EEEDFE,stroke:#534AB7,color:#26215C
+classDef svc fill:#E1F5EE,stroke:#0F6E56,color:#04342C
+classDef data fill:#F1EFE8,stroke:#5F5E5A,color:#2C2C2A
+classDef ext fill:#FAEEDA,stroke:#854F0B,color:#412402
+classDef anim fill:#FBEAF0,stroke:#993556,color:#4B1528
+classDef term fill:#1B2440,stroke:#1B2440,color:#FFFFFF</pre></div></section><section id="data"><h2>Data model</h2><p>What gets stored. The calendar, quilt, medley and stats are all calculated from moments.</p><div class="sheet"><pre class="mermaid">%%{init: {"theme":"base","themeVariables":{"fontFamily":"Helvetica, Arial, sans-serif","primaryColor":"#F6F8FB","primaryBorderColor":"#8A94A6","primaryTextColor":"#1B2440","lineColor":"#6B7590","fontSize":"13px"}}}%%
+erDiagram
+  USERS ||--o{ MOMENTS : writes
+  MOMENTS ||--o{ MEDIA : has
+  MOMENTS ||--o{ DECORATIONS : carries
+  MOMENTS ||--o| SEALS : "closed with"
+  STICKERS ||--o{ DECORATIONS : "placed as"
+  STICKER_PACKS ||--|{ STICKERS : contains
+  USERS ||--o{ USER_PACKS : unlocks
+  STICKER_PACKS ||--o{ USER_PACKS : "unlocked as"
+  USERS ||--o{ REWARDS : earns
+  USERS ||--o{ CALENDAR_STICKERS : places
+  USERS ||--o{ VOLUMES : keeps
+  USERS {
+    uuid id PK
+    string name
+    string home_city
+    json preferences
+    string spotify_token
+  }
+  MOMENTS {
+    uuid id PK
+    uuid user_id FK
+    date day
+    int stamp_no
+    text note
+    string city
+    string song_title
+    string song_source
+    json palette
+    string palette_source
+    timestamp sealed_until
+    timestamp opened_at
+    bool delayed_redelivery
+  }
+  MEDIA {
+    uuid id PK
+    uuid moment_id FK
+    string kind
+    string file_url
+    string filter
+    float intensity
+  }
+  DECORATIONS {
+    uuid id PK
+    uuid moment_id FK
+    uuid sticker_id FK
+    float x
+    float y
+    float rotation
+    float scale
+    string side
+  }
+  SEALS {
+    uuid moment_id FK
+    string color
+    string emblem
+  }
+  STICKER_PACKS {
+    uuid id PK
+    string name
+    string kind
+    string city
+  }
+  STICKERS {
+    uuid id PK
+    uuid pack_id FK
+    string svg_url
+  }
+  USER_PACKS {
+    uuid user_id FK
+    uuid pack_id FK
+    string unlocked_by
+  }
+  REWARDS {
+    uuid id PK
+    uuid user_id FK
+    string kind
+    date earned_on
+  }
+  CALENDAR_STICKERS {
+    uuid id PK
+    uuid user_id FK
+    date month
+    string label
+    float x
+    float y
+  }
+  VOLUMES {
+    uuid id PK
+    uuid user_id FK
+    int year
+    json cover_stickers
+    timestamp closed_at
+  }</pre></div></section></main>
+<footer>Postmark concept architecture. Song, place and sticker names are samples.</footer>
+
+
+<!--claude-mermaid-runtime-begin:3477-->
+<style>.mermaid-diagram{margin-block:4px}.mermaid-diagram svg{display:block;margin:0 auto;max-width:100%;height:auto}</style>
+<script src="/_runtime/mermaid-11.16.1.min.js"></script>
+<script>(function(){
+var CFG={"palettes":{"light":{"surface":"#f4efe4","text":"#42392e","line":"#8a7f6d","border":"#7a6c52","bg":"#fffdf8"},"dark":{"surface":"#262b34","text":"#f2f3f5","line":"#a8adb8","border":"#9aa4b8","bg":"#1f232b"}}};
+if(typeof mermaid==='undefined')return;
+var pres=Array.prototype.slice.call(document.querySelectorAll('pre.mermaid')).filter(function(p){if(p.hasAttribute('data-claude-mermaid-claimed'))return false;p.setAttribute('data-claude-mermaid-claimed','1');return true;});
+if(!pres.length)return;
+var mq=window.matchMedia?window.matchMedia('(prefers-color-scheme: dark)'):null;
+var root=document.documentElement;
+var items=pres.map(function(pre){
+var mount=document.createElement('div');mount.className='mermaid-diagram';
+return {pre:pre,mount:mount,src:pre.textContent||''};
+});
+var seq=0;
+var renderGen=0;
+var lastKey='';
+function pageBg(fallback){
+var els=[document.body,document.documentElement];
+for(var i=0;i<els.length;i++){
+var c=els[i]&&getComputedStyle(els[i]).backgroundColor;
+if(c&&c!=='transparent'&&c!=='rgba(0, 0, 0, 0)')return c;
+}
+return fallback;
+}
+function render(){
+var theme=root.getAttribute('data-theme');
+var dark=theme==='dark'||(!!(mq&&mq.matches)&&theme!=='light');
+var pal=dark?CFG.palettes.dark:CFG.palettes.light;
+var bg=pageBg(pal.bg);
+var key=(dark?'d':'l')+'|'+bg;
+if(key===lastKey)return;
+lastKey=key;
+var gen=++renderGen;
+var font=getComputedStyle(document.body).fontFamily||'sans-serif';
+var nat={useMaxWidth:false};
+mermaid.initialize({
+startOnLoad:false,securityLevel:'strict',theme:'base',
+flowchart:nat,sequence:nat,er:nat,state:nat,class:nat,pie:nat,
+gantt:nat,journey:nat,timeline:nat,gitGraph:nat,mindmap:nat,xyChart:nat,
+quadrantChart:nat,sankey:nat,c4:nat,requirement:nat,block:nat,
+packet:nat,kanban:nat,architecture:nat,radar:nat,
+themeVariables:{background:bg,mainBkg:pal.surface,primaryColor:pal.surface,
+primaryTextColor:pal.text,lineColor:pal.line,primaryBorderColor:pal.border,
+nodeBorder:pal.border,clusterBorder:pal.border,edgeLabelBackground:bg,
+clusterBkg:'rgba(127,127,127,0.07)',titleColor:pal.text,
+darkMode:dark,rowOdd:bg,rowEven:'rgba(127,127,127,0.07)',
+attributeBackgroundColorOdd:bg,attributeBackgroundColorEven:'rgba(127,127,127,0.07)',
+fontSize:'16px',fontFamily:font},
+themeCSS:'.node rect, .node circle, .node polygon, .node path, .cluster rect { stroke-width: 2px; }'
+});
+items.forEach(function(it){
+var id='claude-mermaid-'+seq++;
+mermaid.render(id,it.src).then(function(r){
+if(gen!==renderGen)return;
+var prev=it.pre.previousElementSibling;
+if(prev&&prev.className==='mermaid-diagram'&&prev!==it.mount)return;
+it.mount.innerHTML=r.svg;
+if(!it.mount.parentNode)it.pre.parentNode.insertBefore(it.mount,it.pre);
+it.pre.style.display='none';
+},function(){
+var scratch=document.getElementById(id);
+if(scratch)scratch.parentNode.removeChild(scratch);
+scratch=document.getElementById('d'+id);
+if(scratch)scratch.parentNode.removeChild(scratch);
+if(gen!==renderGen)return;
+if(it.mount.parentNode)it.mount.parentNode.removeChild(it.mount);
+it.pre.style.display='';
+});
+});
+}
+render();
+if(mq&&mq.addEventListener)mq.addEventListener('change',render);
+if(typeof MutationObserver!=='undefined')new MutationObserver(render).observe(root,{attributes:true,attributeFilter:['data-theme']});
+})();</script>
+<!--claude-mermaid-runtime-end-->
+</body></html>
