@@ -59,23 +59,25 @@ describe('mixPalette', () => {
   })
 
   it('never produces two colors that look alike, for every feeling x topic combination', () => {
+    // collect failures and assert once: this loop runs ~7,800 mixes, so keep it cheap
+    const bad = []
     for (const f of Object.keys(feelings)) {
       for (const base of palettes[f]) {
         for (const t of Object.keys(topics)) {
           const { colors } = mixPalette(base.colors, topics[t].accents, `${f}:${t}`, base.energy)
-          expect(colors).toHaveLength(5)
+          if (colors.length !== 5) bad.push(`${base.id} + ${t}: ${colors.length} colors`)
           for (let i = 0; i < 5; i++) {
             for (let j = i + 1; j < 5; j++) {
-              expect(
-                hexDistance(colors[i], colors[j]),
-                `${base.id} + ${t}: ${colors[i]} / ${colors[j]}`,
-              ).toBeGreaterThanOrEqual(LIMITS.minPair)
+              if (hexDistance(colors[i], colors[j]) < LIMITS.minPair) {
+                bad.push(`${base.id} + ${t}: ${colors[i]} / ${colors[j]} look alike`)
+              }
             }
           }
         }
       }
     }
-  })
+    expect(bad).toEqual([])
+  }, 30_000)
 
   it('returns the base unchanged with no accents, and rejects a bad palette', () => {
     expect(mixPalette(joyful.colors, [], 'x')).toEqual({
