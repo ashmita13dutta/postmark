@@ -2,6 +2,7 @@ import { HashRouter, Route, Routes } from 'react-router-dom'
 import Album from '../screens/Album'
 import Calendar from '../screens/Calendar'
 import Mailbox from '../screens/Mailbox'
+import Palettes from '../screens/Palettes'
 import Today from '../screens/Today'
 import You from '../screens/You'
 import InstallPrompt from './InstallPrompt'
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/mailbox" element={<Mailbox />} />
         <Route path="/album" element={<Album />} />
         <Route path="/you" element={<You />} />
+        <Route path="/palettes" element={<Palettes />} />
         <Route path="*" element={<Today />} />
       </Routes>
       <InstallPrompt />
