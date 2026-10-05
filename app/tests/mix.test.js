@@ -83,6 +83,7 @@ describe('mixPalette', () => {
     expect(mixPalette(joyful.colors, [], 'x')).toEqual({
       colors: joyful.colors,
       mixed: false,
+      tinted: false,
       accentsUsed: [],
     })
     expect(() => mixPalette(['#000000'], shopping, 'x')).toThrow('5 colors')

@@ -3,7 +3,10 @@ import { feelings } from '../../data/feelings.json'
 import { topics } from '../../data/topics.json'
 import './teach.css'
 
-const labelOf = (e) => (e.kind === 'feeling' ? feelings[e.id]?.label : topics[e.id]?.label) ?? e.id
+const labelOf = (e) =>
+  e.kind === 'tint'
+    ? 'a color'
+    : ((e.kind === 'feeling' ? feelings[e.id]?.label : topics[e.id]?.label) ?? e.id)
 
 /** The words you have taught, with a way to take each one back. Everything stays on this phone. */
 export default function MyWords({ lexicon, onForget, onForgetAll }) {
@@ -20,14 +23,17 @@ export default function MyWords({ lexicon, onForget, onForgetAll }) {
       <summary>My words · {lexicon.length}</summary>
       <ul>
         {lexicon.map((e) => (
-          <li key={e.word}>
+          <li key={e.key}>
             <span className="mywords__word">{e.example ?? e.word}</span>
             <span className="mywords__arrow">→</span>
             <span className="mywords__target">
+              {e.kind === 'tint' && (
+                <i className="dot" style={{ background: e.id }} aria-hidden="true" />
+              )}{' '}
               {labelOf(e)}
               <small>{e.kind === 'topic' ? ' · topic' : ''}</small>
             </span>
-            <button onClick={() => onForget(e.word)} aria-label={`Forget ${e.example ?? e.word}`}>
+            <button onClick={() => onForget(e.key)} aria-label={`Forget ${e.example ?? e.word}`}>
               ×
             </button>
           </li>

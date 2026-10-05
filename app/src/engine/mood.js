@@ -14,7 +14,9 @@
  * Pure: the caller passes the local hour and month (see contextAt) so time travel stays testable.
  */
 import emojiData from '../data/emoji.json'
+import tintData from '../data/tints.json'
 import typoGuard from '../data/notTypos.json'
+import { hexToOklab, oklabDistance } from '../lib/color'
 import { defaultFeeling, feelings } from '../data/feelings.json'
 import { fallback, topics } from '../data/topics.json'
 
@@ -197,6 +199,21 @@ for (const { kind, id, words } of entries) {
   }
 }
 
+// ---- tints: words that ask for a color ("breezy morning" -> bright blue) ----
+
+/** word -> { color, name }. Written joined for phrases; single words also match their forms. */
+const tintIndex = new Map()
+for (const { color, name, words } of tintData.tints) {
+  for (const w of words) tintIndex.set(w, { color, name })
+}
+for (const { color, name, words } of tintData.tints) {
+  for (const w of words) {
+    for (const form of inflections(w))
+      if (!tintIndex.has(form)) tintIndex.set(form, { color, name })
+  }
+}
+const HEX = /^#[0-9A-Fa-f]{6}$/
+
 const stripVS = (s) => s.replace(/️/g, '') // emoji variation selector (invisible)
 const emojiTable = []
 for (const [id, list] of Object.entries(emojiData.feelings))
@@ -270,16 +287,91 @@ export function unstretch(word) {
  */
 export function buildLexicon(entries = []) {
   const map = new Map()
-  const info = (e) => ({ kind: e.kind, id: e.id, hint: undefined, weak: false, taught: true })
+  const tints = new Map() // words you tied to a color
+  const valid = (e) =>
+    !!e?.word &&
+    (e.kind === 'feeling'
+      ? feelings[e.id]
+      : e.kind === 'topic'
+        ? topics[e.id]
+        : e.kind === 'tint' && HEX.test(e.id ?? ''))
+  const target = (e) => (e.kind === 'tint' ? tints : map)
+  const info = (e) =>
+    e.kind === 'tint'
+      ? { color: e.id.toUpperCase(), name: e.example ?? e.word, taught: true }
+      : { kind: e.kind, id: e.id, hint: undefined, weak: false, taught: true }
+  for (const e of entries) if (valid(e)) target(e).set(e.word, info(e))
   for (const e of entries) {
-    if (!e?.word || !(e.kind === 'feeling' ? feelings[e.id] : topics[e.id])) continue
-    map.set(e.word, info(e))
+    if (!valid(e) || e.parts !== 1) continue
+    for (const form of inflections(e.word)) if (!target(e).has(form)) target(e).set(form, info(e))
   }
-  for (const e of entries) {
-    if (e?.parts !== 1 || !map.has(e.word)) continue
-    for (const form of inflections(e.word)) if (!map.has(form)) map.set(form, info(e))
-  }
+  Object.defineProperty(map, 'tints', { value: tints })
   return map
+}
+
+/**
+ * The colors a note asks for. Phrases first ("morning breeze"), then single words; a word right
+ * after a "no"/"not" does not count ("no breeze today"). Returns each match with its weight.
+ */
+function findTints(text, userTints) {
+  const lookup = (key) => userTints?.get(key) ?? tintIndex.get(key)
+  const tokens = tokenize(text).map((tk) => ({ ...tk, word: unstretch(tk.word) }))
+  const n = tokens.length
+  const found = []
+  for (let i = 0; i < n; i++) {
+    let owner = null
+    let span = 1
+    for (let len = Math.min(MAX_PHRASE, n - i); len >= 2 && !owner; len--) {
+      const parts = tokens.slice(i, i + len)
+      if (!parts.every((p) => p.sentence === tokens[i].sentence)) continue
+      owner = lookup(parts.map((p) => p.word).join('')) ?? null
+      if (owner) span = len
+    }
+    if (!owner) owner = lookup(tokens[i].word) ?? null
+    if (!owner) continue
+    const negated = [i - 1, i - 2].some(
+      (j) => j >= 0 && tokens[j].clause === tokens[i].clause && NEGATORS.has(tokens[j].word),
+    )
+    if (!negated) {
+      found.push({
+        color: owner.color,
+        name: owner.name,
+        word: tokens
+          .slice(i, i + span)
+          .map((p) => p.word)
+          .join(' '),
+        at: i,
+        weight: (span >= 2 ? 1.5 : 1) * (owner.taught ? 1.5 : 1),
+      })
+    }
+    i += span - 1
+  }
+  return found
+}
+
+/** Up to two clearly different colors, strongest first (a tie goes to what was said first). */
+function pickTints(found) {
+  const byColor = new Map()
+  for (const h of found) {
+    const cur = byColor.get(h.color) ?? { ...h, weight: 0 }
+    cur.weight += h.weight
+    cur.at = Math.min(cur.at, h.at)
+    byColor.set(h.color, cur)
+  }
+  const ranked = [...byColor.values()].sort((a, b) => b.weight - a.weight || a.at - b.at)
+  const chosen = []
+  for (const r of ranked) {
+    const lab = hexToOklab(r.color)
+    if (chosen.every((c) => oklabDistance(hexToOklab(c.color), lab) >= 0.08)) chosen.push(r)
+    if (chosen.length === 2) break
+  }
+  // strong: a phrase ("morning breeze"), something you taught, or the same color asked for twice
+  return chosen.map(({ color, name, word, weight }) => ({
+    color,
+    name,
+    word,
+    strong: weight >= 1.5,
+  }))
 }
 
 function findHits(text, lexicon) {
@@ -444,6 +536,7 @@ function confidence(t, ranked) {
 export function detectMood({ text = '', hour, month, profile, lexicon }) {
   const lex = lexicon instanceof Map ? lexicon : lexicon?.length ? buildLexicon(lexicon) : undefined
   const hits = findHits(text, lex)
+  const tintList = pickTints(findTints(text, lex?.tints))
   const f = tally(hits, 'feeling')
   const t = tally(hits, 'topic')
   const rankedFeelings = rank(f, 'feeling', hour)
@@ -504,6 +597,11 @@ export function detectMood({ text = '', hour, month, profile, lexicon }) {
     feeling,
     topic,
     energy,
+    // colors the note asked for ("breezy morning" -> blue), strongest first, at most two
+    tints: tintList.map((x) => x.color),
+    // a strong tint builds the whole stamp around its color; a passing one adds an accent
+    tintStrong: tintList[0]?.strong ?? false,
+    tintWords: tintList,
     // which of YOUR taught words shaped this reading
     taught: [...new Set(hits.filter((h) => h.taught).map((h) => h.word))],
     secondaryTopic,
@@ -520,7 +618,9 @@ export function isKnownWord(word, lexicon) {
   const w = unstretch(word.toLowerCase())
   return !!(
     lexicon?.get(w) ??
+    lexicon?.tints?.get(w) ??
     index.get(w) ??
+    tintIndex.get(w) ??
     (NEGATORS.has(w) || POSTPOSED_NEGATORS.has(w) || INTENSIFIERS.has(w) || CONTRAST.has(w))
   )
 }

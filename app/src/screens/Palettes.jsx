@@ -139,8 +139,10 @@ function NoteView() {
         hour,
         month,
         profile,
+        tints: mood.tints,
+        tintStrong: mood.tintStrong,
       }),
-    [mood.feeling, mood.topic, mood.energy, day, hour, month, profile],
+    [mood.feeling, mood.topic, mood.energy, mood.tints, mood.tintStrong, day, hour, month, profile],
   )
   const how = (source, words) =>
     ({
@@ -210,6 +212,20 @@ function NoteView() {
             {mood.source.topic === 'words' ? ` · ${mood.confidence.topic} confidence` : ''}
           </small>
         </div>
+        {mood.tintWords.length > 0 && (
+          <div>
+            <span className="lbl">Color</span>
+            <b>
+              {mood.tintWords.map((t) => (
+                <span key={t.color}>
+                  <i className="dot" style={{ background: t.color }} aria-hidden="true" />{' '}
+                  {t.name}{' '}
+                </span>
+              ))}
+            </b>
+            <small>from “{mood.tintWords.map((t) => t.word).join('”, “')}”</small>
+          </div>
+        )}
         {mood.taught.length > 0 && (
           <div>
             <span className="lbl">Your words</span>

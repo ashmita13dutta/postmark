@@ -151,7 +151,10 @@ export function makeQueries(db) {
 
   /** Everything you have taught, newest first. Feed it to detectMood({ lexicon }). */
   async function getLexicon() {
-    return (await db.lexicon.toArray()).sort((a, b) => b.createdAt - a.createdAt)
+    // `key` is how a row is stored; `word` is the word itself
+    return (await db.lexicon.toArray())
+      .map((r) => ({ ...r, key: r.word, word: r.text ?? r.word }))
+      .sort((a, b) => b.createdAt - a.createdAt)
   }
 
   /**
@@ -164,13 +167,17 @@ export function makeQueries(db) {
         (e) =>
           e?.word &&
           /^\p{L}{2,}$/u.test(e.word) &&
-          (e.kind === 'feeling' || e.kind === 'topic') &&
+          (e.kind === 'feeling' ||
+            e.kind === 'topic' ||
+            (e.kind === 'tint' && /^#[0-9A-Fa-f]{6}$/.test(e.id ?? ''))) &&
           e.id,
       )
       .map((e) => ({
-        word: e.word,
+        // a color row is stored as "tint:breezy", so one word can mean a feeling AND a color
+        word: e.kind === 'tint' ? `tint:${e.word}` : e.word,
+        text: e.word,
         kind: e.kind,
-        id: e.id,
+        id: e.kind === 'tint' ? e.id.toUpperCase() : e.id,
         parts: e.parts ?? 1,
         example: e.example ?? e.word,
         createdAt: now(),
@@ -185,7 +192,8 @@ export function makeQueries(db) {
     })
   }
 
-  const forgetWord = (word) => db.lexicon.delete(word)
+  /** Forget one taught word. Pass its `key` from getLexicon (a plain word works for feelings and topics). */
+  const forgetWord = (key) => db.lexicon.delete(key)
   const forgetAllWords = () => db.lexicon.clear()
 
   return {

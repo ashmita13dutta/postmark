@@ -247,3 +247,26 @@
   color: var(--ink);
   font: 500 14px var(--font-ui);
 }
+
+.dot {
+  display: inline-block;
+  width: 0.9em;
+  height: 0.9em;
+  border-radius: 50%;
+  vertical-align: -0.1em;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+.tints__custom {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.6rem;
+  font-size: 0.9rem;
+}
+.tints__custom input {
+  width: 3rem;
+  height: 2rem;
+  padding: 0;
+  border: none;
+  background: none;
+}

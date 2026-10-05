@@ -1,0 +1,43 @@
+{
+  "tints": [
+    { "name": "Breezy Blue", "color": "#3AA0F0", "words": [
+      "breezy", "breeze", "morningbreeze", "breezymorning", "morningwind", "windymorning", "freshbreeze",
+      "coolbreeze", "gentlebreeze", "softbreeze", "freshair", "freshmorning", "coolmorning", "crispmorning",
+      "morningair", "airybreeze", "seabreeze", "morningbreezy", "breezyweather", "breezyday", "breezyevening", "breezyafternoon", "breezywalk"
+    ] },
+    { "name": "Open Sky", "color": "#5BB4F5", "words": ["bluesky", "clearsky", "skyblue", "cloudless", "clearday", "openair", "openskies"] },
+    { "name": "Ocean Teal", "color": "#1FA7BF", "words": ["ocean", "sea", "seaside", "seashore", "waves", "lagoon", "tide", "shoreline"] },
+    { "name": "Rain Blue", "color": "#3F7CB8", "words": ["rain", "rainy", "raining", "drizzle", "monsoon", "bristi", "brishti", "barish", "baarish", "showers"] },
+    { "name": "Snow Blue", "color": "#A9D6F5", "words": ["snow", "snowy", "snowfall", "frost", "frosty", "icy", "snowflakes", "winterwonderland"] },
+    { "name": "Mist Grey-Blue", "color": "#8EA4B8", "words": ["fog", "foggy", "mist", "haze", "hazy", "overcast", "grayday", "greyday", "greysky", "graysky"] },
+    { "name": "Moonlight Indigo", "color": "#5E6AC4", "words": ["moonlight", "moonlit", "moon", "moonrise", "fullmoon", "moonlitnight"] },
+    { "name": "Midnight Navy", "color": "#2E3F8F", "words": ["midnight", "latenight", "deepnight", "nightsky", "darksky"] },
+    { "name": "Starlight Violet", "color": "#7A5CC4", "words": ["starry", "starrysky", "stargazing", "milkyway", "stars", "constellation"] },
+    { "name": "Dusk Violet", "color": "#8E6FD0", "words": ["dusk", "twilight", "bluehour", "gloaming"] },
+    { "name": "Sunrise Peach", "color": "#FF9B7A", "words": ["sunrise", "dawn", "daybreak", "firstlight", "earlymorning", "sunup"] },
+    { "name": "Golden Hour", "color": "#F2A33A", "words": ["goldenhour", "goldenlight", "goldenafternoon", "honeylight", "warmlight"] },
+    { "name": "Sunset Orange", "color": "#F2864B", "words": ["sunset", "sundown", "redsky", "eveningsky", "orangesky"] },
+    { "name": "Sunflower Yellow", "color": "#F7C531", "words": ["sunflower", "sunflowers", "lemon", "lemonade", "sunshine", "sunny", "sunnyday", "yellow"] },
+    { "name": "Marigold", "color": "#F2A93B", "words": ["marigold", "genda", "gendaphool", "turmeric", "haldi", "saffron"] },
+    { "name": "Rose Pink", "color": "#E56B9F", "words": ["rose", "roses", "rosegarden", "peony", "rosepetals"] },
+    { "name": "Blossom Pink", "color": "#F58FB4", "words": ["blossom", "blossoms", "cherryblossom", "sakura", "cottoncandy", "bubblegum"] },
+    { "name": "Lavender", "color": "#B79CE0", "words": ["lavender", "lilac", "wisteria", "violet", "lavenderfields"] },
+    { "name": "Mint Fresh", "color": "#7AD3B0", "words": ["mint", "minty", "spearmint", "pistachio"] },
+    { "name": "Fresh Leaf Green", "color": "#58B368", "words": ["greenery", "freshleaves", "newleaves", "spring", "springtime"] },
+    { "name": "Forest Green", "color": "#3D8B5B", "words": ["forest", "woods", "jungle", "pinewood", "evergreen", "pine"] },
+    { "name": "Meadow Green", "color": "#7DBE6B", "words": ["grass", "lawn", "meadow", "fields", "paddy", "greenfields"] },
+    { "name": "Pumpkin Orange", "color": "#D9692B", "words": ["pumpkin", "autumn", "fallleaves", "autumnleaves", "harvest"] },
+    { "name": "Maple Red", "color": "#B5472B", "words": ["maple", "maples", "rust", "brick"] },
+    { "name": "Sindoor Red", "color": "#D2321E", "words": ["sindoor", "alta", "crimson", "scarlet"] },
+    { "name": "Chai Brown", "color": "#C77B4A", "words": ["chai", "masalachai", "cutting", "kullad", "cinnamon", "caramel"] },
+    { "name": "Coffee Brown", "color": "#8B5A3C", "words": ["coffee", "espresso", "latte", "cappuccino", "mocha"] },
+    { "name": "Cocoa Brown", "color": "#7B4B3A", "words": ["cocoa", "chocolate", "hotchocolate", "brownie"] },
+    { "name": "Candlelight Amber", "color": "#F2B56B", "words": ["candle", "candles", "candlelight", "candlelit", "fairylights", "lanterns", "diya", "diyas"] },
+    { "name": "Bonfire Orange", "color": "#E8743B", "words": ["bonfire", "campfire", "fireplace", "embers", "firelight"] },
+    { "name": "Cloud White-Blue", "color": "#CFE0EE", "words": ["clouds", "cloudy", "fluffyclouds", "cloudwatching", "whiteclouds"] },
+    { "name": "Pool Turquoise", "color": "#2EC4B6", "words": ["pool", "swimmingpool", "turquoise", "aqua", "tropical"] },
+    { "name": "Terracotta", "color": "#B9633F", "words": ["terracotta", "clay", "earthen", "mudhouse", "adobe"] },
+    { "name": "Ink Blue", "color": "#2F4A8A", "words": ["inkblue", "navy", "denim", "indigo", "bluejeans"] },
+    { "name": "Silver Dawn", "color": "#B9C4CE", "words": ["silver", "silvery", "steel", "chrome", "pearl"] }
+  ]
+}

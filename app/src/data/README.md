@@ -167,6 +167,16 @@ an honest number, and only then added to the development sets. The honest first-
 are recorded at the top of `tests/corpus/dev2.json` and `dev3.json`. Your own real notes are the best
 test: add the ones that read wrong as `["the note", "the feeling it should be", "the topic"]`.
 
+## tints.json: words that ask for a color
+
+Some words name a color without naming a feeling: "morning breeze" is bright blue, "golden hour" is amber, "chai" is brown. Each entry is `{ name, color, words }`. Phrases are written joined and lowercase ("morningbreeze"); the engine tries up to five joined words, and generates plural/-ing forms of single words.
+
+- A phrase, a word you taught, or the same color asked for twice is **strong**: the stamp keeps the palette's darkest and lightest colors (they carry the mood) and builds the middle bands from shades of that color.
+- A single passing word is **soft**: the color is simply the closest-matching palette plus an accent.
+- "no breeze" turns it off. Up to two clearly different colors per note.
+- The color is toned a little toward the mood, and never past the strength the feeling's look allows, so a sad breezy morning is still a quiet blue.
+- In the app, "This felt different" → "Its color" lets you tie any word to a preset or your own color.
+
 ## Teaching the app your words
 
 Open the review page (You, then "Review palettes, color names and mood words"), go to **Note**, and

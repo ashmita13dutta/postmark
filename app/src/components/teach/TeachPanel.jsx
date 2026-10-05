@@ -1,10 +1,14 @@
 import { useMemo, useState } from 'react'
 import { feelings } from '../../data/feelings.json'
 import { topics } from '../../data/topics.json'
+import tintData from '../../data/tints.json'
 import { entriesFromSelection, suggestSelection, teachableTokens } from '../../engine/teach'
 import './teach.css'
 
 const FEELING_IDS = Object.keys(feelings)
+const TINTS = tintData.tints
+const tintName = (hex) =>
+  TINTS.find((t) => t.color.toUpperCase() === hex?.toUpperCase())?.name ?? hex
 
 // topics grouped for the picker, in file order
 const GROUPS = Object.entries(topics).reduce((acc, [id, t]) => {
@@ -37,6 +41,12 @@ export default function TeachPanel({ text, mood, lexicon, onSave }) {
   )
   const canSave = !!target && entries.length > 0 && !busy
 
+  function targetLabel() {
+    if (kind === 'feeling') return feelings[target].label
+    if (kind === 'topic') return topics[target].label
+    return tintName(target)
+  }
+
   function begin() {
     setOpen(true)
     setMessage(null)
@@ -57,7 +67,7 @@ export default function TeachPanel({ text, mood, lexicon, onSave }) {
     setBusy(true)
     try {
       const saved = await onSave(entries)
-      const label = kind === 'feeling' ? feelings[target].label : topics[target].label
+      const label = targetLabel()
       setMessage({
         ok: true,
         text: `Learned ${saved.map((e) => `“${e.example}”`).join(', ')} → ${label}. Your note was read again.`,
@@ -92,6 +102,7 @@ export default function TeachPanel({ text, mood, lexicon, onSave }) {
         {[
           ['feeling', 'How it felt'],
           ['topic', 'What it was about'],
+          ['tint', 'Its color'],
         ].map(([k, label]) => (
           <button
             key={k}
@@ -117,6 +128,29 @@ export default function TeachPanel({ text, mood, lexicon, onSave }) {
             </button>
           ))}
         </div>
+      ) : kind === 'tint' ? (
+        <div className="tints">
+          <div className="chips chips--wrap" role="group" aria-label="The color it brings to mind">
+            {TINTS.map((t) => (
+              <button
+                key={t.name}
+                className={target === t.color ? 'on' : ''}
+                onClick={() => setTarget(t.color)}
+              >
+                <i className="dot" style={{ background: t.color }} aria-hidden="true" /> {t.name}
+              </button>
+            ))}
+          </div>
+          <label className="tints__custom">
+            Or pick your own
+            <input
+              type="color"
+              value={target ?? '#3aa0f0'}
+              onChange={(e) => setTarget(e.target.value.toUpperCase())}
+              aria-label="Your own color"
+            />
+          </label>
+        </div>
       ) : (
         <select
           className="picker"
@@ -138,7 +172,9 @@ export default function TeachPanel({ text, mood, lexicon, onSave }) {
         </select>
       )}
 
-      <p className="teach__label">Tap the words that show it</p>
+      <p className="teach__label">
+        {kind === 'tint' ? 'Tap the words that bring this color' : 'Tap the words that show it'}
+      </p>
       <div className="words words--tap" role="group" aria-label="Words in your note">
         {tokens.map((t, i) => {
           const on = selected.has(t.index)
@@ -183,7 +219,7 @@ export default function TeachPanel({ text, mood, lexicon, onSave }) {
       {entries.length > 0 && (
         <p className="teach__preview">
           Will learn: {entries.map((e) => `“${e.example}”`).join(', ')}
-          {target && ` → ${kind === 'feeling' ? feelings[target].label : topics[target].label}`}
+          {target && ` → ${targetLabel()}`}
         </p>
       )}
       {message && !message.ok && <p className="teach__msg teach__msg--err">{message.text}</p>}

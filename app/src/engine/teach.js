@@ -64,9 +64,13 @@ export function suggestSelection(tokens) {
  * @returns {{ word: string, kind: string, id: string, parts: number }[]}
  */
 export function entriesFromSelection(tokens, selected, kind, id) {
-  if (!(kind === 'feeling' ? feelings[id] : kind === 'topic' ? topics[id] : null)) {
-    throw new Error(`Unknown ${kind}: ${id}`)
-  }
+  const known =
+    kind === 'feeling'
+      ? feelings[id]
+      : kind === 'topic'
+        ? topics[id]
+        : kind === 'tint' && /^#[0-9A-Fa-f]{6}$/.test(id ?? '')
+  if (!known) throw new Error(`Unknown ${kind}: ${id}`)
   const picked = [...new Set(selected)].sort((a, b) => a - b).filter((i) => tokens[i])
   const runs = []
   for (const i of picked) {
