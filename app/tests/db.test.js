@@ -231,3 +231,18 @@ describe('media', () => {
     expect(await q.mediaForMoment(m.id)).toHaveLength(0)
   })
 })
+
+describe('mood fields', () => {
+  it('stores the feeling and topic the mood engine found, and keeps them editable', async () => {
+    const m = await q.saveMoment('2026-09-24', { note: 'rain', feeling: 'peaceful', topic: 'rain' })
+    expect(m).toMatchObject({ feeling: 'peaceful', topic: 'rain' })
+    const edited = await q.saveMoment('2026-09-24', { feeling: 'joyful', topic: 'shopping' })
+    expect(edited).toMatchObject({ feeling: 'joyful', topic: 'shopping' })
+    expect((await q.getMoment(m.id)).topic).toBe('shopping')
+  })
+
+  it('starts as null until the engine has run', async () => {
+    const m = await q.saveMoment('2026-09-25', { note: 'x' })
+    expect([m.feeling, m.topic]).toEqual([null, null])
+  })
+})

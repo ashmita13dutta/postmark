@@ -91,3 +91,38 @@ describe('palette topic tags', () => {
     }
   })
 })
+
+describe('energy preference', () => {
+  it('a vivid joyful day uses a vivid palette, a soft one a soft palette', () => {
+    for (const seed of seeds) {
+      expect(pickPalette('joyful', 'shopping', seed, 'vivid').palette.energy).toBe('vivid')
+      expect(pickPalette('joyful', 'shopping', seed, 'soft').palette.energy).toBe('soft')
+    }
+  })
+
+  it('falls back to the other kind when a feeling has none of the preferred energy', () => {
+    // tired has only soft palettes
+    for (const seed of seeds.slice(0, 5)) {
+      expect(pickPalette('tired', null, seed, 'vivid').palette.energy).toBe('soft')
+    }
+  })
+
+  it('a topic-made palette also respects energy when it can', () => {
+    for (const seed of seeds) {
+      expect(pickPalette('excited', 'party', seed, 'vivid').palette.energy).toBe('vivid')
+    }
+    // party palettes under excited: 4 vivid + 1 soft
+    const softOnes = seeds.map((s) => pickPalette('excited', 'party', s, 'soft').palette)
+    expect(softOnes.every((p) => p.energy === 'soft')).toBe(true)
+  })
+
+  it('composePalette passes the energy through', () => {
+    const r = composePalette({ feeling: 'joyful', topic: 'shopping', seed: 'a', energy: 'vivid' })
+    expect(r.palette.energy).toBe('vivid')
+  })
+
+  it('no preference keeps the old behaviour', () => {
+    const a = pickPalette('joyful', 'shopping', 'a')
+    expect(a).toEqual(pickPalette('joyful', 'shopping', 'a', undefined))
+  })
+})

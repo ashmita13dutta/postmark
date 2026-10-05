@@ -8,7 +8,8 @@
         "best", "lovely", "delighted", "cheerful", "thrilled", "glad", "fun", "smile",
         "smiled", "smiling", "laugh", "laughed", "laughing", "blissful", "yay", "hooray",
         "sparkle", "brilliant", "perfect", "magical", "giggle", "giggled", "grin", "beaming",
-        "wow", "excellent", "cheery", "bliss", "radiant"
+        "wow", "excellent", "cheery", "bliss", "radiant", "delicious", "tasty", "yum", "yummy",
+        "scrumptious"
       ]
     },
     "content": {
@@ -36,8 +37,8 @@
       "keywords": [
         "excited", "exciting", "thrilling", "adventure", "energetic", "energy", "pumped",
         "hyped", "eager", "anticipation", "buzzing", "rush", "adrenaline", "spontaneous",
-        "wild", "epic", "crazy", "finally", "countdown", "stoked", "psyched", "electric",
-        "lively", "unreal"
+        "wild", "epic", "crazy", "countdown", "stoked", "psyched", "electric", "lively",
+        "unreal"
       ]
     },
     "proud": {
@@ -124,7 +125,8 @@
       "keywords": [
         "bored", "boring", "boredom", "dull", "meh", "monotonous", "same", "repetitive",
         "idle", "uneventful", "ordinary", "average", "whatever", "blah", "tedious", "stuck",
-        "nothing", "routine", "unmotivated", "drifting"
+        "routine", "unmotivated", "drifting", "nothinghappened", "nothingspecial",
+        "nothingmuch"
       ]
     },
     "inspired": {
@@ -154,7 +156,7 @@
         "canceled", "failed", "fail", "bland", "stale", "soggy", "burnt", "raw", "undercooked",
         "overcooked", "tasteless", "awful", "terrible", "horrible", "worst", "disgusting",
         "gross", "yuck", "rotten", "overpriced", "wasted", "regret", "mistake", "flop",
-        "underwhelming", "mediocre", "lousy"
+        "underwhelming", "mediocre", "lousy", "bad", "wrong", "spilled", "broken", "unlucky"
       ]
     }
   },

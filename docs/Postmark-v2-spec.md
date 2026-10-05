@@ -115,7 +115,8 @@ moments {
   songSource: 'own' | 'suggested' | null
   palette: { hex: string; name: string }[5]
   paletteSource: 'moment' | 'photo' | 'manual'
-  moodFamily: string | null        // from the mood engine, used by stats + packs
+  feeling: string | null          // how the day felt (feelings.json), from the mood engine
+  topic: string | null            // what it was about (topics.json), from the mood engine
   sealedUntil: number              // ms, start of delivery day
   openedAt: number | null
   sealedAt: number | null          // set when "Seal & send" is tapped
@@ -170,14 +171,14 @@ Consecutive local days with a stamp, ending today or yesterday (a streak is not 
 - Complete-month badge: a past month with zero blank days.
 - Golden stamp: a streak of 20+ days.
 - Rare sticker: 7-day streak.
-- Month sticker pack on delivery: chosen by that month's dominant `moodFamily` (e.g. rain-heavy gives "Monsoon").
+- Month sticker pack on delivery: chosen by that month's dominant `topic` or `feeling` (e.g. rain-heavy gives "Monsoon").
 - City pack: unlocked from the home city at onboarding and from any new city tagged on a moment.
 
 ### 6.8 Calendar grid
 Monday-first. Compute the leading offset from the real weekday of the 1st using the date library or `Date` through `clock.ts`. **Never hardcode weekdays.** (Reference check: 1 Sept 2026 is a Tuesday, 24 Sept 2026 is a Thursday, 1 Oct 2026 is a Thursday.) Festival ribbons come from `data/festivals.json` with year-specific dates; verify those dates before shipping and do not invent them.
 
 ### 6.9 Stats ("year so far")
-Most common color (bucket palette hex by hue family, name the bucket), rainy-day count (`moodFamily === 'rain'`), city counts, top song by (title+artist) with count of stamps.
+Most common color (bucket palette hex by hue family, name the bucket), rainy-day count (`topic === 'rain'`), city counts, top song by (title+artist) with count of stamps.
 
 ### 6.10 Volumes
 One volume per calendar year. On the first open after 31 Dec, run the closing ceremony once (album closes, final wax seal, moves to shelf, new volume opens). Past volumes stay readable.

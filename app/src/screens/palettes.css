@@ -337,3 +337,56 @@
 .seg button {
   font-size: 12px;
 }
+
+/* "note" tab */
+.seg {
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.seg::-webkit-scrollbar {
+  display: none;
+}
+.seg button {
+  flex: 1 0 auto;
+  padding: 0 14px;
+}
+.note {
+  display: block;
+  width: 100%;
+  margin-top: 14px;
+  padding: 12px 14px;
+  resize: vertical;
+  border: 1px solid var(--ink-08);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--ink);
+  font: 400 16px/24px var(--font-hand);
+}
+.samples {
+  margin-top: 10px;
+}
+.found {
+  display: grid;
+  gap: 14px;
+  margin-top: 14px;
+  padding: 14px;
+  background: var(--card);
+  border: 1px solid var(--ink-08);
+  border-radius: 12px;
+}
+.found > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.found b {
+  font: 600 17px var(--font-ui);
+}
+.found b i {
+  font-weight: 400;
+  color: var(--ink-60);
+}
+.found small {
+  font: 400 12px/1.4 var(--font-ui);
+  color: var(--ink-50);
+}

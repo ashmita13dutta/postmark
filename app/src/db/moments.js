@@ -20,7 +20,8 @@ export const EDITABLE_FIELDS = [
   'songSource',
   'palette',
   'paletteSource',
-  'moodFamily',
+  'feeling',
+  'topic',
 ]
 
 const newId = () => globalThis.crypto.randomUUID()
@@ -40,7 +41,8 @@ export function newMoment({ day, stampNo, nowMs, deliveryDay = 1, fields = {} })
     songSource: null,
     palette: BLANK_PALETTE,
     paletteSource: 'moment',
-    moodFamily: null,
+    feeling: null,
+    topic: null,
     sealedUntil: sealedUntilFor(day, deliveryDay),
     openedAt: null,
     sealedAt: null,

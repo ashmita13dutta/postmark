@@ -10,17 +10,25 @@ import { seededRng } from '../lib/rng'
  *  1. A palette made for the topic ("party", "dating", "autumn"...) wins if the feeling has one.
  *  2. Otherwise one of the feeling's general palettes (palettes made for a different topic are
  *     skipped, so a party palette never shows up on a shopping day).
+ * `energy` ('vivid' | 'soft') is a preference from the mood engine: an emphatic happy note leans
+ * toward the bright palettes, a mild one toward the soft ones. If nothing of that energy is
+ * available the other kind is used, so there is always a palette.
  * Same seed, same palette.
  * @returns {{ palette: object, tagged: boolean }}
  */
-export function pickPalette(feeling, topic, seed) {
+export function pickPalette(feeling, topic, seed, energy) {
   const list = palettes[feeling] ?? palettes[defaultFeeling]
   const rng = seededRng(`pick:${feeling}:${topic}:${seed}`)
+  const preferEnergy = (pool) => {
+    const match = energy ? pool.filter((p) => p.energy === energy) : pool
+    return match.length ? match : pool
+  }
+  const choose = (pool) => pool[Math.floor(rng() * pool.length)]
+
   const tagged = topic ? list.filter((p) => p.topics?.includes(topic)) : []
-  if (tagged.length) return { palette: tagged[Math.floor(rng() * tagged.length)], tagged: true }
+  if (tagged.length) return { palette: choose(preferEnergy(tagged)), tagged: true }
   const general = list.filter((p) => !p.topics?.length)
-  const pool = general.length ? general : list
-  return { palette: pool[Math.floor(rng() * pool.length)], tagged: false }
+  return { palette: choose(preferEnergy(general.length ? general : list)), tagged: false }
 }
 
 /**
@@ -28,8 +36,8 @@ export function pickPalette(feeling, topic, seed) {
  * already made for that topic.
  * @returns {{ palette: object, colors: string[], mixed: boolean, tagged: boolean }}
  */
-export function composePalette({ feeling, topic, seed }) {
-  const { palette, tagged } = pickPalette(feeling, topic, seed)
+export function composePalette({ feeling, topic, seed, energy }) {
+  const { palette, tagged } = pickPalette(feeling, topic, seed, energy)
   const def = topic ? topics[topic] : null
   if (!def || tagged) return { palette, colors: [...palette.colors], mixed: false, tagged }
   const mix = mixPalette(palette.colors, def.accents, `${feeling}:${topic}:${seed}`, palette.energy)

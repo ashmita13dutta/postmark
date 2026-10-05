@@ -6,7 +6,7 @@
  *  moments          { id, day, stampNo, note, city, lat, lon, songTitle, songArtist,
  *                     songSource: 'own'|'suggested'|null,
  *                     palette: [{hex, name} x5], paletteSource: 'moment'|'photo'|'manual',
- *                     moodFamily, sealedUntil, openedAt, sealedAt, createdAt, updatedAt }
+ *                     feeling, topic, sealedUntil, openedAt, sealedAt, createdAt, updatedAt }
  *  media            { id, momentId, kind: 'single'|'strip', blob, thumb,
  *                     filter: 'none'|'vintage'|'vibrant', intensity, layoutSeed }
  *  decorations      { id, momentId, stickerId, x, y, rotation, scale, side: 'back'|'front', z }

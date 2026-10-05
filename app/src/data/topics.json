@@ -3,6 +3,7 @@
     "sunny": {
       "label": "Sunny day",
       "group": "weather & time",
+      "defaultFeeling": "joyful",
       "accents": ["#F7C531", "#4FA3E8", "#FF8FB1"],
       "keywords": [
         "sun", "sunny", "sunshine", "bright", "clear", "sky", "golden", "summer", "daylight",
@@ -12,6 +13,7 @@
     "rain": {
       "label": "Rain",
       "group": "weather & time",
+      "defaultFeeling": "peaceful",
       "accents": ["#3F7CB8", "#F2C230", "#7BA7C2"],
       "keywords": [
         "rain", "rainy", "raining", "bristi", "brishti", "barish", "baarish", "monsoon",
@@ -23,6 +25,7 @@
     "snow": {
       "label": "Snow & ice",
       "group": "weather & time",
+      "defaultFeeling": "peaceful",
       "accents": ["#A9D6F5", "#E8EEF4", "#D95D5D"],
       "keywords": [
         "snow", "snowy", "snowfall", "snowman", "frost", "frozen", "ice", "icy", "blizzard",
@@ -32,6 +35,7 @@
     "wind": {
       "label": "Windy",
       "group": "weather & time",
+      "defaultFeeling": "peaceful",
       "accents": ["#6BB8D6", "#F2B84B", "#E8737B"],
       "keywords": [
         "wind", "windy", "gust", "breeze", "kite", "kites", "blowing", "blew", "gale",
@@ -41,6 +45,7 @@
     "heat": {
       "label": "Heat",
       "group": "weather & time",
+      "defaultFeeling": "tired",
       "accents": ["#F26B3A", "#FFC93C", "#2FA7B8"],
       "keywords": [
         "hot", "heat", "heatwave", "scorching", "boiling", "sweltering", "sticky", "humid",
@@ -50,12 +55,14 @@
     "fog": {
       "label": "Fog & mist",
       "group": "weather & time",
+      "defaultFeeling": "peaceful",
       "accents": ["#B8C4CE", "#8EA4B8", "#E6B8A2"],
       "keywords": ["fog", "foggy", "mist", "misty", "haze", "hazy", "smog", "dew", "dewy", "murky"]
     },
     "morning": {
       "label": "Morning",
       "group": "weather & time",
+      "defaultFeeling": "content",
       "accents": ["#FFC857", "#FF9B7A", "#7EC8E3"],
       "keywords": [
         "morning", "sunrise", "dawn", "alarm", "woke", "wakeup", "earlybird", "daybreak",
@@ -65,6 +72,7 @@
     "evening": {
       "label": "Evening",
       "group": "weather & time",
+      "defaultFeeling": "peaceful",
       "accents": ["#F2864B", "#D95F8A", "#5E6AC4"],
       "keywords": [
         "evening", "sunset", "dusk", "twilight", "goldenhour", "afternoon", "sundown",
@@ -74,6 +82,7 @@
     "night": {
       "label": "Night",
       "group": "weather & time",
+      "defaultFeeling": "peaceful",
       "hours": [
         21,
         22,
@@ -94,6 +103,7 @@
     "spring": {
       "label": "Spring",
       "group": "weather & time",
+      "defaultFeeling": "joyful",
       "accents": ["#F58FB4", "#9ACD5A", "#FFD84D"],
       "keywords": [
         "spring", "blossom", "blossoms", "bloom", "cherry", "petals", "pollen", "basant",
@@ -103,6 +113,7 @@
     "autumn": {
       "label": "Autumn",
       "group": "weather & time",
+      "defaultFeeling": "content",
       "accents": ["#D9692B", "#E8B93A", "#8C4A2F"],
       "keywords": [
         "autumn", "fall", "leaves", "falling", "harvest", "pumpkin", "orange", "shiuli",
@@ -112,16 +123,17 @@
     "winter": {
       "label": "Winter",
       "group": "weather & time",
+      "defaultFeeling": "content",
       "accents": ["#5B7FB5", "#C9524F", "#E8D9B8"],
       "keywords": [
-        "winter", "sweater", "scarf", "heater", "woolen", "cold", "shivering", "jacket",
-        "muffler", "blanket", "quilt", "fireplace", "cocoa", "hibernate", "pajamas",
-        "slippers"
+        "winter", "sweater", "scarf", "heater", "woolen", "shivering", "jacket", "muffler",
+        "blanket", "quilt", "fireplace", "cocoa", "hibernate", "pajamas", "slippers"
       ]
     },
     "shopping": {
       "label": "Shopping",
       "group": "everyday life",
+      "defaultFeeling": "joyful",
       "accents": ["#F2559B", "#FFC93C", "#2EC4B6"],
       "keywords": [
         "shopping", "shop", "shops", "mall", "bazaar", "market", "store", "sale", "discount",
@@ -133,6 +145,7 @@
     "exams": {
       "label": "Exams & study",
       "group": "everyday life",
+      "defaultFeeling": "anxious",
       "accents": ["#E3B23C", "#D64545", "#4F7CC4"],
       "keywords": [
         "exam", "exams", "test", "quiz", "viva", "midterm", "syllabus", "revision", "marks",
@@ -144,6 +157,7 @@
     "school": {
       "label": "School & college",
       "group": "everyday life",
+      "defaultFeeling": "content",
       "accents": ["#3E8E6B", "#F2C230", "#2F5DA8"],
       "keywords": [
         "school", "class", "classes", "classroom", "teacher", "teachers", "lecture", "college",
@@ -154,6 +168,7 @@
     "work": {
       "label": "Work",
       "group": "everyday life",
+      "defaultFeeling": "content",
       "accents": ["#E8743B", "#7DB7E8", "#3E4C59"],
       "keywords": [
         "work", "working", "office", "meeting", "email", "report", "tasks", "todo", "coding",
@@ -166,6 +181,7 @@
     "money": {
       "label": "Money",
       "group": "everyday life",
+      "defaultFeeling": "anxious",
       "accents": ["#2E9E6B", "#D9A62E", "#2B3A55"],
       "keywords": [
         "money", "paid", "payment", "rent", "bills", "budget", "savings", "saved", "bank",
@@ -176,6 +192,7 @@
     "home": {
       "label": "Home",
       "group": "everyday life",
+      "defaultFeeling": "content",
       "accents": ["#D07A55", "#8FAE8B", "#E8C07A"],
       "keywords": [
         "home", "house", "room", "bedroom", "kitchen", "couch", "bed", "window", "curtains",
@@ -186,6 +203,7 @@
     "chores": {
       "label": "Chores",
       "group": "everyday life",
+      "defaultFeeling": "content",
       "accents": ["#62B6E8", "#F2D64B", "#7AD3B0"],
       "keywords": [
         "cleaning", "cleaned", "clean", "laundry", "dishes", "sweeping", "mopping", "dusting",
@@ -196,6 +214,7 @@
     "tech": {
       "label": "Phone & tech",
       "group": "everyday life",
+      "defaultFeeling": "bored",
       "accents": ["#7C5CFC", "#25C2A0", "#FF6B6B"],
       "keywords": [
         "phone", "mobile", "app", "apps", "screen", "wifi", "internet", "online", "social",
@@ -207,6 +226,7 @@
     "health": {
       "label": "Health",
       "group": "everyday life",
+      "defaultFeeling": "tired",
       "accents": ["#4FA3A5", "#E8A0A0", "#A8D8C8"],
       "keywords": [
         "sick", "ill", "fever", "cough", "flu", "headache", "migraine", "unwell", "doctor",
@@ -218,6 +238,7 @@
     "beauty": {
       "label": "Beauty & grooming",
       "group": "everyday life",
+      "defaultFeeling": "content",
       "accents": ["#E56B9F", "#B79CE0", "#E8C170"],
       "keywords": [
         "haircut", "hair", "salon", "makeup", "skincare", "nails", "manicure", "perfume",
@@ -228,6 +249,7 @@
     "pets": {
       "label": "Pets & animals",
       "group": "everyday life",
+      "defaultFeeling": "joyful",
       "accents": ["#D9A066", "#7DBE6B", "#7EC4F2"],
       "keywords": [
         "dog", "dogs", "puppy", "cat", "cats", "kitten", "pet", "pets", "fur", "paws", "bark",
@@ -238,6 +260,7 @@
     "fitness": {
       "label": "Fitness",
       "group": "activities",
+      "defaultFeeling": "proud",
       "accents": ["#22A699", "#F2B84B", "#F25C54"],
       "keywords": [
         "gym", "workout", "run", "running", "ran", "jog", "jogging", "cycle", "cycling",
@@ -249,6 +272,7 @@
     "sports": {
       "label": "Sports",
       "group": "activities",
+      "defaultFeeling": "excited",
       "accents": ["#3E9E4A", "#D64933", "#F4D35E"],
       "keywords": [
         "football", "cricket", "badminton", "match", "sports", "basketball", "tennis",
@@ -259,6 +283,7 @@
     "gaming": {
       "label": "Gaming",
       "group": "activities",
+      "defaultFeeling": "excited",
       "accents": ["#7C5CFC", "#00C2A8", "#FF6F59"],
       "keywords": [
         "gaming", "game", "games", "gamer", "playstation", "xbox", "console", "pubg",
@@ -269,6 +294,7 @@
     "movies": {
       "label": "Movies & shows",
       "group": "activities",
+      "defaultFeeling": "content",
       "accents": ["#C8403F", "#F7C948", "#35507A"],
       "keywords": [
         "movie", "movies", "film", "films", "cinema", "theatre", "series", "show", "netflix",
@@ -279,6 +305,7 @@
     "music": {
       "label": "Music",
       "group": "activities",
+      "defaultFeeling": "inspired",
       "accents": ["#7B4FD0", "#FF6B5B", "#F2A93B"],
       "keywords": [
         "music", "song", "songs", "sing", "singing", "guitar", "piano", "melody", "band",
@@ -290,6 +317,7 @@
     "art": {
       "label": "Art & craft",
       "group": "activities",
+      "defaultFeeling": "inspired",
       "accents": ["#E8505B", "#F2B134", "#3F8FD2"],
       "keywords": [
         "draw", "drawing", "drew", "paint", "painting", "painted", "sketch", "sketching",
@@ -301,6 +329,7 @@
     "reading": {
       "label": "Books & writing",
       "group": "activities",
+      "defaultFeeling": "peaceful",
       "accents": ["#C89B5B", "#5B7FA8", "#A45A5A"],
       "keywords": [
         "book", "books", "read", "reading", "novel", "library", "story", "stories", "write",
@@ -311,6 +340,7 @@
     "garden": {
       "label": "Garden & plants",
       "group": "activities",
+      "defaultFeeling": "peaceful",
       "accents": ["#F27BA0", "#8FCB5A", "#F7CF44"],
       "keywords": [
         "garden", "gardening", "plant", "plants", "planting", "flowers", "flower", "roses",
@@ -321,6 +351,7 @@
     "learning": {
       "label": "Learning",
       "group": "activities",
+      "defaultFeeling": "inspired",
       "accents": ["#3B82C4", "#F5B83D", "#58B368"],
       "keywords": [
         "learn", "learning", "learned", "tutorial", "course", "practice", "practised", "skill",
@@ -331,6 +362,7 @@
     "nature": {
       "label": "Nature",
       "group": "places & travel",
+      "defaultFeeling": "peaceful",
       "accents": ["#3D8B5B", "#2F8FB8", "#C9A24B"],
       "keywords": [
         "nature", "forest", "woods", "trees", "tree", "river", "lake", "waterfall", "birds",
@@ -342,6 +374,7 @@
     "mountains": {
       "label": "Mountains",
       "group": "places & travel",
+      "defaultFeeling": "excited",
       "accents": ["#3D6FA3", "#7FB069", "#E8A25C"],
       "keywords": [
         "hills", "mountain", "mountains", "darjeeling", "himalaya", "peak", "summit", "valley",
@@ -352,6 +385,7 @@
     "beach": {
       "label": "Beach & sea",
       "group": "places & travel",
+      "defaultFeeling": "joyful",
       "accents": ["#2EB5C9", "#F6D58E", "#FF7B6B"],
       "keywords": [
         "beach", "sea", "ocean", "waves", "sand", "shells", "surf", "island", "lighthouse",
@@ -361,6 +395,7 @@
     "travel": {
       "label": "Travel & trips",
       "group": "places & travel",
+      "defaultFeeling": "excited",
       "accents": ["#FF8A3D", "#29B6A6", "#FFD166"],
       "keywords": [
         "travel", "trip", "vacation", "holiday", "backpack", "itinerary", "abroad", "passport",
@@ -371,6 +406,7 @@
     "transport": {
       "label": "Commute & transport",
       "group": "places & travel",
+      "defaultFeeling": "tired",
       "accents": ["#F2B636", "#3A6EA5", "#E0584B"],
       "keywords": [
         "train", "flight", "airport", "bus", "metro", "tram", "ferry", "station", "platform",
@@ -382,6 +418,7 @@
     "city": {
       "label": "City life",
       "group": "places & travel",
+      "defaultFeeling": "excited",
       "accents": ["#F2A93B", "#4A90C2", "#E8574C"],
       "keywords": [
         "city", "street", "streets", "downtown", "skyscraper", "subway", "honk", "horn",
@@ -392,6 +429,7 @@
     "space": {
       "label": "Space & stars",
       "group": "places & travel",
+      "defaultFeeling": "inspired",
       "accents": ["#2B2F77", "#E8B94A", "#8E5CD9"],
       "keywords": [
         "space", "planet", "galaxy", "telescope", "eclipse", "astronomy", "comet", "meteor",
@@ -401,19 +439,20 @@
     "food": {
       "label": "Meals & eating out",
       "group": "food & drink",
+      "defaultFeeling": "content",
       "accents": ["#E0603A", "#F2B134", "#6BA24A"],
       "keywords": [
-        "eat", "ate", "eating", "lunch", "dinner", "breakfast", "snack", "delicious", "yum",
-        "foodie", "hungry", "tasty", "restaurant", "feast", "tiffin", "menu", "order",
-        "ordered", "takeaway", "zomato", "swiggy", "buffet", "spicy", "thali", "biryani",
-        "pizza", "pasta", "burger", "noodles", "dosa", "idli", "paratha", "ilish", "hilsa",
-        "luchi", "alur", "dum", "rice", "dal", "chicken", "mutton", "sushi", "tacos",
-        "sandwich", "meal", "meals"
+        "eat", "ate", "eating", "lunch", "dinner", "breakfast", "snack", "foodie", "hungry",
+        "restaurant", "feast", "tiffin", "menu", "order", "ordered", "takeaway", "zomato",
+        "swiggy", "buffet", "spicy", "thali", "biryani", "pizza", "pasta", "burger", "noodles",
+        "dosa", "idli", "paratha", "ilish", "hilsa", "luchi", "alur", "dum", "rice", "dal",
+        "chicken", "mutton", "sushi", "tacos", "sandwich", "meal", "meals"
       ]
     },
     "cooking": {
       "label": "Cooking & baking",
       "group": "food & drink",
+      "defaultFeeling": "content",
       "accents": ["#D6542F", "#7EA65A", "#F2C14E"],
       "keywords": [
         "cook", "cooked", "cooking", "recipe", "bake", "baked", "chef", "stirred", "fry",
@@ -424,6 +463,7 @@
     "streetfood": {
       "label": "Street food",
       "group": "food & drink",
+      "defaultFeeling": "joyful",
       "accents": ["#E8742A", "#F5C242", "#7FB050"],
       "keywords": [
         "jhalmuri", "phuchka", "puchka", "chaat", "momo", "momos", "maggi", "roll", "kathi",
@@ -434,6 +474,7 @@
     "dessert": {
       "label": "Sweets & desserts",
       "group": "food & drink",
+      "defaultFeeling": "joyful",
       "accents": ["#F28FB3", "#F7D08A", "#8B5A3C"],
       "keywords": [
         "dessert", "sweet", "mishti", "rosogolla", "sandesh", "kheer", "payesh", "pitha",
@@ -444,6 +485,7 @@
     "drinks": {
       "label": "Tea, coffee & drinks",
       "group": "food & drink",
+      "defaultFeeling": "content",
       "accents": ["#A8693F", "#F2D2A4", "#4FA38F"],
       "keywords": [
         "tea", "chai", "cha", "coffee", "latte", "cappuccino", "smoothie", "juice",
@@ -454,6 +496,7 @@
     "friends": {
       "label": "Friends",
       "group": "people",
+      "defaultFeeling": "joyful",
       "accents": ["#FF7F50", "#FFD23F", "#3BCEAC"],
       "keywords": [
         "friend", "friends", "adda", "gang", "buddy", "hangout", "gossip", "squad", "bestie",
@@ -464,17 +507,20 @@
     "family": {
       "label": "Family",
       "group": "people",
+      "defaultFeeling": "content",
       "accents": ["#D98E5F", "#7FB38A", "#F1C27D"],
       "keywords": [
         "family", "mom", "dad", "mother", "father", "parents", "sister", "brother", "cousin",
         "cousins", "uncle", "aunt", "maa", "baba", "grandma", "grandpa", "grandparents",
         "thakuma", "dadu", "dida", "kids", "baby", "niece", "nephew", "kaku", "mashi", "pishi",
-        "bhai", "didi", "dada"
+        "bhai", "didi", "dada", "mum", "mummy", "mommy", "papa", "daddy", "nani", "nana",
+        "dadi", "bhaiya", "boudi", "mama", "mami", "jethu"
       ]
     },
     "dating": {
       "label": "Dating & relationships",
       "group": "people",
+      "defaultFeeling": "loving",
       "accents": ["#E75A8F", "#F4A6B8", "#9E3D6B"],
       "keywords": [
         "date", "dating", "boyfriend", "girlfriend", "partner", "valentine", "flirt",
@@ -485,6 +531,7 @@
     "spiritual": {
       "label": "Faith & prayer",
       "group": "people",
+      "defaultFeeling": "peaceful",
       "accents": ["#E8A23C", "#F2D27A", "#C95C3F"],
       "keywords": [
         "prayer", "pray", "prayed", "temple", "mandir", "church", "mosque", "gurdwara", "god",
@@ -495,6 +542,7 @@
     "news": {
       "label": "News & world",
       "group": "people",
+      "defaultFeeling": "anxious",
       "accents": ["#C0392B", "#2C5AA0", "#E8C547"],
       "keywords": [
         "news", "election", "vote", "voted", "politics", "protest", "strike", "headlines",
@@ -504,6 +552,7 @@
     "party": {
       "label": "Parties & nights out",
       "group": "occasions",
+      "defaultFeeling": "excited",
       "accents": ["#FF5C8A", "#FFC93C", "#5B8DEF"],
       "keywords": [
         "party", "dance", "dancing", "club", "cheers", "treat", "confetti", "balloons",
@@ -513,6 +562,7 @@
     "birthday": {
       "label": "Birthday",
       "group": "occasions",
+      "defaultFeeling": "joyful",
       "accents": ["#FF6F91", "#FFC75F", "#2EC4B6"],
       "keywords": [
         "birthday", "bday", "cake", "gift", "gifts", "surprise", "candles", "wishes", "turned",
@@ -522,6 +572,7 @@
     "wedding": {
       "label": "Wedding",
       "group": "occasions",
+      "defaultFeeling": "joyful",
       "accents": ["#C8334E", "#F2B33D", "#E7A2B4"],
       "keywords": [
         "wedding", "marriage", "bride", "groom", "baraat", "sangeet", "reception", "shaadi",
@@ -531,6 +582,7 @@
     "graduation": {
       "label": "Graduation",
       "group": "occasions",
+      "defaultFeeling": "proud",
       "accents": ["#1F3A6D", "#F2C230", "#B03A48"],
       "keywords": [
         "graduation", "convocation", "degree", "farewell", "alumni", "cap", "gown", "diploma",
@@ -540,6 +592,7 @@
     "festival": {
       "label": "Festivals",
       "group": "occasions",
+      "defaultFeeling": "excited",
       "accents": ["#E8764A", "#F2A93B", "#B83A7B"],
       "keywords": [
         "pujo", "puja", "durga", "pandal", "dhak", "dhunuchi", "ashtami", "dashami", "sindoor",
@@ -547,7 +600,7 @@
         "saraswati", "lakshmi", "festival", "bhasan", "pushpanjali", "bijoya", "mela",
         "fireworks", "crackers", "lantern", "carnival", "parade", "onam", "pongal", "baisakhi",
         "ganesh", "ramadan", "iftar", "decorations", "tradition", "thanksgiving", "hanukkah",
-        "kali"
+        "kali", "festive"
       ]
     }
   },

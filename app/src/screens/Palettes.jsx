@@ -6,12 +6,23 @@ import { feelings, defaultFeeling } from '../data/feelings.json'
 import palettes from '../data/palettes.json'
 import { topics, fallback } from '../data/topics.json'
 import { namePalette } from '../engine/colorNames'
+import { detectMood, contextAt } from '../engine/mood'
 import { composePalette } from '../engine/palette'
+import { now } from '../lib/clock'
 import { chroma, hexToOklab, hue } from '../lib/color'
+import { todayKey } from '../lib/dates'
 import './palettes.css'
 
 const FEELING_IDS = Object.keys(feelings)
-const VIEWS = ['Mix', 'Feelings', 'Themes', 'Topics', 'Names']
+const VIEWS = ['Note', 'Mix', 'Feelings', 'Themes', 'Topics', 'Names']
+const SAMPLE_NOTES = [
+  'Went shopping with Riya, bought the cutest dress, so happy!',
+  'Exam tomorrow and I am so stressed. Cannot focus at all.',
+  'Rain at Elgin crossing, taxi would not start. Jhalmuri in a shop doorway.',
+  'First snow of the year! Hot chocolate and a blanket, watching movies all day.',
+  'The pasta was soggy and cold. Total waste of money.',
+  'Date with Arjun at the cafe, he brought me flowers 😍',
+]
 
 // every palette with the feeling it belongs to, and the themes (topics) it was made for
 const ALL = Object.entries(palettes).flatMap(([feeling, list]) =>
@@ -37,7 +48,7 @@ const GROUPS = Object.entries(topics).reduce((acc, [id, t]) => {
 
 /** Content review page: see palettes, topics and names the way the app will use them. */
 export default function Palettes() {
-  const [view, setView] = useState('Mix')
+  const [view, setView] = useState('Note')
   return (
     <Screen caption="Content review" title="Palettes & words">
       <div className="seg" role="tablist" aria-label="View">
@@ -53,6 +64,7 @@ export default function Palettes() {
           </button>
         ))}
       </div>
+      {view === 'Note' && <NoteView />}
       {view === 'Mix' && <MixView />}
       {view === 'Feelings' && <FeelingsView />}
       {view === 'Themes' && <ThemesView />}
@@ -74,6 +86,91 @@ function Swatches({ colors, label }) {
         </li>
       ))}
     </ul>
+  )
+}
+
+/** Type a note and see what the mood engine makes of it, and the stamp it would produce. */
+function NoteView() {
+  const [text, setText] = useState(SAMPLE_NOTES[0])
+  // time of day and month come from the app clock, so ?now= time travel changes the fallbacks
+  const ctx = contextAt(now())
+  const day = todayKey()
+  const mood = useMemo(
+    () => detectMood({ text, hour: ctx.hour, month: ctx.month }),
+    [text, ctx.hour, ctx.month],
+  )
+  const result = useMemo(
+    () =>
+      composePalette({ feeling: mood.feeling, topic: mood.topic, seed: day, energy: mood.energy }),
+    [mood.feeling, mood.topic, mood.energy, day],
+  )
+  const how = (source, words) =>
+    ({
+      words: words.length ? `from “${words.join('”, “')}”` : 'from your words',
+      topic: 'no feeling words, so the topic’s usual mood',
+      default: 'nothing matched, so the default',
+      time: 'nothing matched, so the time of day',
+      season: 'nothing matched, so the season',
+    })[source]
+
+  return (
+    <>
+      <p className="screen__note">
+        Write a note the way you would in the app. It finds how the day <b>felt</b> and what it was{' '}
+        <b>about</b>, then builds the stamp. Nothing leaves your phone.
+      </p>
+      <textarea
+        className="note"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        rows={4}
+        placeholder="What happened today?"
+        aria-label="Your note"
+      />
+      <div className="chips samples" role="group" aria-label="Try a sample note">
+        {SAMPLE_NOTES.map((n) => (
+          <button key={n} onClick={() => setText(n)}>
+            {n.slice(0, 22)}…
+          </button>
+        ))}
+      </div>
+
+      <div className="mix">
+        <div className="mix__col">
+          <div className="lbl">Today’s stamp</div>
+          <Stamp colors={result.colors} seed={day} width={120} label="Stamp for this note" />
+          <span className="tag">
+            {result.tagged ? 'made for this' : result.mixed ? 'accents added' : result.palette.name}
+          </span>
+        </div>
+      </div>
+
+      <div className="found">
+        <div>
+          <span className="lbl">Felt</span>
+          <b>
+            {feelings[mood.feeling].label}{' '}
+            {mood.energy === 'vivid' && <span className="tag">vivid</span>}
+          </b>
+          <small>
+            {how(mood.source.feeling, mood.feelingWords)} · {mood.confidence.feeling} confidence
+          </small>
+        </div>
+        <div>
+          <span className="lbl">About</span>
+          <b>
+            {topics[mood.topic].label}
+            {mood.secondaryTopic && <i> + {topics[mood.secondaryTopic].label}</i>}
+          </b>
+          <small>
+            {how(mood.source.topic, mood.topicWords)}
+            {mood.source.topic === 'words' ? ` · ${mood.confidence.topic} confidence` : ''}
+          </small>
+        </div>
+      </div>
+
+      <Swatches colors={result.colors} label="Stamp colors" />
+    </>
   )
 }
 

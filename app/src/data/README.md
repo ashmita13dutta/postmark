@@ -47,6 +47,8 @@ anxious, sad, angry, disappointed, bored, inspired). Each has a `label`, a one-l
 54 topics in groups (weather & time, everyday life, activities, places & travel, food & drink,
 people, occasions). Each has `label`, `group`, `keywords`, and `accents`.
 
+- `defaultFeeling`: the mood this topic usually carries, used only when the note has a topic but no
+  feeling words (rain is peaceful, exams are anxious, shopping is joyful). Change it to taste.
 - `accents`: exactly 3 hex colors that say "this topic": shopping is pink, yellow and aqua; exams are
   lamp gold, red-pen red and notebook blue. The tests make sure they look clearly different from
   each other and are not neon.
@@ -54,6 +56,27 @@ people, occasions). Each has `label`, `group`, `keywords`, and `accents`.
 - `fallback`: when a note matches no topic, the app picks by time of day, then by month using
   `activeProfile`. `generic` suits most places. `kolkata` makes June-September rainy and October
   festive. Add your own profile (for example a southern-hemisphere one) with all 12 months.
+
+## emoji.json
+
+Emoji count like words: 😍 means loving, 😴 tired, 🎉 party, ☔ rain. Each emoji belongs to one feeling or
+one topic. Add the ones you use. Variation selectors (the invisible char after some emoji) are ignored.
+
+## How the engine reads a note (src/engine/mood.js)
+
+- Matches your words, and their forms: `rain` also matches `rains`, `rained`, `raining`. A short word
+  is never mistaken for a longer one ("notes" is not "not").
+- **Negation:** "not happy" does not count as joyful (it leans disappointed). "Not tired" or "no exams"
+  are ignored.
+- **The ending matters:** for feelings, later words count a little more, and what comes after "but"
+  counts more than what came before. A tie goes to what was said last.
+- **Emphasis:** "so happy", an exclamation mark or strong wording make a bright feeling _vivid_ (a
+  vivid palette); mild notes stay _soft_. Quiet feelings (tired, sad, calm) are always soft.
+- **Topics:** a tie goes to the topic mentioned first (journals usually name their subject up front).
+- **Two-word phrases** match as one word: write them joined in the keyword list (`icecream` matches
+  "ice cream", `nothinghappened` matches "nothing happened").
+- **Nothing matched?** The feeling comes from the topic (`defaultFeeling`), or `content`; the topic
+  comes from the time of day (night), then the month (`fallback`).
 
 ## palettes.json
 
