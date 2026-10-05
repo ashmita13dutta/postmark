@@ -8,6 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest run",
+    "test:tz": "node scripts/test-tz.mjs",
     "lint": "eslint .",
     "format": "prettier --write ."
   },

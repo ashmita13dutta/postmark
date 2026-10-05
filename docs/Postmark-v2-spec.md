@@ -134,7 +134,7 @@ volumes { year, coverStickers: {...}[], closedAt: number|null }
 settings { key, value }
 ```
 
-Settings keys: `homeCity`, `paletteDefault ('moment'|'photo')`, `songModeDefault ('own'|'suggested')`, `deliveryDay (1 to 28, default 1)`, `revealAnimation (bool)`, `reminderTime`, `soundOn`, `hapticsOn`, `appLock`, `onboarded`.
+Settings keys: `homeCity`, `paletteDefault ('moment'|'photo')`, `songModeDefault ('own'|'suggested')`, `deliveryDay (1 to 28, default 1)`, `revealAnimation (bool)`, `reminderTime`, `soundOn`, `hapticsOn`, `appLock`, `onboarded`, `stripFrames (3 or 4, default 3)`.
 
 Derived, never stored: calendar grid, quilt, streaks, stats, medley order. Compute from `moments`.
 
@@ -396,7 +396,7 @@ Record the license and source of every asset in `ASSETS.md`. Do not ship an asse
 
 ## 17. Open questions to confirm with the owner
 
-- Film strip frame count: 3 or 4?
+- ~~Film strip frame count: 3 or 4?~~ Decided: the user chooses 3 or 4 (setting `stripFrames`, default 3).
 - Should delivered postcards be editable after opening, or read-only?
 - Whether to produce the optional Capacitor Android APK after launch
 - App lock: simple screen lock only, or real encryption of the journal later?
