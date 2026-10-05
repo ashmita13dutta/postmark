@@ -1,6 +1,40 @@
+import { defaultFeeling } from '../data/feelings.json'
+import palettes from '../data/palettes.json'
+import { topics } from '../data/topics.json'
 import { chroma, hexToOklab, oklabDistance, oklabToHex } from '../lib/color'
 import { LIMITS } from '../lib/contentRules'
 import { seededRng } from '../lib/rng'
+
+/**
+ * Choose a base palette for a feeling and (optionally) a topic.
+ *  1. A palette made for the topic ("party", "dating", "autumn"...) wins if the feeling has one.
+ *  2. Otherwise one of the feeling's general palettes (palettes made for a different topic are
+ *     skipped, so a party palette never shows up on a shopping day).
+ * Same seed, same palette.
+ * @returns {{ palette: object, tagged: boolean }}
+ */
+export function pickPalette(feeling, topic, seed) {
+  const list = palettes[feeling] ?? palettes[defaultFeeling]
+  const rng = seededRng(`pick:${feeling}:${topic}:${seed}`)
+  const tagged = topic ? list.filter((p) => p.topics?.includes(topic)) : []
+  if (tagged.length) return { palette: tagged[Math.floor(rng() * tagged.length)], tagged: true }
+  const general = list.filter((p) => !p.topics?.length)
+  const pool = general.length ? general : list
+  return { palette: pool[Math.floor(rng() * pool.length)], tagged: false }
+}
+
+/**
+ * The full recipe: pick the palette, then bring in the topic's accents unless the palette was
+ * already made for that topic.
+ * @returns {{ palette: object, colors: string[], mixed: boolean, tagged: boolean }}
+ */
+export function composePalette({ feeling, topic, seed }) {
+  const { palette, tagged } = pickPalette(feeling, topic, seed)
+  const def = topic ? topics[topic] : null
+  if (!def || tagged) return { palette, colors: [...palette.colors], mixed: false, tagged }
+  const mix = mixPalette(palette.colors, def.accents, `${feeling}:${topic}:${seed}`, palette.energy)
+  return { palette, colors: mix.colors, mixed: mix.mixed, tagged: false }
+}
 
 /**
  * Mix a feeling's base palette with a topic's accent colors.

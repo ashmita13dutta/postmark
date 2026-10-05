@@ -6,12 +6,28 @@ import { feelings, defaultFeeling } from '../data/feelings.json'
 import palettes from '../data/palettes.json'
 import { topics, fallback } from '../data/topics.json'
 import { namePalette } from '../engine/colorNames'
-import { mixPalette } from '../engine/palette'
+import { composePalette } from '../engine/palette'
 import { chroma, hexToOklab, hue } from '../lib/color'
 import './palettes.css'
 
 const FEELING_IDS = Object.keys(feelings)
-const VIEWS = ['Try a day', 'Feelings', 'Topics', 'Names']
+const VIEWS = ['Mix', 'Feelings', 'Themes', 'Topics', 'Names']
+
+// every palette with the feeling it belongs to, and the themes (topics) it was made for
+const ALL = Object.entries(palettes).flatMap(([feeling, list]) =>
+  list.map((p) => ({ ...p, feeling })),
+)
+const THEME_COUNTS = ALL.reduce((acc, p) => {
+  for (const t of p.topics ?? []) acc[t] = (acc[t] ?? 0) + 1
+  return acc
+}, {})
+// seasons and big themes first, then the rest by how many palettes they have
+const THEME_FIRST = ['autumn', 'winter', 'snow', 'party', 'dating', 'friends', 'food', 'travel']
+const THEME_IDS = Object.keys(THEME_COUNTS).sort(
+  (a, b) =>
+    (THEME_FIRST.indexOf(a) + 1 || 99) - (THEME_FIRST.indexOf(b) + 1 || 99) ||
+    THEME_COUNTS[b] - THEME_COUNTS[a],
+)
 
 // topics grouped for the picker and the Topics view, in file order
 const GROUPS = Object.entries(topics).reduce((acc, [id, t]) => {
@@ -21,7 +37,7 @@ const GROUPS = Object.entries(topics).reduce((acc, [id, t]) => {
 
 /** Content review page: see palettes, topics and names the way the app will use them. */
 export default function Palettes() {
-  const [view, setView] = useState('Try a day')
+  const [view, setView] = useState('Mix')
   return (
     <Screen caption="Content review" title="Palettes & words">
       <div className="seg" role="tablist" aria-label="View">
@@ -37,8 +53,9 @@ export default function Palettes() {
           </button>
         ))}
       </div>
-      {view === 'Try a day' && <MixView />}
+      {view === 'Mix' && <MixView />}
       {view === 'Feelings' && <FeelingsView />}
+      {view === 'Themes' && <ThemesView />}
       {view === 'Topics' && <TopicsView />}
       {view === 'Names' && <NamesView />}
     </Screen>
@@ -66,26 +83,27 @@ function MixView() {
   const [topic, setTopic] = useState('shopping')
   const [shuffle, setShuffle] = useState(0)
 
-  const list = palettes[feeling]
-  const base = list[shuffle % list.length]
-  const mixed = useMemo(
+  // the same recipe the app will use: a palette made for the topic if there is one, otherwise
+  // a general palette for the feeling with the topic's accents mixed in
+  const result = useMemo(
     () =>
-      topic === 'none'
-        ? { colors: base.colors, mixed: false }
-        : mixPalette(
-            base.colors,
-            topics[topic].accents,
-            `${feeling}:${topic}:${shuffle}`,
-            base.energy,
-          ),
-    [base, topic, feeling, shuffle],
+      composePalette({
+        feeling,
+        topic: topic === 'none' ? null : topic,
+        seed: `try-${shuffle}`,
+      }),
+    [feeling, topic, shuffle],
   )
+  const base = result.palette
+  const mixed = result
+  const poolSize = palettes[feeling].length
 
   return (
     <>
       <p className="screen__note">
-        Pick how the day <b>felt</b> and what it was <b>about</b>. The feeling chooses the palette;
-        the topic swaps in its own accent colors.
+        Pick how the day <b>felt</b> and what it was <b>about</b>. The feeling chooses the palette
+        (one made for the topic if there is one); otherwise the topic swaps in its own accent
+        colors.
       </p>
 
       <div className="label">How it felt</div>
@@ -135,15 +153,44 @@ function MixView() {
             width={110}
             label="Mixed stamp"
           />
-          <span className="tag">{mixed.mixed ? 'accents added' : 'unchanged'}</span>
+          <span className="tag">
+            {mixed.tagged ? 'made for this' : mixed.mixed ? 'accents added' : 'plain'}
+          </span>
         </div>
       </div>
 
       <button className="shuffle" onClick={() => setShuffle((s) => s + 1)}>
-        Shuffle · palette {(shuffle % list.length) + 1} of {list.length}
+        Shuffle · {poolSize} palettes for {feelings[feeling].label.toLowerCase()}
       </button>
 
       <Swatches colors={mixed.colors} label="Mixed colors" />
+    </>
+  )
+}
+
+/** Palettes grouped by what they were made for: seasons, party, date, food, travel... */
+function ThemesView() {
+  const [theme, setTheme] = useState('autumn')
+  const shown = ALL.filter((p) => p.topics?.includes(theme))
+  return (
+    <>
+      <p className="screen__note">
+        Palettes made for a particular kind of day. When a note matches the theme, one of these is
+        preferred over a general palette.
+      </p>
+      <div className="chips" role="group" aria-label="Theme">
+        {THEME_IDS.map((t) => (
+          <button key={t} className={theme === t ? 'on' : ''} onClick={() => setTheme(t)}>
+            {topics[t].label} · {THEME_COUNTS[t]}
+          </button>
+        ))}
+      </div>
+      <section className="family">
+        <h2>{topics[theme].label}</h2>
+        {shown.map((p) => (
+          <PaletteCard key={p.id} palette={p} feeling={p.feeling} />
+        ))}
+      </section>
     </>
   )
 }
@@ -194,7 +241,7 @@ function FeelingsView() {
   )
 }
 
-function PaletteCard({ palette }) {
+function PaletteCard({ palette, feeling }) {
   const named = useMemo(() => namePalette(palette.colors), [palette.colors])
   return (
     <article className="pcard">
@@ -209,6 +256,7 @@ function PaletteCard({ palette }) {
       <div className="pcard__body">
         <h3>
           {palette.name} {palette.energy === 'vivid' && <span className="tag">vivid</span>}
+          {feeling && <span className="tag">{feelings[feeling].label}</span>}
         </h3>
         <div className="pcard__harmony">{palette.harmony}</div>
         <ul>

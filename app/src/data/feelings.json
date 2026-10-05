@@ -132,8 +132,29 @@
       "blurb": "Curious, creative, sparking",
       "keywords": [
         "inspired", "inspiration", "creative", "curious", "imagine", "idea", "ideas", "wonder",
-        "discover", "discovered", "dreamy", "dreaming", "motivated", "motivation", "passion",
-        "spark", "aha", "eureka", "vision", "innovative", "fascinated", "intrigued"
+        "discover", "discovered", "dreaming", "motivated", "motivation", "passion", "spark",
+        "aha", "eureka", "vision", "innovative", "fascinated", "intrigued"
+      ]
+    },
+    "dreamy": {
+      "label": "Dreamy",
+      "blurb": "Soft, floaty, a little bit magic",
+      "keywords": [
+        "dreamy", "dreamlike", "daydream", "daydreaming", "ethereal", "whimsical", "floaty",
+        "floating", "surreal", "enchanted", "fairytale", "fantasy", "pastel", "cloudlike",
+        "twinkling", "shimmering", "serendipity", "wistful", "starry", "swoon", "spellbound",
+        "lullaby", "whimsy", "trance", "reverie", "fanciful"
+      ]
+    },
+    "disappointed": {
+      "label": "Disappointed",
+      "blurb": "Let down, ruined plans, a bad meal",
+      "keywords": [
+        "disappointed", "disappointing", "disappointment", "letdown", "ruined", "cancelled",
+        "canceled", "failed", "fail", "bland", "stale", "soggy", "burnt", "raw", "undercooked",
+        "overcooked", "tasteless", "awful", "terrible", "horrible", "worst", "disgusting",
+        "gross", "yuck", "rotten", "overpriced", "wasted", "regret", "mistake", "flop",
+        "underwhelming", "mediocre", "lousy"
       ]
     }
   },

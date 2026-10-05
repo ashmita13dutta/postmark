@@ -31,7 +31,9 @@ So "shopping on a happy day" and "shopping on an exhausting day" look different,
 
 ## feelings.json
 
-14 feelings. Each has a `label`, a one-line `blurb`, and `keywords`.
+16 feelings (joyful, content, peaceful, dreamy, excited, proud, loving, nostalgic, grateful, tired,
+anxious, sad, angry, disappointed, bored, inspired). Each has a `label`, a one-line `blurb`, and
+`keywords`. "Disappointed" covers a bad meal, cancelled plans, a ruined day.
 
 - `keywords`: lowercase single words only, letters a-z (no spaces, no apostrophes). Mix English with
   Hindi/Bengali spelled the way you would type them. Light endings are handled for you: `love` also
@@ -60,6 +62,14 @@ Palettes are grouped by feeling. Each has exactly 5 hex colors.
 - `id`: unique, no spaces. `name`: anything (only you see it). `harmony`: a note on why it works.
 - `energy`: `soft` (warm and a little faded, like old stamps) or `vivid` (bright and cheerful, like
   fresh ink, still not neon). Vivid palettes are allowed stronger colors.
+- `topics` (optional): the topics this palette was made for, for example `["autumn"]`,
+  `["party"]`, `["dating"]`, `["food"]`. When a day matches that topic, a palette made for it is
+  preferred, and the topic's accents are NOT mixed in (the palette already has that flavor). A
+  palette with a `topics` tag is never used for an unrelated topic, so a party palette cannot show up
+  on a shopping day. Leave `topics` out for a general palette.
+- Themed sets include: autumn and winter (warm small-town coffee-shop browns, plaid, pumpkin and maple
+  for fall; snowy windows, twinkle lights, cranberry and evergreen for winter), party, dating,
+  romance, hangouts with friends, good food, bad food (the `disappointed` feeling), and travel.
 - Harmony types used: monochrome (one hue, many lightnesses), analogous (neighbors on the color
   wheel), complementary (opposites, like blue + orange), triad (three balanced hues), and
   "neutrals + one accent".

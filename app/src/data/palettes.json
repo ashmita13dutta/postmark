@@ -26,7 +26,23 @@
     { "id": "sunny-kite-day", "name": "Kite Day", "harmony": "blue + coral + sun", "energy": "soft", "colors": ["#3A7CA5", "#D1553F", "#F0C14B", "#81B29A", "#F6EEDC"] },
     { "id": "food-mishti-counter", "name": "Sweet Counter", "harmony": "caramel + rose", "energy": "soft", "colors": ["#8A5A3C", "#D9902B", "#E58FA0", "#F1DDA8", "#A8BC8B"] },
     { "id": "nature-meadow", "name": "Meadow", "harmony": "green + yellow + pink bloom", "energy": "soft", "colors": ["#5D8A4A", "#A3C06B", "#F0D66C", "#E48DA0", "#F7F3E3"] },
-    { "id": "fitness-pool-day", "name": "Pool Day", "harmony": "analogous aqua + sun", "energy": "soft", "colors": ["#0F5C7A", "#3FA7C4", "#9ADBE3", "#F5D27B", "#FAF6EB"] }
+    { "id": "fitness-pool-day", "name": "Pool Day", "harmony": "analogous aqua + sun", "energy": "soft", "colors": ["#0F5C7A", "#3FA7C4", "#9ADBE3", "#F5D27B", "#FAF6EB"] },
+    { "id": "party-balloon-pop", "name": "Balloon Pop", "harmony": "blue + red + amber + teal", "energy": "vivid", "topics": ["party", "birthday"], "colors": ["#2B59C3", "#FF4F6D", "#FFB020", "#2EC4B6", "#FFF7EA"] },
+    { "id": "hangout-park-bench", "name": "Park Bench", "harmony": "green + sun + sky", "energy": "soft", "topics": ["friends", "sunny"], "colors": ["#3F6B4F", "#8DB87A", "#F2D16B", "#6BA3C7", "#FBF3E0"] },
+    { "id": "hangout-game-night", "name": "Game Night", "harmony": "indigo + periwinkle + coral + gold", "energy": "vivid", "topics": ["friends", "gaming"], "colors": ["#232946", "#5E60CE", "#FF6B6B", "#FFD93D", "#FFF6E6"] },
+    { "id": "hangout-rooftop-jam", "name": "Rooftop Jam", "harmony": "navy + coral + gold + mint", "energy": "soft", "topics": ["friends", "music"], "colors": ["#1F3A5F", "#E26D5C", "#F2B134", "#9AD0C2", "#FFF3E0"] },
+    { "id": "food-sunday-brunch", "name": "Sunday Brunch", "harmony": "tomato + saffron + basil", "energy": "soft", "topics": ["food"], "colors": ["#B8452F", "#F2A33A", "#8DB36B", "#F5E3B0", "#FFF8EA"] },
+    { "id": "food-street-food-glow", "name": "Street Food Glow", "harmony": "chilli + orange + yellow + chutney", "energy": "soft", "topics": ["streetfood", "food"], "colors": ["#8E2F1E", "#E0652C", "#F5B93C", "#6FA34F", "#FFF1D6"] },
+    { "id": "food-sweet-tooth", "name": "Sweet Tooth", "harmony": "cocoa + pink + butter", "energy": "soft", "topics": ["dessert"], "colors": ["#7B3F4A", "#E4789A", "#F7B7C8", "#F8D9A0", "#FFF6EC"] },
+    { "id": "food-farmers-market", "name": "Farmers Market", "harmony": "leaf + lime + squash + tomato", "energy": "soft", "topics": ["food", "garden"], "colors": ["#3F6B3A", "#8DB24A", "#E3B13B", "#D6603A", "#FBF1D9"] },
+    { "id": "food-ice-cream-parlour", "name": "Ice Cream Parlour", "harmony": "blue + pink + butter + mint", "energy": "vivid", "topics": ["dessert"], "colors": ["#1F7AD6", "#FF7BA9", "#FFD45E", "#7ADBB4", "#FFF9F0"] },
+    { "id": "travel-postcard-beach", "name": "Postcard Beach", "harmony": "ocean + turquoise + sand + coral", "energy": "vivid", "topics": ["beach", "travel"], "colors": ["#0B6E99", "#34B1C9", "#F6D58E", "#FF8A65", "#FFF8E8"] },
+    { "id": "travel-island-sunset", "name": "Island Sunset", "harmony": "indigo + magenta + coral + amber", "energy": "vivid", "topics": ["beach", "evening"], "colors": ["#2B2D6B", "#9B3F8A", "#F0647A", "#F7A24A", "#FFF1DC"] },
+    { "id": "fall-pumpkin-patch", "name": "Pumpkin Patch", "harmony": "brown + pumpkin + amber + moss", "energy": "soft", "topics": ["autumn"], "colors": ["#5A3A1F", "#C75B12", "#E8941F", "#8A9A3C", "#FAEBD0"] },
+    { "id": "fall-harvest-festival", "name": "Harvest Festival", "harmony": "rust + orange + gold + green", "energy": "soft", "topics": ["autumn", "festival"], "colors": ["#7A2E1A", "#D9791E", "#E8B53A", "#5E8A4B", "#F8EAC8"] },
+    { "id": "winter-twinkle-lights", "name": "Twinkle Lights", "harmony": "midnight + pine + cranberry + gold", "energy": "soft", "topics": ["winter", "festival"], "colors": ["#1E2A4A", "#2F5D50", "#C9302C", "#F2B93B", "#FFF6E2"] },
+    { "id": "winter-cranberry-and-pine", "name": "Cranberry and Pine", "harmony": "evergreen + cranberry + gold", "energy": "soft", "topics": ["winter", "festival"], "colors": ["#1F4A3A", "#3E7C5A", "#A3243A", "#E3C08A", "#F8F1E2"] },
+    { "id": "winter-gingerbread", "name": "Gingerbread", "harmony": "ginger + caramel + candy red", "energy": "soft", "topics": ["winter", "dessert"], "colors": ["#5E3320", "#B5652E", "#E0A15E", "#C9302C", "#FBEFD9"] }
   ],
   "content": [
     { "id": "cozy-kullad-chai", "name": "Kullad Chai", "harmony": "monochrome brown", "energy": "soft", "colors": ["#5B3F2E", "#8B5A3C", "#C77B4A", "#EBCB75", "#F3E9D0"] },
@@ -48,7 +64,21 @@
     { "id": "family-sunday-lunch", "name": "Sunday Lunch", "harmony": "warm earth + sage", "energy": "soft", "colors": ["#7A4A2E", "#C77B3E", "#E8B96A", "#7FA37A", "#F7EBD4"] },
     { "id": "family-home-walls", "name": "Home Walls", "harmony": "terracotta + sage", "energy": "soft", "colors": ["#B5654A", "#D9A27A", "#EACDA6", "#8DA89A", "#F8F0E1"] },
     { "id": "family-pyjama-morning", "name": "Pyjama Morning", "harmony": "periwinkle + peach", "energy": "soft", "colors": ["#4E6389", "#8CA0C4", "#F2C4B6", "#F0DDBE", "#FCF6EC"] },
-    { "id": "city-window-lights", "name": "Window Lights", "harmony": "navy + warm windows", "energy": "soft", "colors": ["#1F2A44", "#3B4A6B", "#E2A64A", "#D6735C", "#E9E2D6"] }
+    { "id": "city-window-lights", "name": "Window Lights", "harmony": "navy + warm windows", "energy": "soft", "colors": ["#1F2A44", "#3B4A6B", "#E2A64A", "#D6735C", "#E9E2D6"] },
+    { "id": "hangout-couch-and-snacks", "name": "Couch and Snacks", "harmony": "violet + terracotta + sage", "energy": "soft", "topics": ["friends"], "colors": ["#5B4A8A", "#E07A5F", "#F2CC8F", "#81B29A", "#F7F0E1"] },
+    { "id": "hangout-late-night-pizza", "name": "Late Night Pizza", "harmony": "indigo + tomato + amber + basil", "energy": "soft", "topics": ["friends", "food"], "colors": ["#2D2A4A", "#C8553D", "#F2A541", "#7FB069", "#F8EEDC"] },
+    { "id": "hangout-chai-at-the-adda", "name": "Chai at the Adda", "harmony": "brown + amber + teal", "energy": "soft", "topics": ["friends", "drinks"], "colors": ["#6B3F2A", "#C97B4A", "#E8B04A", "#4F9D8F", "#F6EBD8"] },
+    { "id": "food-fresh-from-the-oven", "name": "Fresh From the Oven", "harmony": "crust + gold + cream", "energy": "soft", "topics": ["food", "cooking"], "colors": ["#7A3E1D", "#C9772E", "#E9B35A", "#F4D9A0", "#FFF4DC"] },
+    { "id": "food-spice-market", "name": "Spice Market", "harmony": "paprika + turmeric + herb", "energy": "soft", "topics": ["food", "cooking"], "colors": ["#6B2A1A", "#B8431E", "#E08A1E", "#7A8F3A", "#F6E7C8"] },
+    { "id": "food-coffee-and-croissant", "name": "Coffee and Croissant", "harmony": "espresso + crust + butter", "energy": "soft", "topics": ["drinks", "food"], "colors": ["#4A2F22", "#8C5A3C", "#D4A56A", "#F0D3A0", "#FFF7E6"] },
+    { "id": "travel-city-break-terracotta", "name": "City Break", "harmony": "terracotta + sage", "energy": "soft", "topics": ["travel", "city"], "colors": ["#7A3B2A", "#C26A45", "#E7A877", "#9DB5A1", "#F6EBD8"] },
+    { "id": "fall-town-square-autumn", "name": "Town Square Autumn", "harmony": "coffee to cream through rust and gold", "energy": "soft", "topics": ["autumn"], "colors": ["#4A2E1F", "#9C3D1A", "#D9791E", "#E6B54A", "#F6E9CC"] },
+    { "id": "fall-diner-booth", "name": "Diner Booth", "harmony": "burgundy + mustard + olive", "energy": "soft", "topics": ["autumn", "drinks"], "colors": ["#6E1F2B", "#B5472B", "#D9A21B", "#7A8B4A", "#F5E8D0"] },
+    { "id": "fall-plaid-blanket", "name": "Plaid Blanket", "harmony": "wine + forest + mustard", "energy": "soft", "topics": ["autumn", "winter"], "colors": ["#7A1F2B", "#2F4A32", "#D9A21B", "#B5472B", "#F3E6CC"] },
+    { "id": "fall-coffee-shop-window", "name": "Coffee Shop Window", "harmony": "monochrome coffee", "energy": "soft", "topics": ["autumn", "drinks"], "colors": ["#3B2418", "#7A4A2B", "#C28A4A", "#E3C48E", "#FBF1DE"] },
+    { "id": "winter-wool-scarf", "name": "Wool Scarf", "harmony": "claret + rose + slate blue", "energy": "soft", "topics": ["winter"], "colors": ["#5A2A33", "#A64A4F", "#D9A49A", "#8FA3AE", "#F5ECE4"] },
+    { "id": "winter-hot-cocoa-window", "name": "Hot Cocoa Window", "harmony": "cocoa + caramel + snow", "energy": "soft", "topics": ["winter", "drinks"], "colors": ["#3B2420", "#7A4B3A", "#C9946C", "#F0D2B0", "#F7F9FB"] },
+    { "id": "winter-snow-day-cozy", "name": "Snow Day Cozy", "harmony": "berry + clay + sky", "energy": "soft", "topics": ["winter", "snow"], "colors": ["#6A3A3A", "#B96A5A", "#E8B6A0", "#9FB6C8", "#FCF8F4"] }
   ],
   "peaceful": [
     { "id": "rain-mizzle-morning", "name": "Mizzle Morning", "harmony": "analogous cool", "energy": "soft", "colors": ["#4C5F73", "#7A8B9C", "#B6C7D6", "#D3DCE3", "#F0C419"] },
@@ -63,7 +93,13 @@
     { "id": "calm-sage-morning", "name": "Sage Morning", "harmony": "monochrome sage", "energy": "soft", "colors": ["#5E7360", "#8FA98B", "#BBCDB4", "#D8B994", "#F6F1E6"] },
     { "id": "calm-breathe", "name": "Breathe", "harmony": "soft blue + blush", "energy": "soft", "colors": ["#6F7F9A", "#A3B1C7", "#CAD5E0", "#E7C3B8", "#F7F3EE"] },
     { "id": "calm-soft-dune", "name": "Soft Dune", "harmony": "sand + sage", "energy": "soft", "colors": ["#A68A6D", "#C9B08F", "#E3D2B8", "#8FA597", "#F5EFE4"] },
-    { "id": "calm-lavender-hour", "name": "Lavender Hour", "harmony": "monochrome lavender", "energy": "soft", "colors": ["#6F6A8C", "#9A94B8", "#C4BFD8", "#E3D8DC", "#F6F2F0"] }
+    { "id": "calm-lavender-hour", "name": "Lavender Hour", "harmony": "monochrome lavender", "energy": "soft", "colors": ["#6F6A8C", "#9A94B8", "#C4BFD8", "#E3D8DC", "#F6F2F0"] },
+    { "id": "travel-alpine-morning", "name": "Alpine Morning", "harmony": "blue to snow", "energy": "soft", "topics": ["mountains"], "colors": ["#2F4A6B", "#5E87B5", "#A9C6E0", "#E8D9C0", "#FBF6EA"] },
+    { "id": "travel-train-window", "name": "Train Window", "harmony": "forest + gold + clay", "energy": "soft", "topics": ["transport", "travel"], "colors": ["#2F5D50", "#6E9A7E", "#D8B76B", "#C77B58", "#F4ECDA"] },
+    { "id": "fall-maple-walk", "name": "Maple Walk", "harmony": "maple red + orange + gold + moss", "energy": "soft", "topics": ["autumn", "nature"], "colors": ["#8C2F1B", "#D2561E", "#EBA23A", "#9AA04A", "#F4E4C4"] },
+    { "id": "winter-first-snow", "name": "First Snow", "harmony": "blue shadows + rose + snow", "energy": "soft", "topics": ["winter", "snow"], "colors": ["#3F5573", "#7E98B8", "#B5C8DC", "#D8A9A0", "#F8FAFC"] },
+    { "id": "winter-frosted-windowpane", "name": "Frosted Windowpane", "harmony": "ice blue + candlelight", "energy": "soft", "topics": ["winter", "snow"], "colors": ["#38506B", "#7C9CBA", "#B9D0E2", "#E4D4C0", "#FAFBFC"] },
+    { "id": "winter-evergreen-night", "name": "Evergreen Night", "harmony": "forest to pine + lamp gold", "energy": "soft", "topics": ["winter", "night"], "colors": ["#14241E", "#274A3E", "#4F7C6A", "#E8B650", "#EEF2EC"] }
   ],
   "excited": [
     { "id": "festival-ashtami-morning", "name": "Ashtami Morning", "harmony": "red + white + gold", "energy": "soft", "colors": ["#A3262A", "#F7F3EA", "#E7C64B", "#D2321E", "#E39544"] },
@@ -79,7 +115,15 @@
     { "id": "city-market-street", "name": "Market Street", "harmony": "rust + mustard + teal + blue", "energy": "soft", "colors": ["#B5472F", "#DDA33C", "#4E8C7A", "#2E5E84", "#F4EBD8"] },
     { "id": "excited-festival-gate", "name": "Festival Gate", "harmony": "blue + red + gold + teal", "energy": "vivid", "colors": ["#1F4FBF", "#E8344F", "#FFB400", "#00A896", "#FFF4E0"] },
     { "id": "excited-night-market", "name": "Night Market", "harmony": "violet + pink + orange + teal", "energy": "vivid", "colors": ["#5B2A9E", "#E5497E", "#FF9F1C", "#2EC4B6", "#FFF3E0"] },
-    { "id": "excited-rollercoaster", "name": "Rollercoaster", "harmony": "navy + orange + yellow + sky", "energy": "vivid", "colors": ["#16355E", "#FF5A36", "#FFC93C", "#2FA4E7", "#FFF7E8"] }
+    { "id": "excited-rollercoaster", "name": "Rollercoaster", "harmony": "navy + orange + yellow + sky", "energy": "vivid", "colors": ["#16355E", "#FF5A36", "#FFC93C", "#2FA4E7", "#FFF7E8"] },
+    { "id": "party-disco-ball", "name": "Disco Ball", "harmony": "indigo + violet + pink + gold", "energy": "vivid", "topics": ["party"], "colors": ["#1B1F4B", "#6C3FC9", "#FF4FA0", "#FFC531", "#FFF5E0"] },
+    { "id": "party-midnight-confetti", "name": "Midnight Confetti", "harmony": "navy + teal + pink + yellow", "energy": "vivid", "topics": ["party"], "colors": ["#14213D", "#2EC4B6", "#FF6B9A", "#FFD166", "#FFF8EC"] },
+    { "id": "party-glitter-floor", "name": "Glitter Floor", "harmony": "plum + magenta + pink + gold", "energy": "vivid", "topics": ["party"], "colors": ["#3A1F5C", "#C04CC8", "#FF7BAC", "#F6C453", "#FFF3E6"] },
+    { "id": "party-rooftop-lights", "name": "Rooftop Lights", "harmony": "navy + blue + orange + gold", "energy": "vivid", "topics": ["party"], "colors": ["#232A4A", "#4F7CE0", "#F2994A", "#F4C95D", "#FFF6E5"] },
+    { "id": "party-champagne-fizz", "name": "Champagne Fizz", "harmony": "bronze + gold + blush", "energy": "soft", "topics": ["party"], "colors": ["#4A3B2A", "#C9A24B", "#E9D08A", "#F4B8C4", "#FFFBF0"] },
+    { "id": "travel-boarding-pass", "name": "Boarding Pass", "harmony": "navy + blue + amber + red", "energy": "vivid", "topics": ["travel", "transport"], "colors": ["#12355B", "#2D7DD2", "#F2A541", "#E4572E", "#F5F1E8"] },
+    { "id": "travel-desert-road", "name": "Desert Road", "harmony": "earth + teal", "energy": "soft", "topics": ["travel", "transport"], "colors": ["#5B3A29", "#B8693A", "#E5A860", "#7FA8A0", "#F7EAD2"] },
+    { "id": "winter-ice-skating", "name": "Ice Skating", "harmony": "navy + blue + ice + rose", "energy": "vivid", "topics": ["winter", "snow", "fitness"], "colors": ["#1F3F66", "#2E8FDE", "#9ED0EA", "#F2547D", "#FFF9F6"] }
   ],
   "proud": [
     { "id": "celebration-champagne-toast", "name": "Champagne Toast", "harmony": "gold + blush", "energy": "soft", "colors": ["#3B2F2F", "#C9A227", "#F0D98C", "#E8B7B0", "#FBF4E6"] },
@@ -98,7 +142,19 @@
     { "id": "love-candlelight-dinner", "name": "Candlelight Dinner", "harmony": "wine + amber", "energy": "soft", "colors": ["#2A1520", "#6E2B3A", "#C4704F", "#E9B872", "#F5EADA"] },
     { "id": "love-love-letter", "name": "Love Letter", "harmony": "mauve + dusty blue", "energy": "soft", "colors": ["#5A3A4A", "#A8788C", "#D9B6BE", "#8B9DC3", "#F4EDE4"] },
     { "id": "loving-valentine-window", "name": "Valentine Window", "harmony": "monochrome rose", "energy": "vivid", "colors": ["#B0183A", "#F2547D", "#FFB3C7", "#FFD6E0", "#FFF1F3"] },
-    { "id": "loving-sweet-talk", "name": "Sweet Talk", "harmony": "plum + pink + apricot", "energy": "vivid", "colors": ["#6A2C70", "#F0508D", "#FFB86B", "#F9D7E3", "#FFF8F1"] }
+    { "id": "loving-sweet-talk", "name": "Sweet Talk", "harmony": "plum + pink + apricot", "energy": "vivid", "colors": ["#6A2C70", "#F0508D", "#FFB86B", "#F9D7E3", "#FFF8F1"] },
+    { "id": "date-candlelit-table", "name": "Candlelit Table", "harmony": "wine to cream", "energy": "soft", "topics": ["dating"], "colors": ["#3B1A2A", "#8A2F4A", "#D9805F", "#F2C48D", "#FDF3E3"] },
+    { "id": "date-coffee-date", "name": "Coffee Date", "harmony": "espresso + caramel + blush", "energy": "soft", "topics": ["dating", "drinks"], "colors": ["#5A3B2E", "#A9674A", "#E2A98B", "#F2D3B9", "#FFF6EC"] },
+    { "id": "date-movie-night", "name": "Movie Night", "harmony": "plum + rose + amber", "energy": "soft", "topics": ["dating", "movies"], "colors": ["#2A1F3D", "#7B3F6E", "#D2607A", "#F2A65A", "#FBEFE0"] },
+    { "id": "date-sunset-walk", "name": "Sunset Walk", "harmony": "indigo + mauve + coral + peach", "energy": "soft", "topics": ["dating"], "colors": ["#3F4C7A", "#9A5E8C", "#E97F7F", "#F5B27A", "#FFF2E2"] },
+    { "id": "date-picnic-for-two", "name": "Picnic for Two", "harmony": "raspberry + pink + butter + sage", "energy": "soft", "topics": ["dating", "sunny"], "colors": ["#C7455E", "#F2A3A8", "#F6D68C", "#8DBF9F", "#FFF8EE"] },
+    { "id": "date-first-date-jitters", "name": "First Date Jitters", "harmony": "blue + pink + butter", "energy": "vivid", "topics": ["dating"], "colors": ["#2E4C8A", "#E26A8D", "#F6B8C6", "#F5D07A", "#FFF6F0"] },
+    { "id": "romance-rose-garden", "name": "Rose Garden", "harmony": "monochrome rose", "energy": "soft", "topics": [], "colors": ["#6B1E3A", "#B83B64", "#E98AA6", "#F7C6D3", "#FFF3F5"] },
+    { "id": "romance-slow-dance", "name": "Slow Dance", "harmony": "plum to blush", "energy": "soft", "topics": [], "colors": ["#2B1B3A", "#6E2F66", "#B8527E", "#E8A2A8", "#FBEDE8"] },
+    { "id": "romance-love-notes", "name": "Love Notes", "harmony": "dusty rose + paper", "energy": "soft", "topics": [], "colors": ["#7A3B4E", "#C4788C", "#E8B4B8", "#C9B7A0", "#FAF1E9"] },
+    { "id": "romance-velvet-and-blush", "name": "Velvet and Blush", "harmony": "burgundy to blush", "energy": "soft", "topics": [], "colors": ["#4B1530", "#9C2A55", "#E27B93", "#F4BFC8", "#FFF4F2"] },
+    { "id": "romance-moonlight-kiss", "name": "Moonlight Kiss", "harmony": "indigo + lilac + pink", "energy": "soft", "topics": [], "colors": ["#1F2748", "#4B4F8F", "#9A8FC8", "#E6A8C8", "#FBF1F6"] },
+    { "id": "romance-ribbon-and-lace", "name": "Ribbon and Lace", "harmony": "mauve + cream", "energy": "soft", "topics": [], "colors": ["#8C4A5E", "#D38C9C", "#EBC4C8", "#F5E1D3", "#FFFAF3"] }
   ],
   "nostalgic": [
     { "id": "festival-dhunuchi-smoke", "name": "Dhunuchi Smoke", "harmony": "smoke + gold", "energy": "soft", "colors": ["#8D8A88", "#C9A24B", "#B14126", "#5B3A6E", "#F2B56B"] },
@@ -108,7 +164,10 @@
     { "id": "nostalgic-dadus-verandah", "name": "Verandah Afternoon", "harmony": "green + wood + amber", "energy": "soft", "colors": ["#4F6B3A", "#6B4430", "#7A5C43", "#D9902B", "#E9E2D2"] },
     { "id": "nostalgic-cassette-shelf", "name": "Cassette Shelf", "harmony": "brown + sage + amber", "energy": "soft", "colors": ["#3A2E2A", "#7B4B3A", "#C98F4B", "#7E9C8F", "#EADFC4"] },
     { "id": "nostalgic-yearbook-pages", "name": "Yearbook Pages", "harmony": "earth + dusty blue", "energy": "soft", "colors": ["#5C4A3D", "#9C7A5B", "#CDB891", "#8FA3A8", "#F1E8D4"] },
-    { "id": "family-old-photo-album", "name": "Old Photo Album", "harmony": "sepia + faded sage", "energy": "soft", "colors": ["#5A4636", "#8E6F55", "#C2A887", "#8FA39A", "#EFE5D3"] }
+    { "id": "family-old-photo-album", "name": "Old Photo Album", "harmony": "sepia + faded sage", "energy": "soft", "colors": ["#5A4636", "#8E6F55", "#C2A887", "#8FA39A", "#EFE5D3"] },
+    { "id": "fall-sweater-and-cider", "name": "Sweater and Cider", "harmony": "brown + cider + wool", "energy": "soft", "topics": ["autumn"], "colors": ["#5B3A2E", "#A8693F", "#E2A455", "#C9A98A", "#F6EAD8"] },
+    { "id": "fall-bookshop-rain", "name": "Bookshop in the Rain", "harmony": "ink green + leather + parchment", "energy": "soft", "topics": ["autumn", "reading", "rain"], "colors": ["#2F3A3A", "#6B4A36", "#B8793E", "#D9B77A", "#F2E7D3"] },
+    { "id": "fall-leaf-pile-memories", "name": "Leaf Pile Memories", "harmony": "earth + ochre", "energy": "soft", "topics": ["autumn"], "colors": ["#6B3A2A", "#B5651D", "#D8A24A", "#8E7A4F", "#F3E6CF"] }
   ],
   "grateful": [
     { "id": "grateful-golden-hour-thanks", "name": "Golden Hour Thanks", "harmony": "gold + blush", "energy": "soft", "colors": ["#8A5A2B", "#D49A3C", "#F0CE82", "#E7A98B", "#FBF3E2"] },
@@ -123,7 +182,8 @@
     { "id": "rest-fever-dream", "name": "Fever Dream", "harmony": "dusty violet + peach", "energy": "soft", "colors": ["#5C4A72", "#8E7AA6", "#C9B2C4", "#E9C7B8", "#F6EEE8"] },
     { "id": "rest-blanket-burrito", "name": "Blanket Burrito", "harmony": "soft blue + blush", "energy": "soft", "colors": ["#5E7090", "#9CABC4", "#D3C7BA", "#E8AFA0", "#F8F2EA"] },
     { "id": "rest-pale-morning", "name": "Pale Morning", "harmony": "pale grey + cream", "energy": "soft", "colors": ["#7C8B97", "#B9C4CC", "#DCE2E3", "#E3C7A8", "#FAF6EF"] },
-    { "id": "rest-medicine-cabinet", "name": "Medicine Cabinet", "harmony": "clinical teal + blush", "energy": "soft", "colors": ["#4F7C82", "#8DB6B5", "#D5E4E0", "#E7B4A5", "#F8F4EC"] }
+    { "id": "rest-medicine-cabinet", "name": "Medicine Cabinet", "harmony": "clinical teal + blush", "energy": "soft", "colors": ["#4F7C82", "#8DB6B5", "#D5E4E0", "#E7B4A5", "#F8F4EC"] },
+    { "id": "travel-rainy-layover", "name": "Rainy Layover", "harmony": "slate + lamp amber", "energy": "soft", "topics": ["transport"], "colors": ["#3A4558", "#6B7C94", "#A3B0C0", "#E0B27A", "#F1ECE4"] }
   ],
   "anxious": [
     { "id": "rain-thunder-evening", "name": "Thunder Evening", "harmony": "analogous blue + amber", "energy": "soft", "colors": ["#2E3F63", "#4A6485", "#8190B8", "#A9BFD6", "#E9B44C"] },
@@ -171,5 +231,26 @@
     { "id": "creative-ink-and-wash", "name": "Ink and Wash", "harmony": "navy to terracotta", "energy": "soft", "colors": ["#1F2B3A", "#475B73", "#8CA1B8", "#D6A27C", "#F3EAD9"] },
     { "id": "creative-gig-night", "name": "Gig Night", "harmony": "violet + magenta + amber", "energy": "soft", "colors": ["#251A33", "#6E3A82", "#CC4F6B", "#F0A04B", "#F1E6D6"] },
     { "id": "creative-collage", "name": "Collage", "harmony": "tetrad", "energy": "soft", "colors": ["#C44D3C", "#E9A23B", "#4E8F9E", "#7A5C99", "#F5ECDA"] }
+  ],
+  "dreamy": [
+    { "id": "dreamy-cotton-candy-cloud", "name": "Cotton Candy Cloud", "harmony": "periwinkle + lilac + pink + sky", "energy": "soft", "topics": [], "colors": ["#6C78C0", "#B79BE0", "#F2A9CB", "#BFE3F2", "#FFF6F8"] },
+    { "id": "dreamy-lavender-haze", "name": "Lavender Haze", "harmony": "monochrome violet to blush", "energy": "soft", "topics": [], "colors": ["#5F5A9E", "#9D8FD0", "#CBB9EC", "#F0C7DE", "#FBF4FA"] },
+    { "id": "dreamy-aurora-milk", "name": "Aurora Milk", "harmony": "teal + mint + lilac", "energy": "soft", "topics": [], "colors": ["#3F6F8F", "#6FB7B0", "#A8D8C0", "#C9B6E8", "#F7F5FB"] },
+    { "id": "dreamy-peach-fuzz-dawn", "name": "Peach Fuzz Dawn", "harmony": "mauve to peach", "energy": "soft", "topics": [], "colors": ["#B77A8E", "#E9A08F", "#F7C8A0", "#CFE0C8", "#FFF8EE"] },
+    { "id": "dreamy-moonlit-meadow", "name": "Moonlit Meadow", "harmony": "indigo + periwinkle + sage", "energy": "soft", "topics": [], "colors": ["#3E4A7A", "#7B84B8", "#B5B8DE", "#DDE6C8", "#F6F7EE"] },
+    { "id": "dreamy-soap-bubble", "name": "Soap Bubble", "harmony": "blue + lilac + pink", "energy": "soft", "topics": [], "colors": ["#4A8FC2", "#8EC9E8", "#C6B7F0", "#F4B6D6", "#FCFAFF"] },
+    { "id": "dreamy-starlit-lilac", "name": "Starlit Lilac", "harmony": "navy to orchid", "energy": "soft", "topics": [], "colors": ["#2F3A6E", "#6A5FB0", "#A99AE0", "#E4B5E8", "#FAF1FB"] },
+    { "id": "dreamy-sleepy-sunrise", "name": "Sleepy Sunrise", "harmony": "violet + rose + apricot", "energy": "soft", "topics": [], "colors": ["#7A6FA8", "#C58BB5", "#F0A8A0", "#F8D2A8", "#FFF7EA"] }
+  ],
+  "disappointed": [
+    { "id": "badfood-soggy-fries", "name": "Soggy Fries", "harmony": "limp olive greys", "energy": "soft", "topics": ["food"], "colors": ["#4F4C30", "#8E8A58", "#B9B27A", "#D3CCAA", "#EDE9D8"] },
+    { "id": "badfood-burnt-toast", "name": "Burnt Toast", "harmony": "char to crumb", "energy": "soft", "topics": ["food", "cooking"], "colors": ["#1F1A17", "#4A3326", "#7A5338", "#B08A5E", "#E7D8BC"] },
+    { "id": "badfood-cold-leftovers", "name": "Cold Leftovers", "harmony": "grey-green + beige", "energy": "soft", "topics": ["food"], "colors": ["#4F5B5E", "#7D8A87", "#A9AF9F", "#D6B49C", "#EDE8DD"] },
+    { "id": "badfood-stale-bread", "name": "Stale Bread", "harmony": "dry khaki", "energy": "soft", "topics": ["food"], "colors": ["#6B5B3E", "#9A8556", "#C3AE7A", "#DCCDA0", "#F2EBD6"] },
+    { "id": "badfood-gas-station-sandwich", "name": "Gas Station Sandwich", "harmony": "tired green + ham pink", "energy": "soft", "topics": ["food"], "colors": ["#3E5E4A", "#7B8F5C", "#B9AE6E", "#C98B6A", "#EFE8D2"] },
+    { "id": "badfood-undercooked", "name": "Undercooked", "harmony": "raw pink + pale", "energy": "soft", "topics": ["food", "cooking"], "colors": ["#6E3F3A", "#B5726A", "#D9A6A0", "#C9C0A2", "#F3EDE0"] },
+    { "id": "letdown-rained-out-plans", "name": "Rained Out Plans", "harmony": "slate + warm grey", "energy": "soft", "topics": ["rain"], "colors": ["#3C4A5C", "#6D7F94", "#A3AFBB", "#C9B8A8", "#EDE7DF"] },
+    { "id": "letdown-missed-train", "name": "Missed Train", "harmony": "grey + clay", "energy": "soft", "topics": ["transport"], "colors": ["#4A4A52", "#7C7C86", "#A7A19A", "#D19A7C", "#EDE8E0"] },
+    { "id": "letdown-spilled-coffee", "name": "Spilled Coffee", "harmony": "brown to paper", "energy": "soft", "topics": ["drinks"], "colors": ["#4A3225", "#7A5A45", "#B49A84", "#D2C2B0", "#F3EDE4"] }
   ]
 }
