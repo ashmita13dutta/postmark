@@ -1,20 +1,36 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Screen from '../app/Screen'
 import Stamp from '../components/stamp/Stamp'
 import colorNames from '../data/colornames.json'
 import { feelings, defaultFeeling } from '../data/feelings.json'
 import palettes from '../data/palettes.json'
+import shifts from '../data/shifts.json'
 import { topics, fallback } from '../data/topics.json'
 import { namePalette } from '../engine/colorNames'
+import { paletteFromImageFile } from '../engine/colorExtract'
 import { detectMood, contextAt } from '../engine/mood'
-import { composePalette } from '../engine/palette'
+import { buildPalette, composePalette } from '../engine/palette'
 import { now } from '../lib/clock'
 import { chroma, hexToOklab, hue } from '../lib/color'
 import { todayKey } from '../lib/dates'
 import './palettes.css'
 
 const FEELING_IDS = Object.keys(feelings)
-const VIEWS = ['Note', 'Mix', 'Feelings', 'Themes', 'Topics', 'Names']
+const VIEWS = ['Note', 'Photo', 'Mix', 'Feelings', 'Themes', 'Topics', 'Names']
+const MONTHS = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+]
 const SAMPLE_NOTES = [
   'Went shopping with Riya, bought the cutest dress, so happy!',
   'Exam tomorrow and I am so stressed. Cannot focus at all.',
@@ -65,6 +81,7 @@ export default function Palettes() {
         ))}
       </div>
       {view === 'Note' && <NoteView />}
+      {view === 'Photo' && <PhotoView />}
       {view === 'Mix' && <MixView />}
       {view === 'Feelings' && <FeelingsView />}
       {view === 'Themes' && <ThemesView />}
@@ -92,17 +109,30 @@ function Swatches({ colors, label }) {
 /** Type a note and see what the mood engine makes of it, and the stamp it would produce. */
 function NoteView() {
   const [text, setText] = useState(SAMPLE_NOTES[0])
-  // time of day and month come from the app clock, so ?now= time travel changes the fallbacks
-  const ctx = contextAt(now())
+  // time of day and month default to the app clock (so ?now= time travel works), and can be
+  // changed here to see the same note at another hour or in another season
+  const clock = contextAt(now())
+  const [hour, setHour] = useState(clock.hour)
+  const [month, setMonth] = useState(clock.month)
+  const [profile, setProfile] = useState('generic')
   const day = todayKey()
+
   const mood = useMemo(
-    () => detectMood({ text, hour: ctx.hour, month: ctx.month }),
-    [text, ctx.hour, ctx.month],
+    () => detectMood({ text, hour, month, profile }),
+    [text, hour, month, profile],
   )
-  const result = useMemo(
+  const built = useMemo(
     () =>
-      composePalette({ feeling: mood.feeling, topic: mood.topic, seed: day, energy: mood.energy }),
-    [mood.feeling, mood.topic, mood.energy, day],
+      buildPalette({
+        feeling: mood.feeling,
+        topic: mood.topic,
+        energy: mood.energy,
+        seed: day,
+        hour,
+        month,
+        profile,
+      }),
+    [mood.feeling, mood.topic, mood.energy, day, hour, month, profile],
   )
   const how = (source, words) =>
     ({
@@ -138,9 +168,14 @@ function NoteView() {
       <div className="mix">
         <div className="mix__col">
           <div className="lbl">Today’s stamp</div>
-          <Stamp colors={result.colors} seed={day} width={120} label="Stamp for this note" />
+          <Stamp
+            colors={built.colors.map((c) => c.hex)}
+            seed={day}
+            width={120}
+            label={`Stamp: ${built.colors.map((c) => c.name).join(', ')}`}
+          />
           <span className="tag">
-            {result.tagged ? 'made for this' : result.mixed ? 'accents added' : result.palette.name}
+            {built.tagged ? 'made for this' : built.mixed ? 'accents added' : built.palette.name}
           </span>
         </div>
       </div>
@@ -167,9 +202,136 @@ function NoteView() {
             {mood.source.topic === 'words' ? ` · ${mood.confidence.topic} confidence` : ''}
           </small>
         </div>
+        <div>
+          <span className="lbl">Light</span>
+          <b>
+            {built.time} · {built.season}
+          </b>
+          <small>the palette is nudged a little for the hour and the season</small>
+        </div>
       </div>
 
-      <Swatches colors={result.colors} label="Stamp colors" />
+      <div className="controls">
+        <label>
+          <span className="lbl">Hour · {String(hour).padStart(2, '0')}:00</span>
+          <input
+            type="range"
+            min="0"
+            max="23"
+            value={hour}
+            onChange={(e) => setHour(Number(e.target.value))}
+            aria-label="Hour of day"
+          />
+        </label>
+        <label>
+          <span className="lbl">Month</span>
+          <select
+            className="picker"
+            value={month}
+            onChange={(e) => setMonth(Number(e.target.value))}
+          >
+            {MONTHS.map((m, i) => (
+              <option key={m} value={i + 1}>
+                {m}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          <span className="lbl">Seasons like</span>
+          <select className="picker" value={profile} onChange={(e) => setProfile(e.target.value)}>
+            {Object.keys(shifts.profiles).map((p) => (
+              <option key={p} value={p}>
+                {p}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+
+      <NamedSwatches colors={built.colors} label="Stamp colors" />
+    </>
+  )
+}
+
+/** Five already-named colors (as the pipeline and the photo extractor return them). */
+function NamedSwatches({ colors, label }) {
+  return (
+    <ul className="swatches" aria-label={label}>
+      {colors.map((c) => (
+        <li key={c.hex}>
+          <i style={{ background: c.hex }} />
+          <span className="pcard__name">{c.name}</span>
+          <code>{c.hex}</code>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+/** Pick a photo from the phone and see the stamp colors it would make. Nothing is uploaded. */
+function PhotoView() {
+  const [state, setState] = useState({ status: 'idle' })
+  const [thumb, setThumb] = useState(null)
+
+  // free the preview image when it is replaced or the view closes
+  useEffect(() => () => thumb && URL.revokeObjectURL(thumb), [thumb])
+
+  async function onPick(e) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setState({ status: 'working' })
+    setThumb(URL.createObjectURL(file))
+    try {
+      setState({ status: 'done', result: await paletteFromImageFile(file) })
+    } catch {
+      setState({ status: 'error' })
+    }
+  }
+
+  const result = state.result
+  return (
+    <>
+      <p className="screen__note">
+        Choose a photo and see the five colors it would give your stamp. The picture is read on this
+        phone and shrunk to 64 pixels; it is never uploaded.
+      </p>
+      <label className="shuffle filebtn">
+        Choose a photo
+        <input type="file" accept="image/*" onChange={onPick} hidden />
+      </label>
+
+      {state.status === 'working' && <p className="screen__note">Reading colors…</p>}
+      {state.status === 'error' && (
+        <p className="screen__note">That file could not be read as a picture. Try another one.</p>
+      )}
+
+      {result && (
+        <>
+          <div className="mix">
+            {thumb && (
+              <div className="mix__col">
+                <div className="lbl">Your photo</div>
+                <img className="thumb" src={thumb} alt="The photo you chose" />
+              </div>
+            )}
+            <div className="mix__arrow" aria-hidden="true">
+              →
+            </div>
+            <div className="mix__col">
+              <div className="lbl">Its stamp</div>
+              <Stamp
+                colors={result.colors.map((c) => c.hex)}
+                seed="photo"
+                width={110}
+                label={`Photo stamp: ${result.colors.map((c) => c.name).join(', ')}`}
+              />
+              <span className="tag">from your photo</span>
+            </div>
+          </div>
+          <NamedSwatches colors={result.colors} label="Photo colors" />
+        </>
+      )}
     </>
   )
 }

@@ -1,0 +1,32 @@
+{
+  "times": {
+    "night": { "hours": [21, 22, 23, 0, 1, 2, 3, 4], "dL": -0.035, "dC": -0.05, "warmth": -0.4, "hue": -4 },
+    "dawn": { "hours": [5, 6, 7], "dL": 0.015, "dC": -0.03, "warmth": 0.2, "hue": 4 },
+    "morning": { "hours": [8, 9, 10, 11], "dL": 0.02, "dC": 0.03, "warmth": 0.1, "hue": 0 },
+    "midday": { "hours": [12, 13, 14, 15], "dL": 0.01, "dC": 0.05, "warmth": 0, "hue": 0 },
+    "golden": { "hours": [16, 17, 18], "dL": 0, "dC": 0.04, "warmth": 0.5, "hue": 6 },
+    "evening": { "hours": [19, 20], "dL": -0.02, "dC": -0.02, "warmth": 0.2, "hue": 2 }
+  },
+
+  "seasons": {
+    "spring": { "dL": 0.02, "dC": 0.04, "warmth": 0, "hue": 8 },
+    "summer": { "dL": 0.01, "dC": 0.06, "warmth": 0.3, "hue": 0 },
+    "monsoon": { "dL": -0.02, "dC": 0.02, "warmth": -0.3, "hue": -6 },
+    "autumn": { "dL": -0.01, "dC": 0, "warmth": 0.6, "hue": 10 },
+    "winter": { "dL": 0, "dC": -0.08, "warmth": -0.5, "hue": -8 }
+  },
+
+  "profiles": {
+    "generic": {
+      "1": "winter", "2": "winter", "3": "spring", "4": "spring", "5": "spring", "6": "summer",
+      "7": "summer", "8": "summer", "9": "autumn", "10": "autumn", "11": "autumn", "12": "winter"
+    },
+    "kolkata": {
+      "1": "winter", "2": "winter", "3": "summer", "4": "summer", "5": "summer", "6": "monsoon",
+      "7": "monsoon", "8": "monsoon", "9": "monsoon", "10": "autumn", "11": "autumn", "12": "winter"
+    }
+  },
+
+  "jitter": { "hue": 5, "dL": 0.015, "dC": 0.06 },
+  "strength": 1
+}

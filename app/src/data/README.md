@@ -104,6 +104,23 @@ Palettes are grouped by feeling. Each has exactly 5 hex colors.
   - every color has a close-matching name in `colornames.json`
 - Joyful has the most palettes, including the vivid pink + yellow + blue + white "feel-good day" ones.
 
+## shifts.json: the light of the day
+
+After a palette is chosen, it is nudged a little for the **time of day** and the **season**, plus a
+tiny seeded wobble from the date, so two rainy days never look identical. Night is a touch darker
+and cooler, golden hour (4-7pm) warmer, winter less colorful, summer more.
+
+- `times`: each time-of-day bucket lists its `hours` (every hour 0-23 must belong to exactly one).
+- `seasons`: `dL` lighter/darker, `dC` more/less colorful, `warmth` toward orange (+) or blue (-),
+  `hue` a few degrees of rotation. Keep these small: it is a nudge, not a repaint.
+- `profiles`: which month is which season. `kolkata` has a monsoon (June-September);
+  `generic` has spring, summer, autumn and winter. Add your own with all 12 months, and give it the
+  same name in `topics.json` `fallback.profiles`.
+- `jitter`: the day-to-day wobble. `strength`: 1 is normal, 0 turns all shifts off.
+- Safety: if a shift would make two colors look alike or too strong, it is eased back (half, then a
+  quarter, then none), so it can never spoil a palette. The tests check this for every palette at
+  every time of day in every season.
+
 ## colornames.json
 
 Every name is paired with the color it describes. When a stamp has a color, the app finds the

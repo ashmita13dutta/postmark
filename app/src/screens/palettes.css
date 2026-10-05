@@ -390,3 +390,33 @@
   font: 400 12px/1.4 var(--font-ui);
   color: var(--ink-50);
 }
+
+/* photo + controls */
+.filebtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 16px;
+  cursor: pointer;
+}
+.thumb {
+  width: 110px;
+  height: 132px;
+  object-fit: cover;
+  border-radius: 6px;
+  box-shadow: 0 3px 10px rgba(42, 38, 32, 0.25);
+}
+.controls {
+  display: grid;
+  gap: 14px;
+  margin-top: 14px;
+}
+.controls label {
+  display: grid;
+  gap: 6px;
+}
+.controls input[type='range'] {
+  width: 100%;
+  min-height: var(--tap);
+  accent-color: var(--postmark);
+}
