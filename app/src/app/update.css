@@ -1,0 +1,43 @@
+.update {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  /* at the top so it never collides with the install banner above the tab bar */
+  top: calc(var(--safe-top) + 10px);
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 10px 10px 14px;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(42, 38, 32, 0.28);
+  font: 400 12px/1.35 var(--font-ui);
+}
+
+.update__text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.update__text strong {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.update__text span {
+  opacity: 0.75;
+}
+
+.update__btn {
+  min-height: var(--tap);
+  padding: 0 18px;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: var(--card-warm);
+  color: var(--ink);
+  font: 600 13px var(--font-ui);
+}

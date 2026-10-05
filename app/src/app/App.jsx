@@ -7,6 +7,7 @@ import Today from '../screens/Today'
 import You from '../screens/You'
 import InstallPrompt from './InstallPrompt'
 import TabBar from './TabBar'
+import UpdatePrompt from './UpdatePrompt'
 
 // Hash routing: works on any static host (GitHub Pages) with no server rewrites, and
 // keeps ?now= time travel working.
@@ -22,6 +23,7 @@ export default function App() {
         <Route path="/palettes" element={<Palettes />} />
         <Route path="*" element={<Today />} />
       </Routes>
+      <UpdatePrompt />
       <InstallPrompt />
       <TabBar />
     </HashRouter>
