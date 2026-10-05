@@ -1,66 +1,166 @@
 {
   "rain": [
-    { "id": "rain-wet-alley", "name": "Wet Alley", "colors": ["#3A5771", "#5B6470", "#B6C7D6", "#E7C64B", "#B14126"] },
-    { "id": "rain-mizzle-morning", "name": "Mizzle Morning", "colors": ["#4C5F73", "#7A8B9C", "#B6C7D6", "#D3DCE3", "#F0C419"] },
-    { "id": "rain-banyan-downpour", "name": "Banyan Downpour", "colors": ["#3F5B3C", "#6E8B52", "#3F7D7A", "#9CC5BD", "#E39544"] },
-    { "id": "rain-thunder-evening", "name": "Thunder Evening", "colors": ["#2E3F63", "#4A6485", "#5A6C94", "#A9BFD6", "#E9B44C"] }
+    { "id": "rain-wet-alley", "name": "Wet Alley", "harmony": "cool + warm accents", "colors": ["#3A5771", "#5B6470", "#B6C7D6", "#E7C64B", "#B14126"] },
+    { "id": "rain-mizzle-morning", "name": "Mizzle Morning", "harmony": "analogous cool", "colors": ["#4C5F73", "#7A8B9C", "#B6C7D6", "#D3DCE3", "#F0C419"] },
+    { "id": "rain-banyan-downpour", "name": "Banyan Downpour", "harmony": "analogous green-teal", "colors": ["#3F5B3C", "#6E8B52", "#3F7D7A", "#9CC5BD", "#E39544"] },
+    { "id": "rain-thunder-evening", "name": "Thunder Evening", "harmony": "analogous blue + amber", "colors": ["#2E3F63", "#4A6485", "#8190B8", "#A9BFD6", "#E9B44C"] },
+    { "id": "rain-raincoat-yellow", "name": "Raincoat Yellow", "harmony": "complementary blue / yellow", "colors": ["#2F4B6B", "#4F7CA3", "#A9C6DE", "#F2C230", "#E8E4DC"] }
   ],
   "festival": [
-    { "id": "festival-ashtami-morning", "name": "Ashtami Morning", "colors": ["#A3262A", "#F7F3EA", "#E7C64B", "#D2321E", "#E39544"] },
-    { "id": "festival-dhunuchi-smoke", "name": "Dhunuchi Smoke", "colors": ["#8D8A88", "#C9A24B", "#B14126", "#5B3A6E", "#F2B56B"] },
-    { "id": "festival-pandal-lights", "name": "Pandal Lights", "colors": ["#2E3F63", "#E27A9A", "#F5C06A", "#CDA94B", "#B83A7B"] },
-    { "id": "festival-bijoya", "name": "Bijoya", "colors": ["#D1457D", "#F2A93B", "#F3E9D0", "#8A2E1E", "#E8764A"] }
+    { "id": "festival-ashtami-morning", "name": "Ashtami Morning", "harmony": "red + white + gold", "colors": ["#A3262A", "#F7F3EA", "#E7C64B", "#D2321E", "#E39544"] },
+    { "id": "festival-dhunuchi-smoke", "name": "Dhunuchi Smoke", "harmony": "smoke + gold", "colors": ["#8D8A88", "#C9A24B", "#B14126", "#5B3A6E", "#F2B56B"] },
+    { "id": "festival-pandal-lights", "name": "Pandal Lights", "harmony": "night + warm glow", "colors": ["#2E3F63", "#E27A9A", "#F5C06A", "#CDA94B", "#B83A7B"] },
+    { "id": "festival-bijoya", "name": "Bijoya", "harmony": "warm analogous", "colors": ["#D1457D", "#F2A93B", "#F3E9D0", "#8A2E1E", "#E8764A"] },
+    { "id": "festival-lantern-night", "name": "Lantern Night", "harmony": "plum to amber", "colors": ["#2A1A3A", "#7A2E5C", "#D4572B", "#F2A93B", "#FBE3A8"] },
+    { "id": "festival-carnival-confetti", "name": "Carnival Confetti", "harmony": "muted triad", "colors": ["#2B5A99", "#C8433F", "#E3B53C", "#3E8E71", "#F6EAD0"] }
   ],
   "cozy": [
-    { "id": "cozy-kullad-chai", "name": "Kullad Chai", "colors": ["#5B3F2E", "#8B5A3C", "#C77B4A", "#EBCB75", "#F3E9D0"] },
-    { "id": "cozy-blanket-fort", "name": "Blanket Fort", "colors": ["#7B5848", "#A38B6D", "#C98B94", "#E3D3A5", "#F2EEE4"] },
-    { "id": "cozy-rainy-window-tea", "name": "Rainy Window Tea", "colors": ["#4A5058", "#8B5A3C", "#D9902B", "#F0B58C", "#F7F3EA"] }
+    { "id": "cozy-kullad-chai", "name": "Kullad Chai", "harmony": "monochrome brown", "colors": ["#5B3F2E", "#8B5A3C", "#C77B4A", "#EBCB75", "#F3E9D0"] },
+    { "id": "cozy-blanket-fort", "name": "Blanket Fort", "harmony": "neutral + rose", "colors": ["#7B5848", "#A38B6D", "#C98B94", "#E3D3A5", "#F2EEE4"] },
+    { "id": "cozy-rainy-window-tea", "name": "Rainy Window Tea", "harmony": "grey + amber", "colors": ["#4A5058", "#8B5A3C", "#D9902B", "#F0B58C", "#F7F3EA"] },
+    { "id": "cozy-winter-fireside", "name": "Winter Fireside", "harmony": "ember analogous", "colors": ["#3B2A2A", "#8C3B2E", "#D98A45", "#F0C48B", "#F4EBDD"] },
+    { "id": "cozy-sweater-weather", "name": "Sweater Weather", "harmony": "dusty neutrals", "colors": ["#4B4A59", "#8D6E63", "#C4A484", "#B5838D", "#EDE4DA"] }
   ],
   "pressure": [
-    { "id": "pressure-midnight-oil", "name": "Midnight Oil", "colors": ["#2D3347", "#4A6485", "#C9A45B", "#B83A32", "#D6CDB8"] },
-    { "id": "pressure-highlighter-fade", "name": "Highlighter Fade", "colors": ["#33322F", "#7D9CC4", "#D9D26E", "#E58FA0", "#EFEBE3"] },
-    { "id": "pressure-exam-hall", "name": "Exam Hall", "colors": ["#5B6470", "#8E969B", "#D6CDB8", "#B83A32", "#3A5771"] }
+    { "id": "pressure-midnight-oil", "name": "Midnight Oil", "harmony": "navy + lamp gold + red", "colors": ["#2D3347", "#4A6485", "#C9A45B", "#B83A32", "#D6CDB8"] },
+    { "id": "pressure-highlighter-fade", "name": "Highlighter Fade", "harmony": "charcoal + pastel marker", "colors": ["#33322F", "#7D9CC4", "#D9D26E", "#E58FA0", "#EFEBE3"] },
+    { "id": "pressure-exam-hall", "name": "Exam Hall", "harmony": "grey + blue + red", "colors": ["#5B6470", "#8E969B", "#D6CDB8", "#B83A32", "#3A5771"] },
+    { "id": "pressure-all-nighter", "name": "All-Nighter", "harmony": "navy + coral accent", "colors": ["#1F2A44", "#3D5A80", "#98C1D9", "#EE6C4D", "#E0E8EF"] },
+    { "id": "pressure-coffee-and-panic", "name": "Coffee and Panic", "harmony": "brown + red pen", "colors": ["#2B2118", "#6B4F3A", "#B83A32", "#C9A45B", "#E9E0D0"] }
   ],
   "travel": [
-    { "id": "travel-window-seat", "name": "Window Seat", "colors": ["#6FA0C0", "#4F7A47", "#E1D0A6", "#F0C419", "#B9633F"] },
-    { "id": "travel-night-train", "name": "Night Train", "colors": ["#243248", "#4A6485", "#E9B44C", "#B58B3A", "#8D8A88"] },
-    { "id": "travel-digha-shore", "name": "Digha Shore", "colors": ["#A5CEC8", "#E1D0A6", "#4A7A9B", "#F3E9D0", "#E88B2D"] },
-    { "id": "travel-hill-station-mist", "name": "Hill Station Mist", "colors": ["#C5D2D3", "#4F7A47", "#8FA595", "#5A6C94", "#F2EEE4"] }
+    { "id": "travel-window-seat", "name": "Window Seat", "harmony": "sky + earth", "colors": ["#6FA0C0", "#4F7A47", "#E1D0A6", "#F0C419", "#B9633F"] },
+    { "id": "travel-night-train", "name": "Night Train", "harmony": "navy + lamp amber", "colors": ["#243248", "#4A6485", "#E9B44C", "#B58B3A", "#8D8A88"] },
+    { "id": "travel-digha-shore", "name": "Seashore", "harmony": "sea + sand + sun", "colors": ["#A5CEC8", "#E1D0A6", "#4A7A9B", "#F3E9D0", "#E88B2D"] },
+    { "id": "travel-hill-station-mist", "name": "Hill Station Mist", "harmony": "analogous misty green-blue", "colors": ["#C5D2D3", "#4F7A47", "#8FA595", "#5A6C94", "#F2EEE4"] },
+    { "id": "travel-airport-dawn", "name": "Airport Dawn", "harmony": "blue + peach sunrise", "colors": ["#2C3E5C", "#6C8EBF", "#F2B880", "#E96E58", "#F7EBDD"] },
+    { "id": "travel-road-trip-dust", "name": "Road Trip Dust", "harmony": "earth + teal", "colors": ["#5B4636", "#C0764A", "#E2B77A", "#7FA6A0", "#F3E7D2"] }
   ],
   "friends": [
-    { "id": "friends-adda-evening", "name": "Adda Evening", "colors": ["#E8764A", "#F0C419", "#3F7D7A", "#D9608A", "#F3E9D0"] },
-    { "id": "friends-rooftop-chatter", "name": "Rooftop Chatter", "colors": ["#4A6485", "#E39544", "#F2C4B8", "#8FAF6A", "#F7F3EA"] },
-    { "id": "friends-laugh-until-it-hurts", "name": "Laugh Until It Hurts", "colors": ["#D2321E", "#F2A93B", "#9CC5BD", "#6F5FA8", "#F3E9D0"] }
+    { "id": "friends-adda-evening", "name": "Adda Evening", "harmony": "warm + teal", "colors": ["#E8764A", "#F0C419", "#3F7D7A", "#D9608A", "#F3E9D0"] },
+    { "id": "friends-rooftop-chatter", "name": "Rooftop Chatter", "harmony": "blue + orange complement", "colors": ["#4A6485", "#E39544", "#F2C4B8", "#8FAF6A", "#F7F3EA"] },
+    { "id": "friends-laugh-until-it-hurts", "name": "Laugh Until It Hurts", "harmony": "bright split complement", "colors": ["#D2321E", "#F2A93B", "#9CC5BD", "#6F5FA8", "#F3E9D0"] },
+    { "id": "friends-late-night-laughs", "name": "Late Night Laughs", "harmony": "plum + orange + teal", "colors": ["#3D2C5C", "#E4572E", "#F2A65A", "#4FB0A5", "#F8EFE0"] },
+    { "id": "friends-picnic-blanket", "name": "Picnic Blanket", "harmony": "muted triad", "colors": ["#D1495B", "#EDAE49", "#66A182", "#2E4057", "#F9F1E3"] }
   ],
   "lonely": [
-    { "id": "lonely-empty-room", "name": "Empty Room", "colors": ["#6B7A8F", "#8CA0B3", "#A3A8AD", "#4A5058", "#D3DCE3"] },
-    { "id": "lonely-heavy-sky", "name": "Heavy Sky", "colors": ["#4C5F73", "#6D6259", "#9AA7BD", "#B8BCBF", "#E9E2D2"] },
-    { "id": "lonely-quiet-hours", "name": "Quiet Hours", "colors": ["#3E5C5A", "#7A8B9C", "#8D8A88", "#C5D2D3", "#DAD6CC"] }
+    { "id": "lonely-empty-room", "name": "Empty Room", "harmony": "monochrome blue-grey", "colors": ["#6B7A8F", "#8CA0B3", "#B3A9A0", "#4A5058", "#D3DCE3"] },
+    { "id": "lonely-heavy-sky", "name": "Heavy Sky", "harmony": "grey + faint warm", "colors": ["#4C5F73", "#6D6259", "#9AA7BD", "#B8BCBF", "#E9E2D2"] },
+    { "id": "lonely-quiet-hours", "name": "Quiet Hours", "harmony": "desaturated teal-grey", "colors": ["#3E5C5A", "#7A8B9C", "#A8967F", "#C5D2D3", "#EDE8DC"] },
+    { "id": "lonely-grey-sunday", "name": "Grey Sunday", "harmony": "monochrome grey", "colors": ["#3F4550", "#6E7B8B", "#9FA9B5", "#C9C3BA", "#E8E4DC"] },
+    { "id": "lonely-cold-coffee", "name": "Cold Coffee", "harmony": "muted brown + blue", "colors": ["#4A3F3A", "#7D6B63", "#A99A92", "#6F8099", "#D8D2CA"] }
   ],
   "celebration": [
-    { "id": "celebration-candles-out", "name": "Candles Out", "colors": ["#D9473C", "#F2C94C", "#F4C7D1", "#3FA5A0", "#F7F3EA"] },
-    { "id": "celebration-sparkler", "name": "Sparkler", "colors": ["#5B3A6E", "#D1457D", "#F0C75E", "#E8764A", "#F5EBD3"] },
-    { "id": "celebration-cake-and-cheers", "name": "Cake and Cheers", "colors": ["#B83A7B", "#EBB0B8", "#F0A24F", "#9CC5BD", "#EFE4CB"] }
+    { "id": "celebration-candles-out", "name": "Candles Out", "harmony": "red + gold + teal", "colors": ["#D9473C", "#F2C94C", "#F4C7D1", "#3FA5A0", "#F7F3EA"] },
+    { "id": "celebration-sparkler", "name": "Sparkler", "harmony": "plum to gold", "colors": ["#5B3A6E", "#D1457D", "#F0C75E", "#E8764A", "#F5EBD3"] },
+    { "id": "celebration-cake-and-cheers", "name": "Cake and Cheers", "harmony": "berry + peach + mint", "colors": ["#B83A7B", "#EBB0B8", "#F0A24F", "#9CC5BD", "#EFE4CB"] },
+    { "id": "celebration-champagne-toast", "name": "Champagne Toast", "harmony": "gold + blush", "colors": ["#3B2F2F", "#C9A227", "#F0D98C", "#E8B7B0", "#FBF4E6"] },
+    { "id": "celebration-balloon-arch", "name": "Balloon Arch", "harmony": "muted primary triad", "colors": ["#2F6DB5", "#E94F64", "#F5B83D", "#7BC4A8", "#FDF3E1"] }
   ],
   "nostalgic": [
-    { "id": "nostalgic-faded-polaroid", "name": "Faded Polaroid", "colors": ["#7A5A44", "#A8896A", "#C9B79C", "#E3D3A5", "#EFE4CB"] },
-    { "id": "nostalgic-old-letters", "name": "Old Letters", "colors": ["#6E3F3A", "#A87445", "#D8C7A3", "#7C74B8", "#F2EEE4"] },
-    { "id": "nostalgic-dadus-verandah", "name": "Dadu's Verandah", "colors": ["#4F6B3A", "#6B4430", "#7A5C43", "#D9902B", "#E9E2D2"] }
+    { "id": "nostalgic-faded-polaroid", "name": "Faded Polaroid", "harmony": "sepia monochrome", "colors": ["#7A5A44", "#A8896A", "#C9B79C", "#E3D3A5", "#F7F0DF"] },
+    { "id": "nostalgic-old-letters", "name": "Old Letters", "harmony": "rosewood + faded ink", "colors": ["#6E3F3A", "#A87445", "#D8C7A3", "#7C74B8", "#F2EEE4"] },
+    { "id": "nostalgic-dadus-verandah", "name": "Verandah Afternoon", "harmony": "green + wood + amber", "colors": ["#4F6B3A", "#6B4430", "#7A5C43", "#D9902B", "#E9E2D2"] },
+    { "id": "nostalgic-cassette-shelf", "name": "Cassette Shelf", "harmony": "brown + sage + amber", "colors": ["#3A2E2A", "#7B4B3A", "#C98F4B", "#7E9C8F", "#EADFC4"] },
+    { "id": "nostalgic-yearbook-pages", "name": "Yearbook Pages", "harmony": "earth + dusty blue", "colors": ["#5C4A3D", "#9C7A5B", "#CDB891", "#8FA3A8", "#F1E8D4"] }
   ],
   "sunny": [
-    { "id": "sunny-kash-phool-sky", "name": "Kash Phool Sky", "colors": ["#7FA3C7", "#A9BFD6", "#8FAF6A", "#E7C64B", "#F7F3EA"] },
-    { "id": "sunny-maidan-morning", "name": "Maidan Morning", "colors": ["#7A9A4C", "#A9B64C", "#7FA3C7", "#F0CF5E", "#F3E9D0"] },
-    { "id": "sunny-shiuli-dawn", "name": "Shiuli Dawn", "colors": ["#E8764A", "#F0A24F", "#A8BC8B", "#F2E3A0", "#F7F3EA"] }
+    { "id": "sunny-kash-phool-sky", "name": "Open Sky", "harmony": "sky + white + yellow", "colors": ["#3F6FA0", "#7FA3C7", "#8FAF6A", "#E7C64B", "#F7F3EA"] },
+    { "id": "sunny-maidan-morning", "name": "Park Morning", "harmony": "green + blue + sun", "colors": ["#4F7A3A", "#A9B64C", "#6C9BC4", "#F0CF5E", "#F3E9D0"] },
+    { "id": "sunny-shiuli-dawn", "name": "Dawn Blossom", "harmony": "orange + green", "colors": ["#C95A38", "#F0A24F", "#7E9E6B", "#F2E3A0", "#F7F3EA"] },
+    { "id": "sunny-lemonade-stand", "name": "Lemonade Stand", "harmony": "yellow + orange + blue", "colors": ["#EDC24A", "#E98F3F", "#7FB685", "#4F8FB5", "#FAF1DA"] },
+    { "id": "sunny-kite-day", "name": "Kite Day", "harmony": "blue + coral + sun", "colors": ["#3A7CA5", "#D1553F", "#F0C14B", "#81B29A", "#F6EEDC"] }
   ],
   "night": [
-    { "id": "night-terrace-after-dark", "name": "Terrace After Dark", "colors": ["#243248", "#2E3F63", "#6F5FA8", "#E9B44C", "#D9DCE8"] },
-    { "id": "night-streetlight", "name": "Streetlight", "colors": ["#33322F", "#3A3D42", "#5A6C94", "#8D8A88", "#E9B44C"] },
-    { "id": "night-moonlit-roof", "name": "Moonlit Roof", "colors": ["#2D3347", "#4A6485", "#7C74B8", "#AEB8CF", "#F2EEE4"] }
+    { "id": "night-terrace-after-dark", "name": "Terrace After Dark", "harmony": "navy + violet + lamp", "colors": ["#243248", "#35508A", "#6F5FA8", "#E9B44C", "#D9DCE8"] },
+    { "id": "night-streetlight", "name": "Streetlight", "harmony": "charcoal + sodium amber", "colors": ["#33322F", "#5E656E", "#7B8FBF", "#B8B2A7", "#E9B44C"] },
+    { "id": "night-moonlit-roof", "name": "Moonlit Roof", "harmony": "analogous blue-violet", "colors": ["#2D3347", "#4A6485", "#7C74B8", "#AEB8CF", "#F2EEE4"] },
+    { "id": "night-fireflies", "name": "Fireflies", "harmony": "navy + green glow", "colors": ["#14213D", "#2B4570", "#6B8E4E", "#E2D36B", "#E8EDDF"] },
+    { "id": "night-downtown", "name": "Downtown After Hours", "harmony": "indigo + rose + amber", "colors": ["#1E1B2E", "#4A3F6B", "#B5547F", "#E9A66B", "#EDE6DB"] }
   ],
   "food": [
-    { "id": "food-jhalmuri-cart", "name": "Jhalmuri Cart", "colors": ["#B14126", "#E39544", "#E7C64B", "#8BAA6A", "#F3E9D0"] },
-    { "id": "food-phuchka-stall", "name": "Phuchka Stall", "colors": ["#7A4A2E", "#C73E4A", "#8FAF6A", "#D9902B", "#F3E9D0"] },
-    { "id": "food-mishti-counter", "name": "Mishti Counter", "colors": ["#C9A07A", "#D9902B", "#E58FA0", "#F1DDA8", "#F5EBD3"] },
-    { "id": "food-kathi-roll-wrap", "name": "Kathi Roll Wrap", "colors": ["#B14126", "#5E7F3C", "#F0A24F", "#E0BE85", "#EFE4CB"] }
+    { "id": "food-jhalmuri-cart", "name": "Street Snack Cart", "harmony": "red + orange + yellow", "colors": ["#B14126", "#E39544", "#E7C64B", "#8BAA6A", "#F3E9D0"] },
+    { "id": "food-phuchka-stall", "name": "Tangy Stall", "harmony": "brown + red + green", "colors": ["#7A4A2E", "#C73E4A", "#8FAF6A", "#D9902B", "#F3E9D0"] },
+    { "id": "food-mishti-counter", "name": "Sweet Counter", "harmony": "caramel + rose", "colors": ["#8A5A3C", "#D9902B", "#E58FA0", "#F1DDA8", "#A8BC8B"] },
+    { "id": "food-kathi-roll-wrap", "name": "Wrap and Roll", "harmony": "red + green + wheat", "colors": ["#B14126", "#5E7F3C", "#F0A24F", "#E0BE85", "#EFE4CB"] },
+    { "id": "food-pasta-night", "name": "Pasta Night", "harmony": "tomato + basil + cream", "colors": ["#7A2E1D", "#C4472B", "#E6A04A", "#6B8F4E", "#F7EBD3"] },
+    { "id": "food-dosa-morning", "name": "Breakfast Plate", "harmony": "golden + leaf green", "colors": ["#6B4A2B", "#D9A24E", "#F0D9A0", "#86A56E", "#FBF2DC"] }
+  ],
+  "love": [
+    { "id": "love-rose-petals", "name": "Rose Petals", "harmony": "monochrome rose", "colors": ["#6B1F3A", "#B83A5E", "#E58FA0", "#F3C9D1", "#FBF1EC"] },
+    { "id": "love-sunset-date", "name": "Sunset Date", "harmony": "plum to apricot", "colors": ["#3F2A52", "#A64B7A", "#E4806B", "#F2B879", "#FBEFE0"] },
+    { "id": "love-first-crush", "name": "First Crush", "harmony": "pink + sage", "colors": ["#D96C8A", "#F2A7B8", "#F9D6C9", "#9DB8A5", "#FFF6EC"] },
+    { "id": "love-candlelight-dinner", "name": "Candlelight Dinner", "harmony": "wine + amber", "colors": ["#2A1520", "#6E2B3A", "#C4704F", "#E9B872", "#F5EADA"] },
+    { "id": "love-love-letter", "name": "Love Letter", "harmony": "mauve + dusty blue", "colors": ["#5A3A4A", "#A8788C", "#D9B6BE", "#8B9DC3", "#F4EDE4"] }
+  ],
+  "calm": [
+    { "id": "calm-still-lake", "name": "Still Lake", "harmony": "monochrome teal", "colors": ["#2F4F5A", "#5C8A94", "#9FC1C4", "#DCCDB4", "#F6F3EC"] },
+    { "id": "calm-sage-morning", "name": "Sage Morning", "harmony": "monochrome sage", "colors": ["#5E7360", "#8FA98B", "#BBCDB4", "#D8B994", "#F6F1E6"] },
+    { "id": "calm-breathe", "name": "Breathe", "harmony": "soft blue + blush", "colors": ["#6F7F9A", "#A3B1C7", "#CAD5E0", "#E7C3B8", "#F7F3EE"] },
+    { "id": "calm-soft-dune", "name": "Soft Dune", "harmony": "sand + sage", "colors": ["#A68A6D", "#C9B08F", "#E3D2B8", "#8FA597", "#F5EFE4"] },
+    { "id": "calm-lavender-hour", "name": "Lavender Hour", "harmony": "monochrome lavender", "colors": ["#6F6A8C", "#9A94B8", "#C4BFD8", "#E3D8DC", "#F6F2F0"] }
+  ],
+  "focus": [
+    { "id": "focus-clean-desk", "name": "Clean Desk", "harmony": "blue + gold accent", "colors": ["#2B3A4A", "#4F6D8A", "#9FB7CC", "#E8C468", "#F4F1EA"] },
+    { "id": "focus-green-tea-study", "name": "Green Tea Study", "harmony": "green + gold", "colors": ["#34503E", "#6B8F71", "#A9C4A0", "#D9C27A", "#F2EEDC"] },
+    { "id": "focus-deep-work", "name": "Deep Work", "harmony": "slate + orange accent", "colors": ["#1F2933", "#3E4C59", "#7B8794", "#D9622B", "#EDEAE4"] },
+    { "id": "focus-terminal-glow", "name": "Terminal Glow", "harmony": "monochrome green", "colors": ["#0F1F1A", "#1F4D3A", "#3E8E6B", "#A8D5B5", "#EAF4EC"] },
+    { "id": "focus-planner-pastels", "name": "Planner Pastels", "harmony": "periwinkle + peach", "colors": ["#5B6C8F", "#9AA7D1", "#E6B8A2", "#F2D7B5", "#FAF3E8"] }
+  ],
+  "nature": [
+    { "id": "nature-forest-floor", "name": "Forest Floor", "harmony": "analogous green-olive", "colors": ["#2E4A34", "#567D46", "#8DA05C", "#B7A06A", "#E9E1C8"] },
+    { "id": "nature-river-bend", "name": "River Bend", "harmony": "teal to sand", "colors": ["#2C5F6B", "#4E8F8C", "#8FBFA6", "#D9D4A5", "#F3EFE0"] },
+    { "id": "nature-meadow", "name": "Meadow", "harmony": "green + yellow + pink bloom", "colors": ["#5D8A4A", "#A3C06B", "#F0D66C", "#E48DA0", "#F7F3E3"] },
+    { "id": "nature-campfire", "name": "Campfire", "harmony": "forest dark + ember", "colors": ["#1F2A22", "#6B4423", "#C5632B", "#F2A33A", "#EBDDC0"] },
+    { "id": "nature-mountain-morning", "name": "Mountain Morning", "harmony": "blue + apricot sunrise", "colors": ["#3C4F6B", "#7E94B2", "#BBC7D6", "#E7B890", "#F6EFE6"] }
+  ],
+  "creative": [
+    { "id": "creative-paint-water", "name": "Paint Water", "harmony": "muted triad", "colors": ["#3F5D9B", "#D96C5E", "#F0B84A", "#6BAF9B", "#F7EEDD"] },
+    { "id": "creative-studio-floor", "name": "Studio Floor", "harmony": "purple + coral + gold", "colors": ["#3A3A3A", "#8A5CA8", "#E87B6A", "#F3C86B", "#F4EEE2"] },
+    { "id": "creative-ink-and-wash", "name": "Ink and Wash", "harmony": "navy to terracotta", "colors": ["#1F2B3A", "#475B73", "#8CA1B8", "#D6A27C", "#F3EAD9"] },
+    { "id": "creative-gig-night", "name": "Gig Night", "harmony": "violet + magenta + amber", "colors": ["#251A33", "#6E3A82", "#CC4F6B", "#F0A04B", "#F1E6D6"] },
+    { "id": "creative-collage", "name": "Collage", "harmony": "tetrad", "colors": ["#C44D3C", "#E9A23B", "#4E8F9E", "#7A5C99", "#F5ECDA"] }
+  ],
+  "family": [
+    { "id": "family-sunday-lunch", "name": "Sunday Lunch", "harmony": "warm earth + sage", "colors": ["#7A4A2E", "#C77B3E", "#E8B96A", "#7FA37A", "#F7EBD4"] },
+    { "id": "family-home-walls", "name": "Home Walls", "harmony": "terracotta + sage", "colors": ["#B5654A", "#D9A27A", "#EACDA6", "#8DA89A", "#F8F0E1"] },
+    { "id": "family-old-photo-album", "name": "Old Photo Album", "harmony": "sepia + faded sage", "colors": ["#5A4636", "#8E6F55", "#C2A887", "#8FA39A", "#EFE5D3"] },
+    { "id": "family-courtyard-afternoon", "name": "Courtyard Afternoon", "harmony": "green + gold + coral", "colors": ["#3F6B5C", "#7FA58A", "#E9C46A", "#E76F51", "#FAF1E1"] },
+    { "id": "family-pyjama-morning", "name": "Pyjama Morning", "harmony": "periwinkle + peach", "colors": ["#4E6389", "#8CA0C4", "#F2C4B6", "#F0DDBE", "#FCF6EC"] }
+  ],
+  "fitness": [
+    { "id": "fitness-morning-run", "name": "Morning Run", "harmony": "teal + gold", "colors": ["#264653", "#2A9D8F", "#8AB17D", "#E9C46A", "#F4EDE0"] },
+    { "id": "fitness-court-lights", "name": "Court Lights", "harmony": "navy + coral", "colors": ["#1D3557", "#457B9D", "#A8DADC", "#E76F51", "#F5EFE6"] },
+    { "id": "fitness-sweat-towel", "name": "Sweat Towel", "harmony": "indigo + sage + terracotta", "colors": ["#3D405B", "#81B29A", "#E07A5F", "#F2CC8F", "#F4F1DE"] },
+    { "id": "fitness-cricket-ground", "name": "Playing Field", "harmony": "grass + red ball", "colors": ["#3E6B3C", "#7FA650", "#D9D1A4", "#C0503C", "#F3EFE0"] },
+    { "id": "fitness-pool-day", "name": "Pool Day", "harmony": "analogous aqua + sun", "colors": ["#0F5C7A", "#3FA7C4", "#9ADBE3", "#F5D27B", "#FAF6EB"] }
+  ],
+  "rest": [
+    { "id": "rest-sick-day-soup", "name": "Sick Day Soup", "harmony": "warm neutrals + sage", "colors": ["#8A6A4F", "#C9A27A", "#E7CFA6", "#A8B5A0", "#F6EFE2"] },
+    { "id": "rest-fever-dream", "name": "Fever Dream", "harmony": "dusty violet + peach", "colors": ["#5C4A72", "#8E7AA6", "#C9B2C4", "#E9C7B8", "#F6EEE8"] },
+    { "id": "rest-blanket-burrito", "name": "Blanket Burrito", "harmony": "soft blue + blush", "colors": ["#5E7090", "#9CABC4", "#D3C7BA", "#E8AFA0", "#F8F2EA"] },
+    { "id": "rest-pale-morning", "name": "Pale Morning", "harmony": "pale grey + cream", "colors": ["#7C8B97", "#B9C4CC", "#DCE2E3", "#E3C7A8", "#FAF6EF"] },
+    { "id": "rest-medicine-cabinet", "name": "Medicine Cabinet", "harmony": "clinical teal + blush", "colors": ["#4F7C82", "#8DB6B5", "#D5E4E0", "#E7B4A5", "#F8F4EC"] }
+  ],
+  "frustrated": [
+    { "id": "frustrated-slammed-door", "name": "Slammed Door", "harmony": "dark red analogous", "colors": ["#2A1A1A", "#7A1F26", "#C4372D", "#E88A4B", "#E6DCD0"] },
+    { "id": "frustrated-static", "name": "Static", "harmony": "grey + red alert", "colors": ["#2F3338", "#5C636B", "#8E959D", "#C9553C", "#E5E1DA"] },
+    { "id": "frustrated-burnt-edges", "name": "Burnt Edges", "harmony": "ember analogous", "colors": ["#3B1F1A", "#8A3A22", "#D0652E", "#F0A560", "#EFE3D0"] },
+    { "id": "frustrated-storm-brewing", "name": "Storm Brewing", "harmony": "slate + wine + red", "colors": ["#1F2A3A", "#44546A", "#7D3C4A", "#D1584B", "#EAE2D8"] },
+    { "id": "frustrated-red-pen", "name": "Red Pen", "harmony": "neutral + one red", "colors": ["#B83A32", "#4A4F57", "#8C919A", "#D6D2CA", "#F5F2EC"] }
+  ],
+  "grateful": [
+    { "id": "grateful-golden-hour-thanks", "name": "Golden Hour Thanks", "harmony": "gold + blush", "colors": ["#8A5A2B", "#D49A3C", "#F0CE82", "#E7A98B", "#FBF3E2"] },
+    { "id": "grateful-warm-hands", "name": "Warm Hands", "harmony": "terracotta + sage", "colors": ["#A5573C", "#D9926A", "#F0C9A8", "#8FA58A", "#FAF1E5"] },
+    { "id": "grateful-garden-blessing", "name": "Garden Blessing", "harmony": "green + yellow + pink", "colors": ["#4F7A4B", "#8DB580", "#F0C86A", "#E58FA0", "#FBF5E4"] },
+    { "id": "grateful-soft-morning-light", "name": "Soft Morning Light", "harmony": "peach monochrome + sage", "colors": ["#A8643F", "#E8B99A", "#F6D9C0", "#9DB496", "#FCF7EE"] },
+    { "id": "grateful-open-window", "name": "Open Window", "harmony": "blue + yellow + peach", "colors": ["#4F8FA3", "#8FC1CE", "#F2D78A", "#F0A98B", "#FBF4E8"] }
+  ],
+  "city": [
+    { "id": "city-rush-hour", "name": "Rush Hour", "harmony": "slate + orange + gold", "colors": ["#2B2D42", "#5D6275", "#D9743F", "#E8BE55", "#EDEAE4"] },
+    { "id": "city-wet-asphalt", "name": "Wet Asphalt", "harmony": "charcoal + signal gold", "colors": ["#23272E", "#4A515C", "#7C8793", "#C9A24B", "#E4E1DB"] },
+    { "id": "city-market-street", "name": "Market Street", "harmony": "rust + mustard + teal + blue", "colors": ["#B5472F", "#DDA33C", "#4E8C7A", "#2E5E84", "#F4EBD8"] },
+    { "id": "city-window-lights", "name": "Window Lights", "harmony": "navy + warm windows", "colors": ["#1F2A44", "#3B4A6B", "#E2A64A", "#D6735C", "#E9E2D6"] },
+    { "id": "city-skyline-haze", "name": "Skyline Haze", "harmony": "dusty blue + apricot", "colors": ["#54607A", "#8B93AB", "#C3B3B8", "#EBC0A3", "#F7EEE4"] }
   ]
 }

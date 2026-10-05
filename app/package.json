@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:tz": "node scripts/test-tz.mjs",
+    "analyze": "node scripts/analyze-content.mjs",
     "lint": "eslint .",
     "format": "prettier --write ."
   },
