@@ -7,7 +7,8 @@
       "accents": ["#F7C531", "#4FA3E8", "#FF8FB1"],
       "keywords": [
         "sun", "sunny", "sunshine", "bright", "clear", "sky", "golden", "summer", "daylight",
-        "glow", "lemonade", "rainbow", "clouds", "picnic", "outdoors", "outside", "terrace"
+        "glow", "lemonade", "rainbow", "clouds", "picnic", "outdoors", "outside", "terrace",
+        "dhoop", "dhup", "roddur"
       ]
     },
     "rain": {
@@ -19,7 +20,8 @@
         "rain", "rainy", "raining", "bristi", "brishti", "barish", "baarish", "monsoon",
         "drizzle", "downpour", "puddle", "umbrella", "raincoat", "thunder", "thunderstorm",
         "lightning", "storm", "cloud", "cloudy", "wet", "soaked", "waterlogged", "mizzle",
-        "petrichor", "shower", "flood", "barsha", "megh", "gutter", "mud", "overcast"
+        "petrichor", "shower", "flood", "barsha", "megh", "gutter", "mud", "overcast", "andhi",
+        "jhor"
       ]
     },
     "snow": {
@@ -49,7 +51,8 @@
       "accents": ["#F26B3A", "#FFC93C", "#2FA7B8"],
       "keywords": [
         "hot", "heat", "heatwave", "scorching", "boiling", "sweltering", "sticky", "humid",
-        "sweating", "fan", "ac", "sunburn", "parched", "thirsty", "loo", "baking"
+        "sweating", "fan", "ac", "sunburn", "parched", "thirsty", "loo", "baking", "garmi",
+        "gorom", "garam"
       ]
     },
     "fog": {
@@ -57,7 +60,10 @@
       "group": "weather & time",
       "defaultFeeling": "peaceful",
       "accents": ["#B8C4CE", "#8EA4B8", "#E6B8A2"],
-      "keywords": ["fog", "foggy", "mist", "misty", "haze", "hazy", "smog", "dew", "dewy", "murky"]
+      "keywords": [
+        "fog", "foggy", "mist", "misty", "haze", "hazy", "smog", "dew", "dewy", "murky",
+        "kuyasha", "kuasha"
+      ]
     },
     "morning": {
       "label": "Morning",
@@ -127,7 +133,8 @@
       "accents": ["#5B7FB5", "#C9524F", "#E8D9B8"],
       "keywords": [
         "winter", "sweater", "scarf", "heater", "woolen", "shivering", "jacket", "muffler",
-        "blanket", "quilt", "fireplace", "cocoa", "hibernate", "pajamas", "slippers"
+        "blanket", "quilt", "fireplace", "cocoa", "hibernate", "pajamas", "slippers", "thand",
+        "thanda", "thandi"
       ]
     },
     "shopping": {
@@ -139,7 +146,9 @@
         "shopping", "shop", "shops", "mall", "bazaar", "market", "store", "sale", "discount",
         "bought", "buy", "buying", "cart", "bag", "bags", "haul", "boutique", "thrift",
         "clothes", "dress", "outfit", "shoes", "sneakers", "jewellery", "retail",
-        "supermarket", "grocery", "groceries", "checkout", "browsing", "tried", "trial"
+        "supermarket", "grocery", "groceries", "checkout", "browsing", "tried", "trial",
+        "dokan", "bazar", "kharidari", "saree", "sari", "kurti", "lehenga", "bangles", "juta",
+        "kapde", "kapra"
       ]
     },
     "exams": {
@@ -151,7 +160,8 @@
         "exam", "exams", "test", "quiz", "viva", "midterm", "syllabus", "revision", "marks",
         "result", "results", "paper", "grade", "grades", "cgpa", "semester", "studying",
         "study", "studied", "notes", "textbook", "tuition", "coaching", "thesis", "assignment",
-        "homework", "deadline", "backlog", "crammed", "procrastinate", "placement"
+        "homework", "deadline", "backlog", "crammed", "procrastinate", "placement", "padhai",
+        "imtihan", "porikkha", "porikha", "portey", "padhna"
       ]
     },
     "school": {
@@ -176,7 +186,7 @@
         "project", "presentation", "interview", "internship", "colleague", "shift",
         "freelance", "startup", "kaam", "productive", "productivity", "focus", "focused",
         "planning", "planner", "goals", "goal", "dues", "workload", "overtime", "workday",
-        "workplace", "coworker", "coworkers"
+        "workplace", "coworker", "coworkers", "naukri", "duty"
       ]
     },
     "money": {
@@ -196,9 +206,9 @@
       "defaultFeeling": "content",
       "accents": ["#D07A55", "#8FAE8B", "#E8C07A"],
       "keywords": [
-        "home", "house", "room", "bedroom", "kitchen", "couch", "bed", "window", "curtains",
+        "house", "room", "bedroom", "kitchen", "couch", "bed", "window", "curtains",
         "furniture", "decorate", "rearranged", "ghar", "apartment", "flat", "landlord", "sofa",
-        "rug", "bookshop"
+        "rug", "bookshop", "athome", "stayedhome", "homealone"
       ]
     },
     "chores": {
@@ -233,7 +243,8 @@
         "sick", "ill", "fever", "cough", "flu", "headache", "migraine", "unwell", "doctor",
         "medicine", "pills", "hospital", "recovering", "recovery", "checkup", "dentist",
         "injection", "vaccine", "dizzy", "nausea", "jwor", "sardi", "pain", "injury", "sprain",
-        "fracture", "allergy", "therapy", "clinic"
+        "fracture", "allergy", "therapy", "clinic", "bukhar", "sardard", "petdard", "dard",
+        "dawai", "davai", "oushudh", "haspatal", "daktar"
       ]
     },
     "beauty": {
@@ -278,7 +289,7 @@
       "keywords": [
         "football", "cricket", "badminton", "match", "sports", "basketball", "tennis",
         "hockey", "volleyball", "tournament", "coach", "team", "stadium", "referee", "innings",
-        "wicket", "score", "scored", "kabaddi", "carrom", "chess"
+        "wicket", "score", "scored", "kabaddi", "carrom", "chess", "khela", "khelte"
       ]
     },
     "gaming": {
@@ -312,7 +323,8 @@
         "music", "song", "songs", "sing", "singing", "guitar", "piano", "melody", "band",
         "concert", "gig", "lyrics", "instrument", "strum", "headphones", "playlist", "drums",
         "violin", "rehearsal", "karaoke", "dj", "rap", "tabla", "harmonium", "ghazal",
-        "rabindrasangeet"
+        "rabindrasangeet", "listen", "listened", "listening", "tune", "tunes", "gaan", "gana",
+        "gaane"
       ]
     },
     "art": {
@@ -390,7 +402,8 @@
       "accents": ["#2EB5C9", "#F6D58E", "#FF7B6B"],
       "keywords": [
         "beach", "sea", "ocean", "waves", "sand", "shells", "surf", "island", "lighthouse",
-        "digha", "puri", "goa", "cruise", "sunbathe", "seashore", "tide", "coast", "snorkel"
+        "digha", "puri", "goa", "cruise", "sunbathe", "seashore", "tide", "coast", "snorkel",
+        "samudra", "samundar", "sagar"
       ]
     },
     "travel": {
@@ -401,7 +414,7 @@
       "keywords": [
         "travel", "trip", "vacation", "holiday", "backpack", "itinerary", "abroad", "passport",
         "hotel", "tourist", "sightseeing", "explore", "wander", "journey", "souvenir", "visa",
-        "roadtrip", "getaway", "homestay"
+        "roadtrip", "getaway", "homestay", "ghumna", "ghumne", "ghurte", "bhromon", "bedate"
       ]
     },
     "transport": {
@@ -413,7 +426,7 @@
         "train", "flight", "airport", "bus", "metro", "tram", "ferry", "station", "platform",
         "compartment", "ticket", "luggage", "layover", "commute", "traffic", "taxi",
         "rickshaw", "cab", "auto", "ride", "drive", "driving", "highway", "road", "boarding",
-        "delayed", "scooter"
+        "delayed", "scooter", "local", "toto"
       ]
     },
     "city": {
@@ -447,7 +460,11 @@
         "restaurant", "feast", "tiffin", "menu", "order", "ordered", "takeaway", "zomato",
         "swiggy", "buffet", "spicy", "thali", "biryani", "pizza", "pasta", "burger", "noodles",
         "dosa", "idli", "paratha", "ilish", "hilsa", "luchi", "alur", "dum", "rice", "dal",
-        "chicken", "mutton", "sushi", "tacos", "sandwich", "meal", "meals"
+        "chicken", "mutton", "sushi", "tacos", "sandwich", "meal", "meals", "maach", "mach",
+        "bhaat", "bhat", "daal", "torkari", "jhol", "mangsho", "chingri", "khichuri",
+        "shorshe", "bhaja", "begun", "paneer", "roti", "chapati", "sabzi", "rajma", "chole",
+        "poha", "upma", "uttapam", "vada", "cutlet", "chop", "khana", "khabar", "nashta",
+        "bhojon"
       ]
     },
     "cooking": {
@@ -469,7 +486,8 @@
       "keywords": [
         "jhalmuri", "phuchka", "puchka", "chaat", "momo", "momos", "maggi", "roll", "kathi",
         "samosa", "golgappa", "vadapav", "pavbhaji", "kachori", "chowmein", "bhelpuri",
-        "stall", "fuchka", "telebhaja", "singara"
+        "stall", "fuchka", "telebhaja", "singara", "jhaalmuri", "jhalmudi", "jhalmuree",
+        "phuska", "panipuri", "golgappe", "ghugni", "aloochaat", "kathirolls"
       ]
     },
     "dessert": {
@@ -502,7 +520,7 @@
       "keywords": [
         "friend", "friends", "adda", "gang", "buddy", "hangout", "gossip", "squad", "bestie",
         "bff", "together", "prank", "banter", "meetup", "dost", "bondhu", "sleepover",
-        "reunion", "crew", "yaar", "yaaron", "gathered", "joke"
+        "reunion", "crew", "yaar", "yaaron", "gathered", "joke", "bandhobi", "yaara"
       ]
     },
     "family": {
@@ -515,7 +533,8 @@
         "cousins", "uncle", "aunt", "maa", "baba", "grandma", "grandpa", "grandparents",
         "thakuma", "dadu", "dida", "kids", "baby", "niece", "nephew", "kaku", "mashi", "pishi",
         "bhai", "didi", "dada", "mum", "mummy", "mommy", "papa", "daddy", "nani", "nana",
-        "dadi", "bhaiya", "boudi", "mama", "mami", "jethu"
+        "dadi", "bhaiya", "boudi", "mama", "mami", "jethu", "thammi", "thamma", "dadima",
+        "nanu", "kakima", "jethima", "mamoni"
       ]
     },
     "dating": {
@@ -537,7 +556,8 @@
       "keywords": [
         "prayer", "pray", "prayed", "temple", "mandir", "church", "mosque", "gurdwara", "god",
         "incense", "aarti", "prasad", "namaz", "dua", "mantra", "spiritual", "pilgrimage",
-        "faith", "ashram", "bhajan"
+        "faith", "ashram", "bhajan", "bhagwan", "thakur", "ishwar", "allah", "gurudwara",
+        "darshan"
       ]
     },
     "news": {
@@ -601,7 +621,8 @@
         "saraswati", "lakshmi", "festival", "bhasan", "pushpanjali", "bijoya", "mela",
         "fireworks", "crackers", "lantern", "carnival", "parade", "onam", "pongal", "baisakhi",
         "ganesh", "ramadan", "iftar", "decorations", "tradition", "thanksgiving", "hanukkah",
-        "kali", "festive"
+        "kali", "festive", "pujor", "durgapuja", "kalipuja", "bhaiphonta", "poila", "boishakh",
+        "nabobarsha", "dussehra", "raksha", "rakhi", "janmashtami"
       ]
     }
   },

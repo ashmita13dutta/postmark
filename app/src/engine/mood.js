@@ -43,7 +43,13 @@ const NEGATORS = new Set([
   'neither',
   'nor',
   'nahi',
+  'nahin',
+  'nhi',
+  'nai',
+  'nei',
 ])
+// Negators that follow the word they negate (Hindi/Bengali word order)
+const POSTPOSED_NEGATORS = new Set(['nahi', 'nahin', 'nhi', 'nai', 'nei'])
 const INTENSIFIERS = new Set([
   'so',
   'very',
@@ -60,6 +66,16 @@ const INTENSIFIERS = new Set([
   'sooo',
   'bohot',
   'bahut',
+  'bahot',
+  'itna',
+  'itni',
+  'kaafi',
+  'kafi',
+  'ekdum',
+  'ekdom',
+  'khub',
+  'onek',
+  'ato',
 ])
 const CONTRAST = new Set(['but', 'however', 'though', 'although', 'anyway', 'except', 'yet'])
 // Negating one of these ("not happy") points toward disappointed. Negating anything else is ignored.
@@ -143,7 +159,7 @@ for (const { kind, id, words } of entries) {
   }
 }
 
-const stripVS = (s) => s.replace(/️/g, '')
+const stripVS = (s) => s.replace(/️/g, '') // emoji variation selector (invisible)
 const emojiTable = []
 for (const [id, list] of Object.entries(emojiData.feelings))
   for (const e of list) emojiTable.push({ e: stripVS(e), kind: 'feeling', id })
@@ -160,16 +176,34 @@ export function contextAt(ms) {
   return { hour: d.getHours(), month: d.getMonth() + 1 }
 }
 
+/**
+ * Stretched words: "uffff" -> "uff", "sooo" -> "so", "yaaay" -> "yay". Keeps two letters when the
+ * two-letter form is a word we know ("soo", "uff"), otherwise one.
+ */
+export function unstretch(word) {
+  if (!/(.)\1{2,}/.test(word)) return word
+  const two = word.replace(/(.)\1{2,}/g, '$1$1')
+  const one = word.replace(/(.)\1+/g, '$1')
+  const known = (w) => index.has(w) || NEGATORS.has(w) || INTENSIFIERS.has(w) || CONTRAST.has(w)
+  if (known(two)) return two
+  if (known(one)) return one
+  return two
+}
+
 function findHits(text) {
-  const tokens = tokenize(text)
+  const tokens = tokenize(text).map((t) => ({ ...t, word: unstretch(t.word) }))
   const n = tokens.length
   const lastContrast = tokens.reduce((last, t, i) => (CONTRAST.has(t.word) ? i : last), -1)
   const hits = []
 
   const sameSentence = (i, j) => tokens[j].sentence === tokens[i].sentence
-  const negatedAt = (i) => {
+  const negatedAt = (i, span = 1) => {
+    // English: "not happy" (the negator comes before)
     for (let j = Math.max(0, i - 3); j < i; j++)
       if (sameSentence(i, j) && NEGATORS.has(tokens[j].word)) return true
+    // Hindi and Bengali: "khush nahi hoon", "mast nai laglo" (the negator comes after)
+    for (let j = i + span; j <= Math.min(n - 1, i + span + 1); j++)
+      if (sameSentence(i, j) && POSTPOSED_NEGATORS.has(tokens[j].word)) return true
     return false
   }
   const intensifiedAt = (i) =>
@@ -199,7 +233,7 @@ function findHits(text) {
     if (owner.kind === 'topic') weight = 1
 
     let { kind, id } = owner
-    if (negatedAt(i)) {
+    if (negatedAt(i, span)) {
       if (kind === 'feeling' && POSITIVE.has(id)) {
         id = 'disappointed' // "not happy"
         word = `not ${word}`

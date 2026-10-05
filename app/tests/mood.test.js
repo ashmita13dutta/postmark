@@ -2,7 +2,14 @@ import { describe, expect, it } from 'vitest'
 import emojiData from '../src/data/emoji.json'
 import { feelings } from '../src/data/feelings.json'
 import { topics } from '../src/data/topics.json'
-import { ambiguousForms, contextAt, detectMood, inflections, tokenize } from '../src/engine/mood'
+import {
+  ambiguousForms,
+  contextAt,
+  detectMood,
+  inflections,
+  tokenize,
+  unstretch,
+} from '../src/engine/mood'
 
 const noon = { hour: 12, month: 3 }
 const mood = (text, ctx = noon) => detectMood({ text, ...ctx })
@@ -431,5 +438,72 @@ describe('detectMood: everyday vocabulary', () => {
     ['Lost in an epiphany, full of creativity and imagination', 'inspired'],
   ])('%s -> %s', (text, expected) => {
     expect(mood(text).feeling).toBe(expected)
+  })
+})
+
+describe('detectMood: how people really write (Hinglish and Bengali in English letters)', () => {
+  it('unstretches elongated words', () => {
+    expect(unstretch('uffff')).toBe('uff')
+    expect(unstretch('sooo')).toBe('soo')
+    expect(unstretch('yaaay')).toBe('yay')
+    expect(unstretch('happy')).toBe('happy') // real double letters are left alone
+    expect(mood('Uffff').feeling).toBe('angry')
+    expect(mood('yaaay!!').feeling).toBe('joyful')
+  })
+
+  it('"Aaj I had a soft skills class. Itna bekaar. Uffff" is bored, not inspired', () => {
+    const r = mood('Aaj I had a soft skills class . Itna bekaar. Uffff')
+    expect(r.feeling).toBe('bored')
+    expect(r.source.feeling).toBe('words')
+    expect(['learning', 'school']).toContain(r.topic)
+  })
+
+  it('"Ate jhaalmuri on my way back home. Listened to some good feel music"', () => {
+    const r = mood('Ate jhaalmuri on my way back home. Listened to some good feel music')
+    expect(r.feeling).toBe('joyful') // "good feel" is feel-good
+    // two real subjects: the music (listened + music) and the street food (jhaalmuri, spelled
+    // several ways); either may lead, but both must be seen
+    const seen = r.scores.topics.map(([id]) => id)
+    expect(seen).toContain('music')
+    expect(seen).toContain('streetfood')
+    expect(['music', 'streetfood', 'food']).toContain(r.topic)
+    expect(r.topic).not.toBe('home') // "back home" is the commute
+  })
+
+  it('"back home" is the commute, not the Home topic, but "stayed home" still counts', () => {
+    expect(mood('on my way back home').topic).not.toBe('home')
+    expect(mood('stayed home all day').topic).toBe('home')
+  })
+
+  it('"Aajke maach bhaat lunch. Felt very sleepy later" is a meal, and tired', () => {
+    const r = mood('Aajke maach bhaat lunch. Felt very sleepy later')
+    expect([r.feeling, r.topic]).toEqual(['tired', 'food'])
+    expect(r.topicWords).toEqual(expect.arrayContaining(['maach', 'bhaat', 'lunch']))
+  })
+
+  it('Hindi and Bengali feeling words', () => {
+    expect(mood('Aaj mast din tha, bahut maza aaya').feeling).toBe('joyful')
+    expect(mood('Bahut thak gaya hoon, neend aa rahi hai').feeling).toBe('tired')
+    expect(mood('Mon kharap, bohot udaas').feeling).toBe('sad')
+    expect(mood('Pareshan hoon, bahut tension hai').feeling).toBe('anxious')
+    expect(mood('Aaj bhalo laglo, darun din').feeling).toBe('joyful')
+    expect(mood('Gussa aa raha hai, bohot birokto').feeling).toBe('angry')
+    expect(mood('Dukh hua, bakwas khana').feeling).not.toBe('joyful')
+  })
+
+  it('Hindi and Bengali intensifiers and negation', () => {
+    const plain = mood('bekaar').scores.feelings[0][1]
+    expect(mood('itna bekaar').scores.feelings[0][1]).toBeGreaterThan(plain)
+    expect(mood('khush nahi hoon').feeling).toBe('disappointed') // "not happy"
+    expect(mood('mast nai laglo').feeling).toBe('disappointed')
+  })
+
+  it('Bengali and Hindi topics', () => {
+    expect(mood('bristi hocche, andhi aur bijli').topic).toBe('rain')
+    expect(mood('Aaj bohot garmi hai, loo chal rahi hai').topic).toBe('heat')
+    expect(mood('Bukhar aur sardard, daktar ke paas gaya').topic).toBe('health')
+    expect(mood('Kurti aur juta kharidne gaye bazar').topic).toBe('shopping')
+    expect(mood('Durgapuja er pandal ghurlam').topic).toBe('festival')
+    expect(mood('Padhai kar rahi hoon, imtihan kal hai').topic).toBe('exams')
   })
 })

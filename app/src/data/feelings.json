@@ -11,7 +11,9 @@
         "wow", "excellent", "cheery", "bliss", "radiant", "delicious", "tasty", "yum", "yummy",
         "scrumptious", "fabulous", "marvelous", "terrific", "ecstatic", "elated", "overjoyed",
         "jolly", "merry", "lighthearted", "upbeat", "enjoy", "enjoyed", "enjoying", "smiles",
-        "laughter"
+        "laughter", "mast", "maza", "maja", "mazaa", "mazedaar", "khush", "khushi", "badhiya",
+        "zabardast", "shandar", "bindaas", "jhakaas", "darun", "chomotkar", "anondo",
+        "aanondo", "mojar", "moja", "osadharon", "feelgood", "goodfeel", "enjoyable"
       ]
     },
     "content": {
@@ -22,7 +24,8 @@
         "simple", "easy", "nice", "decent", "cozy", "snug", "warm", "comfy", "homey",
         "settled", "fulfilled", "pleased", "alright", "smooth", "cosy", "sorted", "mellow",
         "satisfying", "relieved", "relief", "chilled", "chill", "chilling", "manageable",
-        "stable", "okayish", "cruisy"
+        "stable", "okayish", "cruisy", "achha", "accha", "theek", "thik", "thikthak", "sahi",
+        "bhalo", "valo", "bhaloi"
       ]
     },
     "peaceful": {
@@ -33,7 +36,8 @@
         "gentle", "soothing", "mindful", "meditate", "meditation", "breathe", "breathing",
         "relax", "relaxed", "relaxing", "unwind", "shanti", "shanto", "sukoon", "harmony",
         "ease", "slow", "slowly", "hush", "restful", "balance", "tranquility", "soothed",
-        "refreshing", "refreshed", "rejuvenated", "recharged", "zen", "quietly", "lull"
+        "refreshing", "refreshed", "rejuvenated", "recharged", "zen", "quietly", "lull",
+        "shaant", "shant", "aaram", "araam", "aram"
       ]
     },
     "excited": {
@@ -44,7 +48,7 @@
         "hyped", "eager", "anticipation", "buzzing", "rush", "adrenaline", "spontaneous",
         "wild", "epic", "crazy", "countdown", "stoked", "psyched", "electric", "lively",
         "unreal", "cantwait", "lookingforward", "amped", "thrill", "buzz", "pumpedup",
-        "impatient"
+        "impatient", "josh", "utsuk", "uttejito"
       ]
     },
     "proud": {
@@ -56,7 +60,7 @@
         "milestone", "promoted", "promotion", "passed", "selected", "trophy", "medal",
         "congrats", "congratulations", "graduated", "completed", "finished", "shipped",
         "topper", "champion", "accomplishment", "accomplish", "achieve", "conquered",
-        "smashed", "rocked", "improved", "improvement", "nailedit"
+        "smashed", "rocked", "improved", "improvement", "nailedit", "garv", "gorbo"
       ]
     },
     "loving": {
@@ -67,7 +71,7 @@
         "crush", "kiss", "kissed", "hug", "hugged", "cuddle", "heart", "butterflies",
         "sweetheart", "darling", "soulmate", "bhalobasha", "pyaar", "ishq", "mohabbat", "jaan",
         "babu", "cherish", "devoted", "smitten", "bae", "caring", "adorable", "beloved",
-        "infatuated", "lovestruck"
+        "infatuated", "lovestruck", "prem", "dil", "jaanu", "premika", "premik", "bhalobashi"
       ]
     },
     "nostalgic": {
@@ -78,7 +82,8 @@
         "reminded", "bygone", "vintage", "retro", "old", "past", "yesterday", "once",
         "reminisce", "hometown", "antique", "used", "sentimental", "polaroid", "cassette",
         "yearbook", "diary", "letter", "album", "ancestral", "flashback", "flashbacks",
-        "sentiments", "bittersweet", "longago", "goodolddays"
+        "sentiments", "bittersweet", "longago", "goodolddays", "purani", "puraana", "purono",
+        "yaadein", "yaad", "smriti", "bachpan", "chotobela", "chhotobela"
       ]
     },
     "grateful": {
@@ -88,7 +93,8 @@
         "grateful", "gratitude", "thankful", "thanks", "blessed", "lucky", "appreciate",
         "appreciated", "blessing", "kindness", "kind", "generous", "fortunate", "humbled",
         "touched", "thank", "shukriya", "dhonnobad", "helped", "help", "support", "supportive",
-        "appreciation", "privileged", "indebted", "thankyou", "gratefulness"
+        "appreciation", "privileged", "indebted", "thankyou", "gratefulness", "dhanyavaad",
+        "dhanyavad", "meherbani", "abhari"
       ]
     },
     "tired": {
@@ -99,7 +105,8 @@
         "fatigued", "worn", "drowsy", "sluggish", "yawn", "yawning", "sleep", "slept", "nap",
         "rest", "resting", "bedrest", "knackered", "wiped", "overworked", "spent", "tiring",
         "tiresome", "exhausting", "draining", "fatigue", "groggy", "hungover", "depleted",
-        "sleepdeprived", "pooped"
+        "sleepdeprived", "pooped", "thaka", "thak", "thaki", "thakan", "thakaan", "thakgaya",
+        "klanto", "ghum", "neend", "nind", "alsi", "aalsi", "ghumono"
       ]
     },
     "anxious": {
@@ -111,7 +118,8 @@
         "restless", "jittery", "overthinking", "nerves", "frantic", "swamped", "behind",
         "confused", "confusion", "confusing", "unsure", "uncertain", "overloaded", "overload",
         "clueless", "helpless", "pressured", "rushed", "hectic", "chaotic", "agitated",
-        "uptight", "freaked", "freaking", "worrying", "cantcope", "drowning"
+        "uptight", "freaked", "freaking", "worrying", "cantcope", "drowning", "tension",
+        "pareshan", "pareshaan", "chinta", "ghabrahat", "ghabra", "bhoy", "bhay", "durbhabna"
       ]
     },
     "sad": {
@@ -123,7 +131,9 @@
         "homesick", "ache", "longing", "grief", "mourn", "heartbroken", "depressed", "gloomy",
         "kharap", "isolated", "ignored", "unseen", "ghosted", "unhappy", "miserable", "upset",
         "discouraged", "disheartened", "devastated", "hopeless", "lonesome", "melancholy",
-        "sorrow", "weepy", "sobbing", "downcast", "dejected"
+        "sorrow", "weepy", "sobbing", "downcast", "dejected", "udaas", "udas", "dukh", "dukhi",
+        "dukkho", "kosto", "kasht", "rona", "roya", "roye", "kanna", "monkharap", "akela",
+        "akeli", "ekla", "tanha", "tanhai"
       ]
     },
     "angry": {
@@ -135,7 +145,8 @@
         "argument", "shouted", "yelled", "rant", "unfair", "betrayed", "gussa", "rege", "ugh",
         "bitter", "resent", "unbearable", "pissed", "enraged", "outraged", "livid",
         "infuriated", "offended", "insulted", "disrespected", "grumpy", "cranky", "moody",
-        "irritable", "snapped", "sulking", "irked"
+        "irritable", "snapped", "sulking", "irked", "rag", "ragi", "birokto", "birakt",
+        "chidh", "jhagda", "jhagra", "jhogra", "laraai", "uff", "dhoka"
       ]
     },
     "bored": {
@@ -146,7 +157,7 @@
         "idle", "uneventful", "ordinary", "average", "whatever", "blah", "tedious", "stuck",
         "routine", "unmotivated", "drifting", "nothinghappened", "nothingspecial",
         "nothingmuch", "monotony", "dreary", "lifeless", "uninteresting", "pointless",
-        "aimless", "stagnant", "killingtime"
+        "aimless", "stagnant", "killingtime", "bekaar", "bekar", "faltu", "bore", "timepass"
       ]
     },
     "inspired": {
@@ -167,7 +178,7 @@
         "floating", "surreal", "enchanted", "fairytale", "fantasy", "pastel", "cloudlike",
         "twinkling", "shimmering", "serendipity", "wistful", "starry", "swoon", "spellbound",
         "lullaby", "whimsy", "trance", "reverie", "fanciful", "dreamt", "wondrous",
-        "celestial", "moonstruck"
+        "celestial", "moonstruck", "sapna", "sapne", "swapno", "shopno", "khwab"
       ]
     },
     "disappointed": {
@@ -180,7 +191,8 @@
         "gross", "yuck", "rotten", "overpriced", "wasted", "regret", "mistake", "flop",
         "underwhelming", "mediocre", "lousy", "bad", "wrong", "spilled", "broken", "unlucky",
         "unsatisfied", "dissatisfied", "unimpressed", "sucks", "sucked", "sucky", "waste",
-        "ruin", "dreadful", "pathetic", "disaster", "nightmare", "fiasco", "poor"
+        "ruin", "dreadful", "pathetic", "disaster", "nightmare", "fiasco", "poor", "bakwas",
+        "ghatiya", "bura", "buri", "kharab", "barbaad", "nirash", "nirasha"
       ]
     }
   },
