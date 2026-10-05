@@ -9,7 +9,9 @@
         "smiled", "smiling", "laugh", "laughed", "laughing", "blissful", "yay", "hooray",
         "sparkle", "brilliant", "perfect", "magical", "giggle", "giggled", "grin", "beaming",
         "wow", "excellent", "cheery", "bliss", "radiant", "delicious", "tasty", "yum", "yummy",
-        "scrumptious"
+        "scrumptious", "fabulous", "marvelous", "terrific", "ecstatic", "elated", "overjoyed",
+        "jolly", "merry", "lighthearted", "upbeat", "enjoy", "enjoyed", "enjoying", "smiles",
+        "laughter"
       ]
     },
     "content": {
@@ -18,7 +20,9 @@
       "keywords": [
         "content", "satisfied", "comfortable", "okay", "fine", "good", "pleasant", "steady",
         "simple", "easy", "nice", "decent", "cozy", "snug", "warm", "comfy", "homey",
-        "settled", "fulfilled", "pleased", "alright", "smooth", "cosy", "sorted", "mellow"
+        "settled", "fulfilled", "pleased", "alright", "smooth", "cosy", "sorted", "mellow",
+        "satisfying", "relieved", "relief", "chilled", "chill", "chilling", "manageable",
+        "stable", "okayish", "cruisy"
       ]
     },
     "peaceful": {
@@ -28,7 +32,8 @@
         "calm", "peaceful", "peace", "serene", "still", "stillness", "tranquil", "quiet",
         "gentle", "soothing", "mindful", "meditate", "meditation", "breathe", "breathing",
         "relax", "relaxed", "relaxing", "unwind", "shanti", "shanto", "sukoon", "harmony",
-        "ease", "slow", "slowly", "hush", "restful", "balance"
+        "ease", "slow", "slowly", "hush", "restful", "balance", "tranquility", "soothed",
+        "refreshing", "refreshed", "rejuvenated", "recharged", "zen", "quietly", "lull"
       ]
     },
     "excited": {
@@ -38,7 +43,8 @@
         "excited", "exciting", "thrilling", "adventure", "energetic", "energy", "pumped",
         "hyped", "eager", "anticipation", "buzzing", "rush", "adrenaline", "spontaneous",
         "wild", "epic", "crazy", "countdown", "stoked", "psyched", "electric", "lively",
-        "unreal"
+        "unreal", "cantwait", "lookingforward", "amped", "thrill", "buzz", "pumpedup",
+        "impatient"
       ]
     },
     "proud": {
@@ -49,7 +55,8 @@
         "success", "successful", "nailed", "crushed", "aced", "victory", "triumph",
         "milestone", "promoted", "promotion", "passed", "selected", "trophy", "medal",
         "congrats", "congratulations", "graduated", "completed", "finished", "shipped",
-        "topper", "champion"
+        "topper", "champion", "accomplishment", "accomplish", "achieve", "conquered",
+        "smashed", "rocked", "improved", "improvement", "nailedit"
       ]
     },
     "loving": {
@@ -59,7 +66,8 @@
         "love", "loved", "loving", "adore", "affection", "tender", "romantic", "romance",
         "crush", "kiss", "kissed", "hug", "hugged", "cuddle", "heart", "butterflies",
         "sweetheart", "darling", "soulmate", "bhalobasha", "pyaar", "ishq", "mohabbat", "jaan",
-        "babu", "cherish", "devoted", "smitten"
+        "babu", "cherish", "devoted", "smitten", "bae", "caring", "adorable", "beloved",
+        "infatuated", "lovestruck"
       ]
     },
     "nostalgic": {
@@ -69,7 +77,8 @@
         "nostalgic", "nostalgia", "remember", "memory", "memories", "childhood", "throwback",
         "reminded", "bygone", "vintage", "retro", "old", "past", "yesterday", "once",
         "reminisce", "hometown", "antique", "used", "sentimental", "polaroid", "cassette",
-        "yearbook", "diary", "letter", "album", "ancestral"
+        "yearbook", "diary", "letter", "album", "ancestral", "flashback", "flashbacks",
+        "sentiments", "bittersweet", "longago", "goodolddays"
       ]
     },
     "grateful": {
@@ -78,7 +87,8 @@
       "keywords": [
         "grateful", "gratitude", "thankful", "thanks", "blessed", "lucky", "appreciate",
         "appreciated", "blessing", "kindness", "kind", "generous", "fortunate", "humbled",
-        "touched", "thank", "shukriya", "dhonnobad", "helped", "help", "support", "supportive"
+        "touched", "thank", "shukriya", "dhonnobad", "helped", "help", "support", "supportive",
+        "appreciation", "privileged", "indebted", "thankyou", "gratefulness"
       ]
     },
     "tired": {
@@ -87,7 +97,9 @@
       "keywords": [
         "tired", "exhausted", "sleepy", "drained", "burnout", "lazy", "lethargic", "weary",
         "fatigued", "worn", "drowsy", "sluggish", "yawn", "yawning", "sleep", "slept", "nap",
-        "rest", "resting", "bedrest", "knackered", "wiped", "overworked", "spent"
+        "rest", "resting", "bedrest", "knackered", "wiped", "overworked", "spent", "tiring",
+        "tiresome", "exhausting", "draining", "fatigue", "groggy", "hungover", "depleted",
+        "sleepdeprived", "pooped"
       ]
     },
     "anxious": {
@@ -96,7 +108,10 @@
       "keywords": [
         "anxious", "anxiety", "stressed", "stress", "worried", "worry", "nervous", "panic",
         "overwhelmed", "pressure", "tense", "uneasy", "scared", "afraid", "fear", "dread",
-        "restless", "jittery", "overthinking", "nerves", "frantic", "swamped", "behind"
+        "restless", "jittery", "overthinking", "nerves", "frantic", "swamped", "behind",
+        "confused", "confusion", "confusing", "unsure", "uncertain", "overloaded", "overload",
+        "clueless", "helpless", "pressured", "rushed", "hectic", "chaotic", "agitated",
+        "uptight", "freaked", "freaking", "worrying", "cantcope", "drowning"
       ]
     },
     "sad": {
@@ -106,7 +121,9 @@
         "sad", "sadness", "cry", "cried", "crying", "tears", "lonely", "alone", "loneliness",
         "miss", "missing", "empty", "heavy", "numb", "down", "blue", "hurt", "hollow",
         "homesick", "ache", "longing", "grief", "mourn", "heartbroken", "depressed", "gloomy",
-        "kharap", "isolated", "ignored", "unseen", "ghosted"
+        "kharap", "isolated", "ignored", "unseen", "ghosted", "unhappy", "miserable", "upset",
+        "discouraged", "disheartened", "devastated", "hopeless", "lonesome", "melancholy",
+        "sorrow", "weepy", "sobbing", "downcast", "dejected"
       ]
     },
     "angry": {
@@ -116,7 +133,9 @@
         "angry", "anger", "furious", "annoyed", "irritated", "frustrated", "frustrating",
         "fuming", "rage", "mad", "hate", "hated", "fight", "fought", "argue", "argued",
         "argument", "shouted", "yelled", "rant", "unfair", "betrayed", "gussa", "rege", "ugh",
-        "bitter", "resent", "unbearable"
+        "bitter", "resent", "unbearable", "pissed", "enraged", "outraged", "livid",
+        "infuriated", "offended", "insulted", "disrespected", "grumpy", "cranky", "moody",
+        "irritable", "snapped", "sulking", "irked"
       ]
     },
     "bored": {
@@ -126,7 +145,8 @@
         "bored", "boring", "boredom", "dull", "meh", "monotonous", "same", "repetitive",
         "idle", "uneventful", "ordinary", "average", "whatever", "blah", "tedious", "stuck",
         "routine", "unmotivated", "drifting", "nothinghappened", "nothingspecial",
-        "nothingmuch"
+        "nothingmuch", "monotony", "dreary", "lifeless", "uninteresting", "pointless",
+        "aimless", "stagnant", "killingtime"
       ]
     },
     "inspired": {
@@ -135,7 +155,8 @@
       "keywords": [
         "inspired", "inspiration", "creative", "curious", "imagine", "idea", "ideas", "wonder",
         "discover", "discovered", "dreaming", "motivated", "motivation", "passion", "spark",
-        "aha", "eureka", "vision", "innovative", "fascinated", "intrigued"
+        "aha", "eureka", "vision", "innovative", "fascinated", "intrigued", "creativity",
+        "imagination", "brainstorm", "brainstorming", "epiphany", "insight", "innovate"
       ]
     },
     "dreamy": {
@@ -145,7 +166,8 @@
         "dreamy", "dreamlike", "daydream", "daydreaming", "ethereal", "whimsical", "floaty",
         "floating", "surreal", "enchanted", "fairytale", "fantasy", "pastel", "cloudlike",
         "twinkling", "shimmering", "serendipity", "wistful", "starry", "swoon", "spellbound",
-        "lullaby", "whimsy", "trance", "reverie", "fanciful"
+        "lullaby", "whimsy", "trance", "reverie", "fanciful", "dreamt", "wondrous",
+        "celestial", "moonstruck"
       ]
     },
     "disappointed": {
@@ -156,7 +178,9 @@
         "canceled", "failed", "fail", "bland", "stale", "soggy", "burnt", "raw", "undercooked",
         "overcooked", "tasteless", "awful", "terrible", "horrible", "worst", "disgusting",
         "gross", "yuck", "rotten", "overpriced", "wasted", "regret", "mistake", "flop",
-        "underwhelming", "mediocre", "lousy", "bad", "wrong", "spilled", "broken", "unlucky"
+        "underwhelming", "mediocre", "lousy", "bad", "wrong", "spilled", "broken", "unlucky",
+        "unsatisfied", "dissatisfied", "unimpressed", "sucks", "sucked", "sucky", "waste",
+        "ruin", "dreadful", "pathetic", "disaster", "nightmare", "fiasco", "poor"
       ]
     }
   },

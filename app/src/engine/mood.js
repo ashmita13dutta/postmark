@@ -61,7 +61,7 @@ const INTENSIFIERS = new Set([
   'bohot',
   'bahut',
 ])
-const CONTRAST = new Set(['but', 'however', 'though', 'although', 'anyway', 'except'])
+const CONTRAST = new Set(['but', 'however', 'though', 'although', 'anyway', 'except', 'yet'])
 // Negating one of these ("not happy") points toward disappointed. Negating anything else is ignored.
 const POSITIVE = new Set([
   'joyful',

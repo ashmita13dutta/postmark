@@ -388,3 +388,48 @@ describe('detectMood: energy', () => {
     expect(mood('').energy).toBe('soft')
   })
 })
+
+describe('detectMood: real notes from a phone', () => {
+  it('"peaceful yet tiring": the turn at "yet" shifts the day to tired', () => {
+    const r = mood(
+      'Today college classes were over early in the day and got to feel the hot summer loo on my way home. It was peaceful yet tiring',
+      { hour: 17, month: 5 },
+    )
+    expect(r.feeling).toBe('tired')
+    expect(r.topic).toBe('school')
+    expect(r.secondaryTopic).toBe('heat') // "loo" is the hot summer wind
+  })
+
+  it('a coffee that was the best, and rain on the way back', () => {
+    const r = mood('I had the best coffee the other day. It rained on the way back')
+    expect([r.feeling, r.topic]).toEqual(['joyful', 'drinks'])
+    expect(r.secondaryTopic).toBe('rain')
+  })
+
+  it('"fatigue and confused" under heavy work is not "content"', () => {
+    const r = mood('I have tons of project dues and loads of work Feeling fatigue and confused')
+    expect(r.topic).toBe('work')
+    expect(['anxious', 'tired']).toContain(r.feeling)
+    expect(r.source.feeling).toBe('words')
+  })
+})
+
+describe('detectMood: everyday vocabulary', () => {
+  it.each([
+    ['I feel so overwhelmed and confused about everything', 'anxious'],
+    ['Totally drained, such an exhausting day', 'tired'],
+    ['Feeling miserable and upset all evening', 'sad'],
+    ['He was so rude, I was livid and cranky', 'angry'],
+    ['Absolutely fabulous day, I enjoyed every minute', 'joyful'],
+    ['Finally relieved, everything is sorted and manageable', 'content'],
+    ['Feeling refreshed and rejuvenated after the nap', 'peaceful'],
+    ['Cannot wait for tomorrow, looking forward to it', 'excited'],
+    ['A real accomplishment, I smashed my goals', 'proud'],
+    ['It felt bittersweet, such a flashback', 'nostalgic'],
+    ['That movie was a disaster, so unimpressed and it sucked', 'disappointed'],
+    ['Pointless dull day, everything is so monotonous', 'bored'],
+    ['Lost in an epiphany, full of creativity and imagination', 'inspired'],
+  ])('%s -> %s', (text, expected) => {
+    expect(mood(text).feeling).toBe(expected)
+  })
+})
