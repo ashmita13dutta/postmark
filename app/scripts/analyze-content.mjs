@@ -1,19 +1,15 @@
 // Quality report for the content files in src/data. Run: npm run analyze
-//   - palettes: are the 5 colors distinguishable? is there light/dark range? is anything neon?
-//   - names: does every palette color have a close-matching color name?
-//   - coverage: which parts of the color wheel have no names nearby?
+//   - palettes: are the 5 colors distinguishable? is there light/dark range? soft vs vivid?
+//   - topic accents: are the 3 signature colors distinguishable and not neon?
+//   - names: does every palette and accent color have a close-matching color name?
 import { readFileSync } from 'node:fs'
 import { chroma, hexDistance, hexToOklab, hue } from '../src/lib/color.js'
+import { LIMITS } from '../src/lib/contentRules.js'
 
 const read = (f) => JSON.parse(readFileSync(new URL(`../src/data/${f}`, import.meta.url), 'utf8'))
 const palettes = read('palettes.json')
+const topics = read('topics.json').topics
 const names = read('colornames.json')
-
-// Thresholds (OKLab units). Tune if you disagree with a verdict.
-const MIN_PAIR = 0.06 // two colors closer than this look like the same band
-const MIN_RANGE = 0.3 // lightest minus darkest, so the stamp has depth
-const MAX_CHROMA = 0.2 // above this starts to look neon
-const NAME_MATCH = 0.035 // a palette color should have a name at least this close
 
 const nearest = (hex) => {
   let best = { name: null, d: Infinity }
@@ -32,9 +28,11 @@ const flag = (msg) => {
 
 console.log('PALETTES')
 let count = 0
-for (const [family, list] of Object.entries(palettes)) {
+let vivid = 0
+for (const [feeling, list] of Object.entries(palettes)) {
   for (const p of list) {
     count++
+    if (p.energy === 'vivid') vivid++
     const labs = p.colors.map(hexToOklab)
     let minPair = Infinity
     let pair = ''
@@ -49,68 +47,67 @@ for (const [family, list] of Object.entries(palettes)) {
     }
     const range = Math.max(...labs.map((l) => l.L)) - Math.min(...labs.map((l) => l.L))
     const maxChroma = Math.max(...labs.map(chroma))
+    const cap = p.energy === 'vivid' ? LIMITS.maxChromaVivid : LIMITS.maxChromaSoft
     const issues = []
-    if (minPair < MIN_PAIR) issues.push(`two colors too close (${minPair.toFixed(3)}: ${pair})`)
-    if (range < MIN_RANGE) issues.push(`little light/dark range (${range.toFixed(2)})`)
-    if (maxChroma > MAX_CHROMA) issues.push(`very saturated (chroma ${maxChroma.toFixed(2)})`)
+    if (minPair < LIMITS.minPair)
+      issues.push(`two colors too close (${minPair.toFixed(3)}: ${pair})`)
+    if (range < LIMITS.minRange) issues.push(`little light/dark range (${range.toFixed(2)})`)
+    if (maxChroma > cap)
+      issues.push(`too saturated for ${p.energy} (chroma ${maxChroma.toFixed(2)} > ${cap})`)
+    if (p.energy === 'vivid' && maxChroma < LIMITS.minChromaVivid) {
+      issues.push(
+        `tagged vivid but nothing is vivid (chroma ${maxChroma.toFixed(2)}); call it soft`,
+      )
+    }
     if (issues.length) {
-      console.log(`${family}/${p.id}`)
+      console.log(`${feeling}/${p.id}`)
       issues.forEach(flag)
     }
   }
 }
-console.log(`  checked ${count} palettes`)
+console.log(`  checked ${count} palettes (${vivid} vivid)`)
 
-console.log('\nNAME COVERAGE (palette colors without a close name)')
+console.log('\nTOPIC ACCENTS')
+for (const [id, t] of Object.entries(topics)) {
+  const issues = []
+  for (let i = 0; i < t.accents.length; i++) {
+    for (let j = i + 1; j < t.accents.length; j++) {
+      const d = hexDistance(t.accents[i], t.accents[j])
+      if (d < LIMITS.minAccentPair)
+        issues.push(`${t.accents[i]} ~ ${t.accents[j]} too close (${d.toFixed(3)})`)
+    }
+  }
+  for (const a of t.accents) {
+    const c = chroma(hexToOklab(a))
+    if (c > LIMITS.maxChromaVivid) issues.push(`${a} too saturated (${c.toFixed(2)})`)
+  }
+  if (issues.length) {
+    console.log(id)
+    issues.forEach(flag)
+  }
+}
+console.log(`  checked ${Object.keys(topics).length} topics`)
+
+console.log('\nNAME COVERAGE (palette and accent colors without a close name)')
 const missing = new Map()
-for (const list of Object.values(palettes)) {
-  for (const p of list) {
-    for (const hex of p.colors) {
-      const n = nearest(hex)
-      if (n.d > NAME_MATCH) missing.set(hex.toUpperCase(), n)
-    }
-  }
+const all = [
+  ...Object.values(palettes).flatMap((l) => l.flatMap((p) => p.colors)),
+  ...Object.values(topics).flatMap((t) => t.accents),
+]
+for (const hex of all) {
+  const n = nearest(hex)
+  if (n.d > LIMITS.nameMatch) missing.set(hex.toUpperCase(), n)
 }
-for (const [hex, n] of [...missing].sort()) {
-  flag(`${hex} is ${n.d.toFixed(3)} from "${n.name}"`)
-}
-console.log(`  ${missing.size} palette colors need a closer name`)
+for (const [hex, n] of [...missing].sort()) flag(`${hex} is ${n.d.toFixed(3)} from "${n.name}"`)
+console.log(`  ${missing.size} colors need a closer name`)
 
-console.log('\nCOLOR WHEEL COVERAGE (gaps where no name is within 0.06)')
-const gaps = []
-for (let h = 0; h < 360; h += 30) {
-  for (const L of [0.3, 0.45, 0.6, 0.75, 0.9]) {
-    // chromatic samples only, since neutrals are well covered
-    const rad = (h * Math.PI) / 180
-    const C = 0.08
-    const lab = { L, a: C * Math.cos(rad), b: C * Math.sin(rad) }
-    let best = Infinity
-    let bestName = ''
-    for (const n of names) {
-      const nl = hexToOklab(n.hex)
-      const d = Math.hypot(lab.L - nl.L, lab.a - nl.a, lab.b - nl.b)
-      if (d < best) {
-        best = d
-        bestName = n.name
-      }
-    }
-    if (best > 0.06) gaps.push({ h, L, best, bestName })
-  }
-}
-for (const g of gaps)
-  console.log(
-    `  hue ${String(g.h).padStart(3)} lightness ${g.L}: nearest "${g.bestName}" is ${g.best.toFixed(3)} away`,
-  )
-console.log(`  ${gaps.length} gaps of ${12 * 5} sampled points`)
-
-const hues = names.filter((n) => chroma(hexToOklab(n.hex)) > 0.03)
-console.log(
-  `\n${names.length} names total, ${hues.length} colorful, ${names.length - hues.length} neutral`,
-)
+const colorful = names.filter((n) => chroma(hexToOklab(n.hex)) > 0.03)
 const buckets = {}
-for (const n of hues) {
+for (const n of colorful) {
   const b = Math.floor(hue(hexToOklab(n.hex)) / 45) * 45
   buckets[b] = (buckets[b] ?? 0) + 1
 }
-console.log('names per 45° of hue:', JSON.stringify(buckets))
+console.log(
+  `\n${names.length} names (${colorful.length} colorful). Per 45° of hue: ${JSON.stringify(buckets)}`,
+)
 console.log(problems ? `\n${problems} things to look at` : '\nAll good')

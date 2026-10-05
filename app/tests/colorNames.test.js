@@ -33,7 +33,7 @@ describe('namePalette', () => {
     ])
   })
 
-  it('never repeats a name within a palette, for any of the 118 palettes', () => {
+  it('never repeats a name within a palette, for any palette', () => {
     for (const list of Object.values(palettes)) {
       for (const p of list) {
         const names = namePalette(p.colors).map((n) => n.name)

@@ -1,0 +1,591 @@
+{
+  "topics": {
+    "sunny": {
+      "label": "Sunny day",
+      "group": "weather & time",
+      "accents": ["#F7C531", "#4FA3E8", "#FF8FB1"],
+      "keywords": [
+        "sun", "sunny", "sunshine", "bright", "clear", "sky", "golden", "summer", "daylight",
+        "glow", "lemonade", "rainbow", "clouds", "picnic", "outdoors", "outside", "terrace"
+      ]
+    },
+    "rain": {
+      "label": "Rain",
+      "group": "weather & time",
+      "accents": ["#3F7CB8", "#F2C230", "#7BA7C2"],
+      "keywords": [
+        "rain", "rainy", "raining", "bristi", "brishti", "barish", "baarish", "monsoon",
+        "drizzle", "downpour", "puddle", "umbrella", "raincoat", "thunder", "thunderstorm",
+        "lightning", "storm", "cloud", "cloudy", "wet", "soaked", "waterlogged", "mizzle",
+        "petrichor", "shower", "flood", "barsha", "megh", "gutter", "mud", "overcast"
+      ]
+    },
+    "snow": {
+      "label": "Snow & ice",
+      "group": "weather & time",
+      "accents": ["#A9D6F5", "#E8EEF4", "#D95D5D"],
+      "keywords": [
+        "snow", "snowy", "snowfall", "snowman", "frost", "frozen", "ice", "icy", "blizzard",
+        "sleet", "chilly", "freezing", "skiing", "sledge", "snowflake", "igloo"
+      ]
+    },
+    "wind": {
+      "label": "Windy",
+      "group": "weather & time",
+      "accents": ["#6BB8D6", "#F2B84B", "#E8737B"],
+      "keywords": [
+        "wind", "windy", "gust", "breeze", "kite", "kites", "blowing", "blew", "gale",
+        "breezy", "whirlwind", "dust"
+      ]
+    },
+    "heat": {
+      "label": "Heat",
+      "group": "weather & time",
+      "accents": ["#F26B3A", "#FFC93C", "#2FA7B8"],
+      "keywords": [
+        "hot", "heat", "heatwave", "scorching", "boiling", "sweltering", "sticky", "humid",
+        "sweating", "fan", "ac", "sunburn", "parched", "thirsty", "loo", "baking"
+      ]
+    },
+    "fog": {
+      "label": "Fog & mist",
+      "group": "weather & time",
+      "accents": ["#B8C4CE", "#8EA4B8", "#E6B8A2"],
+      "keywords": ["fog", "foggy", "mist", "misty", "haze", "hazy", "smog", "dew", "dewy", "murky"]
+    },
+    "morning": {
+      "label": "Morning",
+      "group": "weather & time",
+      "accents": ["#FFC857", "#FF9B7A", "#7EC8E3"],
+      "keywords": [
+        "morning", "sunrise", "dawn", "alarm", "woke", "wakeup", "earlybird", "daybreak",
+        "fresh", "brunch"
+      ]
+    },
+    "evening": {
+      "label": "Evening",
+      "group": "weather & time",
+      "accents": ["#F2864B", "#D95F8A", "#5E6AC4"],
+      "keywords": [
+        "evening", "sunset", "dusk", "twilight", "goldenhour", "afternoon", "sundown",
+        "nightfall", "shaam", "sandhya", "teatime", "dinnertime"
+      ]
+    },
+    "night": {
+      "label": "Night",
+      "group": "weather & time",
+      "hours": [
+        21,
+        22,
+        23,
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "accents": ["#2E3F8F", "#E9B44C", "#7A5CC4"],
+      "keywords": [
+        "night", "midnight", "moon", "stars", "star", "insomnia", "awake", "late", "dark",
+        "streetlight", "rooftop", "balcony", "lamp", "sleepless", "dream", "raat", "chand",
+        "nighttime", "fireflies", "moonlight", "owl"
+      ]
+    },
+    "spring": {
+      "label": "Spring",
+      "group": "weather & time",
+      "accents": ["#F58FB4", "#9ACD5A", "#FFD84D"],
+      "keywords": [
+        "spring", "blossom", "blossoms", "bloom", "cherry", "petals", "pollen", "basant",
+        "springtime"
+      ]
+    },
+    "autumn": {
+      "label": "Autumn",
+      "group": "weather & time",
+      "accents": ["#D9692B", "#E8B93A", "#8C4A2F"],
+      "keywords": [
+        "autumn", "fall", "leaves", "falling", "harvest", "pumpkin", "orange", "shiuli",
+        "kash", "scarecrow"
+      ]
+    },
+    "winter": {
+      "label": "Winter",
+      "group": "weather & time",
+      "accents": ["#5B7FB5", "#C9524F", "#E8D9B8"],
+      "keywords": [
+        "winter", "sweater", "scarf", "heater", "woolen", "cold", "shivering", "jacket",
+        "muffler", "blanket", "quilt", "fireplace", "cocoa", "hibernate", "pajamas",
+        "slippers"
+      ]
+    },
+    "shopping": {
+      "label": "Shopping",
+      "group": "everyday life",
+      "accents": ["#F2559B", "#FFC93C", "#2EC4B6"],
+      "keywords": [
+        "shopping", "shop", "shops", "mall", "bazaar", "market", "store", "sale", "discount",
+        "bought", "buy", "buying", "cart", "bag", "bags", "haul", "boutique", "thrift",
+        "clothes", "dress", "outfit", "shoes", "sneakers", "jewellery", "retail",
+        "supermarket", "grocery", "groceries", "checkout", "browsing", "tried", "trial"
+      ]
+    },
+    "exams": {
+      "label": "Exams & study",
+      "group": "everyday life",
+      "accents": ["#E3B23C", "#D64545", "#4F7CC4"],
+      "keywords": [
+        "exam", "exams", "test", "quiz", "viva", "midterm", "syllabus", "revision", "marks",
+        "result", "results", "paper", "grade", "grades", "cgpa", "semester", "studying",
+        "study", "studied", "notes", "textbook", "tuition", "coaching", "thesis", "assignment",
+        "homework", "deadline", "backlog", "crammed", "procrastinate", "placement"
+      ]
+    },
+    "school": {
+      "label": "School & college",
+      "group": "everyday life",
+      "accents": ["#3E8E6B", "#F2C230", "#2F5DA8"],
+      "keywords": [
+        "school", "class", "classes", "classroom", "teacher", "teachers", "lecture", "college",
+        "university", "campus", "canteen", "hostel", "bell", "uniform", "principal", "recess",
+        "bench", "batch", "assembly", "professor", "lab", "seminar", "classmates", "roommates"
+      ]
+    },
+    "work": {
+      "label": "Work",
+      "group": "everyday life",
+      "accents": ["#E8743B", "#7DB7E8", "#3E4C59"],
+      "keywords": [
+        "work", "working", "office", "meeting", "email", "report", "tasks", "todo", "coding",
+        "code", "debug", "debugging", "programming", "laptop", "desk", "client", "boss",
+        "project", "presentation", "interview", "internship", "colleague", "shift",
+        "freelance", "startup", "kaam", "productive", "productivity", "focus", "focused",
+        "planning", "planner", "goals", "goal"
+      ]
+    },
+    "money": {
+      "label": "Money",
+      "group": "everyday life",
+      "accents": ["#2E9E6B", "#D9A62E", "#2B3A55"],
+      "keywords": [
+        "money", "paid", "payment", "rent", "bills", "budget", "savings", "saved", "bank",
+        "loan", "debt", "expenses", "taxes", "wallet", "rupees", "dollars", "cash", "upi",
+        "emi", "invest", "stocks", "salary", "pocketmoney", "broke", "refund"
+      ]
+    },
+    "home": {
+      "label": "Home",
+      "group": "everyday life",
+      "accents": ["#D07A55", "#8FAE8B", "#E8C07A"],
+      "keywords": [
+        "home", "house", "room", "bedroom", "kitchen", "couch", "bed", "window", "curtains",
+        "furniture", "decorate", "rearranged", "ghar", "apartment", "flat", "landlord", "sofa",
+        "rug", "bookshop"
+      ]
+    },
+    "chores": {
+      "label": "Chores",
+      "group": "everyday life",
+      "accents": ["#62B6E8", "#F2D64B", "#7AD3B0"],
+      "keywords": [
+        "cleaning", "cleaned", "clean", "laundry", "dishes", "sweeping", "mopping", "dusting",
+        "tidy", "iron", "ironing", "chores", "trash", "garbage", "vacuum", "wash", "washing",
+        "organise", "organize", "decluttered"
+      ]
+    },
+    "tech": {
+      "label": "Phone & tech",
+      "group": "everyday life",
+      "accents": ["#7C5CFC", "#25C2A0", "#FF6B6B"],
+      "keywords": [
+        "phone", "mobile", "app", "apps", "screen", "wifi", "internet", "online", "social",
+        "instagram", "whatsapp", "reel", "reels", "scrolling", "scroll", "youtube", "tweet",
+        "post", "posted", "notification", "battery", "charger", "download", "update",
+        "texting", "texted", "selfie"
+      ]
+    },
+    "health": {
+      "label": "Health",
+      "group": "everyday life",
+      "accents": ["#4FA3A5", "#E8A0A0", "#A8D8C8"],
+      "keywords": [
+        "sick", "ill", "fever", "cough", "flu", "headache", "migraine", "unwell", "doctor",
+        "medicine", "pills", "hospital", "recovering", "recovery", "checkup", "dentist",
+        "injection", "vaccine", "dizzy", "nausea", "jwor", "sardi", "pain", "injury", "sprain",
+        "fracture", "allergy", "therapy", "clinic"
+      ]
+    },
+    "beauty": {
+      "label": "Beauty & grooming",
+      "group": "everyday life",
+      "accents": ["#E56B9F", "#B79CE0", "#E8C170"],
+      "keywords": [
+        "haircut", "hair", "salon", "makeup", "skincare", "nails", "manicure", "perfume",
+        "facial", "parlour", "trim", "shave", "beard", "grooming", "lipstick", "mehendi",
+        "spa", "blowdry"
+      ]
+    },
+    "pets": {
+      "label": "Pets & animals",
+      "group": "everyday life",
+      "accents": ["#D9A066", "#7DBE6B", "#7EC4F2"],
+      "keywords": [
+        "dog", "dogs", "puppy", "cat", "cats", "kitten", "pet", "pets", "fur", "paws", "bark",
+        "barking", "meow", "parrot", "fish", "rabbit", "cow", "horse", "vet", "adopt",
+        "adopted", "stray", "strays", "walkies", "tail"
+      ]
+    },
+    "fitness": {
+      "label": "Fitness",
+      "group": "activities",
+      "accents": ["#22A699", "#F2B84B", "#F25C54"],
+      "keywords": [
+        "gym", "workout", "run", "running", "ran", "jog", "jogging", "cycle", "cycling",
+        "cycled", "bike", "biking", "swim", "swimming", "stretch", "pushups", "yoga", "sweat",
+        "sweaty", "sore", "protein", "exercise", "muscles", "marathon", "training", "trained",
+        "dumbbells", "zumba"
+      ]
+    },
+    "sports": {
+      "label": "Sports",
+      "group": "activities",
+      "accents": ["#3E9E4A", "#D64933", "#F4D35E"],
+      "keywords": [
+        "football", "cricket", "badminton", "match", "sports", "basketball", "tennis",
+        "hockey", "volleyball", "tournament", "coach", "team", "stadium", "referee", "innings",
+        "wicket", "score", "scored", "kabaddi", "carrom", "chess"
+      ]
+    },
+    "gaming": {
+      "label": "Gaming",
+      "group": "activities",
+      "accents": ["#7C5CFC", "#00C2A8", "#FF6F59"],
+      "keywords": [
+        "gaming", "game", "games", "gamer", "playstation", "xbox", "console", "pubg",
+        "valorant", "minecraft", "level", "quest", "multiplayer", "esports", "streaming",
+        "controller", "arcade", "ludo", "cards", "puzzle", "boardgame", "lego"
+      ]
+    },
+    "movies": {
+      "label": "Movies & shows",
+      "group": "activities",
+      "accents": ["#C8403F", "#F7C948", "#35507A"],
+      "keywords": [
+        "movie", "movies", "film", "films", "cinema", "theatre", "series", "show", "netflix",
+        "binge", "binged", "episode", "trailer", "actor", "popcorn", "screening", "ott",
+        "webseries", "documentary", "anime", "cartoon", "premiere"
+      ]
+    },
+    "music": {
+      "label": "Music",
+      "group": "activities",
+      "accents": ["#7B4FD0", "#FF6B5B", "#F2A93B"],
+      "keywords": [
+        "music", "song", "songs", "sing", "singing", "guitar", "piano", "melody", "band",
+        "concert", "gig", "lyrics", "instrument", "strum", "headphones", "playlist", "drums",
+        "violin", "rehearsal", "karaoke", "dj", "rap", "tabla", "harmonium", "ghazal",
+        "rabindrasangeet"
+      ]
+    },
+    "art": {
+      "label": "Art & craft",
+      "group": "activities",
+      "accents": ["#E8505B", "#F2B134", "#3F8FD2"],
+      "keywords": [
+        "draw", "drawing", "drew", "paint", "painting", "painted", "sketch", "sketching",
+        "art", "artist", "canvas", "poem", "poetry", "craft", "crafts", "pottery", "knit",
+        "knitting", "design", "designed", "photography", "photo", "photos", "camera",
+        "calligraphy", "doodle", "embroidery"
+      ]
+    },
+    "reading": {
+      "label": "Books & writing",
+      "group": "activities",
+      "accents": ["#C89B5B", "#5B7FA8", "#A45A5A"],
+      "keywords": [
+        "book", "books", "read", "reading", "novel", "library", "story", "stories", "write",
+        "writing", "wrote", "journal", "blog", "essay", "magazine", "comics", "kindle",
+        "author", "bookstore", "chapter", "fiction", "literature", "reread"
+      ]
+    },
+    "garden": {
+      "label": "Garden & plants",
+      "group": "activities",
+      "accents": ["#F27BA0", "#8FCB5A", "#F7CF44"],
+      "keywords": [
+        "garden", "gardening", "plant", "plants", "planting", "flowers", "flower", "roses",
+        "seeds", "watering", "pots", "lawn", "soil", "bonsai", "nursery", "tulsi", "marigold",
+        "sapling", "weeds"
+      ]
+    },
+    "learning": {
+      "label": "Learning",
+      "group": "activities",
+      "accents": ["#3B82C4", "#F5B83D", "#58B368"],
+      "keywords": [
+        "learn", "learning", "learned", "tutorial", "course", "practice", "practised", "skill",
+        "workshop", "hobby", "language", "lesson", "lessons", "trying", "beginner", "newskill",
+        "mentor"
+      ]
+    },
+    "nature": {
+      "label": "Nature",
+      "group": "places & travel",
+      "accents": ["#3D8B5B", "#2F8FB8", "#C9A24B"],
+      "keywords": [
+        "nature", "forest", "woods", "trees", "tree", "river", "lake", "waterfall", "birds",
+        "bird", "butterfly", "wildlife", "meadow", "field", "fields", "village", "countryside",
+        "greenery", "jungle", "sundarbans", "nodi", "jongol", "gaach", "wilderness", "safari",
+        "pond"
+      ]
+    },
+    "mountains": {
+      "label": "Mountains",
+      "group": "places & travel",
+      "accents": ["#3D6FA3", "#7FB069", "#E8A25C"],
+      "keywords": [
+        "hills", "mountain", "mountains", "darjeeling", "himalaya", "peak", "summit", "valley",
+        "trek", "trekking", "hiking", "hike", "camping", "campfire", "pahar", "cliff",
+        "glacier", "tent", "backpacking", "ridge"
+      ]
+    },
+    "beach": {
+      "label": "Beach & sea",
+      "group": "places & travel",
+      "accents": ["#2EB5C9", "#F6D58E", "#FF7B6B"],
+      "keywords": [
+        "beach", "sea", "ocean", "waves", "sand", "shells", "surf", "island", "lighthouse",
+        "digha", "puri", "goa", "cruise", "sunbathe", "seashore", "tide", "coast", "snorkel"
+      ]
+    },
+    "travel": {
+      "label": "Travel & trips",
+      "group": "places & travel",
+      "accents": ["#FF8A3D", "#29B6A6", "#FFD166"],
+      "keywords": [
+        "travel", "trip", "vacation", "holiday", "backpack", "itinerary", "abroad", "passport",
+        "hotel", "tourist", "sightseeing", "explore", "wander", "journey", "souvenir", "visa",
+        "roadtrip", "getaway", "homestay"
+      ]
+    },
+    "transport": {
+      "label": "Commute & transport",
+      "group": "places & travel",
+      "accents": ["#F2B636", "#3A6EA5", "#E0584B"],
+      "keywords": [
+        "train", "flight", "airport", "bus", "metro", "tram", "ferry", "station", "platform",
+        "compartment", "ticket", "luggage", "layover", "commute", "traffic", "taxi",
+        "rickshaw", "cab", "auto", "ride", "drive", "driving", "highway", "road", "boarding",
+        "delayed", "scooter"
+      ]
+    },
+    "city": {
+      "label": "City life",
+      "group": "places & travel",
+      "accents": ["#F2A93B", "#4A90C2", "#E8574C"],
+      "keywords": [
+        "city", "street", "streets", "downtown", "skyscraper", "subway", "honk", "horn",
+        "noise", "noisy", "pavement", "flyover", "crowd", "crowded", "hawker", "footpath",
+        "gali", "chowk", "vendors", "neighbourhood", "lanes"
+      ]
+    },
+    "space": {
+      "label": "Space & stars",
+      "group": "places & travel",
+      "accents": ["#2B2F77", "#E8B94A", "#8E5CD9"],
+      "keywords": [
+        "space", "planet", "galaxy", "telescope", "eclipse", "astronomy", "comet", "meteor",
+        "cosmos", "constellation", "orbit", "universe", "rocket", "nasa", "milkyway"
+      ]
+    },
+    "food": {
+      "label": "Meals & eating out",
+      "group": "food & drink",
+      "accents": ["#E0603A", "#F2B134", "#6BA24A"],
+      "keywords": [
+        "eat", "ate", "eating", "lunch", "dinner", "breakfast", "snack", "delicious", "yum",
+        "foodie", "hungry", "tasty", "restaurant", "feast", "tiffin", "menu", "order",
+        "ordered", "takeaway", "zomato", "swiggy", "buffet", "spicy", "thali", "biryani",
+        "pizza", "pasta", "burger", "noodles", "dosa", "idli", "paratha", "ilish", "hilsa",
+        "luchi", "alur", "dum", "rice", "dal", "chicken", "mutton", "sushi", "tacos",
+        "sandwich", "meal", "meals"
+      ]
+    },
+    "cooking": {
+      "label": "Cooking & baking",
+      "group": "food & drink",
+      "accents": ["#D6542F", "#7EA65A", "#F2C14E"],
+      "keywords": [
+        "cook", "cooked", "cooking", "recipe", "bake", "baked", "chef", "stirred", "fry",
+        "fried", "boil", "curry", "dough", "oven", "grill", "barbecue", "masala", "kneading",
+        "simmer", "marinate"
+      ]
+    },
+    "streetfood": {
+      "label": "Street food",
+      "group": "food & drink",
+      "accents": ["#E8742A", "#F5C242", "#7FB050"],
+      "keywords": [
+        "jhalmuri", "phuchka", "puchka", "chaat", "momo", "momos", "maggi", "roll", "kathi",
+        "samosa", "golgappa", "vadapav", "pavbhaji", "kachori", "chowmein", "bhelpuri",
+        "stall", "fuchka", "telebhaja", "singara"
+      ]
+    },
+    "dessert": {
+      "label": "Sweets & desserts",
+      "group": "food & drink",
+      "accents": ["#F28FB3", "#F7D08A", "#8B5A3C"],
+      "keywords": [
+        "dessert", "sweet", "mishti", "rosogolla", "sandesh", "kheer", "payesh", "pitha",
+        "chocolate", "gelato", "kulfi", "pastry", "donut", "brownie", "cookies", "candy",
+        "halwa", "jalebi", "ladoo", "gulab", "bakery", "icecream", "sundae", "fudge"
+      ]
+    },
+    "drinks": {
+      "label": "Tea, coffee & drinks",
+      "group": "food & drink",
+      "accents": ["#A8693F", "#F2D2A4", "#4FA38F"],
+      "keywords": [
+        "tea", "chai", "cha", "coffee", "latte", "cappuccino", "smoothie", "juice",
+        "milkshake", "mocktail", "kullad", "cafe", "brew", "boba", "espresso", "kettle", "mug",
+        "sip", "sipping"
+      ]
+    },
+    "friends": {
+      "label": "Friends",
+      "group": "people",
+      "accents": ["#FF7F50", "#FFD23F", "#3BCEAC"],
+      "keywords": [
+        "friend", "friends", "adda", "gang", "buddy", "hangout", "gossip", "squad", "bestie",
+        "bff", "together", "prank", "banter", "meetup", "dost", "bondhu", "sleepover",
+        "reunion", "crew", "yaar", "yaaron", "gathered", "joke"
+      ]
+    },
+    "family": {
+      "label": "Family",
+      "group": "people",
+      "accents": ["#D98E5F", "#7FB38A", "#F1C27D"],
+      "keywords": [
+        "family", "mom", "dad", "mother", "father", "parents", "sister", "brother", "cousin",
+        "cousins", "uncle", "aunt", "maa", "baba", "grandma", "grandpa", "grandparents",
+        "thakuma", "dadu", "dida", "kids", "baby", "niece", "nephew", "kaku", "mashi", "pishi",
+        "bhai", "didi", "dada"
+      ]
+    },
+    "dating": {
+      "label": "Dating & relationships",
+      "group": "people",
+      "accents": ["#E75A8F", "#F4A6B8", "#9E3D6B"],
+      "keywords": [
+        "date", "dating", "boyfriend", "girlfriend", "partner", "valentine", "flirt",
+        "flirting", "couple", "proposal", "ex", "breakup", "relationship", "situationship",
+        "fiance", "fiancee", "anniversary"
+      ]
+    },
+    "spiritual": {
+      "label": "Faith & prayer",
+      "group": "people",
+      "accents": ["#E8A23C", "#F2D27A", "#C95C3F"],
+      "keywords": [
+        "prayer", "pray", "prayed", "temple", "mandir", "church", "mosque", "gurdwara", "god",
+        "incense", "aarti", "prasad", "namaz", "dua", "mantra", "spiritual", "pilgrimage",
+        "faith", "ashram", "bhajan"
+      ]
+    },
+    "news": {
+      "label": "News & world",
+      "group": "people",
+      "accents": ["#C0392B", "#2C5AA0", "#E8C547"],
+      "keywords": [
+        "news", "election", "vote", "voted", "politics", "protest", "strike", "headlines",
+        "government", "debate", "rally", "newspaper", "radio"
+      ]
+    },
+    "party": {
+      "label": "Parties & nights out",
+      "group": "occasions",
+      "accents": ["#FF5C8A", "#FFC93C", "#5B8DEF"],
+      "keywords": [
+        "party", "dance", "dancing", "club", "cheers", "treat", "confetti", "balloons",
+        "champagne", "nightout", "celebrate", "celebration", "bash", "clubbing", "partying"
+      ]
+    },
+    "birthday": {
+      "label": "Birthday",
+      "group": "occasions",
+      "accents": ["#FF6F91", "#FFC75F", "#2EC4B6"],
+      "keywords": [
+        "birthday", "bday", "cake", "gift", "gifts", "surprise", "candles", "wishes", "turned",
+        "birthdays"
+      ]
+    },
+    "wedding": {
+      "label": "Wedding",
+      "group": "occasions",
+      "accents": ["#C8334E", "#F2B33D", "#E7A2B4"],
+      "keywords": [
+        "wedding", "marriage", "bride", "groom", "baraat", "sangeet", "reception", "shaadi",
+        "bridesmaid", "engagement", "ring", "honeymoon", "vows", "mandap"
+      ]
+    },
+    "graduation": {
+      "label": "Graduation",
+      "group": "occasions",
+      "accents": ["#1F3A6D", "#F2C230", "#B03A48"],
+      "keywords": [
+        "graduation", "convocation", "degree", "farewell", "alumni", "cap", "gown", "diploma",
+        "commencement"
+      ]
+    },
+    "festival": {
+      "label": "Festivals",
+      "group": "occasions",
+      "accents": ["#E8764A", "#F2A93B", "#B83A7B"],
+      "keywords": [
+        "pujo", "puja", "durga", "pandal", "dhak", "dhunuchi", "ashtami", "dashami", "sindoor",
+        "diwali", "diya", "rangoli", "holi", "eid", "christmas", "navratri", "garba",
+        "saraswati", "lakshmi", "festival", "bhasan", "pushpanjali", "bijoya", "mela",
+        "fireworks", "crackers", "lantern", "carnival", "parade", "onam", "pongal", "baisakhi",
+        "ganesh", "ramadan", "iftar", "decorations", "tradition", "thanksgiving", "hanukkah",
+        "kali"
+      ]
+    }
+  },
+  "fallback": {
+    "activeProfile": "generic",
+    "profiles": {
+      "generic": {
+        "monthTopic": {
+          "1": "winter",
+          "2": "winter",
+          "3": "spring",
+          "4": "spring",
+          "5": "sunny",
+          "6": "sunny",
+          "7": "sunny",
+          "8": "sunny",
+          "9": "autumn",
+          "10": "autumn",
+          "11": "autumn",
+          "12": "winter"
+        }
+      },
+      "kolkata": {
+        "monthTopic": {
+          "1": "winter",
+          "2": "winter",
+          "3": "sunny",
+          "4": "heat",
+          "5": "heat",
+          "6": "rain",
+          "7": "rain",
+          "8": "rain",
+          "9": "rain",
+          "10": "festival",
+          "11": "autumn",
+          "12": "winter"
+        }
+      }
+    }
+  }
+}

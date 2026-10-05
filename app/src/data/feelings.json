@@ -1,0 +1,141 @@
+{
+  "feelings": {
+    "joyful": {
+      "label": "Joyful",
+      "blurb": "A feel-good, bright, sunny kind of day",
+      "keywords": [
+        "happy", "joy", "joyful", "amazing", "wonderful", "fantastic", "awesome", "great",
+        "best", "lovely", "delighted", "cheerful", "thrilled", "glad", "fun", "smile",
+        "smiled", "smiling", "laugh", "laughed", "laughing", "blissful", "yay", "hooray",
+        "sparkle", "brilliant", "perfect", "magical", "giggle", "giggled", "grin", "beaming",
+        "wow", "excellent", "cheery", "bliss", "radiant"
+      ]
+    },
+    "content": {
+      "label": "Content",
+      "blurb": "Easy, warm, nothing missing",
+      "keywords": [
+        "content", "satisfied", "comfortable", "okay", "fine", "good", "pleasant", "steady",
+        "simple", "easy", "nice", "decent", "cozy", "snug", "warm", "comfy", "homey",
+        "settled", "fulfilled", "pleased", "alright", "smooth", "cosy", "sorted", "mellow"
+      ]
+    },
+    "peaceful": {
+      "label": "Peaceful",
+      "blurb": "Quiet, slow, still",
+      "keywords": [
+        "calm", "peaceful", "peace", "serene", "still", "stillness", "tranquil", "quiet",
+        "gentle", "soothing", "mindful", "meditate", "meditation", "breathe", "breathing",
+        "relax", "relaxed", "relaxing", "unwind", "shanti", "shanto", "sukoon", "harmony",
+        "ease", "slow", "slowly", "hush", "restful", "balance"
+      ]
+    },
+    "excited": {
+      "label": "Excited",
+      "blurb": "Buzzing, can't wait, big energy",
+      "keywords": [
+        "excited", "exciting", "thrilling", "adventure", "energetic", "energy", "pumped",
+        "hyped", "eager", "anticipation", "buzzing", "rush", "adrenaline", "spontaneous",
+        "wild", "epic", "crazy", "finally", "countdown", "stoked", "psyched", "electric",
+        "lively", "unreal"
+      ]
+    },
+    "proud": {
+      "label": "Proud",
+      "blurb": "Did it. Won it. Earned it.",
+      "keywords": [
+        "proud", "pride", "accomplished", "achieved", "achievement", "won", "win", "winning",
+        "success", "successful", "nailed", "crushed", "aced", "victory", "triumph",
+        "milestone", "promoted", "promotion", "passed", "selected", "trophy", "medal",
+        "congrats", "congratulations", "graduated", "completed", "finished", "shipped",
+        "topper", "champion"
+      ]
+    },
+    "loving": {
+      "label": "Loving",
+      "blurb": "Soft, tender, full-hearted",
+      "keywords": [
+        "love", "loved", "loving", "adore", "affection", "tender", "romantic", "romance",
+        "crush", "kiss", "kissed", "hug", "hugged", "cuddle", "heart", "butterflies",
+        "sweetheart", "darling", "soulmate", "bhalobasha", "pyaar", "ishq", "mohabbat", "jaan",
+        "babu", "cherish", "devoted", "smitten"
+      ]
+    },
+    "nostalgic": {
+      "label": "Nostalgic",
+      "blurb": "Faded, golden, looking back",
+      "keywords": [
+        "nostalgic", "nostalgia", "remember", "memory", "memories", "childhood", "throwback",
+        "reminded", "bygone", "vintage", "retro", "old", "past", "yesterday", "once",
+        "reminisce", "hometown", "antique", "used", "sentimental", "polaroid", "cassette",
+        "yearbook", "diary", "letter", "album", "ancestral"
+      ]
+    },
+    "grateful": {
+      "label": "Grateful",
+      "blurb": "Thankful, blessed, touched",
+      "keywords": [
+        "grateful", "gratitude", "thankful", "thanks", "blessed", "lucky", "appreciate",
+        "appreciated", "blessing", "kindness", "kind", "generous", "fortunate", "humbled",
+        "touched", "thank", "shukriya", "dhonnobad", "helped", "help", "support", "supportive"
+      ]
+    },
+    "tired": {
+      "label": "Tired",
+      "blurb": "Drained, sleepy, running on empty",
+      "keywords": [
+        "tired", "exhausted", "sleepy", "drained", "burnout", "lazy", "lethargic", "weary",
+        "fatigued", "worn", "drowsy", "sluggish", "yawn", "yawning", "sleep", "slept", "nap",
+        "rest", "resting", "bedrest", "knackered", "wiped", "overworked", "spent"
+      ]
+    },
+    "anxious": {
+      "label": "Anxious",
+      "blurb": "Tense, racing, on edge",
+      "keywords": [
+        "anxious", "anxiety", "stressed", "stress", "worried", "worry", "nervous", "panic",
+        "overwhelmed", "pressure", "tense", "uneasy", "scared", "afraid", "fear", "dread",
+        "restless", "jittery", "overthinking", "nerves", "frantic", "swamped", "behind"
+      ]
+    },
+    "sad": {
+      "label": "Sad",
+      "blurb": "Heavy, blue, missing someone",
+      "keywords": [
+        "sad", "sadness", "cry", "cried", "crying", "tears", "lonely", "alone", "loneliness",
+        "miss", "missing", "empty", "heavy", "numb", "down", "blue", "hurt", "hollow",
+        "homesick", "ache", "longing", "grief", "mourn", "heartbroken", "depressed", "gloomy",
+        "kharap", "isolated", "ignored", "unseen", "ghosted"
+      ]
+    },
+    "angry": {
+      "label": "Angry",
+      "blurb": "Fed up, fuming, had enough",
+      "keywords": [
+        "angry", "anger", "furious", "annoyed", "irritated", "frustrated", "frustrating",
+        "fuming", "rage", "mad", "hate", "hated", "fight", "fought", "argue", "argued",
+        "argument", "shouted", "yelled", "rant", "unfair", "betrayed", "gussa", "rege", "ugh",
+        "bitter", "resent", "unbearable"
+      ]
+    },
+    "bored": {
+      "label": "Bored",
+      "blurb": "Flat, grey, same as always",
+      "keywords": [
+        "bored", "boring", "boredom", "dull", "meh", "monotonous", "same", "repetitive",
+        "idle", "uneventful", "ordinary", "average", "whatever", "blah", "tedious", "stuck",
+        "nothing", "routine", "unmotivated", "drifting"
+      ]
+    },
+    "inspired": {
+      "label": "Inspired",
+      "blurb": "Curious, creative, sparking",
+      "keywords": [
+        "inspired", "inspiration", "creative", "curious", "imagine", "idea", "ideas", "wonder",
+        "discover", "discovered", "dreamy", "dreaming", "motivated", "motivation", "passion",
+        "spark", "aha", "eureka", "vision", "innovative", "fascinated", "intrigued"
+      ]
+    }
+  },
+  "defaultFeeling": "content"
+}

@@ -186,3 +186,147 @@
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
+/* "try a day" mixer */
+.label {
+  margin: 18px 0 8px;
+  font: 500 10px var(--font-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-50);
+}
+.picker {
+  width: 100%;
+  min-height: var(--tap);
+  padding: 0 12px;
+  border: 1px solid var(--ink-12);
+  border-radius: var(--r-md);
+  background: var(--card);
+  color: var(--ink);
+  font: 500 14px var(--font-ui);
+}
+.mix {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 22px;
+  padding: 18px 8px 14px;
+  background: var(--card);
+  border: 1px solid var(--ink-08);
+  border-radius: 14px;
+}
+.mix__col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.mix__col .lbl {
+  height: 26px;
+  text-align: center;
+  font-size: 9px;
+  line-height: 1.3;
+}
+.mix__arrow {
+  align-self: center;
+  font: 400 22px var(--font-display);
+  color: var(--ink-45);
+}
+.tag {
+  display: inline-block;
+  padding: 1px 7px;
+  border-radius: var(--r-pill);
+  background: var(--ink-08);
+  font: 500 9px var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-60);
+  vertical-align: middle;
+}
+.shuffle {
+  width: 100%;
+  min-height: var(--tap);
+  margin: 14px 0 6px;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: var(--postmark);
+  color: var(--card-warm);
+  font: 500 14px var(--font-ui);
+}
+.swatches {
+  margin: 12px 0 0;
+  padding: 14px;
+  list-style: none;
+  display: grid;
+  gap: 6px;
+  background: var(--card);
+  border: 1px solid var(--ink-08);
+  border-radius: 12px;
+}
+.swatches li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font: 400 13px var(--font-ui);
+}
+.swatches i {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 1px rgba(42, 38, 32, 0.15);
+}
+.swatches code {
+  font: 400 10px var(--font-mono);
+  color: var(--ink-45);
+}
+
+/* feelings and topics */
+.blurb {
+  margin: -4px 0 8px;
+  font: 400 13px/1.4 var(--font-ui);
+  color: var(--ink-60);
+}
+.words {
+  margin-bottom: 12px;
+}
+.words summary {
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  font: 500 12px var(--font-ui);
+  color: var(--postmark);
+  cursor: pointer;
+}
+.words .kw {
+  margin-top: 6px;
+}
+.topic {
+  padding: 12px 14px 4px;
+  margin-bottom: 8px;
+  background: var(--card);
+  border: 1px solid var(--ink-08);
+  border-radius: 12px;
+}
+.topic__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.topic h3 {
+  margin: 0;
+  font: 600 14px var(--font-ui);
+}
+.topic__accents {
+  display: flex;
+  gap: 5px;
+}
+.topic__accents i {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(42, 38, 32, 0.15);
+}

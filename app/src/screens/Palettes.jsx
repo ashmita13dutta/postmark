@@ -2,19 +2,26 @@ import { useMemo, useState } from 'react'
 import Screen from '../app/Screen'
 import Stamp from '../components/stamp/Stamp'
 import colorNames from '../data/colornames.json'
-import moods from '../data/moods.json'
+import { feelings, defaultFeeling } from '../data/feelings.json'
 import palettes from '../data/palettes.json'
+import { topics, fallback } from '../data/topics.json'
 import { namePalette } from '../engine/colorNames'
+import { mixPalette } from '../engine/palette'
 import { chroma, hexToOklab, hue } from '../lib/color'
 import './palettes.css'
 
-const FAMILIES = Object.keys(moods.families)
-const VIEWS = ['Palettes', 'Names', 'Moods']
+const FEELING_IDS = Object.keys(feelings)
+const VIEWS = ['Try a day', 'Feelings', 'Topics', 'Names']
 
-/** Content review page: see every palette as a stamp, every color name, every mood's keywords. */
+// topics grouped for the picker and the Topics view, in file order
+const GROUPS = Object.entries(topics).reduce((acc, [id, t]) => {
+  ;(acc[t.group] ??= []).push(id)
+  return acc
+}, {})
+
+/** Content review page: see palettes, topics and names the way the app will use them. */
 export default function Palettes() {
-  const [view, setView] = useState('Palettes')
-
+  const [view, setView] = useState('Try a day')
   return (
     <Screen caption="Content review" title="Palettes & words">
       <div className="seg" role="tablist" aria-label="View">
@@ -30,39 +37,159 @@ export default function Palettes() {
           </button>
         ))}
       </div>
-      {view === 'Palettes' && <PaletteView />}
+      {view === 'Try a day' && <MixView />}
+      {view === 'Feelings' && <FeelingsView />}
+      {view === 'Topics' && <TopicsView />}
       {view === 'Names' && <NamesView />}
-      {view === 'Moods' && <MoodsView />}
     </Screen>
   )
 }
 
-function PaletteView() {
-  const [family, setFamily] = useState('all')
-  const shown = family === 'all' ? FAMILIES : [family]
+function Swatches({ colors, label }) {
+  const named = useMemo(() => namePalette(colors), [colors])
+  return (
+    <ul className="swatches" aria-label={label}>
+      {named.map((n) => (
+        <li key={n.hex}>
+          <i style={{ background: n.hex }} />
+          <span className="pcard__name">{n.name}</span>
+          <code>{n.hex}</code>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+/** Pick a feeling and a topic, see what a day like that would look like. */
+function MixView() {
+  const [feeling, setFeeling] = useState('joyful')
+  const [topic, setTopic] = useState('shopping')
+  const [shuffle, setShuffle] = useState(0)
+
+  const list = palettes[feeling]
+  const base = list[shuffle % list.length]
+  const mixed = useMemo(
+    () =>
+      topic === 'none'
+        ? { colors: base.colors, mixed: false }
+        : mixPalette(
+            base.colors,
+            topics[topic].accents,
+            `${feeling}:${topic}:${shuffle}`,
+            base.energy,
+          ),
+    [base, topic, feeling, shuffle],
+  )
+
+  return (
+    <>
+      <p className="screen__note">
+        Pick how the day <b>felt</b> and what it was <b>about</b>. The feeling chooses the palette;
+        the topic swaps in its own accent colors.
+      </p>
+
+      <div className="label">How it felt</div>
+      <div className="chips" role="group" aria-label="Feeling">
+        {FEELING_IDS.map((f) => (
+          <button
+            key={f}
+            className={feeling === f ? 'on' : ''}
+            onClick={() => {
+              setFeeling(f)
+              setShuffle(0)
+            }}
+          >
+            {feelings[f].label}
+          </button>
+        ))}
+      </div>
+
+      <div className="label">What it was about</div>
+      <select className="picker" value={topic} onChange={(e) => setTopic(e.target.value)}>
+        <option value="none">Nothing in particular</option>
+        {Object.entries(GROUPS).map(([group, ids]) => (
+          <optgroup key={group} label={group}>
+            {ids.map((id) => (
+              <option key={id} value={id}>
+                {topics[id].label}
+              </option>
+            ))}
+          </optgroup>
+        ))}
+      </select>
+
+      <div className="mix">
+        <div className="mix__col">
+          <div className="lbl">Palette: {base.name}</div>
+          <Stamp colors={base.colors} seed={base.id} width={110} label={base.name} />
+          <span className="tag">{base.energy}</span>
+        </div>
+        <div className="mix__arrow" aria-hidden="true">
+          +
+        </div>
+        <div className="mix__col">
+          <div className="lbl">With {topic === 'none' ? 'no topic' : topics[topic].label}</div>
+          <Stamp
+            colors={mixed.colors}
+            seed={`${base.id}:${topic}`}
+            width={110}
+            label="Mixed stamp"
+          />
+          <span className="tag">{mixed.mixed ? 'accents added' : 'unchanged'}</span>
+        </div>
+      </div>
+
+      <button className="shuffle" onClick={() => setShuffle((s) => s + 1)}>
+        Shuffle · palette {(shuffle % list.length) + 1} of {list.length}
+      </button>
+
+      <Swatches colors={mixed.colors} label="Mixed colors" />
+    </>
+  )
+}
+
+function FeelingsView() {
+  const [feeling, setFeeling] = useState('all')
+  const shown = feeling === 'all' ? FEELING_IDS : [feeling]
   const total = Object.values(palettes).flat().length
 
   return (
     <>
-      <div className="chips" role="group" aria-label="Mood family">
-        <button className={family === 'all' ? 'on' : ''} onClick={() => setFamily('all')}>
+      <div className="chips" role="group" aria-label="Feeling">
+        <button className={feeling === 'all' ? 'on' : ''} onClick={() => setFeeling('all')}>
           All · {total}
         </button>
-        {FAMILIES.map((f) => (
-          <button key={f} className={family === f ? 'on' : ''} onClick={() => setFamily(f)}>
-            {moods.families[f].label} · {palettes[f].length}
+        {FEELING_IDS.map((f) => (
+          <button key={f} className={feeling === f ? 'on' : ''} onClick={() => setFeeling(f)}>
+            {feelings[f].label} · {palettes[f].length}
           </button>
         ))}
       </div>
 
       {shown.map((f) => (
         <section key={f} className="family">
-          <h2>{moods.families[f].label}</h2>
+          <h2>{feelings[f].label}</h2>
+          <p className="blurb">{feelings[f].blurb}</p>
+          <details className="words">
+            <summary>{feelings[f].keywords.length} words that mean this</summary>
+            <div className="kw">
+              {feelings[f].keywords.map((k) => (
+                <span key={k}>{k}</span>
+              ))}
+            </div>
+          </details>
           {palettes[f].map((p) => (
             <PaletteCard key={p.id} palette={p} />
           ))}
         </section>
       ))}
+
+      <section className="family">
+        <h2>When nothing matches</h2>
+        <p className="blurb">
+          The feeling falls back to <b>{feelings[defaultFeeling].label}</b>.
+        </p>
+      </section>
     </>
   )
 }
@@ -80,7 +207,9 @@ function PaletteCard({ palette }) {
         />
       </div>
       <div className="pcard__body">
-        <h3>{palette.name}</h3>
+        <h3>
+          {palette.name} {palette.energy === 'vivid' && <span className="tag">vivid</span>}
+        </h3>
         <div className="pcard__harmony">{palette.harmony}</div>
         <ul>
           {named.map((n) => (
@@ -93,6 +222,63 @@ function PaletteCard({ palette }) {
         </ul>
       </div>
     </article>
+  )
+}
+
+function TopicsView() {
+  const { activeProfile, profiles } = fallback
+  return (
+    <>
+      <p className="screen__note">
+        {Object.keys(topics).length} topics. Each has words that trigger it and three accent colors
+        that join the palette.
+      </p>
+      {Object.entries(GROUPS).map(([group, ids]) => (
+        <section key={group} className="family">
+          <h2>{group}</h2>
+          {ids.map((id) => {
+            const t = topics[id]
+            return (
+              <article key={id} className="topic">
+                <div className="topic__head">
+                  <h3>{t.label}</h3>
+                  <div className="topic__accents" aria-label="Accent colors">
+                    {t.accents.map((a) => (
+                      <i key={a} style={{ background: a }} title={a} />
+                    ))}
+                  </div>
+                </div>
+                <details className="words">
+                  <summary>{t.keywords.length} words</summary>
+                  <div className="kw">
+                    {t.keywords.map((k) => (
+                      <span key={k}>{k}</span>
+                    ))}
+                  </div>
+                </details>
+              </article>
+            )
+          })}
+        </section>
+      ))}
+
+      <section className="family">
+        <h2>When nothing matches</h2>
+        <p className="blurb">
+          The topic comes from the time of day, then the month (profile: <b>{activeProfile}</b>).
+        </p>
+        {Object.entries(profiles).map(([name, p]) => (
+          <div key={name} className="fb">
+            <b>{name}</b>
+            <span>
+              {Object.entries(p.monthTopic)
+                .map(([m, t]) => `${m}: ${topics[t].label}`)
+                .join(' · ')}
+            </span>
+          </div>
+        ))}
+      </section>
+    </>
   )
 }
 
@@ -130,49 +316,6 @@ function NamesView() {
           </div>
         ))}
       </div>
-    </>
-  )
-}
-
-function MoodsView() {
-  const { activeProfile, profiles } = moods.fallback
-  return (
-    <>
-      <p className="screen__note">
-        When a note matches none of these words, the app falls back to the time of day, then the
-        month (profile: <b>{activeProfile}</b>).
-      </p>
-      {FAMILIES.map((f) => {
-        const { label, keywords, hours } = moods.families[f]
-        return (
-          <section key={f} className="family">
-            <h2>
-              {label} <small>{keywords.length} words</small>
-            </h2>
-            {hours.length > 0 && (
-              <div className="pcard__harmony">wins ties at hours {hours.join(', ')}</div>
-            )}
-            <div className="kw">
-              {keywords.map((k) => (
-                <span key={k}>{k}</span>
-              ))}
-            </div>
-          </section>
-        )
-      })}
-      <section className="family">
-        <h2>Fallback by month</h2>
-        {Object.entries(profiles).map(([name, p]) => (
-          <div key={name} className="fb">
-            <b>{name}</b>
-            <span>
-              {Object.entries(p.monthFamily)
-                .map(([m, f]) => `${m}: ${moods.families[f].label}`)
-                .join(' · ')}
-            </span>
-          </div>
-        ))}
-      </section>
     </>
   )
 }
