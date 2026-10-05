@@ -1,6 +1,6 @@
 ﻿# Postmark
 
-A journaling app where every day becomes a postage stamp. Offline-first, zero-cost PWA. Being rebuilt from scratch.
+A journaling app where every day becomes a postage stamp. Offline-first, zero-cost PWA. Being built from scratch.
 
 ## Folder map
 
