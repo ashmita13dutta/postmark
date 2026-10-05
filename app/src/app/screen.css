@@ -1,0 +1,25 @@
+.screen {
+  min-height: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: calc(var(--safe-top) + 22px) max(22px, var(--safe-right))
+    calc(var(--tabbar-h) + var(--safe-bottom) + 28px) max(22px, var(--safe-left));
+}
+
+.screen h1 {
+  margin: 4px 0 0;
+  font: 400 26px/1.1 var(--font-display);
+}
+
+.screen__note {
+  margin-top: 18px;
+  color: var(--ink-60);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.screen__stage {
+  display: flex;
+  justify-content: center;
+  padding: 36px 0 8px;
+}

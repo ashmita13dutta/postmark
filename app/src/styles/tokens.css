@@ -1,0 +1,55 @@
+/* Design tokens, copied from the Claude Design mockup (design/claude-design-export). */
+:root {
+  /* surfaces */
+  --paper: #f4efe6; /* app background */
+  --card: #fbf6ea; /* stamp paper, input boxes */
+  --card-warm: #fdf8ec;
+  --desk: #e4dac2; /* page behind the phone in the mockup; used for wide screens */
+  --desk-light: #ede3ce;
+
+  /* ink */
+  --ink: #2a2620;
+  --ink-60: rgba(42, 38, 32, 0.6);
+  --ink-50: rgba(42, 38, 32, 0.5);
+  --ink-45: rgba(42, 38, 32, 0.45);
+  --ink-15: rgba(42, 38, 32, 0.15);
+  --ink-12: rgba(42, 38, 32, 0.12);
+  --ink-08: rgba(42, 38, 32, 0.08);
+
+  /* postmark ink: slightly faded, like real ink */
+  --postmark: #534ab7;
+  --postmark-faded: rgba(83, 74, 183, 0.85);
+
+  /* sample stamp colors (Wet Alley Blue, Late Tram Grey, Mizzle Mist, Kadam Yellow, Jhalmuri Orange, Puja Red) */
+  --c-blue: #3a5771;
+  --c-grey: #5b6470;
+  --c-mist: #b6c7d6;
+  --c-yellow: #e7c64b;
+  --c-orange: #e39544;
+  --c-red: #b14126;
+  --c-red-deep: #8a2e1e;
+
+  /* type */
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-ui: 'DM Sans', -apple-system, system-ui, sans-serif;
+  --font-hand: 'Kalam', 'Caveat', cursive; /* postcard notes */
+  --font-hand-alt: 'Caveat', cursive;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace; /* tiny caps labels */
+
+  /* shape */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-pill: 100px;
+
+  /* layout */
+  --app-width: 390px; /* design target; layout is fluid */
+  --tabbar-h: 64px;
+  --tap: 44px; /* minimum tap target */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+
+  /* motion: springs live in JS (Framer Motion); this is the CSS fallback curve */
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}

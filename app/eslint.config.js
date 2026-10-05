@@ -24,8 +24,14 @@ export default [
       // The one rule that protects the spec: only lib/clock.js may read the real time.
       'no-restricted-syntax': [
         'error',
-        { selector: "CallExpression[callee.object.name='Date'][callee.property.name='now']", message: 'Use now() from lib/clock.js.' },
-        { selector: "NewExpression[callee.name='Date'][arguments.length=0]", message: 'Use new Date(now()) from lib/clock.js.' },
+        {
+          selector: "CallExpression[callee.object.name='Date'][callee.property.name='now']",
+          message: 'Use now() from lib/clock.js.',
+        },
+        {
+          selector: "NewExpression[callee.name='Date'][arguments.length=0]",
+          message: 'Use new Date(now()) from lib/clock.js.',
+        },
       ],
     },
   },

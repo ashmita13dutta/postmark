@@ -32,7 +32,11 @@ describe('platform (PWA)', () => {
   })
 
   it('share reports cancelled when the user dismisses', async () => {
-    const nav = { share: vi.fn(async () => { throw Object.assign(new Error(), { name: 'AbortError' }) }) }
+    const nav = {
+      share: vi.fn(async () => {
+        throw Object.assign(new Error(), { name: 'AbortError' })
+      }),
+    }
     vi.stubGlobal('navigator', nav)
     expect(await share({ text: 'x' })).toBe('cancelled')
   })
