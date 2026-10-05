@@ -1,0 +1,66 @@
+{
+  "rain": [
+    { "id": "rain-wet-alley", "name": "Wet Alley", "colors": ["#3A5771", "#5B6470", "#B6C7D6", "#E7C64B", "#B14126"] },
+    { "id": "rain-mizzle-morning", "name": "Mizzle Morning", "colors": ["#4C5F73", "#7A8B9C", "#B6C7D6", "#D3DCE3", "#F0C419"] },
+    { "id": "rain-banyan-downpour", "name": "Banyan Downpour", "colors": ["#3F5B3C", "#6E8B52", "#3F7D7A", "#9CC5BD", "#E39544"] },
+    { "id": "rain-thunder-evening", "name": "Thunder Evening", "colors": ["#2E3F63", "#4A6485", "#5A6C94", "#A9BFD6", "#E9B44C"] }
+  ],
+  "festival": [
+    { "id": "festival-ashtami-morning", "name": "Ashtami Morning", "colors": ["#A3262A", "#F7F3EA", "#E7C64B", "#D2321E", "#E39544"] },
+    { "id": "festival-dhunuchi-smoke", "name": "Dhunuchi Smoke", "colors": ["#8D8A88", "#C9A24B", "#B14126", "#5B3A6E", "#F2B56B"] },
+    { "id": "festival-pandal-lights", "name": "Pandal Lights", "colors": ["#2E3F63", "#E27A9A", "#F5C06A", "#CDA94B", "#B83A7B"] },
+    { "id": "festival-bijoya", "name": "Bijoya", "colors": ["#D1457D", "#F2A93B", "#F3E9D0", "#8A2E1E", "#E8764A"] }
+  ],
+  "cozy": [
+    { "id": "cozy-kullad-chai", "name": "Kullad Chai", "colors": ["#5B3F2E", "#8B5A3C", "#C77B4A", "#EBCB75", "#F3E9D0"] },
+    { "id": "cozy-blanket-fort", "name": "Blanket Fort", "colors": ["#7B5848", "#A38B6D", "#C98B94", "#E3D3A5", "#F2EEE4"] },
+    { "id": "cozy-rainy-window-tea", "name": "Rainy Window Tea", "colors": ["#4A5058", "#8B5A3C", "#D9902B", "#F0B58C", "#F7F3EA"] }
+  ],
+  "pressure": [
+    { "id": "pressure-midnight-oil", "name": "Midnight Oil", "colors": ["#2D3347", "#4A6485", "#C9A45B", "#B83A32", "#D6CDB8"] },
+    { "id": "pressure-highlighter-fade", "name": "Highlighter Fade", "colors": ["#33322F", "#7D9CC4", "#D9D26E", "#E58FA0", "#EFEBE3"] },
+    { "id": "pressure-exam-hall", "name": "Exam Hall", "colors": ["#5B6470", "#8E969B", "#D6CDB8", "#B83A32", "#3A5771"] }
+  ],
+  "travel": [
+    { "id": "travel-window-seat", "name": "Window Seat", "colors": ["#6FA0C0", "#4F7A47", "#E1D0A6", "#F0C419", "#B9633F"] },
+    { "id": "travel-night-train", "name": "Night Train", "colors": ["#243248", "#4A6485", "#E9B44C", "#B58B3A", "#8D8A88"] },
+    { "id": "travel-digha-shore", "name": "Digha Shore", "colors": ["#A5CEC8", "#E1D0A6", "#4A7A9B", "#F3E9D0", "#E88B2D"] },
+    { "id": "travel-hill-station-mist", "name": "Hill Station Mist", "colors": ["#C5D2D3", "#4F7A47", "#8FA595", "#5A6C94", "#F2EEE4"] }
+  ],
+  "friends": [
+    { "id": "friends-adda-evening", "name": "Adda Evening", "colors": ["#E8764A", "#F0C419", "#3F7D7A", "#D9608A", "#F3E9D0"] },
+    { "id": "friends-rooftop-chatter", "name": "Rooftop Chatter", "colors": ["#4A6485", "#E39544", "#F2C4B8", "#8FAF6A", "#F7F3EA"] },
+    { "id": "friends-laugh-until-it-hurts", "name": "Laugh Until It Hurts", "colors": ["#D2321E", "#F2A93B", "#9CC5BD", "#6F5FA8", "#F3E9D0"] }
+  ],
+  "lonely": [
+    { "id": "lonely-empty-room", "name": "Empty Room", "colors": ["#6B7A8F", "#8CA0B3", "#A3A8AD", "#4A5058", "#D3DCE3"] },
+    { "id": "lonely-heavy-sky", "name": "Heavy Sky", "colors": ["#4C5F73", "#6D6259", "#9AA7BD", "#B8BCBF", "#E9E2D2"] },
+    { "id": "lonely-quiet-hours", "name": "Quiet Hours", "colors": ["#3E5C5A", "#7A8B9C", "#8D8A88", "#C5D2D3", "#DAD6CC"] }
+  ],
+  "celebration": [
+    { "id": "celebration-candles-out", "name": "Candles Out", "colors": ["#D9473C", "#F2C94C", "#F4C7D1", "#3FA5A0", "#F7F3EA"] },
+    { "id": "celebration-sparkler", "name": "Sparkler", "colors": ["#5B3A6E", "#D1457D", "#F0C75E", "#E8764A", "#F5EBD3"] },
+    { "id": "celebration-cake-and-cheers", "name": "Cake and Cheers", "colors": ["#B83A7B", "#EBB0B8", "#F0A24F", "#9CC5BD", "#EFE4CB"] }
+  ],
+  "nostalgic": [
+    { "id": "nostalgic-faded-polaroid", "name": "Faded Polaroid", "colors": ["#7A5A44", "#A8896A", "#C9B79C", "#E3D3A5", "#EFE4CB"] },
+    { "id": "nostalgic-old-letters", "name": "Old Letters", "colors": ["#6E3F3A", "#A87445", "#D8C7A3", "#7C74B8", "#F2EEE4"] },
+    { "id": "nostalgic-dadus-verandah", "name": "Dadu's Verandah", "colors": ["#4F6B3A", "#6B4430", "#7A5C43", "#D9902B", "#E9E2D2"] }
+  ],
+  "sunny": [
+    { "id": "sunny-kash-phool-sky", "name": "Kash Phool Sky", "colors": ["#7FA3C7", "#A9BFD6", "#8FAF6A", "#E7C64B", "#F7F3EA"] },
+    { "id": "sunny-maidan-morning", "name": "Maidan Morning", "colors": ["#7A9A4C", "#A9B64C", "#7FA3C7", "#F0CF5E", "#F3E9D0"] },
+    { "id": "sunny-shiuli-dawn", "name": "Shiuli Dawn", "colors": ["#E8764A", "#F0A24F", "#A8BC8B", "#F2E3A0", "#F7F3EA"] }
+  ],
+  "night": [
+    { "id": "night-terrace-after-dark", "name": "Terrace After Dark", "colors": ["#243248", "#2E3F63", "#6F5FA8", "#E9B44C", "#D9DCE8"] },
+    { "id": "night-streetlight", "name": "Streetlight", "colors": ["#33322F", "#3A3D42", "#5A6C94", "#8D8A88", "#E9B44C"] },
+    { "id": "night-moonlit-roof", "name": "Moonlit Roof", "colors": ["#2D3347", "#4A6485", "#7C74B8", "#AEB8CF", "#F2EEE4"] }
+  ],
+  "food": [
+    { "id": "food-jhalmuri-cart", "name": "Jhalmuri Cart", "colors": ["#B14126", "#E39544", "#E7C64B", "#8BAA6A", "#F3E9D0"] },
+    { "id": "food-phuchka-stall", "name": "Phuchka Stall", "colors": ["#7A4A2E", "#C73E4A", "#8FAF6A", "#D9902B", "#F3E9D0"] },
+    { "id": "food-mishti-counter", "name": "Mishti Counter", "colors": ["#C9A07A", "#D9902B", "#E58FA0", "#F1DDA8", "#F5EBD3"] },
+    { "id": "food-kathi-roll-wrap", "name": "Kathi Roll Wrap", "colors": ["#B14126", "#5E7F3C", "#F0A24F", "#E0BE85", "#EFE4CB"] }
+  ]
+}

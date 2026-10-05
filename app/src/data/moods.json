@@ -1,0 +1,133 @@
+{
+  "families": {
+    "rain": {
+      "label": "Rain",
+      "hours": [],
+      "keywords": [
+        "rain", "rainy", "raining", "bristi", "brishti", "monsoon", "drizzle", "downpour", "puddle",
+        "umbrella", "thunder", "lightning", "storm", "cloud", "cloudy", "wet", "soaked",
+        "waterlogged", "mizzle", "petrichor", "shower", "damp", "humid", "flood", "barsha", "megh"
+      ]
+    },
+    "festival": {
+      "label": "Festival",
+      "hours": [],
+      "keywords": [
+        "pujo", "puja", "durga", "pandal", "dhak", "dhunuchi", "ashtami", "dashami", "sindoor",
+        "kali", "diwali", "diya", "rangoli", "holi", "eid", "christmas", "navratri", "garba",
+        "saraswati", "lakshmi", "festival", "bhasan", "pushpanjali", "bijoya", "mela", "fireworks",
+        "crackers"
+      ]
+    },
+    "cozy": {
+      "label": "Chai & cozy",
+      "hours": [],
+      "keywords": [
+        "chai", "tea", "cha", "cozy", "blanket", "kettle", "coffee", "latte", "quilt", "rug", "soup",
+        "cuddle", "snuggle", "warm", "slow", "lazy", "sofa", "reading", "candle", "fireplace",
+        "cocoa", "kullad", "sweater", "winter", "nap"
+      ]
+    },
+    "pressure": {
+      "label": "Exam & pressure",
+      "hours": [],
+      "keywords": [
+        "exam", "test", "study", "studying", "revision", "assignment", "deadline", "viva", "result",
+        "marks", "syllabus", "lecture", "class", "homework", "project", "submission", "presentation",
+        "interview", "stress", "stressed", "anxious", "anxiety", "pressure", "overwhelmed", "panic",
+        "internship"
+      ]
+    },
+    "travel": {
+      "label": "Travel",
+      "hours": [],
+      "keywords": [
+        "travel", "trip", "train", "flight", "airport", "bus", "journey", "road", "highway", "hills",
+        "mountain", "beach", "sea", "darjeeling", "digha", "puri", "station", "luggage", "ticket",
+        "metro", "tram", "ferry", "ride", "drive", "explore", "wander", "sightseeing"
+      ]
+    },
+    "friends": {
+      "label": "Friends",
+      "hours": [],
+      "keywords": [
+        "friend", "friends", "adda", "gang", "buddy", "hangout", "laugh", "laughed", "laughing",
+        "joke", "gossip", "squad", "bestie", "bff", "together", "prank", "banter", "meetup", "dost",
+        "bondhu", "sleepover", "gathered", "reunion"
+      ]
+    },
+    "lonely": {
+      "label": "Lonely",
+      "hours": [],
+      "keywords": [
+        "alone", "lonely", "miss", "missing", "empty", "quiet", "silence", "sad", "cry", "cried",
+        "crying", "heavy", "numb", "homesick", "distance", "gone", "hurt", "tears", "ache",
+        "longing", "isolated", "kharap", "tired"
+      ]
+    },
+    "celebration": {
+      "label": "Celebration",
+      "hours": [],
+      "keywords": [
+        "birthday", "celebrate", "celebration", "cake", "gift", "surprise", "congrats", "won", "win",
+        "passed", "promotion", "proud", "anniversary", "wedding", "engagement", "graduation",
+        "party", "cheers", "happiest", "yay", "dance", "dancing", "treat", "confetti"
+      ]
+    },
+    "nostalgic": {
+      "label": "Nostalgic",
+      "hours": [],
+      "keywords": [
+        "remember", "memory", "memories", "nostalgia", "nostalgic", "childhood", "old", "past",
+        "grandma", "grandpa", "thakuma", "dadu", "school", "reminded", "throwback", "album", "diary",
+        "letter", "yesterday", "once", "vintage", "antique", "dida", "baba"
+      ]
+    },
+    "sunny": {
+      "label": "Sunny",
+      "hours": [],
+      "keywords": [
+        "sun", "sunny", "sunshine", "bright", "clear", "sky", "breeze", "golden", "picnic", "garden",
+        "park", "walk", "walking", "morning", "fresh", "flowers", "bloom", "kash", "shiuli",
+        "autumn", "spring", "cheerful", "happy"
+      ]
+    },
+    "night": {
+      "label": "Night",
+      "hours": [21, 22, 23, 0, 1, 2, 3, 4],
+      "keywords": [
+        "night", "midnight", "moon", "stars", "star", "insomnia", "awake", "late", "dark",
+        "streetlight", "terrace", "rooftop", "balcony", "twilight", "dusk", "sunset", "evening",
+        "lamp", "sleepless", "dream", "raat", "chand"
+      ]
+    },
+    "food": {
+      "label": "Food",
+      "hours": [],
+      "keywords": [
+        "jhalmuri", "phuchka", "puchka", "biryani", "rosogolla", "roll", "kathi", "momo", "momos",
+        "maggi", "ilish", "hilsa", "mishti", "sweet", "sandesh", "luchi", "alur", "dum", "chaat",
+        "eat", "ate", "eating", "lunch", "dinner", "breakfast", "snack", "cook", "cooked", "kheer",
+        "payesh", "pitha", "foodie", "delicious", "yum"
+      ]
+    }
+  },
+
+  "fallback": {
+    "monthFamily": {
+      "1": "cozy",
+      "2": "cozy",
+      "3": "sunny",
+      "4": "sunny",
+      "5": "sunny",
+      "6": "rain",
+      "7": "rain",
+      "8": "rain",
+      "9": "rain",
+      "10": "festival",
+      "11": "cozy",
+      "12": "cozy"
+    },
+    "defaultFamily": "sunny"
+  }
+}

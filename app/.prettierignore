@@ -1,0 +1,4 @@
+dist
+dev-dist
+# hand-edited content: keep the compact layout so it is easy to read and review
+src/data/*.json
