@@ -11,6 +11,7 @@
     "test:tz": "node scripts/test-tz.mjs",
     "analyze": "node scripts/analyze-content.mjs",
     "lint": "eslint .",
+    "assets": "node scripts/build-assets.mjs",
     "format": "prettier --write .",
     "evaluate": "vitest run tests/corpus.test.js && node -e \"process.stdout.write(require('fs').readFileSync('tests/corpus/.last-run.txt','utf8'))\""
   },
@@ -32,6 +33,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",
+    "@resvg/resvg-js": "^2.6.2",
     "@vitejs/plugin-react": "^6.1.1",
     "eslint": "^9.39.5",
     "eslint-plugin-react": "^7.37.5",
