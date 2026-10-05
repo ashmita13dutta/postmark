@@ -42,6 +42,19 @@ anxious, sad, angry, disappointed, bored, inspired). Each has a `label`, a one-l
   fits two, give it to the stronger one.
 - `defaultFeeling`: used when nothing matches.
 
+### Weak words, phrases and the look of a feeling
+
+- `weak`: a list of keywords that are ambiguous ("quiet", "refreshed", "notes", "spilled"). They
+  count for half, so a clearer word elsewhere in the note wins. Use it for words that mean one
+  thing in one note and another elsewhere.
+- `look`: what a stamp for this feeling should look like, as [min, max] for the average color
+  strength (`chroma`) and average `lightness` of its five colors. The tests check every palette,
+  and every stamp the engine can build, against it, so a "sad" stamp can never come out
+  candy-bright. If you add a palette and the tests say it is outside the envelope, either it
+  belongs under another feeling or the envelope should be widened on purpose.
+- Phrases are written joined, up to five words: `overthemoon` matches "over the moon", `didntmake`
+  matches "didn't make". Idioms like "burnt out", "took me back" and "fell through" work this way.
+
 ## topics.json
 
 54 topics in groups (weather & time, everyday life, activities, places & travel, food & drink,
@@ -52,6 +65,10 @@ people, occasions). Each has `label`, `group`, `keywords`, and `accents`.
 - `accents`: exactly 3 hex colors that say "this topic": shopping is pink, yellow and aqua; exams are
   lamp gold, red-pen red and notebook blue. The tests make sure they look clearly different from
   each other and are not neon.
+- `hints` (optional): topic words that lean toward a mood even with no feeling word. For example
+  `interview` leans anxious and `wedding` leans joyful. A gentle nudge: any real feeling word in the
+  note outweighs it. A hint word must be one of the topic's own keywords.
+- `weak` (optional): ambiguous topic words that count for half (see above).
 - `hours` (optional): hours (0-23) when this topic wins a tie. Only `night` uses it.
 - `fallback`: when a note matches no topic, the app picks by time of day, then by month using
   `activeProfile`. `generic` suits most places. `kolkata` makes June-September rainy and October
@@ -132,3 +149,20 @@ closest-looking entry here and uses its name (never the same name twice on one s
 - Voice: places, food, weather, objects. Local ("Late Tram Grey", "Jhalmuri Orange") and universal
   ("Sea Glass", "Candy Window Pink", "Oat Milk") sit side by side.
 - The tests also require names across the whole color wheel.
+
+## Measuring how well it reads notes
+
+`npm run evaluate` runs the mood engine over about 450 realistic notes (`tests/corpus/*.json`:
+English, Hinglish and Bengali, short and long, mixed feelings, emoji, typos) and prints the score and
+every miss:
+
+- **feels-right**: the answer is the same _kind_ of feeling (positive, neutral, negative) as an
+  accepted one. This is what the color mostly depends on.
+- **flips**: a positive note got a negative palette, or the reverse. This is the mistake that ruins a
+  stamp, and the tests require zero on the development notes.
+- **feeling / topic / both**: exact matches.
+
+Tuning on a set always flatters its score, so a new batch of notes is written fresh, checked once for
+an honest number, and only then added to the development sets. The honest first-run numbers so far
+are recorded at the top of `tests/corpus/dev2.json` and `dev3.json`. Your own real notes are the best
+test: add the ones that read wrong as `["the note", "the feeling it should be", "the topic"]`.

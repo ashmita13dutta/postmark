@@ -1,0 +1,532 @@
+{
+  "about": "Third development set: fresh1 and fresh2, folded in after use. Honest first-run scores when each was still held out: fresh1 flips 8.1%, feeling 65.7%, topic 90.9%; fresh2 flips 3.0%, feels-right 72.0%, feeling 57.0%, topic 92.0%. They were then used to tune the engine, so they are now development sets. Add a new fresh set to measure honestly again.",
+  "notes": [
+    [
+      "omg best concert of my life, screamed my lungs out and met the singer!!",
+      ["joyful", "excited"],
+      "music"
+    ],
+    [
+      "Today was one of those days where everything went right. Even my hair behaved lol",
+      "joyful",
+      "*"
+    ],
+    [
+      "Picnic at Maidan with the whole gang, football, ice cream, endless jokes",
+      "joyful",
+      ["friends", "sports", "dessert", "sunny"]
+    ],
+    ["My sister's wedding day!!! I cried and danced and ate way too much", "joyful", "wedding"],
+    [
+      "hapy hapy hapy, passed my driving test and mom bought me ice cream",
+      ["joyful", "proud"],
+      ["transport", "dessert", "family"]
+    ],
+    ["Surprise visit from my best friend from Delhi, we talked till sunrise", "joyful", "friends"],
+    [
+      "Winter sun on the terrace, oranges, and a long phone call with Nani. So good.",
+      ["joyful", "content"],
+      ["winter", "family", "food"]
+    ],
+    [
+      "Laundry done, room tidy, dal chawal for dinner. A small good day.",
+      "content",
+      ["chores", "food", "home"]
+    ],
+    ["Rainy afternoon nap, chai, no emails", ["content", "peaceful"], ["rain", "drinks", "work"]],
+    [
+      "Went to the library, read two chapters, came home early. Nothing to report.",
+      "content",
+      ["reading", "school"]
+    ],
+    [
+      "Quiet birthday at home, just cake with the family",
+      ["content", "joyful"],
+      ["birthday", "family"]
+    ],
+    ["Walked to the market, bought vegetables, bargained a little", "content", "shopping"],
+    [
+      "Sat in the temple courtyard for a long time, the bells and the incense, everything slowed down",
+      "peaceful",
+      "spiritual"
+    ],
+    [
+      "Fireflies in the garden tonight, and a soft breeze. Breathing easy.",
+      "peaceful",
+      ["garden", "nature", "night"]
+    ],
+    [
+      "Slow Sunday brunch with jazz playing, nowhere to be",
+      ["peaceful", "content"],
+      ["food", "music"]
+    ],
+    ["Listened to the rain on the tin roof until I fell asleep, so soothing", "peaceful", "rain"],
+    [
+      "Boat ride on the lake at sunrise. Mist, silence, ducks.",
+      "peaceful",
+      ["nature", "fog", "morning", "travel"]
+    ],
+    ["4 more days to the Himalayan trek!! packing list is ready 🏔️", "excited", "mountains"],
+    ["Got tickets to the finals!! Can't believe it", "excited", "sports"],
+    [
+      "Tomorrow I meet my pen friend of 6 years for the first time. Heart is doing somersaults",
+      ["excited", "anxious", "loving"],
+      "friends"
+    ],
+    ["New semester starts Monday and I'm weirdly eager", "excited", "school"],
+    [
+      "Pujo shopping with ma tomorrow, I've already made a list lol",
+      "excited",
+      ["shopping", "festival", "family"]
+    ],
+    ["Defended my thesis today, committee clapped", "proud", ["exams", "school"]],
+    ["Finally fixed the bug that's been haunting me for a week 🎉", ["proud", "joyful"], "work"],
+    ["Stood up to my boss politely and got my leave approved", "proud", "work"],
+    [
+      "Made rosogolla from scratch, they actually turned out soft!",
+      ["proud", "joyful"],
+      ["dessert", "cooking"]
+    ],
+    ["Ran 10k this morning, new personal best", "proud", "fitness"],
+    ["Fell for the way he laughs at his own jokes, I think I'm in trouble 🙈", "loving", "dating"],
+    ["Mom called just to ask if I ate. I love her so much.", "loving", "family"],
+    ["Our two year anniversary, he wrote me a poem", "loving", ["dating", "art"]],
+    [
+      "Cuddled with Bruno on the couch all evening, best therapy",
+      ["loving", "content"],
+      ["pets", "home"]
+    ],
+    ["Wrote her a letter and slipped it in her book", "loving", ["dating", "reading", "*"]],
+    [
+      "That train whistle at night, takes me back to Dadu's village",
+      "nostalgic",
+      ["transport", "family", "night"]
+    ],
+    [
+      "Found a pressed flower in my old textbook, I don't even remember who gave it",
+      "nostalgic",
+      ["school", "garden", "exams"]
+    ],
+    ["Singing old Kishore Kumar songs with Baba in the car", ["nostalgic", "joyful"], "music"],
+    [
+      "Pandal-hopping reminded me of when we were kids, running around in new clothes",
+      "nostalgic",
+      "festival"
+    ],
+    ["Looking at childhood photos, we were so tiny", "nostalgic", ["art", "family"]],
+    ["Thankful for Sunday, for chai, for the people who love me", "grateful", "drinks"],
+    [
+      "My professor extended the deadline when I was ill. Such kindness.",
+      "grateful",
+      ["school", "health", "exams"]
+    ],
+    ["Grateful for the rain after all that heat", "grateful", ["rain", "heat"]],
+    ["Dhonnobad to the delivery guy who came through the flood", "grateful", ["shopping", "rain"]],
+    ["Blessed with good health this year, shukriya", "grateful", "health"],
+    ["Ugh so tierd, I barely made it through the lab", "tired", "school"],
+    ["Pulled an all-nighter and now my brain is mush", "tired", ["exams", "night"]],
+    [
+      "Feeling lazy and heavy, the humidity is draining everything out of me",
+      "tired",
+      ["heat", "rain"]
+    ],
+    ["Bhaiya's wedding prep is exhausting, I've been on my feet since morning", "tired", "wedding"],
+    ["Spent six hours in traffic, home at midnight", "tired", ["transport", "night"]],
+    [
+      "Visa interview in the morning, I've rehearsed my answers fifty times",
+      "anxious",
+      ["work", "travel", "morning"]
+    ],
+    ["Can't stop checking my phone, waiting for the result", "anxious", ["exams", "tech"]],
+    ["Heart racing before the stage, what if I forget the lines?", "anxious", "*"],
+    ["Dad's surgery is tomorrow. I'm trying to be strong.", "anxious", ["health", "family"]],
+    ["Why does everything feel like it's about to fall apart", "anxious", "*"],
+    ["Cried in the shower today, didn't even know why", "sad", "*"],
+    ["My best friend is moving abroad and I can't pretend I'm fine", "sad", ["friends", "travel"]],
+    ["Saw our old photos and it hurt, I really miss her", "sad", ["dating", "art", "*"]],
+    [
+      "Another weekend alone, scrolling through everyone else's happy pictures",
+      "sad",
+      ["tech", "*"]
+    ],
+    ["The house felt empty after the guests left", "sad", ["home", "*"]],
+    ["The auto guy overcharged me and then argued, I lost my temper", "angry", "transport"],
+    ["Teacher humiliated me in front of everyone, I'm shaking with rage", "angry", "school"],
+    ["Why do people never listen? I explained three times and still nothing!", "angry", "*"],
+    ["Mera phone phir se hang ho gaya, gussa aa gaya", "angry", "tech"],
+    ["He took credit for my work in the meeting. Unbelievable.", "angry", "work"],
+    [
+      "Went to that hyped cafe and the coffee was bitter, over-priced and the staff ignored us",
+      "disappointed",
+      ["drinks", "food"]
+    ],
+    ["Series finale was lame, wasted my whole weekend binge-watching", "disappointed", "movies"],
+    [
+      "The match got called off due to rain, so sad after practising for weeks",
+      ["disappointed", "sad"],
+      ["sports", "rain"]
+    ],
+    [
+      "Bought a pair of shoes online and they look nothing like the photos",
+      "disappointed",
+      "shopping"
+    ],
+    [
+      "Our trip plan fell through again, flights are too expensive",
+      "disappointed",
+      ["travel", "money", "transport"]
+    ],
+    ["Sunday afternoon and absolutely nothing to do, even the walls look boring", "bored", "*"],
+    ["Endless meeting, I doodled in my notebook", "bored", "work"],
+    ["Watching paint dry would have been more fun than this lecture", "bored", "school"],
+    ["Same bus, same seat, same people", "bored", "transport"],
+    ["aaj kuch maza nahi aaya, bas time kat gaya", "bored", "*"],
+    [
+      "Visited the science museum and now I want to build a robot",
+      "inspired",
+      ["learning", "tech", "*"]
+    ],
+    ["Hearing her story made me want to start my own thing", "inspired", "*"],
+    [
+      "Practised calligraphy for hours, it felt meditative and creative",
+      ["inspired", "peaceful"],
+      "art"
+    ],
+    [
+      "New melody popped into my head on the metro and I hummed it all the way",
+      ["inspired", "joyful"],
+      ["music", "transport"]
+    ],
+    [
+      "Sat at the window sketching the street below, couldn't stop",
+      "inspired",
+      ["art", "city", "home"]
+    ],
+    [
+      "Walking home under the lamp posts with fog, it felt like another world",
+      "dreamy",
+      ["fog", "night"]
+    ],
+    [
+      "Spent the evening stargazing and just floating in thoughts",
+      "dreamy",
+      ["space", "night", "evening"]
+    ],
+    [
+      "Soft pink light through the curtains, I lay in bed daydreaming for hours",
+      "dreamy",
+      ["home", "*"]
+    ],
+    ["Everything looked like a watercolour painting today", "dreamy", ["art", "*"]],
+    ["Happy for her but a little jealous", ["joyful", "sad", "disappointed"], "*"],
+    [
+      "Today sucked until the evening, then the sunset fixed everything",
+      ["peaceful", "joyful", "content"],
+      ["evening", "sunny"]
+    ],
+    ["I laughed so hard I cried", "joyful", "*"],
+    ["Couldn't sleep, too excited about tomorrow", "excited", "*"],
+    ["not feeling it today, just want to be alone", ["sad", "tired", "bored"], "*"],
+    [
+      "No homework, no class, no worries!",
+      ["joyful", "content", "peaceful"],
+      ["school", "exams", "*"]
+    ],
+    ["He didn't call. Again.", ["sad", "disappointed", "angry"], "*"],
+    ["wow this tea is so good 😍", ["joyful", "content", "loving"], "drinks"],
+    ["🥱🥱", "tired", "*"],
+    ["😬 tomorrow", "anxious", "*"],
+    ["Not nervous anymore, just ready", ["content", "excited", "proud"], "*"],
+    ["I miss the old days when we had no worries", ["nostalgic", "sad"], "*"],
+    [
+      "Delayed flight, rude staff, lost luggage. What a nightmare",
+      ["angry", "disappointed"],
+      ["transport", "travel"]
+    ],
+    [
+      "Free day!! cafe, books, maybe a movie later",
+      ["joyful", "content"],
+      ["reading", "movies", "drinks"]
+    ],
+    ["Another day, another deadline", ["anxious", "bored", "tired"], ["work", "exams"]],
+    [
+      "Rain, chai and old Bollywood songs, what else do you need",
+      ["content", "joyful", "peaceful", "nostalgic"],
+      ["rain", "drinks", "music"]
+    ],
+    ["Aaj thanda thanda mausam hai, sweater nikala", ["content", "joyful", "peaceful"], "winter"],
+    ["kal exam hai but I'm too tired to even care", "tired", "exams"],
+    [
+      "Finished my last paper today and ran straight to the golgappa stall. Freedom tastes like spicy water.",
+      ["joyful", "excited"],
+      ["exams", "streetfood", "school"]
+    ],
+    [
+      "Our team won the inter-college quiz! We jumped around like kids.",
+      ["joyful", "proud"],
+      ["school", "sports", "*"]
+    ],
+    [
+      "The kids at the orphanage sang for us today, my heart is so full 😊",
+      ["joyful", "loving", "grateful"],
+      "*"
+    ],
+    [
+      "Rooftop dinner with fairy lights and my favourite people",
+      "joyful",
+      ["friends", "food", "night", "festival"]
+    ],
+    [
+      "Everything smelled like new books and fresh paint, I'm obsessed with my new room",
+      "joyful",
+      ["home", "*"]
+    ],
+    [
+      "gym buddies convinced me to try zumba lol, laughed through the whole class",
+      "joyful",
+      "fitness"
+    ],
+    [
+      "Got a surprise bonus, treating myself and mum to dinner!",
+      "joyful",
+      ["money", "family", "food", "work"]
+    ],
+    [
+      "Finished reading, watered the plants, made some tea. Gentle day.",
+      ["content", "peaceful"],
+      ["reading", "garden", "drinks"]
+    ],
+    ["Today I just existed and it was enough", ["content", "peaceful"], "*"],
+    [
+      "The commute was smooth, lunch was hot and the meeting was short",
+      "content",
+      ["transport", "food", "work"]
+    ],
+    [
+      "Chilled at the cafe with my laptop, wrote a few pages",
+      "content",
+      ["drinks", "work", "reading"]
+    ],
+    ["Ordinary Friday. Pizza night with the roommates.", "content", ["food", "friends"]],
+    [
+      "Sunrise from the hilltop and a thermos of chai. I could stay here forever.",
+      "peaceful",
+      ["mountains", "drinks", "morning"]
+    ],
+    [
+      "The monastery was so quiet, only the wind and some prayer flags",
+      "peaceful",
+      ["spiritual", "mountains", "wind"]
+    ],
+    ["Lay on the grass watching clouds drift, no thoughts", "peaceful", ["nature", "sunny"]],
+    ["Warm bath, lavender oil, early to bed", "peaceful", "*"],
+    ["Morning walk by the river, the water was glass", "peaceful", ["nature", "morning"]],
+    [
+      "Booked tickets to Goa with the girls! Counting down like a kid",
+      "excited",
+      ["travel", "beach", "friends"]
+    ],
+    [
+      "Auditions tomorrow, I've been practising my monologue all week and I'm buzzing",
+      ["excited", "anxious"],
+      "*"
+    ],
+    ["They're releasing the new season on Friday, I can't wait!!", "excited", "movies"],
+    [
+      "Meeting my favourite author tomorrow, I might actually faint",
+      ["excited", "anxious"],
+      "reading"
+    ],
+    [
+      "The wedding is next week and the whole house is in chaos, I love it",
+      ["excited", "joyful"],
+      "wedding"
+    ],
+    [
+      "Taught my little brother to read his first sentence today",
+      "proud",
+      ["family", "learning", "school"]
+    ],
+    [
+      "I did it, I finally spoke at the open mic and nobody laughed at me",
+      "proud",
+      ["music", "art", "*"]
+    ],
+    ["Closed my first client deal solo", "proud", "work"],
+    ["Lost five kilos and my jeans fit again, proud of myself", "proud", "fitness"],
+    ["Won best actor at the college fest 🏆", "proud", ["school", "festival", "art", "movies"]],
+    [
+      "Slow dancing in the kitchen with my husband to our wedding song",
+      "loving",
+      ["dating", "music", "wedding"]
+    ],
+    [
+      "My grandmother held my face and said she's proud of me. I melted.",
+      ["loving", "grateful", "proud"],
+      "family"
+    ],
+    [
+      "He brought me chai at 2am when I was studying, I'm so in love",
+      "loving",
+      ["dating", "drinks", "exams"]
+    ],
+    ["Spent the day with my nephew, best cuddles ever", "loving", "family"],
+    [
+      "Missed her so much that I drove two hours just to hug her",
+      ["loving", "sad"],
+      ["dating", "friends", "transport", "*"]
+    ],
+    [
+      "The smell of chalk dust took me back to Class 5, Miss Banerjee's classroom",
+      "nostalgic",
+      "school"
+    ],
+    ["Dug out my old Walkman, still has my 2008 playlist in it", "nostalgic", "music"],
+    [
+      "Visited the ancestral house in Bardhaman, the courtyard looks smaller now",
+      "nostalgic",
+      ["family", "home", "travel"]
+    ],
+    ["Saw a kid flying a kite and suddenly I was ten again", "nostalgic", "wind"],
+    ["Flipping through my first diary, cringing and smiling", "nostalgic", ["reading", "*"]],
+    ["Grateful that the surgery went well. Thank you, thank you.", "grateful", "health"],
+    [
+      "A colleague covered my shift when I was sick. Such good people.",
+      "grateful",
+      ["work", "health"]
+    ],
+    ["Shukriya to the neighbour aunty who sent over soup", "grateful", ["family", "food", "*"]],
+    [
+      "I have a warm home, good food and people who care. Not taking it for granted.",
+      "grateful",
+      ["home", "food", "family"]
+    ],
+    ["Thank god for filter coffee on a Monday", ["grateful", "joyful", "content"], "drinks"],
+    ["Barely survived the day, running on two hours of sleep and chai", "tired", ["drinks", "*"]],
+    [
+      "My legs are jelly after the trek, I can't climb the stairs",
+      "tired",
+      ["mountains", "fitness"]
+    ],
+    ["Back-to-back zoom calls until 9pm, my eyes are burning", "tired", ["work", "tech"]],
+    ["Slept through the alarm twice and still feel exhausted", "tired", "*"],
+    ["Helped with the shifting all day, I'm done for", "tired", ["home", "*"]],
+    ["Waiting outside the exam hall, my hands are freezing", "anxious", ["exams", "school"]],
+    ["Mum's test results are due and I can't focus on anything", "anxious", ["health", "family"]],
+    ["Late payments piling up, I keep doing the maths in my head", "anxious", "money"],
+    ["Is it normal to feel this scared about growing up?", "anxious", "*"],
+    ["He hasn't replied in three days and I'm spiralling", "anxious", ["dating", "tech"]],
+    [
+      "Gave away my childhood books today, it felt like losing a friend",
+      ["sad", "nostalgic"],
+      ["reading", "home", "*"]
+    ],
+    [
+      "Everyone's leaving the hostel this week and the corridors are already silent",
+      "sad",
+      ["school", "*"]
+    ],
+    ["Dadu's birthday. First one without him.", "sad", ["birthday", "family"]],
+    [
+      "Failed again, I don't know how to tell my parents",
+      ["sad", "anxious", "disappointed"],
+      ["exams", "family"]
+    ],
+    ["I smiled all day but felt hollow inside", "sad", "*"],
+    [
+      "Group member didn't contribute a single thing and still wants credit, I'm done",
+      "angry",
+      ["school", "work"]
+    ],
+    ["Someone dumped garbage outside our gate AGAIN. Disgusting people.", "angry", "*"],
+    ["My brother read my diary. I will never forgive him", "angry", "family"],
+    ["Bus conductor shouted at the old lady, I lost it and shouted back", "angry", "transport"],
+    ["Ahh stop calling me during lunch! Gussa aata hai", "angry", ["food", "tech", "work", "*"]],
+    ["Saved for months for that concert and the sound was terrible", "disappointed", "music"],
+    [
+      "The exam paper was nothing like the syllabus, what a letdown",
+      ["disappointed", "angry"],
+      "exams"
+    ],
+    ["Rain washed out the whole cricket tournament", "disappointed", ["rain", "sports"]],
+    [
+      "Tried the new momo place everyone raves about, honestly average",
+      "disappointed",
+      ["streetfood", "food"]
+    ],
+    ["The sequel completely ruined the original for me", "disappointed", "movies"],
+    ["Stared at the ceiling for an hour. Nothing happening.", "bored", "*"],
+    [
+      "Another zoom class where everyone has their camera off, so dull",
+      "bored",
+      ["school", "tech"]
+    ],
+    [
+      "Sat through the whole family function checking my watch",
+      "bored",
+      ["family", "festival", "party"]
+    ],
+    ["Scrolled and scrolled, nothing interesting anywhere", "bored", "tech"],
+    ["uff aaj ka din bohot boring tha, kuch bhi nahi hua", "bored", "*"],
+    ["Heard a street musician play and went home to dust off my violin", "inspired", "music"],
+    [
+      "Read about a girl who built a school in her village, now I want to do something too",
+      "inspired",
+      ["reading", "school", "*"]
+    ],
+    [
+      "Watched the sunrise and decided to start journaling again",
+      "inspired",
+      ["morning", "reading"]
+    ],
+    [
+      "Visited a pottery workshop, got clay all over me, can't wait to go back",
+      ["inspired", "joyful", "excited"],
+      ["art", "learning"]
+    ],
+    ["Sat with a blank page and suddenly the whole story came", "inspired", "reading"],
+    [
+      "The city looked like a snow globe from the plane window",
+      "dreamy",
+      ["transport", "travel", "snow"]
+    ],
+    ["Lying under the mosquito net, drifting between sleep and daydreams", "dreamy", "*"],
+    [
+      "Golden hour on the river and I felt like I was inside a painting",
+      "dreamy",
+      ["evening", "nature", "art"]
+    ],
+    [
+      "Rain on the window and a half-written poem, floating around in my head",
+      ["dreamy", "inspired", "peaceful"],
+      ["rain", "art"]
+    ],
+    ["Tired but content, a good kind of tired", ["content", "joyful", "peaceful"], "*"],
+    [
+      "Great party but I left early because I was overwhelmed",
+      ["anxious", "tired", "joyful"],
+      "party"
+    ],
+    ["I'm not upset, just a bit numb", "sad", "*"],
+    ["Wasn't expecting much and still got let down", "disappointed", "*"],
+    ["No plans, no pressure, perfect Sunday", ["peaceful", "content", "joyful"], "*"],
+    ["The food was not bad at all, actually quite tasty", ["content", "joyful"], "food"],
+    ["😂😂 my cousin just fell into the pond", "joyful", ["family", "nature", "*"]],
+    ["😴", "tired", "*"],
+    ["💔", "sad", "*"],
+    ["✨✨✨", "joyful", "*"],
+    ["Ugh Mondays", ["tired", "bored", "angry", "disappointed"], "*"],
+    ["Not even mad, just disappointed in myself", "disappointed", "*"],
+    ["Excited and nervous at the same time", ["excited", "anxious"], "*"],
+    ["I could not stop smiling the whole way home", "joyful", ["transport", "*"]],
+    [
+      "Kolkata rains again, waterlogged roads, stuck in a cab for two hours",
+      ["angry", "tired", "disappointed"],
+      ["rain", "transport"]
+    ],
+    ["Bhalo laglo aajke, onek din por friends der shathe dekha holo", "joyful", "friends"],
+    ["Mon ta khub kharap, kichu bhalo lagche na", "sad", "*"],
+    ["just a normal day tbh", "content", "*"],
+    ["heyyy it's finally the weekend 🥳", "joyful", ["party", "*"]]
+  ]
+}

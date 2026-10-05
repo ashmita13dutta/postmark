@@ -3,115 +3,180 @@
     "joyful": {
       "label": "Joyful",
       "blurb": "A feel-good, bright, sunny kind of day",
+      "look": { "chroma": [0.055, 0.16], "lightness": [0.57, 0.88] },
       "keywords": [
         "happy", "joy", "joyful", "amazing", "wonderful", "fantastic", "awesome", "great",
-        "best", "lovely", "delighted", "cheerful", "thrilled", "glad", "fun", "smile",
-        "smiled", "smiling", "laugh", "laughed", "laughing", "blissful", "yay", "hooray",
-        "sparkle", "brilliant", "perfect", "magical", "giggle", "giggled", "grin", "beaming",
-        "wow", "excellent", "cheery", "bliss", "radiant", "delicious", "tasty", "yum", "yummy",
-        "scrumptious", "fabulous", "marvelous", "terrific", "ecstatic", "elated", "overjoyed",
-        "jolly", "merry", "lighthearted", "upbeat", "enjoy", "enjoyed", "enjoying", "smiles",
+        "best", "lovely", "delighted", "cheerful", "glad", "fun", "smile", "smiled", "smiling",
+        "laugh", "laughed", "laughing", "blissful", "yay", "hooray", "sparkle", "brilliant",
+        "perfect", "magical", "giggle", "giggled", "grin", "beaming", "wow", "excellent",
+        "cheery", "bliss", "radiant", "delicious", "tasty", "yum", "yummy", "scrumptious",
+        "fabulous", "marvelous", "terrific", "ecstatic", "elated", "overjoyed", "jolly",
+        "merry", "lighthearted", "upbeat", "enjoy", "enjoyed", "enjoying", "smiles",
         "laughter", "mast", "maza", "maja", "mazaa", "mazedaar", "khush", "khushi", "badhiya",
         "zabardast", "shandar", "bindaas", "jhakaas", "darun", "chomotkar", "anondo",
-        "aanondo", "mojar", "moja", "osadharon", "feelgood", "goodfeel", "enjoyable"
+        "aanondo", "mojar", "moja", "osadharon", "feelgood", "goodfeel", "enjoyable",
+        "overthemoon", "cloudnine", "walkingonair", "ontopoftheworld", "cantstopsmiling",
+        "bestday", "bestdayever", "bestweek", "bestnight", "bestever", "happiestday",
+        "greatday", "lovelyday", "perfectday", "wentright", "wentwell", "wentperfectly",
+        "everythingwentright", "laughedsohard", "laughingsohard", "laughsohard",
+        "fixedeverything", "obsessed", "happytears", "couldstayhere", "stayhereforever"
+      ],
+      "weak": [
+        "perfect", "best", "great", "fun", "magical", "sparkle", "wow", "brilliant",
+        "excellent", "lovely"
       ]
     },
     "content": {
       "label": "Content",
       "blurb": "Easy, warm, nothing missing",
+      "look": { "chroma": [0.03, 0.15], "lightness": [0.52, 0.84] },
       "keywords": [
         "content", "satisfied", "comfortable", "okay", "fine", "good", "pleasant", "steady",
         "simple", "easy", "nice", "decent", "cozy", "snug", "warm", "comfy", "homey",
         "settled", "fulfilled", "pleased", "alright", "smooth", "cosy", "sorted", "mellow",
         "satisfying", "relieved", "relief", "chilled", "chill", "chilling", "manageable",
         "stable", "okayish", "cruisy", "achha", "accha", "theek", "thik", "thikthak", "sahi",
-        "bhalo", "valo", "bhaloi"
+        "bhalo", "valo", "bhaloi", "nap"
+      ],
+      "weak": [
+        "fine", "good", "okay", "nice", "decent", "alright", "smooth", "simple", "easy",
+        "warm", "settled", "sorted", "cozy", "cosy", "mellow", "comfy", "pleasant", "steady",
+        "nap"
       ]
     },
     "peaceful": {
       "label": "Peaceful",
       "blurb": "Quiet, slow, still",
+      "look": { "chroma": [0.03, 0.145], "lightness": [0.52, 0.85] },
       "keywords": [
-        "calm", "peaceful", "peace", "serene", "still", "stillness", "tranquil", "quiet",
-        "gentle", "soothing", "mindful", "meditate", "meditation", "breathe", "breathing",
-        "relax", "relaxed", "relaxing", "unwind", "shanti", "shanto", "sukoon", "harmony",
-        "ease", "slow", "slowly", "hush", "restful", "balance", "tranquility", "soothed",
-        "refreshing", "refreshed", "rejuvenated", "recharged", "zen", "quietly", "lull",
-        "shaant", "shant", "aaram", "araam", "aram"
+        "calm", "peaceful", "peace", "serene", "stillness", "tranquil", "quiet", "gentle",
+        "soothing", "mindful", "meditate", "meditation", "breathe", "breathing", "relax",
+        "relaxed", "relaxing", "unwind", "shanti", "shanto", "sukoon", "harmony", "ease",
+        "slow", "slowly", "hush", "restful", "balance", "tranquility", "soothed", "refreshing",
+        "refreshed", "rejuvenated", "recharged", "zen", "quietly", "lull", "shaant", "shant",
+        "aaram", "araam", "aram", "grounded", "centered", "centred", "stillinside", "atpeace",
+        "silence", "silent", "serenity", "earlytobed", "waterwasglass", "glassy", "nothoughts",
+        "nothingonmymind", "lavender"
+      ],
+      "weak": [
+        "refreshed", "refreshing", "slow", "slowly", "quiet", "gentle", "balance", "ease",
+        "hush", "silence", "silent", "lavender"
       ]
     },
     "excited": {
       "label": "Excited",
       "blurb": "Buzzing, can't wait, big energy",
+      "look": { "chroma": [0.04, 0.17], "lightness": [0.51, 0.79] },
       "keywords": [
         "excited", "exciting", "thrilling", "adventure", "energetic", "energy", "pumped",
         "hyped", "eager", "anticipation", "buzzing", "rush", "adrenaline", "spontaneous",
         "wild", "epic", "crazy", "countdown", "stoked", "psyched", "electric", "lively",
         "unreal", "cantwait", "lookingforward", "amped", "thrill", "buzz", "pumpedup",
-        "impatient", "josh", "utsuk", "uttejito"
+        "impatient", "josh", "utsuk", "uttejito", "thrilled", "cantsleep", "cantcalmdown",
+        "cannotcalmdown", "countinghours", "cantwaitfor", "inagoodway", "bookedtickets",
+        "bookedflights", "bookedmytickets", "mightfaint", "somersaults", "countingdown",
+        "cannotwait", "couldntwait", "cantwaittosee", "cantwaittogo"
+      ],
+      "weak": [
+        "wild", "crazy", "epic", "energy", "rush", "electric", "lively", "buzz", "unreal",
+        "eager", "buzzing"
       ]
     },
     "proud": {
       "label": "Proud",
       "blurb": "Did it. Won it. Earned it.",
+      "look": { "chroma": [0.048, 0.145], "lightness": [0.56, 0.8] },
       "keywords": [
         "proud", "pride", "accomplished", "achieved", "achievement", "won", "win", "winning",
         "success", "successful", "nailed", "crushed", "aced", "victory", "triumph",
         "milestone", "promoted", "promotion", "passed", "selected", "trophy", "medal",
         "congrats", "congratulations", "graduated", "completed", "finished", "shipped",
         "topper", "champion", "accomplishment", "accomplish", "achieve", "conquered",
-        "smashed", "rocked", "improved", "improvement", "nailedit", "garv", "gorbo"
-      ]
+        "smashed", "rocked", "improved", "improvement", "nailedit", "garv", "gorbo",
+        "accepted", "bymyself", "allbymyself", "nobodycouldfault", "gotaccepted",
+        "gotselected", "didnotfall", "finallylearned", "finallymanaged", "praised",
+        "complimented", "compliments", "applauded", "congratulated", "askedforseconds",
+        "defended", "clapped", "clapping", "applause", "cheered", "personalbest", "newrecord",
+        "personalrecord", "approved", "ididit", "didit", "closedadeal", "closeddeal",
+        "closedmyfirst", "nobodylaughed"
+      ],
+      "weak": ["finished", "completed", "shipped", "approved"]
     },
     "loving": {
       "label": "Loving",
       "blurb": "Soft, tender, full-hearted",
+      "look": { "chroma": [0.03, 0.16], "lightness": [0.5, 0.87] },
       "keywords": [
         "love", "loved", "loving", "adore", "affection", "tender", "romantic", "romance",
         "crush", "kiss", "kissed", "hug", "hugged", "cuddle", "heart", "butterflies",
         "sweetheart", "darling", "soulmate", "bhalobasha", "pyaar", "ishq", "mohabbat", "jaan",
         "babu", "cherish", "devoted", "smitten", "bae", "caring", "adorable", "beloved",
-        "infatuated", "lovestruck", "prem", "dil", "jaanu", "premika", "premik", "bhalobashi"
-      ]
+        "infatuated", "lovestruck", "prem", "dil", "jaanu", "premika", "premik", "bhalobashi",
+        "fellfor", "inlove", "fellinlove", "fallinginlove", "headoverheels"
+      ],
+      "weak": ["heart", "hug", "hugged", "kiss", "kissed"]
     },
     "nostalgic": {
       "label": "Nostalgic",
       "blurb": "Faded, golden, looking back",
+      "look": { "chroma": [0.03, 0.16], "lightness": [0.5, 0.81] },
       "keywords": [
         "nostalgic", "nostalgia", "remember", "memory", "memories", "childhood", "throwback",
         "reminded", "bygone", "vintage", "retro", "old", "past", "yesterday", "once",
         "reminisce", "hometown", "antique", "used", "sentimental", "polaroid", "cassette",
         "yearbook", "diary", "letter", "album", "ancestral", "flashback", "flashbacks",
         "sentiments", "bittersweet", "longago", "goodolddays", "purani", "puraana", "purono",
-        "yaadein", "yaad", "smriti", "bachpan", "chotobela", "chhotobela"
+        "yaadein", "yaad", "smriti", "bachpan", "chotobela", "chhotobela", "tookmeback",
+        "takesmeback", "takemeback", "broughtback", "bringsback", "wheniwassmall",
+        "wheniwasyoung", "wheniwasakid", "whenwewerekids", "backthen", "backintheday",
+        "iwasbackin", "differentme", "paperboats", "eightagain", "tenagain", "sixagain",
+        "akidagain", "achildagain", "missthosedays"
+      ],
+      "weak": [
+        "old", "once", "past", "used", "yesterday", "letter", "album", "diary", "vintage",
+        "retro", "antique", "polaroid", "cassette"
       ]
     },
     "grateful": {
       "label": "Grateful",
       "blurb": "Thankful, blessed, touched",
+      "look": { "chroma": [0.04, 0.125], "lightness": [0.58, 0.86] },
       "keywords": [
         "grateful", "gratitude", "thankful", "thanks", "blessed", "lucky", "appreciate",
         "appreciated", "blessing", "kindness", "kind", "generous", "fortunate", "humbled",
-        "touched", "thank", "shukriya", "dhonnobad", "helped", "help", "support", "supportive",
-        "appreciation", "privileged", "indebted", "thankyou", "gratefulness", "dhanyavaad",
-        "dhanyavad", "meherbani", "abhari"
-      ]
+        "touched", "thank", "shukriya", "dhonnobad", "support", "supportive", "appreciation",
+        "privileged", "indebted", "thankyou", "gratefulness", "dhanyavaad", "dhanyavad",
+        "meherbani", "abhari", "restored", "alhamdulillah", "mashallah", "shukar", "shukr",
+        "waheguru", "thankgod", "couldcry", "thankfulfor", "gratefulfor", "thankfulto",
+        "gratefulto", "blessedwith", "blessedto", "thanksto", "thankyouto", "helpedme",
+        "helpedus", "helpsme", "helpingme", "helpedmeout"
+      ],
+      "weak": ["support", "supportive", "kind", "kindness", "generous", "lucky"]
     },
     "tired": {
       "label": "Tired",
       "blurb": "Drained, sleepy, running on empty",
+      "look": { "chroma": [0.015, 0.095], "lightness": [0.6, 0.87] },
       "keywords": [
         "tired", "exhausted", "sleepy", "drained", "burnout", "lazy", "lethargic", "weary",
-        "fatigued", "worn", "drowsy", "sluggish", "yawn", "yawning", "sleep", "slept", "nap",
-        "rest", "resting", "bedrest", "knackered", "wiped", "overworked", "spent", "tiring",
-        "tiresome", "exhausting", "draining", "fatigue", "groggy", "hungover", "depleted",
-        "sleepdeprived", "pooped", "thaka", "thak", "thaki", "thakan", "thakaan", "thakgaya",
-        "klanto", "ghum", "neend", "nind", "alsi", "aalsi", "ghumono"
-      ]
+        "fatigued", "worn", "drowsy", "sluggish", "yawn", "yawning", "sleep", "slept", "rest",
+        "resting", "bedrest", "knackered", "wiped", "overworked", "tiring", "tiresome",
+        "exhausting", "draining", "fatigue", "groggy", "hungover", "depleted", "sleepdeprived",
+        "pooped", "thaka", "thak", "thaki", "thakan", "thakaan", "thakgaya", "klanto", "ghum",
+        "neend", "nind", "alsi", "aalsi", "ghumono", "burntout", "noenergy", "lowenergy",
+        "dead", "wornout", "eyeswontstayopen", "wontstayopen", "backisgone", "feethurt",
+        "legshurt", "backache", "backpain", "achy", "aching", "caffeine", "badsleep",
+        "nosleep", "lesssleep", "sleeplessnight", "cantkeepmyeyesopen", "asleep", "fellasleep",
+        "dozed", "dozing", "nighter", "allnighter", "mush", "brainfog", "brainmush",
+        "hoursintraffic", "imdonefor", "donefor", "legsjelly", "legsarejelly", "jelly",
+        "eyesburning", "backtobackcalls", "backtobackmeetings", "backtobackclasses"
+      ],
+      "weak": ["rest", "resting", "sleep", "slept", "dead", "bedrest", "asleep", "jelly"]
     },
     "anxious": {
       "label": "Anxious",
       "blurb": "Tense, racing, on edge",
+      "look": { "chroma": [0.03, 0.125], "lightness": [0.52, 0.77] },
       "keywords": [
         "anxious", "anxiety", "stressed", "stress", "worried", "worry", "nervous", "panic",
         "overwhelmed", "pressure", "tense", "uneasy", "scared", "afraid", "fear", "dread",
@@ -119,26 +184,46 @@
         "confused", "confusion", "confusing", "unsure", "uncertain", "overloaded", "overload",
         "clueless", "helpless", "pressured", "rushed", "hectic", "chaotic", "agitated",
         "uptight", "freaked", "freaking", "worrying", "cantcope", "drowning", "tension",
-        "pareshan", "pareshaan", "chinta", "ghabrahat", "ghabra", "bhoy", "bhay", "durbhabna"
-      ]
+        "pareshan", "pareshaan", "chinta", "ghabrahat", "ghabra", "bhoy", "bhay", "durbhabna",
+        "knots", "shaking", "trembling", "heartpounding", "heartracing", "heartpounds",
+        "onedge", "whatif", "cantbreathe", "cantbreath", "waitingforresults", "keeprefreshing",
+        "butterfliesinstomach", "fallapart", "fallingapart", "fallsapart", "losingit",
+        "losingmymind", "breakdown", "breakingdown", "spiralling", "spiraling", "spiral",
+        "hasntreplied", "leftonread", "waitingforareply", "piling", "doingthemaths",
+        "doingmaths", "latepayment", "latepayments"
+      ],
+      "weak": ["pressure", "behind", "restless", "rushed", "hectic", "chaotic", "overload"]
     },
     "sad": {
       "label": "Sad",
       "blurb": "Heavy, blue, missing someone",
+      "look": { "chroma": [0.015, 0.115], "lightness": [0.54, 0.78] },
       "keywords": [
         "sad", "sadness", "cry", "cried", "crying", "tears", "lonely", "alone", "loneliness",
-        "miss", "missing", "empty", "heavy", "numb", "down", "blue", "hurt", "hollow",
-        "homesick", "ache", "longing", "grief", "mourn", "heartbroken", "depressed", "gloomy",
-        "kharap", "isolated", "ignored", "unseen", "ghosted", "unhappy", "miserable", "upset",
+        "miss", "missing", "empty", "heavy", "numb", "blue", "hurt", "hollow", "homesick",
+        "ache", "longing", "grief", "mourn", "heartbroken", "depressed", "gloomy", "kharap",
+        "isolated", "ignored", "unseen", "ghosted", "unhappy", "miserable", "upset",
         "discouraged", "disheartened", "devastated", "hopeless", "lonesome", "melancholy",
         "sorrow", "weepy", "sobbing", "downcast", "dejected", "udaas", "udas", "dukh", "dukhi",
         "dukkho", "kosto", "kasht", "rona", "roya", "roye", "kanna", "monkharap", "akela",
-        "akeli", "ekla", "tanha", "tanhai"
+        "akeli", "ekla", "tanha", "tanhai", "solow", "feelinglow", "feellow", "lowmood",
+        "passedaway", "died", "death", "funeral", "leftout", "excluded", "uninvited",
+        "notinvited", "nobodyasked", "heaviness", "nobody", "shouldbehappy",
+        "supposedtobehappy", "feelingdown", "feltdown", "feeldown", "downinthedumps",
+        "everyoneelses", "otherpeoples", "everyoneelse", "cantpretend", "pretendimfine",
+        "pretendingtobefine", "didntcall", "didntreply", "didntshowup", "nevershowedup",
+        "stoodmeup", "jealous", "leftbehind", "withouthim", "withouther", "withoutthem",
+        "firstwithout", "silentcorridors"
+      ],
+      "weak": [
+        "blue", "empty", "heavy", "miss", "missing", "alone", "hurt", "ache", "ignored",
+        "unseen", "nobody", "cry", "cried", "crying", "tears"
       ]
     },
     "angry": {
       "label": "Angry",
       "blurb": "Fed up, fuming, had enough",
+      "look": { "chroma": [0.035, 0.13], "lightness": [0.48, 0.75] },
       "keywords": [
         "angry", "anger", "furious", "annoyed", "irritated", "frustrated", "frustrating",
         "fuming", "rage", "mad", "hate", "hated", "fight", "fought", "argue", "argued",
@@ -146,44 +231,77 @@
         "bitter", "resent", "unbearable", "pissed", "enraged", "outraged", "livid",
         "infuriated", "offended", "insulted", "disrespected", "grumpy", "cranky", "moody",
         "irritable", "snapped", "sulking", "irked", "rag", "ragi", "birokto", "birakt",
-        "chidh", "jhagda", "jhagra", "jhogra", "laraai", "uff", "dhoka"
+        "chidh", "jhagda", "jhagra", "jhogra", "laraai", "uff", "dhoka", "fedup", "sickof",
+        "lied", "liar", "lying", "cheated", "gaslight", "gaslighting", "twofaced",
+        "backstabbed", "unbelievable", "ridiculous", "nonsense", "audacity", "unacceptable",
+        "outrageous", "absurd", "onhold", "hungup", "cutthecall", "keptmeonhold", "dented",
+        "droveoff", "hitandrun", "withoutasking", "nonotice", "neverlisten", "dontlisten",
+        "notlistening", "nobodylistens", "neverforgive", "tookcredit", "takingcredit",
+        "wantscredit", "imdone"
+      ],
+      "weak": [
+        "mad", "hate", "hated", "fight", "fought", "argue", "argued", "rant", "bitter", "ugh",
+        "uff", "imdone"
       ]
     },
     "bored": {
       "label": "Bored",
       "blurb": "Flat, grey, same as always",
+      "look": { "chroma": [0.02, 0.11], "lightness": [0.49, 0.82] },
       "keywords": [
         "bored", "boring", "boredom", "dull", "meh", "monotonous", "same", "repetitive",
         "idle", "uneventful", "ordinary", "average", "whatever", "blah", "tedious", "stuck",
-        "routine", "unmotivated", "drifting", "nothinghappened", "nothingspecial",
-        "nothingmuch", "monotony", "dreary", "lifeless", "uninteresting", "pointless",
-        "aimless", "stagnant", "killingtime", "bekaar", "bekar", "faltu", "bore", "timepass"
-      ]
+        "routine", "unmotivated", "nothinghappened", "nothingspecial", "nothingmuch",
+        "monotony", "dreary", "lifeless", "uninteresting", "pointless", "aimless", "stagnant",
+        "killingtime", "bekaar", "bekar", "faltu", "bore", "timepass", "nothinghappening",
+        "justnothing", "nothingtodo", "paintdry", "watchingpaintdry", "timekatgaya", "timekat",
+        "endlessmeeting", "endlessmeetings", "endlesslecture", "endlessclass",
+        "checkingmywatch", "checkingmyphone", "lookingattheclock", "nothinginteresting",
+        "nothingtowatch", "scrolledandscrolled", "scrollingandscrolling"
+      ],
+      "weak": ["same", "routine", "stuck", "average", "ordinary", "whatever", "idle", "dull", "blah"]
     },
     "inspired": {
       "label": "Inspired",
       "blurb": "Curious, creative, sparking",
+      "look": { "chroma": [0.035, 0.135], "lightness": [0.5, 0.79] },
       "keywords": [
         "inspired", "inspiration", "creative", "curious", "imagine", "idea", "ideas", "wonder",
         "discover", "discovered", "dreaming", "motivated", "motivation", "passion", "spark",
         "aha", "eureka", "vision", "innovative", "fascinated", "intrigued", "creativity",
-        "imagination", "brainstorm", "brainstorming", "epiphany", "insight", "innovate"
+        "imagination", "brainstorm", "brainstorming", "epiphany", "insight", "innovate",
+        "wanttostart", "wanttolearn", "wanttocreate", "wanttowrite", "wanttobuild",
+        "wanttomake", "wanttobecome", "wanttotry", "flowing", "flowed", "wordskeptcoming",
+        "dustoff", "dustedoff", "blankpage", "wholestorycame", "wanttodosomething",
+        "decidedtostart", "startjournaling"
+      ],
+      "weak": [
+        "idea", "ideas", "wonder", "discover", "discovered", "creative", "vision", "passion",
+        "spark", "curious", "imagine"
       ]
     },
     "dreamy": {
       "label": "Dreamy",
       "blurb": "Soft, floaty, a little bit magic",
+      "look": { "chroma": [0.04, 0.12], "lightness": [0.6, 0.88] },
       "keywords": [
         "dreamy", "dreamlike", "daydream", "daydreaming", "ethereal", "whimsical", "floaty",
         "floating", "surreal", "enchanted", "fairytale", "fantasy", "pastel", "cloudlike",
         "twinkling", "shimmering", "serendipity", "wistful", "starry", "swoon", "spellbound",
         "lullaby", "whimsy", "trance", "reverie", "fanciful", "dreamt", "wondrous",
-        "celestial", "moonstruck", "sapna", "sapne", "swapno", "shopno", "khwab"
-      ]
+        "celestial", "moonstruck", "sapna", "sapne", "swapno", "shopno", "khwab", "fairy",
+        "fairylights", "glittering", "glitter", "velvet", "shimmer", "twinkle", "spacedout",
+        "spaceout", "zonedout", "drift", "drifted", "drifting", "halfasleep", "anotherworld",
+        "otherworldly", "likeadream", "likeamovie", "likeinamovie", "likeafilm",
+        "likeafairytale", "likeapainting", "watercolour", "watercolor", "snowglobe",
+        "insideapainting", "insideamovie", "cloudsdrift", "watchingclouds", "cloudwatching"
+      ],
+      "weak": ["pastel", "floating", "floaty", "watercolour", "watercolor"]
     },
     "disappointed": {
       "label": "Disappointed",
       "blurb": "Let down, ruined plans, a bad meal",
+      "look": { "chroma": [0.012, 0.105], "lightness": [0.46, 0.79] },
       "keywords": [
         "disappointed", "disappointing", "disappointment", "letdown", "ruined", "cancelled",
         "canceled", "failed", "fail", "bland", "stale", "soggy", "burnt", "raw", "undercooked",
@@ -192,7 +310,17 @@
         "underwhelming", "mediocre", "lousy", "bad", "wrong", "spilled", "broken", "unlucky",
         "unsatisfied", "dissatisfied", "unimpressed", "sucks", "sucked", "sucky", "waste",
         "ruin", "dreadful", "pathetic", "disaster", "nightmare", "fiasco", "poor", "bakwas",
-        "ghatiya", "bura", "buri", "kharab", "barbaad", "nirash", "nirasha"
+        "ghatiya", "bura", "buri", "kharab", "barbaad", "nirash", "nirasha", "bummed",
+        "bummer", "soldout", "rejected", "rejection", "denied", "damaged", "declined",
+        "expectedso", "expectedmuch", "expectedmore", "badlyorganised", "badlyorganized",
+        "poorlyorganised", "didntmake", "didntmakeit", "didntpass", "didntqualify",
+        "didntgetin", "rude", "fellthrough", "fallsthrough", "calledoff", "putoff",
+        "postponed", "washedout", "honestlyaverage", "justaverage", "overhyped", "nothinglike",
+        "wasteofmoney", "wasteoftime"
+      ],
+      "weak": [
+        "bad", "poor", "mistake", "fail", "failed", "waste", "wasted", "raw", "spilled",
+        "broken", "wrong", "regret", "terrible", "awful"
       ]
     }
   },

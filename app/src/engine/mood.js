@@ -14,6 +14,7 @@
  * Pure: the caller passes the local hour and month (see contextAt) so time travel stays testable.
  */
 import emojiData from '../data/emoji.json'
+import typoGuard from '../data/notTypos.json'
 import { defaultFeeling, feelings } from '../data/feelings.json'
 import { fallback, topics } from '../data/topics.json'
 
@@ -48,6 +49,16 @@ const NEGATORS = new Set([
   'nai',
   'nei',
 ])
+// The longest phrase we try to match, in words ("on top of the world" is 5)
+const MAX_PHRASE = 5
+// "no plans", "without sugar": these only reach the very next word
+const DETERMINER_NEGATORS = new Set(['no', 'without', 'neither', 'nor'])
+// "can't stop smiling", "couldn't help laughing": a double negative, so it is positive
+const CANT = new Set(['cant', 'couldnt', 'cannot'])
+// "would have been more fun than...", "could have been better": the good thing did not happen
+const CANT_PLAIN = new Set(['could', 'can'])
+const COUNTERFACTUAL = new Set(['would', 'could', 'should'])
+const STOP_WORDS = new Set(['stop', 'help'])
 // Negators that follow the word they negate (Hindi/Bengali word order)
 const POSTPOSED_NEGATORS = new Set(['nahi', 'nahin', 'nhi', 'nai', 'nei'])
 const INTENSIFIERS = new Set([
@@ -77,7 +88,18 @@ const INTENSIFIERS = new Set([
   'onek',
   'ato',
 ])
-const CONTRAST = new Set(['but', 'however', 'though', 'although', 'anyway', 'except', 'yet'])
+const CONTRAST = new Set([
+  'but',
+  'however',
+  'though',
+  'although',
+  'anyway',
+  'except',
+  'yet',
+  'then',
+  'until',
+  'eventually',
+])
 // Negating one of these ("not happy") points toward disappointed. Negating anything else is ignored.
 const POSITIVE = new Set([
   'joyful',
@@ -120,14 +142,20 @@ export function inflections(word) {
   return [...forms]
 }
 
-/** Lowercase, drop apostrophes, split into words, and number the sentences. */
+/**
+ * Lowercase, drop apostrophes, split into words, and number the sentences and clauses.
+ * A clause ends at a comma or a full stop, so "no plans, so serene" keeps "no" away from "serene".
+ */
 export function tokenize(text) {
   const cleaned = text.toLowerCase().replace(/['’`]/g, '')
   const out = []
   let sentence = 0
-  for (const m of cleaned.matchAll(/\p{L}+|[.!?;\n]+/gu)) {
-    if (/^[.!?;\n]/.test(m[0])) sentence++
-    else out.push({ word: m[0], sentence })
+  let clause = 0
+  for (const m of cleaned.matchAll(/\p{L}+|[.!?;\n,]+/gu)) {
+    if (/^[.!?;\n,]/.test(m[0])) {
+      if (/[.!?;\n]/.test(m[0])) sentence++
+      clause++
+    } else out.push({ word: m[0], sentence, clause })
   }
   return out
 }
@@ -143,12 +171,22 @@ const entries = [
   ...FEELING_IDS.map((id) => ({ kind: 'feeling', id, words: feelings[id].keywords })),
   ...TOPIC_IDS.map((id) => ({ kind: 'topic', id, words: topics[id].keywords })),
 ]
-for (const { kind, id, words } of entries) for (const w of words) index.set(w, { kind, id })
+const hintFor = (kind, id, w) => (kind === 'topic' ? topics[id].hints?.[w] : undefined)
+// Weak words are ambiguous ("quiet", "refreshed", "notes", "spilled"): they count for half, so a
+// clearer signal elsewhere in the note wins. Listed per entry as "weak" in the data files.
+const weakOf = (kind, id) => new Set((kind === 'topic' ? topics[id] : feelings[id]).weak ?? [])
+const info = (kind, id, w) => ({
+  kind,
+  id,
+  hint: hintFor(kind, id, w),
+  weak: weakOf(kind, id).has(w),
+})
+for (const { kind, id, words } of entries) for (const w of words) index.set(w, info(kind, id, w))
 for (const { kind, id, words } of entries) {
   for (const w of words) {
     for (const form of inflections(w)) {
       const prev = index.get(form)
-      if (!prev) index.set(form, { kind, id })
+      if (!prev) index.set(form, info(kind, id, w))
       else if (prev.id !== id || prev.kind !== kind) {
         // an exact keyword of another entry is fine (it wins); only flag two inflections colliding
         const exactOwner = entries.some((e) => e.words.includes(form))
@@ -167,6 +205,39 @@ for (const [id, list] of Object.entries(emojiData.topics))
   for (const e of list) emojiTable.push({ e: stripVS(e), kind: 'topic', id })
 
 const keywordCount = (id) => topics[id].keywords.length
+// the real keywords only (not the forms we generate from them): typos are matched against these
+const exactWords = new Set(entries.flatMap((e) => e.words))
+
+// ---- typos ----
+
+function transposes(w) {
+  const out = []
+  for (let i = 0; i < w.length - 1; i++) out.push(w.slice(0, i) + w[i + 1] + w[i] + w.slice(i + 2))
+  return out
+}
+// Real words that are two swapped letters away from a keyword. They are NOT typos ("quite" is not "quiet").
+const NOT_TYPOS = new Set(typoGuard)
+
+/**
+ * A keyword with two adjacent letters swapped ("tierd" -> tired, "excietd" -> excited). Only for
+ * words of 5+ letters that we do not know, and only when exactly one entry matches, so it never
+ * guesses between two meanings. We tried allowing any single wrong, missing or extra letter and
+ * it was a disaster ("stopping" became "shopping", "yellow" became "mellow"): real words are
+ * almost never two swapped letters away from a keyword, but they are very often one edit away.
+ * Typo matches count a little less.
+ */
+export function typoOwner(word) {
+  if (word.length < 5 || index.has(word) || NOT_TYPOS.has(word)) return null
+  let owner = null
+  for (const c of transposes(word)) {
+    if (!exactWords.has(c)) continue
+    const o = index.get(c)
+    if (!o) continue
+    if (owner && (owner.id !== o.id || owner.kind !== o.kind)) return null
+    owner = o
+  }
+  return owner && { ...owner, typo: true }
+}
 
 // ---- the engine ----
 
@@ -197,31 +268,51 @@ function findHits(text) {
   const hits = []
 
   const sameSentence = (i, j) => tokens[j].sentence === tokens[i].sentence
-  const negatedAt = (i, span = 1) => {
-    // English: "not happy" (the negator comes before)
-    for (let j = Math.max(0, i - 3); j < i; j++)
-      if (sameSentence(i, j) && NEGATORS.has(tokens[j].word)) return true
+  const sameClause = (i, j) => tokens[j].clause === tokens[i].clause
+  const negatedAt = (i, span = 1, kind = 'feeling') => {
+    // English: "not happy" (the negator comes before). A topic is only negated right next to it
+    // ("no exams"); "didn't enjoy the movie" says nothing against the movie.
+    const reach = kind === 'topic' ? 1 : 3
+    for (let j = Math.max(0, i - reach); j < i; j++) {
+      if (!sameClause(i, j)) continue
+      const w = tokens[j].word
+      if (!NEGATORS.has(w)) continue
+      if (DETERMINER_NEGATORS.has(w) && i - j > 1) continue // "no plans" is not "not ..."
+      if (CANT.has(w) && STOP_WORDS.has(tokens[j + 1]?.word)) continue // "can't stop smiling" is positive
+      // "could not stop smiling", "can not stop": the negator is the word 'not' after could/can
+      if (w === 'not' && CANT_PLAIN.has(tokens[j - 1]?.word) && STOP_WORDS.has(tokens[j + 1]?.word))
+        continue
+      return true
+    }
+    // counterfactual: "would have been more fun", "could have been better"
+    for (let j = Math.max(0, i - 4); j < i; j++) {
+      if (sameClause(i, j) && COUNTERFACTUAL.has(tokens[j].word) && tokens[j + 1]?.word === 'have')
+        return true
+    }
     // Hindi and Bengali: "khush nahi hoon", "mast nai laglo" (the negator comes after)
     for (let j = i + span; j <= Math.min(n - 1, i + span + 1); j++)
-      if (sameSentence(i, j) && POSTPOSED_NEGATORS.has(tokens[j].word)) return true
+      if (sameClause(i, j) && POSTPOSED_NEGATORS.has(tokens[j].word)) return true
     return false
   }
   const intensifiedAt = (i) =>
     [i - 1, i - 2].some((j) => j >= 0 && sameSentence(i, j) && INTENSIFIERS.has(tokens[j].word))
 
   for (let i = 0; i < n; i++) {
-    // try the two-word phrase first ("ice" + "cream" -> "icecream"), then the single word
+    // try the longest phrase first ("over the moon" -> "overthemoon", "ice cream" -> "icecream"),
+    // down to two words, then the single word. Keywords for phrases are written joined.
     let owner = null
     let word = tokens[i].word
     let span = 1
-    if (i + 1 < n && sameSentence(i, i + 1)) {
-      owner = index.get(tokens[i].word + tokens[i + 1].word) ?? null
+    for (let len = Math.min(MAX_PHRASE, n - i); len >= 2 && !owner; len--) {
+      const parts = tokens.slice(i, i + len)
+      if (!parts.every((_, k) => sameSentence(i, i + k))) continue
+      owner = index.get(parts.map((t) => t.word).join('')) ?? null
       if (owner) {
-        word = `${tokens[i].word} ${tokens[i + 1].word}`
-        span = 2
+        word = parts.map((t) => t.word).join(' ')
+        span = len
       }
     }
-    if (!owner) owner = index.get(tokens[i].word) ?? null
+    if (!owner) owner = index.get(tokens[i].word) ?? typoOwner(tokens[i].word)
     if (!owner) continue
 
     // Feelings care about the shape of the note: later counts more, "but" outweighs what came
@@ -229,11 +320,14 @@ function findHits(text) {
     let weight = 1 + 0.4 * (i / Math.max(1, n - 1))
     if (lastContrast >= 0 && i < lastContrast) weight *= 0.6
     if (intensifiedAt(i)) weight *= 1.5
-    if (span === 2) weight *= 1.5 // a deliberate phrase ("nothing happened") says more than a stray word
+    if (span >= 2) weight *= 1.5 // a deliberate phrase ("nothing happened") says more than a stray word
     if (owner.kind === 'topic') weight = 1
+    if (owner.weak) weight *= 0.5
+    if (owner.typo) weight *= 0.8
 
     let { kind, id } = owner
-    if (negatedAt(i, span)) {
+    const intense = intensifiedAt(i)
+    if (negatedAt(i, span, kind)) {
       if (kind === 'feeling' && POSITIVE.has(id)) {
         id = 'disappointed' // "not happy"
         word = `not ${word}`
@@ -242,7 +336,14 @@ function findHits(text) {
         continue // "no exams", "not tired": says nothing useful
       }
     }
+    // "so good", "really good" is more than just fine
+    if (kind === 'feeling' && id === 'content' && intense) id = 'joyful'
     hits.push({ kind, id, word, weight, at: i })
+    // some topic words lean toward a mood ("interview" is usually anxious); a gentle nudge that
+    // any real feeling word outweighs
+    if (owner.hint && kind === 'topic') {
+      hits.push({ kind: 'feeling', id: owner.hint, word, weight: 0.6, at: i })
+    }
     i += span - 1
   }
 
@@ -355,6 +456,15 @@ export function detectMood({ text = '', hour, month, profile }) {
     topicFromWords && second && t.score.get(second) >= 0.6 * t.score.get(topicFromWords)
       ? second
       : null
+
+  // A bare "!" with no feeling words lifts a plain "content" to joyful ("Ran my first 5k!")
+  if (
+    feelingSource === 'topic' &&
+    feeling === 'content' &&
+    text.includes('!') &&
+    !tokenize(text).some((tk) => NEGATORS.has(tk.word) && !DETERMINER_NEGATORS.has(tk.word))
+  )
+    feeling = 'joyful'
 
   // How emphatic was the note? "so happy", strong wording or an exclamation mark make a bright
   // feeling vivid; anything mild stays soft. Feelings that are quiet by nature are always soft.

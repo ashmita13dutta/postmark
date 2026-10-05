@@ -33,13 +33,14 @@ describe('inflections/tokenize', () => {
     expect(mood('a long meeting').feelingWords).toEqual([])
   })
 
-  it('drops apostrophes and punctuation, lowercases, and numbers the sentences', () => {
+  it('drops apostrophes and punctuation, lowercases, and numbers sentences and clauses', () => {
+    // a comma ends a clause (so negation cannot reach past it); a full stop ends both
     expect(tokenize("Didn't LIKE it. Bristi, bristi!!")).toEqual([
-      { word: 'didnt', sentence: 0 },
-      { word: 'like', sentence: 0 },
-      { word: 'it', sentence: 0 },
-      { word: 'bristi', sentence: 1 },
-      { word: 'bristi', sentence: 1 },
+      { word: 'didnt', sentence: 0, clause: 0 },
+      { word: 'like', sentence: 0, clause: 0 },
+      { word: 'it', sentence: 0, clause: 0 },
+      { word: 'bristi', sentence: 1, clause: 1 },
+      { word: 'bristi', sentence: 1, clause: 2 },
     ])
   })
 })

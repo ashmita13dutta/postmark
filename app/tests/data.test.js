@@ -194,3 +194,55 @@ describe('colornames.json', () => {
     }
   })
 })
+
+describe('weak words and mood hints', () => {
+  const entries = [
+    ...feelingIds.map((id) => ['feeling', id, feelings[id]]),
+    ...topicIds.map((id) => ['topic', id, topics[id]]),
+  ]
+
+  it('every weak word is one of the entry’s own keywords', () => {
+    for (const [kind, id, e] of entries) {
+      for (const w of e.weak ?? []) expect(e.keywords, `${kind} ${id}: weak "${w}"`).toContain(w)
+    }
+  })
+
+  it('every hint is on one of the topic’s keywords and names a real feeling', () => {
+    for (const id of topicIds) {
+      for (const [word, feeling] of Object.entries(topics[id].hints ?? {})) {
+        expect(topics[id].keywords, `${id}: hint "${word}"`).toContain(word)
+        expect(feelingIds, `${id}: hint "${word}" -> ${feeling}`).toContain(feeling)
+      }
+    }
+  })
+
+  it('every topic names a real default feeling', () => {
+    for (const id of topicIds) expect(feelingIds).toContain(topics[id].defaultFeeling)
+  })
+})
+
+describe('weak words and mood hints', () => {
+  const entries = [
+    ...feelingIds.map((id) => ['feeling', id, feelings[id]]),
+    ...topicIds.map((id) => ['topic', id, topics[id]]),
+  ]
+
+  it('every weak word is one of the entry’s own keywords', () => {
+    for (const [kind, id, e] of entries) {
+      for (const w of e.weak ?? []) expect(e.keywords, `${kind} ${id}: weak "${w}"`).toContain(w)
+    }
+  })
+
+  it('every hint is on one of the topic’s keywords and names a real feeling', () => {
+    for (const id of topicIds) {
+      for (const [word, feeling] of Object.entries(topics[id].hints ?? {})) {
+        expect(topics[id].keywords, `${id}: hint "${word}"`).toContain(word)
+        expect(feelingIds, `${id}: hint "${word}" -> ${feeling}`).toContain(feeling)
+      }
+    }
+  })
+
+  it('every topic names a real default feeling', () => {
+    for (const id of topicIds) expect(feelingIds).toContain(topics[id].defaultFeeling)
+  })
+})
