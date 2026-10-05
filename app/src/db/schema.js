@@ -19,12 +19,15 @@
  *  redeliveries     { monthKey, momentId }                  delayed-in-transit pick, fixed per month
  *  volumes          { year, coverStickers, closedAt }
  *  settings         { key, value }
+ *  lexicon          { word, kind: 'feeling'|'topic', id, parts, example, createdAt }   words you taught
+ *                   `word` is the word or phrase written joined ("bekaar", "passedaway"); one row
+ *                   per word, so teaching a word again replaces what it meant before.
  *
  * `day` is a local-calendar 'YYYY-MM-DD'; every other time is epoch ms.
  */
 import Dexie from 'dexie'
 
-export const SCHEMA_VERSION = 1
+export const SCHEMA_VERSION = 2
 
 export class PostmarkDB extends Dexie {
   constructor(name = 'postmark') {
@@ -44,6 +47,10 @@ export class PostmarkDB extends Dexie {
       redeliveries: 'monthKey',
       volumes: 'year',
       settings: 'key',
+    })
+    // v2: the words you teach the mood engine. Only the new table is listed; the rest carry over.
+    this.version(2).stores({
+      lexicon: 'word, kind, id',
     })
   }
 }

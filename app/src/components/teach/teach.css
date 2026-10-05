@@ -1,0 +1,249 @@
+.teach {
+  margin-top: 14px;
+}
+.teach__open {
+  width: 100%;
+  min-height: var(--tap);
+  border: 1px dashed var(--postmark);
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--postmark);
+  font: 500 14px var(--font-ui);
+}
+.teach__open:disabled {
+  opacity: 0.4;
+}
+.teach--open {
+  padding: 16px 14px;
+  background: var(--card);
+  border: 1px solid var(--ink-12);
+  border-radius: 14px;
+}
+.teach h3 {
+  margin: 0 0 10px;
+  font: 400 20px var(--font-display);
+}
+.teach .seg--small {
+  margin-top: 0;
+}
+.chips--wrap {
+  flex-wrap: wrap;
+  margin: 12px 0 0;
+  padding: 0;
+  overflow: visible;
+}
+.teach .picker {
+  margin-top: 12px;
+}
+.teach__label {
+  margin: 16px 0 8px;
+  font: 500 10px var(--font-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-50);
+}
+.words--tap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 4px;
+}
+.word {
+  min-height: 36px;
+  padding: 0 11px;
+  border: 1px solid var(--ink-15);
+  border-radius: 10px;
+  background: var(--card-warm);
+  color: var(--ink);
+  font: 400 16px var(--font-hand);
+}
+.word--known {
+  color: var(--ink-45);
+  background: transparent;
+  border-style: dashed;
+}
+.word--stop {
+  color: var(--ink-45);
+  border-color: transparent;
+  background: transparent;
+}
+.word--on {
+  background: var(--postmark);
+  border-color: var(--postmark);
+  color: var(--card-warm);
+}
+/* neighbours you tapped together read as one phrase */
+.word--joined {
+  margin-right: -4px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.word--on + .word--on {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.teach__hint {
+  margin: 10px 0 0;
+  font: 400 12px/1.45 var(--font-ui);
+  color: var(--ink-50);
+}
+.teach__row {
+  display: flex;
+  gap: 18px;
+  margin-top: 4px;
+}
+.teach__link {
+  min-height: var(--tap);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--postmark);
+  font: 500 13px var(--font-ui);
+  text-align: left;
+}
+.teach__preview {
+  margin: 8px 0 0;
+  font: 500 13px/1.4 var(--font-ui);
+  color: var(--ink);
+}
+.teach__msg {
+  margin: 10px 0 0;
+  font: 400 13px/1.45 var(--font-ui);
+  color: var(--ink-60);
+}
+.teach__msg--err {
+  color: #a3262a;
+}
+.teach__actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+.teach__save {
+  flex: 1;
+  min-height: var(--tap);
+  border: 0;
+  border-radius: var(--r-pill);
+  background: var(--postmark);
+  color: var(--card-warm);
+  font: 500 14px var(--font-ui);
+}
+.teach__save:disabled {
+  opacity: 0.35;
+}
+.teach__cancel {
+  min-height: var(--tap);
+  padding: 0 18px;
+  border: 1px solid var(--ink-15);
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--ink-60);
+  font: 500 14px var(--font-ui);
+}
+
+/* my words */
+.mywords {
+  margin-top: 14px;
+  padding: 0 14px 6px;
+  background: var(--card);
+  border: 1px solid var(--ink-08);
+  border-radius: 12px;
+}
+.mywords summary {
+  min-height: var(--tap);
+  display: flex;
+  align-items: center;
+  font: 500 13px var(--font-ui);
+  color: var(--postmark);
+  cursor: pointer;
+}
+.mywords ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.mywords li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  border-top: 1px solid var(--ink-08);
+  font: 400 14px var(--font-ui);
+}
+.mywords__word {
+  font-family: var(--font-hand);
+  font-size: 16px;
+}
+.mywords__arrow {
+  color: var(--ink-45);
+}
+.mywords__target {
+  flex: 1;
+  min-width: 0;
+}
+.mywords__target small {
+  color: var(--ink-45);
+}
+.mywords li button {
+  width: var(--tap);
+  height: var(--tap);
+  margin-right: -10px;
+  border: 0;
+  background: none;
+  font-size: 20px;
+  color: var(--ink-45);
+}
+
+/* the panel carries its own copies of the shared controls, so it works on any screen */
+.teach .seg {
+  display: flex;
+  padding: 3px;
+  background: var(--ink-08);
+  border-radius: var(--r-pill);
+}
+.teach .seg button {
+  flex: 1;
+  min-height: 38px;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: none;
+  font: 500 12px var(--font-ui);
+  color: var(--ink-60);
+}
+.teach .seg button.on {
+  background: var(--card-warm);
+  color: var(--ink);
+  box-shadow: 0 1px 3px rgba(42, 38, 32, 0.15);
+}
+.teach .chips {
+  display: flex;
+  gap: 8px;
+}
+.teach .chips button {
+  flex: none;
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--ink-12);
+  border-radius: var(--r-pill);
+  background: transparent;
+  font: 500 12px var(--font-ui);
+  color: var(--ink-60);
+  white-space: nowrap;
+}
+.teach .chips button.on {
+  background: var(--postmark);
+  border-color: var(--postmark);
+  color: var(--card-warm);
+}
+.teach .chips small {
+  opacity: 0.7;
+}
+.teach .picker {
+  width: 100%;
+  min-height: var(--tap);
+  padding: 0 12px;
+  border: 1px solid var(--ink-12);
+  border-radius: var(--r-md);
+  background: var(--card);
+  color: var(--ink);
+  font: 500 14px var(--font-ui);
+}

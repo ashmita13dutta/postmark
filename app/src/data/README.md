@@ -166,3 +166,25 @@ Tuning on a set always flatters its score, so a new batch of notes is written fr
 an honest number, and only then added to the development sets. The honest first-run numbers so far
 are recorded at the top of `tests/corpus/dev2.json` and `dev3.json`. Your own real notes are the best
 test: add the ones that read wrong as `["the note", "the feeling it should be", "the topic"]`.
+
+## Teaching the app your words
+
+Open the review page (You, then "Review palettes, color names and mood words"), go to **Note**, and
+type a note. If it reads wrong, tap **This felt different**:
+
+1. Choose **How it felt** or **What it was about**, then pick the right one.
+2. Tap the words in your note that show it. Dim words are ones the app already understands. Words you
+   tap next to each other become one phrase ("passed away"). **Pick the words it doesn't know**
+   selects the unfamiliar ones for you.
+3. Tap **Teach it**. The note is read again straight away.
+
+What you taught is saved **on this phone only** and listed under **My words**, where each word has a
+**×** to take it back. Taught words:
+
+- win over the built-in meaning (teach "quiet" as sad and it is sad for you),
+- count a little extra, because you chose them on purpose,
+- also match their usual forms (teach "zonk" and "zonked" works), though a phrase matches exactly,
+- are stored in the `lexicon` table of the phone's database, not in these files.
+
+To make a word part of the app for everyone (and for the tests), add it to `feelings.json` or
+`topics.json` instead. Words from "My words" are a good source of candidates.

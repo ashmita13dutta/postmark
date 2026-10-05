@@ -261,7 +261,29 @@ export function unstretch(word) {
   return two
 }
 
-function findHits(text) {
+/**
+ * Your own taught words, ready for lookup. Each entry is { word, kind: 'feeling' | 'topic', id,
+ * parts }: `word` is the word or phrase written joined ("bekaar", "passedaway") and `parts` how
+ * many words it is. Single words also match their usual forms (taught "cook" also matches
+ * "cooked"), but never over a word you taught exactly.
+ * @returns {Map<string, object>}
+ */
+export function buildLexicon(entries = []) {
+  const map = new Map()
+  const info = (e) => ({ kind: e.kind, id: e.id, hint: undefined, weak: false, taught: true })
+  for (const e of entries) {
+    if (!e?.word || !(e.kind === 'feeling' ? feelings[e.id] : topics[e.id])) continue
+    map.set(e.word, info(e))
+  }
+  for (const e of entries) {
+    if (e?.parts !== 1 || !map.has(e.word)) continue
+    for (const form of inflections(e.word)) if (!map.has(form)) map.set(form, info(e))
+  }
+  return map
+}
+
+function findHits(text, lexicon) {
+  const lookup = (key) => lexicon?.get(key) ?? index.get(key)
   const tokens = tokenize(text).map((t) => ({ ...t, word: unstretch(t.word) }))
   const n = tokens.length
   const lastContrast = tokens.reduce((last, t, i) => (CONTRAST.has(t.word) ? i : last), -1)
@@ -306,13 +328,13 @@ function findHits(text) {
     for (let len = Math.min(MAX_PHRASE, n - i); len >= 2 && !owner; len--) {
       const parts = tokens.slice(i, i + len)
       if (!parts.every((_, k) => sameSentence(i, i + k))) continue
-      owner = index.get(parts.map((t) => t.word).join('')) ?? null
+      owner = lookup(parts.map((t) => t.word).join('')) ?? null
       if (owner) {
         word = parts.map((t) => t.word).join(' ')
         span = len
       }
     }
-    if (!owner) owner = index.get(tokens[i].word) ?? typoOwner(tokens[i].word)
+    if (!owner) owner = lookup(tokens[i].word) ?? typoOwner(tokens[i].word)
     if (!owner) continue
 
     // Feelings care about the shape of the note: later counts more, "but" outweighs what came
@@ -324,6 +346,8 @@ function findHits(text) {
     if (owner.kind === 'topic') weight = 1
     if (owner.weak) weight *= 0.5
     if (owner.typo) weight *= 0.8
+    // a word you deliberately taught is stronger evidence than a built-in guess
+    if (owner.taught) weight *= 1.5
 
     let { kind, id } = owner
     const intense = intensifiedAt(i)
@@ -338,7 +362,7 @@ function findHits(text) {
     }
     // "so good", "really good" is more than just fine
     if (kind === 'feeling' && id === 'content' && intense) id = 'joyful'
-    hits.push({ kind, id, word, weight, at: i })
+    hits.push({ kind, id, word, weight, at: i, taught: owner.taught })
     // some topic words lean toward a mood ("interview" is usually anxious); a gentle nudge that
     // any real feeling word outweighs
     if (owner.hint && kind === 'topic') {
@@ -415,9 +439,11 @@ function confidence(t, ranked) {
  * @param {number} input.hour   local hour 0-23
  * @param {number} input.month  local month 1-12
  * @param {string} [input.profile] fallback profile from topics.json ("generic", "kolkata"...)
+ * @param {object[]|Map} [input.lexicon] words you taught (see buildLexicon); they win over built-ins
  */
-export function detectMood({ text = '', hour, month, profile }) {
-  const hits = findHits(text)
+export function detectMood({ text = '', hour, month, profile, lexicon }) {
+  const lex = lexicon instanceof Map ? lexicon : lexicon?.length ? buildLexicon(lexicon) : undefined
+  const hits = findHits(text, lex)
   const f = tally(hits, 'feeling')
   const t = tally(hits, 'topic')
   const rankedFeelings = rank(f, 'feeling', hour)
@@ -478,6 +504,8 @@ export function detectMood({ text = '', hour, month, profile }) {
     feeling,
     topic,
     energy,
+    // which of YOUR taught words shaped this reading
+    taught: [...new Set(hits.filter((h) => h.taught).map((h) => h.word))],
     secondaryTopic,
     feelingWords: f.words.get(rankedFeelings[0]) ?? [],
     topicWords: t.words.get(topicFromWords) ?? [],
@@ -485,4 +513,14 @@ export function detectMood({ text = '', hour, month, profile }) {
     confidence: { feeling: confidence(f, rankedFeelings), topic: confidence(t, rankedTopics) },
     scores: { feelings: top3(f, rankedFeelings), topics: top3(t, rankedTopics) },
   }
+}
+
+/** Does the engine already understand this word (a keyword, a form of one, or one you taught)? */
+export function isKnownWord(word, lexicon) {
+  const w = unstretch(word.toLowerCase())
+  return !!(
+    lexicon?.get(w) ??
+    index.get(w) ??
+    (NEGATORS.has(w) || POSTPOSED_NEGATORS.has(w) || INTENSIFIERS.has(w) || CONTRAST.has(w))
+  )
 }

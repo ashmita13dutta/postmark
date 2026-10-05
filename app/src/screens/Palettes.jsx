@@ -1,6 +1,9 @@
+import { useLiveQuery } from 'dexie-react-hooks'
 import { useEffect, useMemo, useState } from 'react'
 import Screen from '../app/Screen'
 import Stamp from '../components/stamp/Stamp'
+import MyWords from '../components/teach/MyWords'
+import TeachPanel from '../components/teach/TeachPanel'
 import colorNames from '../data/colornames.json'
 import { feelings, defaultFeeling } from '../data/feelings.json'
 import palettes from '../data/palettes.json'
@@ -8,8 +11,9 @@ import shifts from '../data/shifts.json'
 import { topics, fallback } from '../data/topics.json'
 import { namePalette } from '../engine/colorNames'
 import { paletteFromImageFile } from '../engine/colorExtract'
-import { detectMood, contextAt } from '../engine/mood'
+import { buildLexicon, detectMood, contextAt } from '../engine/mood'
 import { buildPalette, composePalette } from '../engine/palette'
+import { queries } from '../db/queries'
 import { now } from '../lib/clock'
 import { chroma, hexToOklab, hue } from '../lib/color'
 import { todayKey } from '../lib/dates'
@@ -117,9 +121,13 @@ function NoteView() {
   const [profile, setProfile] = useState('generic')
   const day = todayKey()
 
+  // the words you taught live in this phone's database; the page re-reads when they change
+  const lexiconRows = useLiveQuery(() => queries.getLexicon(), [], [])
+  const lexicon = useMemo(() => buildLexicon(lexiconRows), [lexiconRows])
+
   const mood = useMemo(
-    () => detectMood({ text, hour, month, profile }),
-    [text, hour, month, profile],
+    () => detectMood({ text, hour, month, profile, lexicon }),
+    [text, hour, month, profile, lexicon],
   )
   const built = useMemo(
     () =>
@@ -202,6 +210,13 @@ function NoteView() {
             {mood.source.topic === 'words' ? ` · ${mood.confidence.topic} confidence` : ''}
           </small>
         </div>
+        {mood.taught.length > 0 && (
+          <div>
+            <span className="lbl">Your words</span>
+            <b>{mood.taught.map((w) => `“${w}”`).join(', ')}</b>
+            <small>you taught the app these, so they count extra</small>
+          </div>
+        )}
         <div>
           <span className="lbl">Light</span>
           <b>
@@ -210,6 +225,13 @@ function NoteView() {
           <small>the palette is nudged a little for the hour and the season</small>
         </div>
       </div>
+
+      <TeachPanel
+        text={text}
+        mood={mood}
+        lexicon={lexicon}
+        onSave={(entries) => queries.teachWords(entries)}
+      />
 
       <div className="controls">
         <label>
@@ -250,6 +272,12 @@ function NoteView() {
       </div>
 
       <NamedSwatches colors={built.colors} label="Stamp colors" />
+
+      <MyWords
+        lexicon={lexiconRows}
+        onForget={(word) => queries.forgetWord(word)}
+        onForgetAll={() => queries.forgetAllWords()}
+      />
     </>
   )
 }

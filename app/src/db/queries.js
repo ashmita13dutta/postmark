@@ -145,7 +145,54 @@ export function makeQueries(db) {
   const mediaForMoment = (momentId) => db.media.where('momentId').equals(momentId).toArray()
   const deleteMediaForMoment = (momentId) => db.media.where('momentId').equals(momentId).delete()
 
+  // ---- lexicon: words you taught the mood engine ----
+
+  const MAX_LEXICON = 3000 // plenty for one person; stops a runaway list
+
+  /** Everything you have taught, newest first. Feed it to detectMood({ lexicon }). */
+  async function getLexicon() {
+    return (await db.lexicon.toArray()).sort((a, b) => b.createdAt - a.createdAt)
+  }
+
+  /**
+   * Save taught words (entries from engine/teach.js). Teaching a word again replaces what it meant
+   * before, so a correction always wins. Returns the entries that were saved.
+   */
+  async function teachWords(entries) {
+    const clean = entries
+      .filter(
+        (e) =>
+          e?.word &&
+          /^\p{L}{2,}$/u.test(e.word) &&
+          (e.kind === 'feeling' || e.kind === 'topic') &&
+          e.id,
+      )
+      .map((e) => ({
+        word: e.word,
+        kind: e.kind,
+        id: e.id,
+        parts: e.parts ?? 1,
+        example: e.example ?? e.word,
+        createdAt: now(),
+      }))
+    if (!clean.length) return []
+    return db.transaction('rw', db.lexicon, async () => {
+      if ((await db.lexicon.count()) + clean.length > MAX_LEXICON) {
+        throw new Error('Your word list is full. Remove some words first.')
+      }
+      await db.lexicon.bulkPut(clean)
+      return clean
+    })
+  }
+
+  const forgetWord = (word) => db.lexicon.delete(word)
+  const forgetAllWords = () => db.lexicon.clear()
+
   return {
+    getLexicon,
+    teachWords,
+    forgetWord,
+    forgetAllWords,
     getSetting,
     getSettings,
     setSetting,
