@@ -19,7 +19,11 @@
         "bestday", "bestdayever", "bestweek", "bestnight", "bestever", "happiestday",
         "greatday", "lovelyday", "perfectday", "wentright", "wentwell", "wentperfectly",
         "everythingwentright", "laughedsohard", "laughingsohard", "laughsohard",
-        "fixedeverything", "obsessed", "happytears", "couldstayhere", "stayhereforever"
+        "fixedeverything", "obsessed", "happytears", "couldstayhere", "stayhereforever",
+        "giggling", "squealed", "squealing", "jumpedforjoy", "celebrated", "celebrating",
+        "priceless", "hilarious", "hysterical", "rofl", "lmao", "imfloating", "feltlight",
+        "feellight", "lightasafeather", "cheekshurt", "sideshurt", "screamedwithjoy",
+        "forgottobreathe", "forgotbreathing"
       ],
       "weak": [
         "perfect", "best", "great", "fun", "magical", "sparkle", "wow", "brilliant",
@@ -36,7 +40,10 @@
         "settled", "fulfilled", "pleased", "alright", "smooth", "cosy", "sorted", "mellow",
         "satisfying", "relieved", "relief", "chilled", "chill", "chilling", "manageable",
         "stable", "okayish", "cruisy", "achha", "accha", "theek", "thik", "thikthak", "sahi",
-        "bhalo", "valo", "bhaloi", "nap"
+        "bhalo", "valo", "bhaloi", "nap", "lazysunday", "lazyday", "lazyafternoon",
+        "lazymorning", "lazyweekend", "chillday", "restday", "slowday", "slowmorning",
+        "slowsunday", "nothingtofix", "nohurry", "organised", "organized", "wellfed",
+        "fullbelly", "easygoing", "untroubled", "smallgoodday"
       ],
       "weak": [
         "fine", "good", "okay", "nice", "decent", "alright", "smooth", "simple", "easy",
@@ -56,7 +63,8 @@
         "refreshed", "rejuvenated", "recharged", "zen", "quietly", "lull", "shaant", "shant",
         "aaram", "araam", "aram", "grounded", "centered", "centred", "stillinside", "atpeace",
         "silence", "silent", "serenity", "earlytobed", "waterwasglass", "glassy", "nothoughts",
-        "nothingonmymind", "lavender"
+        "nothingonmymind", "lavender", "unhurried", "leisurely", "leisure", "serenely",
+        "slowdown", "slowedown", "breathedin", "silentmorning", "quietevening", "stoodstill"
       ],
       "weak": [
         "refreshed", "refreshing", "slow", "slowly", "quiet", "gentle", "balance", "ease",
@@ -75,7 +83,10 @@
         "impatient", "josh", "utsuk", "uttejito", "thrilled", "cantsleep", "cantcalmdown",
         "cannotcalmdown", "countinghours", "cantwaitfor", "inagoodway", "bookedtickets",
         "bookedflights", "bookedmytickets", "mightfaint", "somersaults", "countingdown",
-        "cannotwait", "couldntwait", "cantwaittosee", "cantwaittogo"
+        "cannotwait", "couldntwait", "cantwaittosee", "cantwaittogo", "screamedintomypillow",
+        "screamedintopillow", "countingthedays", "countingdays", "stillshaking", "gottickets",
+        "gotthetickets", "gotmytickets", "packedmybags", "packingbags", "packedbags", "giddy",
+        "euphoric", "euphoria", "hypedup", "overexcited", "keyedup"
       ],
       "weak": [
         "wild", "crazy", "epic", "energy", "rush", "electric", "lively", "buzz", "unreal",
@@ -98,7 +109,11 @@
         "complimented", "compliments", "applauded", "congratulated", "askedforseconds",
         "defended", "clapped", "clapping", "applause", "cheered", "personalbest", "newrecord",
         "personalrecord", "approved", "ididit", "didit", "closedadeal", "closeddeal",
-        "closedmyfirst", "nobodylaughed"
+        "closedmyfirst", "nobodylaughed", "topped", "topscore", "toppedtheclass", "firstrank",
+        "distinction", "goldmedal", "winninggoal", "genius", "likeagenius", "gotthejob",
+        "gotanoffer", "internshipoffer", "gothired", "praise", "praising", "welldone",
+        "goodjob", "greatjob", "wellplayed", "saidno", "stoodmyground", "boundary",
+        "boundaries", "overcame", "overcome", "facedmyfear", "learnedhowto", "didntshake"
       ],
       "weak": ["finished", "completed", "shipped", "approved"]
     },
@@ -108,13 +123,17 @@
       "look": { "chroma": [0.03, 0.16], "lightness": [0.5, 0.87] },
       "keywords": [
         "love", "loved", "loving", "adore", "affection", "tender", "romantic", "romance",
-        "crush", "kiss", "kissed", "hug", "hugged", "cuddle", "heart", "butterflies",
-        "sweetheart", "darling", "soulmate", "bhalobasha", "pyaar", "ishq", "mohabbat", "jaan",
-        "babu", "cherish", "devoted", "smitten", "bae", "caring", "adorable", "beloved",
-        "infatuated", "lovestruck", "prem", "dil", "jaanu", "premika", "premik", "bhalobashi",
-        "fellfor", "inlove", "fellinlove", "fallinginlove", "headoverheels"
+        "crush", "kiss", "kissed", "hug", "hugged", "cuddle", "butterflies", "sweetheart",
+        "darling", "soulmate", "bhalobasha", "pyaar", "ishq", "mohabbat", "jaan", "babu",
+        "cherish", "devoted", "smitten", "bae", "caring", "adorable", "beloved", "infatuated",
+        "lovestruck", "prem", "dil", "jaanu", "premika", "premik", "bhalobashi", "fellfor",
+        "inlove", "fellinlove", "fallinginlove", "headoverheels", "melted", "melt", "melting",
+        "melts", "swooned", "snuggle", "snuggled", "snuggling", "cherished", "adored",
+        "sweetest", "thoughtful", "thoughtfulness", "newborn", "imgone", "holdhands",
+        "heldmyhand", "kisses", "lovedones", "heartisfull", "myheartisfull", "fullheart",
+        "heartfull"
       ],
-      "weak": ["heart", "hug", "hugged", "kiss", "kissed"]
+      "weak": ["hug", "hugged", "kiss", "kissed"]
     },
     "nostalgic": {
       "label": "Nostalgic",
@@ -130,7 +149,10 @@
         "takesmeback", "takemeback", "broughtback", "bringsback", "wheniwassmall",
         "wheniwasyoung", "wheniwasakid", "whenwewerekids", "backthen", "backintheday",
         "iwasbackin", "differentme", "paperboats", "eightagain", "tenagain", "sixagain",
-        "akidagain", "achildagain", "missthosedays"
+        "akidagain", "achildagain", "missthosedays", "oldphotos", "oldphoto", "oldpictures",
+        "oldalbum", "oldsongs", "oldsong", "oldradio", "olddiary", "olderme", "youngerme",
+        "oldself", "pastself", "memorylane", "goodoldtimes", "oldtimes", "theolddays",
+        "thosedays", "thoseyears", "cantgoback", "nevergoback", "atimeicantreturnto"
       ],
       "weak": [
         "old", "once", "past", "used", "yesterday", "letter", "album", "diary", "vintage",
@@ -149,7 +171,9 @@
         "meherbani", "abhari", "restored", "alhamdulillah", "mashallah", "shukar", "shukr",
         "waheguru", "thankgod", "couldcry", "thankfulfor", "gratefulfor", "thankfulto",
         "gratefulto", "blessedwith", "blessedto", "thanksto", "thankyouto", "helpedme",
-        "helpedus", "helpsme", "helpingme", "helpedmeout"
+        "helpedus", "helpsme", "helpingme", "helpedmeout", "blessedtohave", "peoplewhocare",
+        "therewhenineeded", "stoodbyme", "hadmyback", "hasmyback", "forgave", "forgiven",
+        "apologised", "apologized", "apologies"
       ],
       "weak": ["support", "supportive", "kind", "kindness", "generous", "lucky"]
     },
@@ -169,9 +193,12 @@
         "nosleep", "lesssleep", "sleeplessnight", "cantkeepmyeyesopen", "asleep", "fellasleep",
         "dozed", "dozing", "nighter", "allnighter", "mush", "brainfog", "brainmush",
         "hoursintraffic", "imdonefor", "donefor", "legsjelly", "legsarejelly", "jelly",
-        "eyesburning", "backtobackcalls", "backtobackmeetings", "backtobackclasses"
+        "eyesburning", "backtobackcalls", "backtobackmeetings", "backtobackclasses",
+        "bodyache", "bodyaches", "wetcement", "heavylimbs", "zerosleep", "sendhelp",
+        "barelyawake", "barelyalive", "halfdead", "needsleep", "needanap", "skippedlunch",
+        "skippeddinner", "skippedbreakfast", "skippedmeals"
       ],
-      "weak": ["rest", "resting", "sleep", "slept", "dead", "bedrest", "asleep", "jelly"]
+      "weak": ["rest", "resting", "sleep", "slept", "dead", "bedrest", "asleep", "jelly", "lazy"]
     },
     "anxious": {
       "label": "Anxious",
@@ -190,7 +217,12 @@
         "butterfliesinstomach", "fallapart", "fallingapart", "fallsapart", "losingit",
         "losingmymind", "breakdown", "breakingdown", "spiralling", "spiraling", "spiral",
         "hasntreplied", "leftonread", "waitingforareply", "piling", "doingthemaths",
-        "doingmaths", "latepayment", "latepayments"
+        "doingmaths", "latepayment", "latepayments", "blanked", "blankedout", "wentblank",
+        "mindwentblank", "heartstopped", "heartskippedabeat", "stomachknots", "sundayscaries",
+        "scaries", "jumpy", "makemejump", "makesmejump", "madejump", "keepchecking",
+        "keptchecking", "checkingagain", "cantconcentrate", "cantfocus", "waitingfornews",
+        "waitingforanswer", "waitingforacall", "waitingforvisa", "waitingfortheresult",
+        "waitingfortheresults", "waitingforresult", "lostmywallet", "lostmyphone"
       ],
       "weak": ["pressure", "behind", "restless", "rushed", "hectic", "chaotic", "overload"]
     },
@@ -213,11 +245,17 @@
         "everyoneelses", "otherpeoples", "everyoneelse", "cantpretend", "pretendimfine",
         "pretendingtobefine", "didntcall", "didntreply", "didntshowup", "nevershowedup",
         "stoodmeup", "jealous", "leftbehind", "withouthim", "withouther", "withoutthem",
-        "firstwithout", "silentcorridors"
+        "firstwithout", "silentcorridors", "teary", "tearyeyed", "lumpinthroat", "nearlycried",
+        "wantedtocry", "feltlikecrying", "cantsaywhy", "dontknowwhy", "cantexplain",
+        "driftedapart", "driftapart", "grownapart", "growingapart", "becamestrangers",
+        "lostcontact", "losttouch", "gonequiet", "silenttreatment", "notspeaking", "notalking",
+        "nottalking", "stoppedtalking", "everyonehadplans", "everyonehasplans", "nobodytocall",
+        "nobodytotalkto", "noonetotalkto", "noonetocall", "moodoff", "moodisoff",
+        "bhalolagchena", "heartbreak"
       ],
       "weak": [
         "blue", "empty", "heavy", "miss", "missing", "alone", "hurt", "ache", "ignored",
-        "unseen", "nobody", "cry", "cried", "crying", "tears"
+        "unseen", "nobody", "cry", "cried", "crying", "tears", "died"
       ]
     },
     "angry": {
@@ -237,11 +275,17 @@
         "outrageous", "absurd", "onhold", "hungup", "cutthecall", "keptmeonhold", "dented",
         "droveoff", "hitandrun", "withoutasking", "nonotice", "neverlisten", "dontlisten",
         "notlistening", "nobodylistens", "neverforgive", "tookcredit", "takingcredit",
-        "wantscredit", "imdone"
+        "wantscredit", "imdone", "glare", "glared", "glaring", "hadthenerve", "cutthequeue",
+        "cutinline", "cutinfront", "cutmeoff", "scolded", "yelledat", "doesntlisten",
+        "wontlisten", "wouldntlisten", "nobodywilllisten", "refusestolisten", "tiredof",
+        "sickandtired", "thirdtime", "fourthtime", "fifthtime", "forthethirdtime",
+        "forthefifthtime", "fifthday", "fourthday", "againandagain", "everysingletime",
+        "lostmytemper", "losthistemper", "lostmycool"
       ],
       "weak": [
         "mad", "hate", "hated", "fight", "fought", "argue", "argued", "rant", "bitter", "ugh",
-        "uff", "imdone"
+        "uff", "imdone", "thirdtime", "fourthtime", "fifthtime", "forthethirdtime",
+        "forthefifthtime", "fifthday", "fourthday"
       ]
     },
     "bored": {
@@ -257,9 +301,14 @@
         "justnothing", "nothingtodo", "paintdry", "watchingpaintdry", "timekatgaya", "timekat",
         "endlessmeeting", "endlessmeetings", "endlesslecture", "endlessclass",
         "checkingmywatch", "checkingmyphone", "lookingattheclock", "nothinginteresting",
-        "nothingtowatch", "scrolledandscrolled", "scrollingandscrolling"
+        "nothingtowatch", "scrolledandscrolled", "scrollingandscrolling", "stared",
+        "staredattheceiling", "staringattheceiling", "staredatnothing", "dragged", "draggedon",
+        "unproductive", "gotnowhere", "goingnowhere", "noprogress", "nothingdecided"
       ],
-      "weak": ["same", "routine", "stuck", "average", "ordinary", "whatever", "idle", "dull", "blah"]
+      "weak": [
+        "same", "routine", "stuck", "average", "ordinary", "whatever", "idle", "dull", "blah",
+        "stared", "dragged"
+      ]
     },
     "inspired": {
       "label": "Inspired",
@@ -316,11 +365,15 @@
         "poorlyorganised", "didntmake", "didntmakeit", "didntpass", "didntqualify",
         "didntgetin", "rude", "fellthrough", "fallsthrough", "calledoff", "putoff",
         "postponed", "washedout", "honestlyaverage", "justaverage", "overhyped", "nothinglike",
-        "wasteofmoney", "wasteoftime"
+        "wasteofmoney", "wasteoftime", "puncture", "punctured", "flattyre", "flattire",
+        "parkingticket", "peakmonday", "mondayblues", "powercut", "powercuts", "breakout",
+        "breakouts", "pimple", "pimples", "acne", "forgot", "forgotten", "lostthematch",
+        "lostthegame", "lostthefinal", "lostthefinals", "lostthetrophy", "lostbyone",
+        "breakingout", "breakingoutagain"
       ],
       "weak": [
         "bad", "poor", "mistake", "fail", "failed", "waste", "wasted", "raw", "spilled",
-        "broken", "wrong", "regret", "terrible", "awful"
+        "broken", "wrong", "regret", "terrible", "awful", "forgot", "forgotten"
       ]
     }
   },

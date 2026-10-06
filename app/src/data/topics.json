@@ -80,7 +80,10 @@
       "group": "weather & time",
       "defaultFeeling": "content",
       "accents": ["#FFC857", "#FF9B7A", "#7EC8E3"],
-      "keywords": ["morning", "sunrise", "dawn", "alarm", "woke", "wakeup", "earlybird", "daybreak", "fresh"],
+      "keywords": [
+        "morning", "sunrise", "dawn", "alarm", "woke", "wakeup", "earlybird", "daybreak",
+        "fresh"
+      ],
       "weak": ["fresh", "alarm", "woke"]
     },
     "evening": {
@@ -201,9 +204,15 @@
         "planning", "planner", "goals", "goal", "dues", "workload", "overtime", "workday",
         "workplace", "coworker", "coworkers", "naukri", "duty", "job", "jobs", "joboffer",
         "offerletter", "hired", "hiring", "resume", "appraisal", "bug", "bugs", "deploy",
-        "deployed", "commit", "github", "server"
+        "deployed", "commit", "github", "server", "offer", "offers"
       ],
-      "hints": { "interview": "anxious", "presentation": "anxious" },
+      "hints": {
+        "interview": "anxious",
+        "presentation": "anxious",
+        "hired": "proud",
+        "offerletter": "proud",
+        "offer": "proud"
+      },
       "weak": ["project", "desk", "report", "tasks", "planner", "goals", "goal", "planning"]
     },
     "money": {
@@ -239,7 +248,7 @@
         "furniture", "decorate", "rearranged", "ghar", "apartment", "flat", "landlord", "sofa",
         "rug", "bookshop", "athome", "stayedhome", "homealone", "roof", "shelter", "shifting"
       ],
-      "weak": ["room", "window", "bed", "couch", "sofa", "rug"]
+      "weak": ["room", "window", "bed", "couch", "sofa", "rug", "flat"]
     },
     "chores": {
       "label": "Chores",
@@ -342,7 +351,8 @@
         "wicket", "score", "scored", "kabaddi", "carrom", "chess", "khela", "khelte",
         "matchday", "finals"
       ],
-      "weak": ["team", "score", "scored", "match"]
+      "weak": ["team", "score", "scored", "match"],
+      "hints": { "scored": "proud" }
     },
     "gaming": {
       "label": "Gaming",
@@ -476,7 +486,8 @@
         "travel", "trip", "vacation", "holiday", "backpack", "itinerary", "abroad", "passport",
         "hotel", "tourist", "sightseeing", "explore", "wander", "journey", "souvenir", "visa",
         "roadtrip", "getaway", "homestay", "ghumna", "ghumne", "ghurte", "bhromon", "bedate"
-      ]
+      ],
+      "hints": { "visa": "anxious" }
     },
     "transport": {
       "label": "Commute & transport",
@@ -528,7 +539,7 @@
         "bhaat", "bhat", "daal", "torkari", "jhol", "mangsho", "chingri", "khichuri",
         "shorshe", "bhaja", "begun", "paneer", "roti", "chapati", "sabzi", "rajma", "chole",
         "poha", "upma", "uttapam", "vada", "cutlet", "chop", "khana", "khabar", "nashta",
-        "bhojon", "food", "foods", "cuisine", "dish", "brunch"
+        "bhojon", "food", "foods", "cuisine", "dish", "brunch", "mango", "mangoes"
       ]
     },
     "cooking": {
@@ -539,7 +550,7 @@
       "keywords": [
         "cook", "cooked", "cooking", "recipe", "bake", "baked", "chef", "stirred", "fry",
         "fried", "boil", "curry", "dough", "oven", "grill", "barbecue", "masala", "kneading",
-        "simmer", "marinate"
+        "simmer", "marinate", "smokealarm"
       ]
     },
     "streetfood": {

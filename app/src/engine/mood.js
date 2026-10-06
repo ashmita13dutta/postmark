@@ -61,6 +61,57 @@ const CANT = new Set(['cant', 'couldnt', 'cannot'])
 const CANT_PLAIN = new Set(['could', 'can'])
 const COUNTERFACTUAL = new Set(['would', 'could', 'should'])
 const STOP_WORDS = new Set(['stop', 'help'])
+// "almost cried", "nearly gave up": it did not quite happen, so the feeling word is ignored
+const ALMOST = new Set(['almost', 'nearly'])
+// "missed the bus" is not "missed you": after 'missed' these words mean something that was not caught
+const MISSED_THINGS = new Set([
+  'the',
+  'a',
+  'an',
+  'two',
+  'three',
+  'four',
+  'last',
+  'class',
+  'classes',
+  'call',
+  'calls',
+  'bus',
+  'train',
+  'metro',
+  'flight',
+  'deadline',
+  'exam',
+  'meeting',
+  'lecture',
+  'lunch',
+  'dinner',
+  'breakfast',
+  'turn',
+  'another',
+  'both',
+  'my',
+  'our',
+])
+const MISSED_OBJECTS = new Set([
+  'bus',
+  'train',
+  'metro',
+  'flight',
+  'class',
+  'call',
+  'calls',
+  'deadline',
+  'exam',
+  'lecture',
+  'lunch',
+  'dinner',
+  'breakfast',
+  'meeting',
+  'turn',
+  'classes',
+  'alarm',
+])
 // Negators that follow the word they negate (Hindi/Bengali word order)
 const POSTPOSED_NEGATORS = new Set(['nahi', 'nahin', 'nhi', 'nai', 'nei'])
 const INTENSIFIERS = new Set([
@@ -428,6 +479,27 @@ function findHits(text, lexicon) {
     }
     if (!owner) owner = lookup(tokens[i].word) ?? typoOwner(tokens[i].word)
     if (!owner) continue
+
+    // "almost cried" did not happen, so it says nothing
+    if (
+      owner.kind === 'feeling' &&
+      i > 0 &&
+      sameSentence(i, i - 1) &&
+      ALMOST.has(tokens[i - 1].word)
+    ) {
+      i += span - 1
+      continue
+    }
+    // "missed the bus" says nothing about feeling lonely
+    if (
+      owner.kind === 'feeling' &&
+      tokens[i].word === 'missed' &&
+      MISSED_THINGS.has(tokens[i + 1]?.word) &&
+      (!['my', 'our'].includes(tokens[i + 1].word) || MISSED_OBJECTS.has(tokens[i + 2]?.word))
+    ) {
+      i += span - 1
+      continue
+    }
 
     // Feelings care about the shape of the note: later counts more, "but" outweighs what came
     // before, "so happy" outweighs "happy". Topics are just "what was mentioned", so they don't.
