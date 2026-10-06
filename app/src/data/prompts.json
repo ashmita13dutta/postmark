@@ -1,0 +1,15 @@
+{
+  "about": "Gentle prompts shown in the empty writing box on the Today screen. One is picked per day. Edit freely: any text in double quotes, separated by commas.",
+  "prompts": [
+    "What happened today?",
+    "What did today smell like?",
+    "Who made you laugh?",
+    "What would you want to remember?",
+    "What was the best small thing today?",
+    "What did you eat, and was it good?",
+    "Who did you think about today?",
+    "What song kept playing in your head?",
+    "What are you tired of, or proud of?",
+    "Describe today in three words, then keep going."
+  ]
+}

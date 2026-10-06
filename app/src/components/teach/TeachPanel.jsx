@@ -25,8 +25,11 @@ const GROUPS = Object.entries(topics).reduce((acc, [id, t]) => {
  *  - mood:      what detectMood read from it (to mark the current guess)
  *  - lexicon:   Map of words already taught (buildLexicon), so they are shown as known
  *  - onSave:    async (entries) => saved entries; the parent stores them
+ *  - preset:    optional { kind, target } to start with (the Today screen passes the feeling you
+ *               just chose, so you only have to tap the words)
+ *  - label:     optional text for the button that opens the panel
  */
-export default function TeachPanel({ text, mood, lexicon, onSave }) {
+export default function TeachPanel({ text, mood, lexicon, onSave, preset, label }) {
   const [open, setOpen] = useState(false)
   const [kind, setKind] = useState('feeling')
   const [target, setTarget] = useState(null)
@@ -50,7 +53,8 @@ export default function TeachPanel({ text, mood, lexicon, onSave }) {
   function begin() {
     setOpen(true)
     setMessage(null)
-    setTarget(null)
+    setKind(preset?.kind ?? 'feeling')
+    setTarget(preset?.target ?? null)
     setSelected(new Set())
   }
 
@@ -84,7 +88,7 @@ export default function TeachPanel({ text, mood, lexicon, onSave }) {
     return (
       <div className="teach">
         <button className="teach__open" onClick={begin} disabled={!text.trim()}>
-          This felt different
+          {label ?? 'This felt different'}
         </button>
         {message && (
           <p className={message.ok ? 'teach__msg' : 'teach__msg teach__msg--err'} role="status">
