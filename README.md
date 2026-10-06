@@ -1,5 +1,7 @@
 ﻿# Postmark
 
+<img src="app/public/icon-512.png" width="120" alt="Postmark app icon" />
+
 A journaling app where every day becomes a postage stamp. Offline-first, zero-cost PWA. Being built from scratch.
 
 ## Folder map
@@ -13,3 +15,19 @@ A journaling app where every day becomes a postage stamp. Offline-first, zero-co
 
 Stack follows the spec, except plain JavaScript instead of TypeScript.
 Try time travel: `http://localhost:5173/?now=2026-10-01T09:00`.
+
+## Install on your phone
+
+Open https://ashmita13dutta.github.io/postmark/ in Safari (iPhone) or Chrome (Android), then Share, Add to Home Screen. It works offline after the first visit.
+
+## Useful commands (run inside `app/`)
+
+| Command | What it does |
+|---|---|
+| `npm run dev` | Start the app locally |
+| `npm test` | Run all tests |
+| `npm run lint` | Check the code |
+| `npm run evaluate` | Measure mood-engine accuracy on the test corpus |
+| `npm run assets` | Redraw the app icon, launch screens and share card |
+
+Licenses for every font, emoji set and image: `app/ASSETS.md`.

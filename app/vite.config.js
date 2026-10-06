@@ -22,6 +22,18 @@ export default defineConfig({
         orientation: 'portrait',
         start_url: base,
         scope: base,
+        shortcuts: [
+          {
+            name: 'Calendar',
+            url: `${base}#/calendar`,
+            icons: [{ src: 'icon-192.png', sizes: '192x192' }],
+          },
+          {
+            name: 'Mailbox',
+            url: `${base}#/mailbox`,
+            icons: [{ src: 'icon-192.png', sizes: '192x192' }],
+          },
+        ],
         categories: ['lifestyle', 'productivity'],
         icons: [
           { src: 'icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
