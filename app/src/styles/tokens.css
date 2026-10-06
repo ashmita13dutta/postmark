@@ -30,11 +30,11 @@
   --c-red-deep: #8a2e1e;
 
   /* type */
-  --font-display: 'DM Serif Display', Georgia, serif;
-  --font-ui: 'DM Sans', -apple-system, system-ui, sans-serif;
-  --font-hand: 'Kalam', 'Caveat', cursive; /* postcard notes */
-  --font-hand-alt: 'Caveat', cursive;
-  --font-mono: 'JetBrains Mono', ui-monospace, monospace; /* tiny caps labels */
+  --font-display: 'Noto Color Emoji', 'DM Serif Display', Georgia, serif;
+  --font-ui: 'Noto Color Emoji', 'DM Sans', -apple-system, system-ui, sans-serif;
+  --font-hand: 'Noto Color Emoji', 'Kalam', 'Caveat', cursive; /* postcard notes */
+  --font-hand-alt: 'Noto Color Emoji', 'Caveat', cursive;
+  --font-mono: 'Noto Color Emoji', 'JetBrains Mono', ui-monospace, monospace; /* tiny caps labels */
 
   /* shape */
   --r-sm: 6px;

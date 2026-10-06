@@ -38,7 +38,15 @@ export default defineConfig({
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,woff2,json}'],
         // launch screens and the share card are only fetched by the phone / link previewers, no need offline
-        globIgnores: ['splash/**', 'og-card.png', 'icon-1024.png'],
+        globIgnores: ['splash/**', '**/noto-color-emoji-*', 'og-card.png', 'icon-1024.png'],
+        // emoji font chunks are big (up to ~1 MB each), so cache each one the first time it is shown
+        runtimeCaching: [
+          {
+            urlPattern: /noto-color-emoji-.*\.woff2$/,
+            handler: 'CacheFirst',
+            options: { cacheName: 'emoji-font', expiration: { maxEntries: 20 } },
+          },
+        ],
       },
     }),
   ],

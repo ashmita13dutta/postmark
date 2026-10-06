@@ -21,6 +21,7 @@
     "@fontsource/dm-serif-display": "^5.3.0",
     "@fontsource/jetbrains-mono": "^5.3.0",
     "@fontsource/kalam": "^5.3.0",
+    "@fontsource/noto-color-emoji": "^5.3.2",
     "@use-gesture/react": "^10.3.1",
     "dexie": "^4.4.6",
     "dexie-react-hooks": "^4.4.0",
