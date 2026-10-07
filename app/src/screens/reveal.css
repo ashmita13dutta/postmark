@@ -5,22 +5,33 @@
   justify-content: center;
   padding: 36px 0 24px;
   cursor: pointer;
-  overflow: hidden;
 }
 .reveal__drop {
   position: relative;
   z-index: 1;
 }
 
-.reveal__postmark-wrap {
+.reveal__print {
   position: absolute;
   z-index: 2;
   top: 58px;
   left: calc(50% + 28px);
   width: 112px;
-  color: var(--postmark-faded);
+  height: 112px;
   pointer-events: none;
+}
+.reveal__postmark-wrap {
+  position: absolute;
+  inset: 0;
+  color: var(--postmark-faded);
   mix-blend-mode: multiply;
+}
+.reveal__splatter i {
+  position: absolute;
+  top: 56px;
+  left: 56px;
+  border-radius: 50%;
+  background: var(--postmark-faded);
 }
 .reveal__postmark {
   display: block;

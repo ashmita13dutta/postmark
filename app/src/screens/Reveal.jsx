@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import Screen from '../app/Screen'
 import Stamp from '../components/stamp/Stamp'
+import Stamper from '../components/stamper/Stamper'
 import { queries } from '../db/queries'
 import { now } from '../lib/clock'
 import { daysUntil, parseDay, todayKey } from '../lib/dates'
@@ -14,7 +15,18 @@ const SPRING = { type: 'spring', stiffness: 260, damping: 20 }
 const MAX_CONFETTI = 12 // spec 8.3: never more than 15
 
 // When each beat of the ~3s reveal starts, in seconds (spec 8.3).
-const AT = { stamp: 0.3, bands: 0.6, postmark: 1.0, ambient: 1.5, five: 2.0, buttons: 2.5 }
+// The stamper starts at `stamper`, presses at 1.0 and holds until `postmark`, when it lifts and
+// the print is revealed underneath.
+const AT = {
+  stamp: 0.3,
+  bands: 0.6,
+  stamper: 0.4,
+  postmark: 1.15,
+  ambient: 1.6,
+  five: 2.1,
+  buttons: 2.6,
+}
+const STAMPER_SECONDS = 1.0
 
 const SOURCE_TAG = {
   moment: '✦ from your words',
@@ -27,40 +39,87 @@ function shortDate(day) {
   return new Date(y, m - 1, d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
 }
 
-/** The postmark: two rings with the date running round the top. */
-function Postmark({ day }) {
+/** The postmark: outer ring, POSTMARK over the top, the city (or stars) under, and a date box. */
+function Postmark({ day, city }) {
   const { y, m, d } = parseDay(day)
-  const date = new Date(y, m - 1, d)
-    .toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+  const when = new Date(y, m - 1, d)
+  const dayMonth = when
+    .toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
     .toUpperCase()
   return (
     <svg
       className="reveal__postmark"
-      viewBox="0 0 100 100"
+      viewBox="0 0 120 120"
       role="img"
-      aria-label={`Postmarked ${date}`}
+      aria-label={`Postmarked ${dayMonth} ${y}`}
     >
       <defs>
-        <path id="pm-arc" d="M 50 50 m -33 0 a 33 33 0 1 1 66 0 a 33 33 0 1 1 -66 0" />
+        <path id="pm-top" d="M27 60 a33 33 0 0 1 66 0" />
+        <path id="pm-bottom" d="M27 62 a33 33 0 0 0 66 0" />
       </defs>
-      <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" strokeWidth="2.2" />
-      <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="1" />
-      <text fontSize="9.5" letterSpacing="1.6" fill="currentColor" fontFamily="var(--font-mono)">
-        <textPath href="#pm-arc" startOffset="2%">
-          POSTMARK · {date} ·
-        </textPath>
-      </text>
+      <g fill="none" stroke="currentColor">
+        <circle cx="60" cy="60" r="46" strokeWidth="2.2" />
+        <circle cx="60" cy="60" r="26" strokeWidth="1" />
+        <path d="M38 60h44" strokeWidth="1" />
+      </g>
+      <g fill="currentColor" fontFamily="var(--font-mono)" fontSize="8.5" letterSpacing="2">
+        <text textAnchor="middle">
+          <textPath href="#pm-top" startOffset="50%">
+            POSTMARK
+          </textPath>
+        </text>
+        <text textAnchor="middle">
+          <textPath href="#pm-bottom" startOffset="50%">
+            {city ? city.toUpperCase() : '✦ ✦ ✦'}
+          </textPath>
+        </text>
+      </g>
       <text
-        x="50"
-        y="55"
+        x="60"
+        y="56"
         textAnchor="middle"
-        fontSize="15"
+        fontSize="12"
         fill="currentColor"
         fontFamily="var(--font-display)"
       >
-        ✦
+        {dayMonth}
+      </text>
+      <text
+        x="60"
+        y="72"
+        textAnchor="middle"
+        fontSize="10"
+        fill="currentColor"
+        fontFamily="var(--font-mono)"
+      >
+        {y}
       </text>
     </svg>
+  )
+}
+
+/** A few specks of ink flicked out around the print when the stamper lifts. */
+function Splatter({ day, instant }) {
+  const dots = useMemo(() => {
+    const rnd = seededRng(`splat:${day}`)
+    return Array.from({ length: 9 }, () => {
+      const a = rnd() * Math.PI * 2
+      const r = 58 + rnd() * 16
+      return { x: Math.cos(a) * r, y: Math.sin(a) * r, s: 2 + rnd() * 3.5 }
+    })
+  }, [day])
+  return (
+    <div className="reveal__splatter" aria-hidden="true">
+      {dots.map((p, i) => (
+        <motion.i
+          key={i}
+          style={{ width: p.s, height: p.s, x: p.x, y: p.y }}
+          initial={instant ? false : { scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 0.7 }}
+          transition={{ ...SPRING, delay: AT.postmark + i * 0.01 }}
+        />
+      ))}
+    </div>
   )
 }
 
@@ -139,18 +198,22 @@ export default function Reveal() {
           />
         </motion.div>
 
-        <motion.div
-          className="reveal__postmark-wrap"
-          initial={instant ? false : { scale: 1.7, opacity: 0, rotate: -24 }}
-          animate={{ scale: [1.7, 0.92, 1], opacity: 1, rotate: -12 }}
-          transition={
-            instant
-              ? { duration: 0 }
-              : { duration: 0.45, times: [0, 0.6, 1], ease: 'easeOut', delay: AT.postmark }
-          }
-        >
-          <Postmark day={day} />
-        </motion.div>
+        <div className="reveal__print">
+          <motion.div
+            className="reveal__postmark-wrap"
+            initial={instant ? false : { scale: 0.94, opacity: 0, rotate: -12 }}
+            animate={{ scale: [0.94, 1.04, 1], opacity: 1, rotate: -12 }}
+            transition={
+              instant
+                ? { duration: 0 }
+                : { duration: 0.35, times: [0, 0.5, 1], ease: 'easeOut', delay: AT.postmark }
+            }
+          >
+            <Postmark day={day} city={moment.city} />
+          </motion.div>
+          <Splatter day={day} instant={instant} />
+          {!instant && <Stamper delay={AT.stamper} duration={STAMPER_SECONDS} />}
+        </div>
 
         <Confetti colors={colors} day={day} instant={instant} />
         {!reducedMotion && (
@@ -160,7 +223,16 @@ export default function Reveal() {
             <i>✦</i>
           </div>
         )}
-        {!instant && <p className="reveal__skip">Tap to skip</p>}
+        {!instant && (
+          <motion.p
+            className="reveal__skip"
+            initial={{ opacity: 1 }}
+            animate={{ opacity: 0 }}
+            transition={{ duration: 0.4, delay: AT.buttons }}
+          >
+            Tap to skip
+          </motion.p>
+        )}
       </div>
 
       <motion.section className="reveal__five" {...rise(t(AT.five))} aria-label="Today's five">
