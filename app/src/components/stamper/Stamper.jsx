@@ -15,8 +15,11 @@ import './stamper.css'
  */
 export const STAMPER_TIMES = { press: 0.6, lift: 0.75 }
 
-// the face centre in the SVG's own pixels (viewBox starts at x -6, y -135)
-const ORIGIN = '62px 191px'
+// Drawn at 124x247 in its own units, shown at SIZE of that so the whole stamper (knob included)
+// fits on a phone screen at the moment it presses.
+const SIZE = 0.8
+// the face centre in the SVG's own units (the viewBox starts at x -6, y -135)
+const FACE = { x: 62, y: 191 }
 
 export default function Stamper({ delay = 0.4, duration = 1 }) {
   const times = [0, 0.4, STAMPER_TIMES.press, STAMPER_TIMES.lift, 1]
@@ -33,9 +36,13 @@ export default function Stamper({ delay = 0.4, duration = 1 }) {
       <motion.svg
         className="stamper__body"
         viewBox="-6 -135 124 247"
-        width="124"
-        height="247"
-        style={{ transformOrigin: ORIGIN }}
+        width={124 * SIZE}
+        height={247 * SIZE}
+        style={{
+          left: -6 * SIZE,
+          top: -135 * SIZE,
+          transformOrigin: `${FACE.x * SIZE}px ${FACE.y * SIZE}px`,
+        }}
         initial={{ opacity: 0, x: 70, y: -110, rotate: -30, scale: 1.1 }}
         animate={{
           opacity: [0, 1, 1, 1, 0],

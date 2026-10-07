@@ -7,14 +7,12 @@
 }
 .stamper__body {
   position: absolute;
-  left: -6px;
-  top: -135px;
   overflow: visible;
   filter: drop-shadow(8px 10px 7px rgba(42, 38, 32, 0.28));
 }
 .stamper__shadow {
   position: absolute;
-  inset: 8px -4px -6px 4px;
+  inset: 14px 8px 2px 12px;
   border-radius: 50%;
   background: radial-gradient(closest-side, rgba(42, 38, 32, 0.55), rgba(42, 38, 32, 0));
 }
