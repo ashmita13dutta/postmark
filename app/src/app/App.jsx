@@ -3,6 +3,7 @@ import Album from '../screens/Album'
 import Calendar from '../screens/Calendar'
 import Mailbox from '../screens/Mailbox'
 import Palettes from '../screens/Palettes'
+import Reveal from '../screens/Reveal'
 import Today from '../screens/Today'
 import You from '../screens/You'
 import InstallPrompt from './InstallPrompt'
@@ -16,6 +17,7 @@ export default function App() {
     <HashRouter>
       <Routes>
         <Route path="/" element={<Today />} />
+        <Route path="/reveal" element={<Reveal />} />
         <Route path="/calendar" element={<Calendar />} />
         <Route path="/mailbox" element={<Mailbox />} />
         <Route path="/album" element={<Album />} />

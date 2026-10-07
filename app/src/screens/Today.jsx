@@ -1,5 +1,6 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Screen from '../app/Screen'
 import Stamp from '../components/stamp/Stamp'
 import TeachPanel from '../components/teach/TeachPanel'
@@ -61,6 +62,7 @@ function Editor({ day, existing }) {
   const [fixing, setFixing] = useState(false)
   const [status, setStatus] = useState(null)
   const [busy, setBusy] = useState(false)
+  const navigate = useNavigate()
 
   const days = useLiveQuery(async () => (await queries.allMoments()).map((m) => m.day), [], [])
   const nextNo = useLiveQuery(() => queries.nextStampNo(), [existing], 1)
@@ -109,6 +111,7 @@ function Editor({ day, existing }) {
         paletteSource: custom ? 'manual' : 'moment',
       })
       setStatus({ ok: true, text: `Stamped as No. ${m.stampNo}. You can still change it today.` })
+      navigate('/reveal')
     } catch (err) {
       setStatus({ ok: false, text: err.message })
     } finally {
