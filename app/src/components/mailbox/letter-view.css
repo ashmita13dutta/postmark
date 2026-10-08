@@ -1,0 +1,80 @@
+.letter {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  overflow-y: auto;
+  background: var(--paper);
+}
+.letter__inner {
+  max-width: 480px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding: calc(var(--safe-top) + 24px) max(22px, var(--safe-right)) calc(var(--safe-bottom) + 28px)
+    max(22px, var(--safe-left));
+}
+.letter__slip {
+  margin-bottom: 18px;
+  padding: 12px 16px;
+  border: 1px dashed var(--ink-15);
+  border-radius: 4px;
+  background: #f6f1e3;
+  transform: rotate(-1deg);
+}
+.letter__slip p {
+  margin: 6px 0 0;
+  font: 400 13px/1.45 var(--font-hand-alt);
+  font-size: 16px;
+  color: var(--ink-60);
+}
+.letter__pair {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+.letter__pair figure {
+  margin: 0;
+  text-align: center;
+}
+.letter__pair figcaption {
+  margin-top: 6px;
+  font: 500 10px var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-60);
+}
+.letter__arrow {
+  align-self: center;
+  font: 400 22px var(--font-ui);
+  color: var(--ink-45);
+}
+.letter__blank {
+  display: block;
+  width: 64px;
+  aspect-ratio: 5 / 6;
+  border: 1.5px dashed var(--ink-15);
+  border-radius: 3px;
+}
+.letter__actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 22px;
+}
+.letter__flip,
+.letter__close {
+  flex: 1;
+  min-height: 52px;
+  border-radius: var(--r-pill);
+  font: 500 15px var(--font-ui);
+}
+.letter__flip {
+  border: 1px solid var(--ink-15);
+  background: transparent;
+  color: var(--ink);
+}
+.letter__close {
+  border: 0;
+  background: var(--postmark);
+  color: var(--card-warm);
+}

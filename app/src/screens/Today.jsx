@@ -1,6 +1,6 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useMemo, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Screen from '../app/Screen'
 import WaxSeal from '../components/postcard/WaxSeal'
 import Stamp from '../components/stamp/Stamp'
@@ -15,6 +15,7 @@ import { setSwatch } from '../engine/palette'
 import { readNote } from '../engine/readNote'
 import { now } from '../lib/clock'
 import { dayOfYear, parseDay, todayKey } from '../lib/dates'
+import { yearAgoLetter } from '../lib/mailbox'
 import { currentStreak } from '../lib/streak'
 import './today.css'
 
@@ -31,6 +32,16 @@ function greeting(hour) {
   if (hour < 17) return 'Good afternoon'
   if (hour < 21) return 'Good evening'
   return 'Good night'
+}
+
+// "8 Oct 2025": a day with its year, for postcards from a past year
+function longAgo(day) {
+  const { y, m, d } = parseDay(day)
+  return new Date(y, m - 1, d).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  })
 }
 
 function dateLine(day) {
@@ -67,6 +78,12 @@ function Editor({ day, existing }) {
 
   const days = useLiveQuery(async () => (await queries.allMoments()).map((m) => m.day), [], [])
   const nextNo = useLiveQuery(() => queries.nextStampNo(), [existing], 1)
+  // a postcard from exactly a year ago, once it has been delivered (spec 6.4)
+  const yearAgo = useLiveQuery(
+    async () => yearAgoLetter(await queries.deliveredMoments(now()), day) ?? null,
+    [day],
+    null,
+  )
   const lexiconRows = useLiveQuery(() => queries.getLexicon(), [], [])
   const lexicon = useMemo(() => buildLexicon(lexiconRows), [lexiconRows])
 
@@ -130,6 +147,12 @@ function Editor({ day, existing }) {
       <p className="today__streak">
         {streak > 0 ? `${streak}-day streak. Keep it going.` : 'Stamp today to start a streak.'}
       </p>
+      {yearAgo && (
+        <Link className="today__letter" to="/mailbox">
+          A letter from past you arrived
+          <small>From {longAgo(yearAgo.day)}</small>
+        </Link>
+      )}
 
       {sealed ? (
         // a sealed note is simply not shown until it is delivered (spec 6.2)

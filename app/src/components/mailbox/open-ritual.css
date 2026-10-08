@@ -1,0 +1,93 @@
+.ritual {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--paper);
+}
+.ritual__stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  perspective: 900px;
+}
+.ritual__env {
+  position: relative;
+  display: block;
+  width: 270px;
+  height: 190px;
+  padding: 0;
+  border: 0;
+  background: none;
+  filter: drop-shadow(0 8px 10px rgba(42, 38, 32, 0.25));
+}
+.ritual__env > * {
+  position: absolute;
+}
+.ritual__back {
+  inset: 0;
+  z-index: 0;
+}
+.ritual__card {
+  left: 26px;
+  right: 26px;
+  top: -78px;
+  height: 150px;
+  z-index: 1;
+  border-radius: 6px;
+  background: var(--card-warm);
+  box-shadow: 0 1px 3px rgba(42, 38, 32, 0.3);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 17px,
+    rgba(83, 74, 183, 0.14) 17px,
+    rgba(83, 74, 183, 0.14) 18px
+  );
+}
+.ritual__front {
+  inset: 0;
+  z-index: 2;
+}
+.ritual__flap {
+  left: 0;
+  top: 0;
+  z-index: 3;
+  transform-origin: 50% 0;
+}
+.ritual__wax {
+  left: 103px;
+  top: 93px;
+  width: 64px;
+  height: 64px;
+  z-index: 4;
+}
+.ritual__half {
+  position: absolute;
+  inset: 0;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.3));
+}
+.ritual__half--l {
+  clip-path: inset(0 50% 0 0);
+}
+.ritual__half--r {
+  clip-path: inset(0 0 0 50%);
+}
+.ritual__hint {
+  margin: 56px 0 0;
+  font: 500 11px var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-60);
+}
+.ritual__later {
+  margin-top: 6px;
+  min-height: 44px;
+  padding: 0 20px;
+  border: 0;
+  background: none;
+  font: 400 14px var(--font-ui);
+  color: var(--ink-60);
+}

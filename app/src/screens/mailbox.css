@@ -1,0 +1,135 @@
+.mb__special {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.mb__card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--ink-12);
+  border-radius: 14px;
+  background: var(--card-warm);
+  text-align: left;
+  color: var(--ink);
+  font: inherit;
+}
+.mb__card strong {
+  display: block;
+  font: 500 15px var(--font-ui);
+}
+.mb__card small {
+  display: block;
+  margin-top: 2px;
+  font: 400 12px var(--font-ui);
+  color: var(--ink-60);
+}
+
+.mb__batch,
+.mb__quiet {
+  margin-top: 22px;
+}
+.mb__batch h2,
+.mb__quiet h2 {
+  margin: 0;
+  font: 400 22px/1.15 var(--font-display);
+}
+.mb__count {
+  margin: 6px 0 10px;
+  font: 400 13px var(--font-ui);
+  color: var(--ink-60);
+}
+.mb__bar {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--ink-08);
+  overflow: hidden;
+}
+.mb__bar i {
+  display: block;
+  height: 100%;
+  border-radius: 3px;
+  background: var(--postmark);
+}
+.mb__sub {
+  margin: 20px 0 10px;
+}
+.mb__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+  gap: 14px 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.mb__grid--opened {
+  grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
+  gap: 12px 6px;
+}
+.mb__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+}
+.mb__item:active {
+  transform: scale(0.95);
+}
+.mb__n {
+  font: 500 10px var(--font-mono);
+  color: var(--ink-60);
+}
+
+.mb__quiet {
+  text-align: center;
+}
+.mb__quiet p {
+  margin: 8px auto 0;
+  max-width: 300px;
+  font: 400 14px/1.45 var(--font-ui);
+  color: var(--ink-60);
+}
+.mb__ghosts {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.mb__next {
+  margin: 22px 0 0;
+  text-align: center;
+  font: 500 11px var(--font-mono);
+  letter-spacing: 0.06em;
+  color: var(--ink-60);
+}
+
+.mb__older {
+  margin-top: 28px;
+}
+.mb__month {
+  border-top: 1px solid var(--ink-08);
+  padding: 4px 0 12px;
+}
+.mb__month summary {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  min-height: 48px;
+  align-items: center;
+  font: 400 17px var(--font-display);
+  cursor: pointer;
+}
+.mb__month summary small {
+  font: 400 12px var(--font-ui);
+  color: var(--ink-60);
+}

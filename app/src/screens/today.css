@@ -197,3 +197,22 @@
   font: 400 14px/1.45 var(--font-ui);
   color: var(--ink-60);
 }
+
+/* the nudge to the Mailbox when a postcard from a year ago has arrived */
+.today__letter {
+  display: block;
+  margin-top: 14px;
+  padding: 12px 16px;
+  border: 1px solid var(--ink-12);
+  border-radius: 14px;
+  background: var(--card-warm);
+  color: var(--ink);
+  text-decoration: none;
+  font: 500 14px var(--font-ui);
+}
+.today__letter small {
+  display: block;
+  margin-top: 2px;
+  font: 400 12px var(--font-ui);
+  color: var(--ink-60);
+}

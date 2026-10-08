@@ -63,19 +63,19 @@ export default function SealSequence({ moment, seal, onDone }) {
           <Stamp colors={moment.palette.map((c) => c.hex)} seed={moment.day} width={54} small />
         </div>
         <svg className="sealseq__front" viewBox="0 0 270 190" width="270" height="190">
-          <path d="M0 190 V70 L135 135 L270 70 V190 Z" fill={KRAFT} />
-          <path d="M0 70 L135 135 L270 70" fill="none" stroke={KRAFT_DARK} strokeWidth="2" />
-          <path d="M0 190 L110 118 M270 190 L160 118" stroke={KRAFT_DARK} strokeWidth="1.5" />
+          <path d="M0 0 L135 125 L270 0 V190 H0 Z" fill={KRAFT} />
+          <path d="M0 0 L135 125 L270 0" fill="none" stroke={KRAFT_DARK} strokeWidth="2" />
+          <path d="M0 190 L100 105 M270 190 L170 105" stroke={KRAFT_DARK} strokeWidth="1.5" />
         </svg>
         <svg
           className="sealseq__flap"
           data-p="flap"
-          viewBox="0 0 270 90"
+          viewBox="0 0 270 130"
           width="270"
-          height="90"
+          height="130"
           style={{ transform: 'rotateX(180deg)' }}
         >
-          <path d="M0 0 H270 L135 82 Z" fill="#cdb98f" stroke={KRAFT_DARK} strokeWidth="2" />
+          <path d="M0 0 H270 L135 125 Z" fill="#cdb98f" stroke={KRAFT_DARK} strokeWidth="2" />
         </svg>
         <div className="sealseq__wax" data-p="wax" style={{ opacity: 0 }}>
           <WaxSeal color={seal.color} emblem={seal.emblem} initial={seal.initial} size={64} />

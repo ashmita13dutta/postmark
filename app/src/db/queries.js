@@ -1,6 +1,7 @@
 import { now } from '../lib/clock'
 import { MAX_DECORATIONS, clampPlacement } from '../lib/decor'
-import { clampDeliveryDay, sealedUntilFor } from '../lib/dates'
+import { clampDeliveryDay, dayKey, sealedUntilFor } from '../lib/dates'
+import { eligibleForDelay, pickDelayed } from '../lib/mailbox'
 import { applyFields, newMoment } from './moments'
 import { db as defaultDb } from './schema'
 
@@ -91,6 +92,23 @@ export function makeQueries(db) {
     return db.moments.where('sealedUntil').belowOrEqual(nowMs).sortBy('day')
   }
 
+  /**
+   * This month's "delayed in transit" postcard, or null. Decided once per month (spec 6.5), the
+   * first time it is asked for, and stored so reopening the Mailbox never re-rolls it.
+   */
+  async function delayedForMonth(monthKey, nowMs = now()) {
+    const row = await db.transaction('rw', db.redeliveries, db.moments, async () => {
+      const found = await db.redeliveries.get(monthKey)
+      if (found) return found
+      const delivered = await deliveredMoments(nowMs)
+      const picked = pickDelayed(monthKey, eligibleForDelay(delivered, dayKey(nowMs)))
+      const next = { monthKey, momentId: picked?.id ?? null }
+      await db.redeliveries.put(next)
+      return next
+    })
+    return row.momentId ? ((await getMoment(row.momentId)) ?? null) : null
+  }
+
   async function nextStampNo() {
     const last = await db.moments.orderBy('stampNo').last()
     return last ? last.stampNo + 1 : 1
@@ -152,6 +170,9 @@ export function makeQueries(db) {
   const decorationsFor = (momentId) => db.decorations.where('momentId').equals(momentId).sortBy('z')
 
   const getSeal = (momentId) => db.seals.get(momentId)
+
+  /** Every wax seal, by postcard id, so a whole month of envelopes can be drawn at once. */
+  const allSeals = async () => new Map((await db.seals.toArray()).map((s) => [s.momentId, s]))
 
   async function editableMoment(momentId) {
     const moment = await getMoment(momentId)
@@ -289,6 +310,8 @@ export function makeQueries(db) {
     markOpened,
     decorationsFor,
     getSeal,
+    allSeals,
+    delayedForMonth,
     addDecoration,
     updateDecoration,
     removeDecoration,

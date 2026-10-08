@@ -1,31 +1,25 @@
-import { motion, useReducedMotion } from 'framer-motion'
+import { useReducedMotion } from 'framer-motion'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useCallback, useEffect, useState } from 'react'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import Screen from '../app/Screen'
 import DecorLayer from '../components/postcard/DecorLayer'
+import PostcardCard, {
+  PostcardBack,
+  PostcardFront,
+  shortDate,
+} from '../components/postcard/PostcardCard'
 import SealPicker from '../components/postcard/SealPicker'
 import SealSequence from '../components/postcard/SealSequence'
 import Tray from '../components/postcard/Tray'
 import WaxSeal from '../components/postcard/WaxSeal'
-import Postmark from '../components/postmark/Postmark'
-import Stamp from '../components/stamp/Stamp'
 import { PostcardFullError, queries } from '../db/queries'
 import { now } from '../lib/clock'
-import { daysUntil, parseDay, todayKey } from '../lib/dates'
+import { daysUntil, todayKey } from '../lib/dates'
 import { dropSpot, dropTilt } from '../lib/decor'
 import './postcard.css'
 
 const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`
-const shortDate = (day) => {
-  const { y, m, d } = parseDay(day)
-  return new Date(y, m - 1, d).toLocaleDateString('en-GB', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  })
-}
-
 /** Today's postcard: flip it over, decorate the back, then seal it with wax and send it off. */
 export default function Postcard() {
   const day = todayKey()
@@ -135,60 +129,40 @@ function Board({ moment, intent }) {
         )
       }
     >
-      <div className="pc__stage" onClick={() => setSelectedId(null)}>
-        <motion.div
-          className="pc__card"
-          initial={false}
-          animate={{ rotateY: showBack ? 180 : 0 }}
-          transition={reduced ? { duration: 0 } : { type: 'spring', stiffness: 120, damping: 17 }}
-        >
-          {/* front: the stamp, with its postmark (and the wax seal once sent) */}
-          <div
-            className="pc__face pc__front"
-            onClick={() => !sealed && setFlipped(true)}
-            role={sealed ? undefined : 'button'}
-            aria-label={sealed ? undefined : 'Flip the postcard over'}
-            aria-hidden={showBack}
-          >
-            <div className="pc__front-stamp">
-              <Stamp
-                colors={palette.map((c) => c.hex)}
-                no={moment.stampNo}
-                seed={moment.day}
-                width={150}
-                label={`Today's stamp: ${palette.map((c) => c.name).join(', ')}`}
+      <div onClick={() => setSelectedId(null)}>
+        <PostcardCard
+          flipped={showBack}
+          onFrontClick={sealed ? undefined : () => setFlipped(true)}
+          front={
+            <PostcardFront moment={moment}>
+              {sealed && seal ? (
+                <div className="pcard__wax">
+                  <WaxSeal
+                    color={seal.color}
+                    emblem={seal.emblem}
+                    initial={seal.initial}
+                    size={62}
+                  />
+                </div>
+              ) : null}
+              <p className="pcard__cap">
+                {sealed ? `Sealed until ${sealedUntil} · ${plural(dueIn, 'day')}` : 'Tap to flip'}
+              </p>
+            </PostcardFront>
+          }
+          back={
+            <PostcardBack moment={moment}>
+              <DecorLayer
+                decorations={decorations}
+                palette={palette}
+                selectedId={selectedId}
+                locked={sealed}
+                onSelect={setSelectedId}
+                onChange={change}
               />
-              <div className="pc__front-mark">
-                <Postmark day={moment.day} city={moment.city} />
-              </div>
-            </div>
-            {sealed && seal ? (
-              <div className="pc__front-wax">
-                <WaxSeal color={seal.color} emblem={seal.emblem} initial={seal.initial} size={62} />
-              </div>
-            ) : null}
-            <p className="pc__front-cap">
-              {sealed ? `Sealed until ${sealedUntil} · ${plural(dueIn, 'day')}` : 'Tap to flip'}
-            </p>
-          </div>
-
-          {/* back: the note, then the stickers on top */}
-          <div className="pc__face pc__back" aria-hidden={!showBack}>
-            <div className="pc__back-head">
-              <span className="lbl">From: {shortDate(moment.day)}</span>
-              <span className="pc__to">to future you</span>
-            </div>
-            <p className="pc__note">{moment.note}</p>
-            <DecorLayer
-              decorations={decorations}
-              palette={palette}
-              selectedId={selectedId}
-              locked={sealed}
-              onSelect={setSelectedId}
-              onChange={change}
-            />
-          </div>
-        </motion.div>
+            </PostcardBack>
+          }
+        />
       </div>
 
       {sealed ? (

@@ -1,0 +1,34 @@
+.env {
+  position: relative;
+  display: block;
+  filter: drop-shadow(0 3px 3px rgba(42, 38, 32, 0.22));
+}
+.env svg {
+  display: block;
+}
+/* the wax sits on the tip of the flap: 50% across, about two thirds down */
+.env__wax {
+  position: absolute;
+  left: 50%;
+  top: 66%;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.3));
+}
+.env--aged {
+  transform: rotate(-2.5deg);
+  filter: sepia(0.35) drop-shadow(0 3px 3px rgba(42, 38, 32, 0.18));
+}
+.env--ghost {
+  filter: none;
+  color: var(--ink-15);
+}
+.env--ghost svg {
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-dasharray: 8 7;
+}
+
+/* a delayed letter has its top-right corner torn off */
+.env--delayed svg {
+  clip-path: polygon(0 0, 81% 0, 87% 7%, 84.5% 13.5%, 91.5% 19%, 100% 16%, 100% 100%, 0 100%);
+}
