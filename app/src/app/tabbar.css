@@ -10,12 +10,12 @@
     max(12px, var(--safe-left));
   border-top: 1px solid var(--ink-08);
   /* solid fallback first, frosted where supported */
-  background: rgba(244, 239, 230, 0.97);
+  background: rgba(239, 233, 220, 0.97);
 }
 
 @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
   .tabbar {
-    background: rgba(244, 239, 230, 0.8);
+    background: rgba(239, 233, 220, 0.8);
     -webkit-backdrop-filter: saturate(1.4) blur(18px);
     backdrop-filter: saturate(1.4) blur(18px);
   }

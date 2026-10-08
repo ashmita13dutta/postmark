@@ -16,7 +16,7 @@ const pub = resolve(root, 'public')
 mkdirSync(resolve(pub, 'splash'), { recursive: true })
 
 const C = {
-  paper: '#F4EFE6',
+  paper: '#EFE9DC',
   card: '#FBF6EA',
   ink: '#2A2620',
   postmark: '#534AB7',

@@ -161,3 +161,97 @@ a:active,
 .tray__handle:active {
   scale: 1;
 }
+
+/* =====================================================================================
+   Second pass: make the iOS feel obvious, while keeping the paper
+   ===================================================================================== */
+
+/* ---- large title (the serif stays; only the size and weight of presence change) ---- */
+.screen h1 {
+  margin-top: 6px;
+  font-size: 34px;
+  line-height: 1.06;
+}
+
+/* ---- the small bar that fades in when the large title scrolls away: frosted, with a hairline ---- */
+.navbar {
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: saturate(1.8) var(--glass-blur);
+  backdrop-filter: saturate(1.8) var(--glass-blur);
+  border-bottom: var(--glass-border);
+}
+
+/* ---- the pinned "Stamp it" strip: a blur that fades out upward, like Apple Music's mini player ---- */
+.today__bar {
+  background: none;
+  isolation: isolate;
+}
+.today__bar::before {
+  content: '';
+  position: absolute;
+  inset: -28px 0 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(to top, var(--paper) 30%, transparent);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  -webkit-mask-image: linear-gradient(to top, #000 60%, transparent);
+  mask-image: linear-gradient(to top, #000 60%, transparent);
+}
+@supports (background: color-mix(in srgb, red 50%, transparent)) {
+  .today__bar::before {
+    background: linear-gradient(
+      to top,
+      color-mix(in srgb, var(--paper) 86%, transparent) 35%,
+      transparent
+    );
+  }
+}
+
+/* ---- rounder surfaces: inset-grouped cards and big sheets ---- */
+.install,
+.sealseq__card,
+.ritual__card,
+.teach--open,
+.mywords,
+.mb__card,
+.today__mood,
+.today__sealed,
+.today__letter,
+.pc__tools,
+.found,
+.topic,
+.mix,
+.swatches,
+.today__note {
+  border-radius: 20px;
+}
+.tray {
+  border-radius: 28px 28px 0 0;
+}
+
+/* iOS "continuous" corners where the browser can draw them (Chrome 139+); elsewhere plain radius */
+@supports (corner-shape: squircle) {
+  .install,
+  .sealseq__card,
+  .ritual__card,
+  .teach--open,
+  .mywords,
+  .mb__card,
+  .today__mood,
+  .today__sealed,
+  .today__letter,
+  .pc__tools,
+  .found,
+  .topic,
+  .mix,
+  .swatches,
+  .today__note {
+    corner-shape: squircle;
+    border-radius: 28px;
+  }
+  .tray {
+    corner-shape: squircle;
+    border-radius: 36px 36px 0 0;
+  }
+}

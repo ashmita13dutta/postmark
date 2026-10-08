@@ -1,3 +1,4 @@
+import { execSync } from 'node:child_process'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
@@ -5,8 +6,23 @@ import { VitePWA } from 'vite-plugin-pwa'
 // BASE_PATH is set by CI for GitHub Pages project sites (e.g. /Postmark/). Cloudflare Pages uses '/'.
 const base = process.env.BASE_PATH || '/'
 
+// short git commit of this build, shown on the You screen so you can tell which version a phone has
+function commit() {
+  try {
+    return execSync('git rev-parse --short HEAD', { stdio: ['ignore', 'pipe', 'ignore'] })
+      .toString()
+      .trim()
+  } catch {
+    return 'dev'
+  }
+}
+
 export default defineConfig({
   base,
+  define: {
+    __APP_COMMIT__: JSON.stringify(commit()),
+    __APP_BUILT__: JSON.stringify(new Date().toISOString()),
+  },
   plugins: [
     react(),
     VitePWA({
@@ -16,8 +32,8 @@ export default defineConfig({
         name: 'Postmark',
         short_name: 'Postmark',
         description: 'Every day becomes a postage stamp.',
-        theme_color: '#F4EFE6',
-        background_color: '#F4EFE6',
+        theme_color: '#EFE9DC',
+        background_color: '#EFE9DC',
         display: 'standalone',
         orientation: 'portrait',
         start_url: base,

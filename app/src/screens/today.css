@@ -155,7 +155,7 @@
   padding: 10px max(22px, var(--safe-right)) 12px max(22px, var(--safe-left));
   max-width: 480px;
   margin: 0 auto;
-  background: linear-gradient(to top, var(--paper) 70%, rgba(244, 239, 230, 0));
+  background: linear-gradient(to top, var(--paper) 70%, rgba(239, 233, 220, 0));
 }
 .today__status {
   margin: 0 0 8px;

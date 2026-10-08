@@ -1,7 +1,7 @@
 /* Design tokens, copied from the Claude Design mockup (design/claude-design-export). */
 :root {
   /* surfaces */
-  --paper: #f4efe6; /* app background */
+  --paper: #efe9dc; /* app background: a touch deeper than the cards so white cards stand out */
   --card: #fbf6ea; /* stamp paper, input boxes */
   --card-warm: #fdf8ec;
   --desk: #e4dac2; /* page behind the phone in the mockup; used for wide screens */
