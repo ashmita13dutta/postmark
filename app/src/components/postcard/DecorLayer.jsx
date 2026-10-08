@@ -57,7 +57,8 @@ function Decoration({ deco, palette, selected, locked, onSelect, onChange }) {
   return (
     <div
       ref={ref}
-      className={`decor${selected ? ' decor--on' : ''}`}
+      className={`decor${selected ? ' decor--on' : ''}${live ? ' decor--lift' : ''}`}
+      data-kind={deco.stickerId.split(':')[0]}
       style={{
         left: `${p.x * 100}%`,
         top: `${p.y * 100}%`,
@@ -88,6 +89,32 @@ export default function DecorLayer({
 }) {
   return (
     <div className="decor-layer" onClick={() => onSelect(null)}>
+      {/* one shared glossy-highlight filter for the die-cut stickers (see styles/hig.css) */}
+      <svg width="0" height="0" aria-hidden="true" style={{ position: 'absolute' }}>
+        <filter id="sticker-gloss" x="-10%" y="-10%" width="120%" height="120%">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur" />
+          <feSpecularLighting
+            in="blur"
+            surfaceScale="3"
+            specularConstant="0.6"
+            specularExponent="20"
+            lightingColor="#fff"
+            result="spec"
+          >
+            <fePointLight x="-40" y="-60" z="120" />
+          </feSpecularLighting>
+          <feComposite in="spec" in2="SourceAlpha" operator="in" result="sheen" />
+          <feComposite
+            in="SourceGraphic"
+            in2="sheen"
+            operator="arithmetic"
+            k1="0"
+            k2="1"
+            k3="0.5"
+            k4="0"
+          />
+        </filter>
+      </svg>
       {decorations.map((d) => (
         <Decoration
           key={d.id}
