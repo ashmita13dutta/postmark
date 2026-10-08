@@ -1,478 +1,102 @@
 {
   "about": "Fresh held-out set 4 (100 notes, written 2026-10-06 after the dev4 tuning round). Run once for an honest score, then fold into the dev sets.",
   "notes": [
-    [
-      "The professor returned my assignment with a big 'excellent' on top. I read it five times.",
-      ["proud", "joyful"],
-      ["school", "exams"]
-    ],
-    [
-      "Dinner at Nani's, she kept adding more luchi to my plate and I did not fight it",
-      ["joyful", "content", "loving"],
-      ["family", "food"]
-    ],
-    [
-      "It's 2am and I'm lying awake replaying everything I said at the party",
-      ["anxious", "sad"],
-      ["night", "party"]
-    ],
-    [
-      "Moved into the new hostel room today, the window faces a mango tree",
-      ["content", "excited", "peaceful", "joyful"],
-      ["home", "school", "nature"]
-    ],
-    [
-      "My phone fell in the bucket and the repair guy says it's gone for good",
-      ["disappointed", "sad", "angry"],
-      ["tech", "chores"]
-    ],
-    [
-      "Gaye holud tonight!! turmeric everywhere, dancing till my feet gave up",
-      ["joyful", "excited"],
-      ["wedding", "festival"]
-    ],
-    [
-      "Woke up with a sore throat and a heavy head, cancelled everything",
-      ["tired", "sad"],
-      "health"
-    ],
-    [
-      "Stood in the rain waiting for an auto for forty minutes and not one stopped",
-      ["angry", "tired", "disappointed"],
-      ["rain", "transport"]
-    ],
-    [
-      "She texted 'miss you' out of nowhere and my whole day lit up",
-      ["joyful", "loving", "excited"],
-      ["dating", "friends", "tech"]
-    ],
-    [
-      "Finished the 10k run!! legs are jelly but I did it",
-      ["proud", "joyful", "excited"],
-      ["fitness", "sports"]
-    ],
-    [
-      "Sat on the terrace with a book till the lights came on in the street",
-      ["peaceful", "content"],
-      ["reading", "evening", "home"]
-    ],
-    [
-      "I don't know what I want to do after college and everyone around me seems to know",
-      ["anxious", "sad"],
-      ["school", "work"]
-    ],
-    [
-      "Baba taught me to change a tyre today and was weirdly proud of me",
-      ["proud", "grateful", "loving", "joyful"],
-      ["family", "transport"]
-    ],
-    [
-      "Picked a fight with my sister over nothing and now I feel awful",
-      ["sad", "disappointed", "anxious"],
-      "family"
-    ],
-    [
-      "Biryani, a cricket match on the telly, no one asking me anything. Perfect Sunday.",
-      ["content", "joyful", "peaceful"],
-      ["food", "sports", "family"]
-    ],
-    [
-      "The sunset from the ghat was so orange it looked fake",
-      ["peaceful", "dreamy", "joyful", "inspired"],
-      ["evening", "nature", "sunny"]
-    ],
-    [
-      "Another 9 hour day staring at excel and I have achieved nothing",
-      ["tired", "bored", "disappointed"],
-      ["work", "tech"]
-    ],
-    [
-      "Today I forgave someone who never said sorry. It felt like putting a bag down.",
-      ["peaceful", "proud", "content"],
-      "*"
-    ],
-    [
-      "Got my first salary. Bought ma a saree before I bought anything for myself.",
-      ["proud", "loving", "joyful", "grateful"],
-      ["money", "shopping", "family", "work"]
-    ],
-    [
-      "Cold coffee on a hot day and a conversation that lasted three hours",
-      ["joyful", "content"],
-      ["drinks", "heat", "friends"]
-    ],
-    [
-      "Everyone's posting their placement news and I'm still waiting",
-      ["anxious", "sad", "disappointed"],
-      ["work", "school", "tech"]
-    ],
-    [
-      "Aaj shokal theke brishti, jhal muri and old Hemanta songs on the radio. Bhalo.",
-      ["content", "peaceful", "nostalgic", "joyful"],
-      ["rain", "streetfood", "music"]
-    ],
-    [
-      "Can't believe the semester is over, I'm going to miss this hostel so much",
-      ["sad", "nostalgic"],
-      ["school", "home"]
-    ],
-    [
-      "Dad's report came back clear. I sat in the corridor and cried from relief.",
-      ["grateful", "content", "peaceful"],
-      ["health", "family"]
-    ],
-    [
-      "The auto driver returned the extra change I had left, restored my faith in people",
-      ["grateful", "joyful", "content"],
-      ["transport", "money"]
-    ],
-    [
-      "Burnt my hand on the pan, spilled the milk, and the cat knocked over the plant",
-      ["disappointed", "angry", "tired"],
-      ["cooking", "pets", "chores"]
-    ],
-    [
-      "Sketched my grandmother's hands while she was knitting. Might be my best one yet.",
-      ["proud", "inspired", "loving", "content"],
-      ["art", "family"]
-    ],
-    [
-      "Everything is due this week and I have started nothing",
-      ["anxious", "tired"],
-      ["school", "exams", "work"]
-    ],
-    [
-      "He held the umbrella over me and got completely soaked himself",
-      ["loving", "grateful", "joyful"],
-      ["dating", "rain"]
-    ],
-    [
-      "Ordered biryani for the whole floor after the viva, we ate like kings",
-      ["joyful", "excited", "proud", "content"],
-      ["food", "exams", "friends"]
-    ],
-    [
-      "Cleaned out my closet and found my school tie. Sat there for an hour.",
-      ["nostalgic", "sad"],
-      ["school", "home", "chores"]
-    ],
-    [
-      "Winter mornings in Kolkata, fog on the lake, the smell of kachuri frying",
-      ["peaceful", "content", "joyful", "nostalgic"],
-      ["winter", "fog", "morning", "streetfood"]
-    ],
+    ["The professor returned my assignment with a big 'excellent' on top. I read it five times.", ["proud", "joyful"], ["school", "exams"]],
+    ["Dinner at Nani's, she kept adding more luchi to my plate and I did not fight it", ["joyful", "content", "loving"], ["family", "food"]],
+    ["It's 2am and I'm lying awake replaying everything I said at the party", ["anxious", "sad"], ["night", "party"]],
+    ["Moved into the new hostel room today, the window faces a mango tree", ["content", "excited", "peaceful", "joyful"], ["home", "school", "nature"]],
+    ["My phone fell in the bucket and the repair guy says it's gone for good", ["disappointed", "sad", "angry"], ["tech", "chores"]],
+    ["Gaye holud tonight!! turmeric everywhere, dancing till my feet gave up", ["joyful", "excited"], ["wedding", "festival"]],
+    ["Woke up with a sore throat and a heavy head, cancelled everything", ["tired", "sad"], "health"],
+    ["Stood in the rain waiting for an auto for forty minutes and not one stopped", ["angry", "tired", "disappointed"], ["rain", "transport"]],
+    ["She texted 'miss you' out of nowhere and my whole day lit up", ["joyful", "loving", "excited"], ["dating", "friends", "tech"]],
+    ["Finished the 10k run!! legs are jelly but I did it", ["proud", "joyful", "excited"], ["fitness", "sports"]],
+    ["Sat on the terrace with a book till the lights came on in the street", ["peaceful", "content"], ["reading", "evening", "home"]],
+    ["I don't know what I want to do after college and everyone around me seems to know", ["anxious", "sad"], ["school", "work"]],
+    ["Baba taught me to change a tyre today and was weirdly proud of me", ["proud", "grateful", "loving", "joyful"], ["family", "transport"]],
+    ["Picked a fight with my sister over nothing and now I feel awful", ["sad", "disappointed", "anxious"], "family"],
+    ["Biryani, a cricket match on the telly, no one asking me anything. Perfect Sunday.", ["content", "joyful", "peaceful"], ["food", "sports", "family"]],
+    ["The sunset from the ghat was so orange it looked fake", ["peaceful", "dreamy", "joyful", "inspired"], ["evening", "nature", "sunny"]],
+    ["Another 9 hour day staring at excel and I have achieved nothing", ["tired", "bored", "disappointed"], ["work", "tech"]],
+    ["Today I forgave someone who never said sorry. It felt like putting a bag down.", ["peaceful", "proud", "content"], "*"],
+    ["Got my first salary. Bought ma a saree before I bought anything for myself.", ["proud", "loving", "joyful", "grateful"], ["money", "shopping", "family", "work"]],
+    ["Cold coffee on a hot day and a conversation that lasted three hours", ["joyful", "content"], ["drinks", "heat", "friends"]],
+    ["Everyone's posting their placement news and I'm still waiting", ["anxious", "sad", "disappointed"], ["work", "school", "tech"]],
+    ["Aaj shokal theke brishti, jhal muri and old Hemanta songs on the radio. Bhalo.", ["content", "peaceful", "nostalgic", "joyful"], ["rain", "streetfood", "music"]],
+    ["Can't believe the semester is over, I'm going to miss this hostel so much", ["sad", "nostalgic"], ["school", "home"]],
+    ["Dad's report came back clear. I sat in the corridor and cried from relief.", ["grateful", "content", "peaceful"], ["health", "family"]],
+    ["The auto driver returned the extra change I had left, restored my faith in people", ["grateful", "joyful", "content"], ["transport", "money"]],
+    ["Burnt my hand on the pan, spilled the milk, and the cat knocked over the plant", ["disappointed", "angry", "tired"], ["cooking", "pets", "chores"]],
+    ["Sketched my grandmother's hands while she was knitting. Might be my best one yet.", ["proud", "inspired", "loving", "content"], ["art", "family"]],
+    ["Everything is due this week and I have started nothing", ["anxious", "tired"], ["school", "exams", "work"]],
+    ["He held the umbrella over me and got completely soaked himself", ["loving", "grateful", "joyful"], ["dating", "rain"]],
+    ["Ordered biryani for the whole floor after the viva, we ate like kings", ["joyful", "excited", "proud", "content"], ["food", "exams", "friends"]],
+    ["Cleaned out my closet and found my school tie. Sat there for an hour.", ["nostalgic", "sad"], ["school", "home", "chores"]],
+    ["Winter mornings in Kolkata, fog on the lake, the smell of kachuri frying", ["peaceful", "content", "joyful", "nostalgic"], ["winter", "fog", "morning", "streetfood"]],
     ["I got dumped by text. A text.", ["sad", "angry", "disappointed"], ["dating", "tech"]],
-    [
-      "Teaching my cousin to code and she built her first little game",
-      ["proud", "joyful", "inspired"],
-      ["family", "learning", "tech", "gaming"]
-    ],
-    [
-      "Two hours of lectures on a Saturday, I'm literally melting",
-      ["tired", "angry", "bored"],
-      ["school", "heat"]
-    ],
-    [
-      "Wore a kurta for the first time in years and got so many compliments",
-      ["joyful", "proud", "content"],
-      ["beauty", "shopping", "festival"]
-    ],
-    [
-      "The flight got delayed by six hours and the airport food is the worst thing I've ever eaten",
-      ["angry", "disappointed", "tired", "bored"],
-      ["travel", "food"]
-    ],
-    [
-      "Skipped class to sit by the river with Anu and we didn't say much. Exactly what I needed.",
-      ["peaceful", "content", "grateful"],
-      ["friends", "nature", "school"]
-    ],
+    ["Teaching my cousin to code and she built her first little game", ["proud", "joyful", "inspired"], ["family", "learning", "tech", "gaming"]],
+    ["Two hours of lectures on a Saturday, I'm literally melting", ["tired", "angry", "bored"], ["school", "heat"]],
+    ["Wore a kurta for the first time in years and got so many compliments", ["joyful", "proud", "content"], ["beauty", "shopping", "festival"]],
+    ["The flight got delayed by six hours and the airport food is the worst thing I've ever eaten", ["angry", "disappointed", "tired", "bored"], ["travel", "food"]],
+    ["Skipped class to sit by the river with Anu and we didn't say much. Exactly what I needed.", ["peaceful", "content", "grateful"], ["friends", "nature", "school"]],
     ["Why do I get so nervous before every single phone call", ["anxious"], ["tech", "*"]],
-    [
-      "Free pizza at the library event and I got the last slice",
-      ["joyful", "content", "excited"],
-      ["food", "school", "friends"]
-    ],
-    [
-      "She got into her dream college and I cried harder than she did",
-      ["proud", "joyful", "grateful"],
-      ["school", "friends", "family"]
-    ],
-    [
-      "Everyone is laughing in the next room and I'm sitting here pretending to study",
-      ["sad", "bored", "tired"],
-      ["school", "exams", "friends"]
-    ],
-    [
-      "Lit the first diya of the season and it felt like all the Diwalis from childhood came back",
-      ["nostalgic", "peaceful", "joyful", "grateful"],
-      "festival"
-    ],
-    [
-      "Plans for the long weekend: absolutely nothing, and I'm thrilled about it",
-      ["content", "joyful", "peaceful"],
-      "*"
-    ],
-    [
-      "They played our song at the cafe and neither of us said anything, just smiled",
-      ["loving", "nostalgic", "joyful", "content"],
-      ["dating", "music", "drinks"]
-    ],
-    [
-      "The new neighbours blast music until 1am and the walls are paper thin",
-      ["angry", "tired", "disappointed"],
-      ["home", "music", "night"]
-    ],
-    [
-      "My little cousin called me didi for the first time and my heart did a flip",
-      ["loving", "joyful", "grateful"],
-      "family"
-    ],
-    [
-      "I have been staring at this form for an hour and I'm still on page one",
-      ["bored", "anxious", "tired", "disappointed"],
-      ["work", "tech", "school"]
-    ],
-    [
-      "Passed my driving test!!! on the first try, can't stop grinning",
-      ["proud", "joyful", "excited"],
-      ["transport", "learning"]
-    ],
-    [
-      "Cried watching a stupid ad about a dog waiting for its owner",
-      ["sad", "loving"],
-      ["pets", "tech", "movies"]
-    ],
-    [
-      "Standing in line for two hours for a ration card and the office just closed",
-      ["angry", "disappointed", "tired"],
-      ["work", "chores"]
-    ],
-    [
-      "Tried Dad's old guitar. Three chords in, my fingers hurt, but I played something!",
-      ["joyful", "proud", "inspired", "excited"],
-      ["music", "family", "learning"]
-    ],
-    [
-      "Just bad news after bad news this week and I'm so tired of being strong",
-      ["sad", "tired", "angry"],
-      "*"
-    ],
-    [
-      "Aaj class bunk karke chai peeni gayi, kuch bhi nahi kiya, mazaa aa gaya",
-      ["joyful", "content"],
-      ["school", "drinks", "friends"]
-    ],
-    [
-      "The cat finally let me pet her after two weeks of glaring",
-      ["joyful", "proud", "loving", "content"],
-      "pets"
-    ],
-    [
-      "Mom cried at the station when I left. I held it together until the train moved.",
-      ["sad", "loving", "nostalgic"],
-      ["family", "transport", "travel"]
-    ],
-    [
-      "Presented my project to the whole class and nobody fell asleep!",
-      ["proud", "joyful", "excited"],
-      ["school", "work"]
-    ],
-    [
-      "Burnt toast, spilled chai, late for class. It's one of those mornings.",
-      ["disappointed", "angry", "tired"],
-      ["morning", "drinks", "school"]
-    ],
-    [
-      "Looked at the stars from the roof till my neck hurt, felt very small in a good way",
-      ["peaceful", "dreamy", "inspired", "grateful"],
-      ["space", "night", "home"]
-    ],
-    [
-      "Bank said my application is rejected for the third time. I give up.",
-      ["sad", "angry", "disappointed"],
-      ["money", "work"]
-    ],
-    [
-      "The mirror said I look nice today and for once I believed it",
-      ["proud", "content", "joyful"],
-      ["beauty", "*"]
-    ],
-    [
-      "Cheated at carrom with my grandfather and he let me win anyway",
-      ["joyful", "loving", "content"],
-      ["family", "gaming"]
-    ],
-    [
-      "Why does every conversation with him end up like this? I'm too tired to fight again.",
-      ["sad", "tired", "angry", "disappointed"],
-      ["dating", "family", "*"]
-    ],
-    [
-      "Woke up to birthday wishes from people I haven't spoken to in years",
-      ["grateful", "joyful", "nostalgic", "loving"],
-      ["birthday", "friends", "tech"]
-    ],
-    [
-      "All my friends have left for the vacation and the hostel is a ghost town",
-      ["sad", "bored", "tired"],
-      ["friends", "school", "travel"]
-    ],
-    [
-      "Stayed up writing poetry and for once I didn't hate any of it",
-      ["inspired", "proud", "content", "peaceful"],
-      ["art", "reading", "night"]
-    ],
-    [
-      "He ordered my favourite without asking. How do you stay mad at someone like that.",
-      ["loving", "joyful", "content"],
-      ["dating", "food"]
-    ],
-    [
-      "My knees hurt after the stairs. Is this what getting old feels like at twenty four?",
-      ["tired", "sad", "bored"],
-      ["health", "fitness"]
-    ],
-    [
-      "Pujo shopping with the girls, bargained like pros and got three kurtis for the price of one",
-      ["joyful", "proud", "excited"],
-      ["shopping", "festival", "friends"]
-    ],
-    [
-      "Rain on the tin roof, a pot of khichuri, and an old Satyajit Ray film. Heaven.",
-      ["content", "peaceful", "joyful", "nostalgic"],
-      ["rain", "food", "movies"]
-    ],
-    [
-      "My team ignored every suggestion I made and then took the credit",
-      ["angry", "disappointed", "sad"],
-      ["work", "school"]
-    ],
-    [
-      "It's been raining for four days and my laundry smells like wet dog",
-      ["disappointed", "bored", "angry", "tired"],
-      ["rain", "chores"]
-    ],
-    [
-      "Waiting for his reply is making me physically ill",
-      ["anxious", "sad"],
-      ["dating", "tech", "*"]
-    ],
-    [
-      "Got an A in organic chemistry. Organic chemistry!!",
-      ["proud", "joyful", "excited"],
-      ["exams", "school"]
-    ],
-    [
-      "Everything smelled like Dida's kitchen at the old market and I just stood there",
-      ["nostalgic", "loving", "sad"],
-      ["family", "food", "city"]
-    ],
-    [
-      "Can't decide between the two job offers and my brain is going in circles",
-      ["anxious", "excited", "tired"],
-      ["work"]
-    ],
-    [
-      "The bus was empty, I got a window seat, and my favourite song came on shuffle",
-      ["joyful", "content", "peaceful"],
-      ["transport", "music"]
-    ],
-    [
-      "Tried skipping rope after ten years. Thirty jumps and I'm dead.",
-      ["tired", "joyful", "proud"],
-      ["fitness", "sports"]
-    ],
-    [
-      "Got scolded by the warden for coming in two minutes late",
-      ["angry", "disappointed", "sad"],
-      ["school", "home"]
-    ],
-    [
-      "Sat with Dadu and listened to the stories I've heard a hundred times, still loved every one",
-      ["loving", "nostalgic", "content", "grateful"],
-      "family"
-    ],
-    [
-      "I'm so done with this stupid group chat drama",
-      ["angry", "tired", "bored"],
-      ["friends", "tech"]
-    ],
-    [
-      "Ran into my school crush at the bookstore. I said hi and then forgot every word of English.",
-      ["excited", "anxious", "joyful", "loving"],
-      ["reading", "school", "dating", "shopping"]
-    ],
-    [
-      "Painted our balcony wall yellow with Riya, we're both covered in paint and laughing",
-      ["joyful", "excited", "proud", "content"],
-      ["home", "art", "friends"]
-    ],
-    [
-      "A sudden power cut and the whole building came out on the roof to see the stars",
-      ["joyful", "peaceful", "dreamy", "content"],
-      ["night", "space", "home"]
-    ],
-    [
-      "Missing my old life so much it physically hurts, all the little routines I took for granted",
-      ["sad", "nostalgic"],
-      ["home", "*"]
-    ],
-    [
-      "Ma sent me a video of the dog waiting at the gate for me. Crying in the library.",
-      ["sad", "loving", "nostalgic", "grateful"],
-      ["pets", "family", "school"]
-    ],
-    [
-      "Nailed the interview, I think. The panel actually laughed at my joke.",
-      ["proud", "excited", "joyful", "content"],
-      ["work"]
-    ],
-    [
-      "Overslept, missed the exam by ten minutes, and the prof refused to let me in",
-      ["angry", "sad", "disappointed", "anxious"],
-      ["exams", "school"]
-    ],
-    [
-      "Late night maggi and a long talk on the stairs, my favourite kind of night",
-      ["joyful", "content", "loving"],
-      ["food", "night", "friends"]
-    ],
-    [
-      "The first cold breeze of the year and I almost cried, I love this season",
-      ["joyful", "peaceful", "nostalgic", "content"],
-      ["winter", "autumn", "wind"]
-    ],
-    [
-      "My laptop crashed an hour before the submission. Not saved. Nothing saved.",
-      ["anxious", "angry", "sad", "disappointed"],
-      ["tech", "school", "work"]
-    ],
-    [
-      "Danced like nobody was watching, actually nobody was watching, bliss",
-      ["joyful", "excited", "peaceful"],
-      ["music", "home"]
-    ],
+    ["Free pizza at the library event and I got the last slice", ["joyful", "content", "excited"], ["food", "school", "friends"]],
+    ["She got into her dream college and I cried harder than she did", ["proud", "joyful", "grateful"], ["school", "friends", "family"]],
+    ["Everyone is laughing in the next room and I'm sitting here pretending to study", ["sad", "bored", "tired"], ["school", "exams", "friends"]],
+    ["Lit the first diya of the season and it felt like all the Diwalis from childhood came back", ["nostalgic", "peaceful", "joyful", "grateful"], "festival"],
+    ["Plans for the long weekend: absolutely nothing, and I'm thrilled about it", ["content", "joyful", "peaceful"], "*"],
+    ["They played our song at the cafe and neither of us said anything, just smiled", ["loving", "nostalgic", "joyful", "content"], ["dating", "music", "drinks"]],
+    ["The new neighbours blast music until 1am and the walls are paper thin", ["angry", "tired", "disappointed"], ["home", "music", "night"]],
+    ["My little cousin called me didi for the first time and my heart did a flip", ["loving", "joyful", "grateful"], "family"],
+    ["I have been staring at this form for an hour and I'm still on page one", ["bored", "anxious", "tired", "disappointed"], ["work", "tech", "school"]],
+    ["Passed my driving test!!! on the first try, can't stop grinning", ["proud", "joyful", "excited"], ["transport", "learning"]],
+    ["Cried watching a stupid ad about a dog waiting for its owner", ["sad", "loving"], ["pets", "tech", "movies"]],
+    ["Standing in line for two hours for a ration card and the office just closed", ["angry", "disappointed", "tired"], ["work", "chores"]],
+    ["Tried Dad's old guitar. Three chords in, my fingers hurt, but I played something!", ["joyful", "proud", "inspired", "excited"], ["music", "family", "learning"]],
+    ["Just bad news after bad news this week and I'm so tired of being strong", ["sad", "tired", "angry"], "*"],
+    ["Aaj class bunk karke chai peeni gayi, kuch bhi nahi kiya, mazaa aa gaya", ["joyful", "content"], ["school", "drinks", "friends"]],
+    ["The cat finally let me pet her after two weeks of glaring", ["joyful", "proud", "loving", "content"], "pets"],
+    ["Mom cried at the station when I left. I held it together until the train moved.", ["sad", "loving", "nostalgic"], ["family", "transport", "travel"]],
+    ["Presented my project to the whole class and nobody fell asleep!", ["proud", "joyful", "excited"], ["school", "work"]],
+    ["Burnt toast, spilled chai, late for class. It's one of those mornings.", ["disappointed", "angry", "tired"], ["morning", "drinks", "school"]],
+    ["Looked at the stars from the roof till my neck hurt, felt very small in a good way", ["peaceful", "dreamy", "inspired", "grateful"], ["space", "night", "home"]],
+    ["Bank said my application is rejected for the third time. I give up.", ["sad", "angry", "disappointed"], ["money", "work"]],
+    ["The mirror said I look nice today and for once I believed it", ["proud", "content", "joyful"], ["beauty", "*"]],
+    ["Cheated at carrom with my grandfather and he let me win anyway", ["joyful", "loving", "content"], ["family", "gaming"]],
+    ["Why does every conversation with him end up like this? I'm too tired to fight again.", ["sad", "tired", "angry", "disappointed"], ["dating", "family", "*"]],
+    ["Woke up to birthday wishes from people I haven't spoken to in years", ["grateful", "joyful", "nostalgic", "loving"], ["birthday", "friends", "tech"]],
+    ["All my friends have left for the vacation and the hostel is a ghost town", ["sad", "bored", "tired"], ["friends", "school", "travel"]],
+    ["Stayed up writing poetry and for once I didn't hate any of it", ["inspired", "proud", "content", "peaceful"], ["art", "reading", "night"]],
+    ["He ordered my favourite without asking. How do you stay mad at someone like that.", ["loving", "joyful", "content"], ["dating", "food"]],
+    ["My knees hurt after the stairs. Is this what getting old feels like at twenty four?", ["tired", "sad", "bored"], ["health", "fitness"]],
+    ["Pujo shopping with the girls, bargained like pros and got three kurtis for the price of one", ["joyful", "proud", "excited"], ["shopping", "festival", "friends"]],
+    ["Rain on the tin roof, a pot of khichuri, and an old Satyajit Ray film. Heaven.", ["content", "peaceful", "joyful", "nostalgic"], ["rain", "food", "movies"]],
+    ["My team ignored every suggestion I made and then took the credit", ["angry", "disappointed", "sad"], ["work", "school"]],
+    ["It's been raining for four days and my laundry smells like wet dog", ["disappointed", "bored", "angry", "tired"], ["rain", "chores"]],
+    ["Waiting for his reply is making me physically ill", ["anxious", "sad"], ["dating", "tech", "*"]],
+    ["Got an A in organic chemistry. Organic chemistry!!", ["proud", "joyful", "excited"], ["exams", "school"]],
+    ["Everything smelled like Dida's kitchen at the old market and I just stood there", ["nostalgic", "loving", "sad"], ["family", "food", "city"]],
+    ["Can't decide between the two job offers and my brain is going in circles", ["anxious", "excited", "tired"], ["work"]],
+    ["The bus was empty, I got a window seat, and my favourite song came on shuffle", ["joyful", "content", "peaceful"], ["transport", "music"]],
+    ["Tried skipping rope after ten years. Thirty jumps and I'm dead.", ["tired", "joyful", "proud"], ["fitness", "sports"]],
+    ["Got scolded by the warden for coming in two minutes late", ["angry", "disappointed", "sad"], ["school", "home"]],
+    ["Sat with Dadu and listened to the stories I've heard a hundred times, still loved every one", ["loving", "nostalgic", "content", "grateful"], "family"],
+    ["I'm so done with this stupid group chat drama", ["angry", "tired", "bored"], ["friends", "tech"]],
+    ["Ran into my school crush at the bookstore. I said hi and then forgot every word of English.", ["excited", "anxious", "joyful", "loving"], ["reading", "school", "dating", "shopping"]],
+    ["Painted our balcony wall yellow with Riya, we're both covered in paint and laughing", ["joyful", "excited", "proud", "content"], ["home", "art", "friends"]],
+    ["A sudden power cut and the whole building came out on the roof to see the stars", ["joyful", "peaceful", "dreamy", "content"], ["night", "space", "home"]],
+    ["Missing my old life so much it physically hurts, all the little routines I took for granted", ["sad", "nostalgic"], ["home", "*"]],
+    ["Ma sent me a video of the dog waiting at the gate for me. Crying in the library.", ["sad", "loving", "nostalgic", "grateful"], ["pets", "family", "school"]],
+    ["Nailed the interview, I think. The panel actually laughed at my joke.", ["proud", "excited", "joyful", "content"], ["work"]],
+    ["Overslept, missed the exam by ten minutes, and the prof refused to let me in", ["angry", "sad", "disappointed", "anxious"], ["exams", "school"]],
+    ["Late night maggi and a long talk on the stairs, my favourite kind of night", ["joyful", "content", "loving"], ["food", "night", "friends"]],
+    ["The first cold breeze of the year and I almost cried, I love this season", ["joyful", "peaceful", "nostalgic", "content"], ["winter", "autumn", "wind"]],
+    ["My laptop crashed an hour before the submission. Not saved. Nothing saved.", ["anxious", "angry", "sad", "disappointed"], ["tech", "school", "work"]],
+    ["Danced like nobody was watching, actually nobody was watching, bliss", ["joyful", "excited", "peaceful"], ["music", "home"]],
     ["Kind of a flat day. Nothing wrong, nothing right.", ["bored", "sad", "content"], "*"],
-    [
-      "Got lost in the lanes of old Delhi and found the best paratha of my life",
-      ["joyful", "excited", "content"],
-      ["travel", "city", "food", "streetfood"]
-    ],
-    [
-      "The neighbour's kid gave me a drawing of the two of us. It's on my fridge now.",
-      ["loving", "joyful", "grateful", "content"],
-      ["art", "home", "family"]
-    ],
-    [
-      "Skipped breakfast, ran for the bus, and then realised it was a holiday",
-      ["disappointed", "angry", "tired", "joyful"],
-      ["morning", "transport", "school"]
-    ],
-    [
-      "Whole family at the same table for the first time in a year, nobody on their phone",
-      ["joyful", "grateful", "content", "loving"],
-      ["family", "food"]
-    ]
+    ["Got lost in the lanes of old Delhi and found the best paratha of my life", ["joyful", "excited", "content"], ["travel", "city", "food", "streetfood"]],
+    ["The neighbour's kid gave me a drawing of the two of us. It's on my fridge now.", ["loving", "joyful", "grateful", "content"], ["art", "home", "family"]],
+    ["Skipped breakfast, ran for the bus, and then realised it was a holiday", ["disappointed", "angry", "tired", "joyful"], ["morning", "transport", "school"]],
+    ["Whole family at the same table for the first time in a year, nobody on their phone", ["joyful", "grateful", "content", "loving"], ["family", "food"]]
   ]
 }
