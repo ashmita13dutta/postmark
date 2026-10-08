@@ -33,11 +33,6 @@
   border-radius: 50%;
   background: var(--postmark-faded);
 }
-.reveal__postmark {
-  display: block;
-  width: 100%;
-}
-
 .reveal__confetti {
   position: absolute;
   inset: 0;
