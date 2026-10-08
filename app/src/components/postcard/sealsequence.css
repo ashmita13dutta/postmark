@@ -1,0 +1,55 @@
+.sealseq {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--paper);
+  perspective: 900px;
+}
+.sealseq__env {
+  position: relative;
+  width: 270px;
+  height: 190px;
+  filter: drop-shadow(0 8px 10px rgba(42, 38, 32, 0.25));
+}
+.sealseq__env > * {
+  position: absolute;
+}
+.sealseq__back,
+.sealseq__front {
+  inset: 0;
+}
+.sealseq__card {
+  left: 26px;
+  right: 26px;
+  top: -78px;
+  height: 150px;
+  box-sizing: border-box;
+  padding: 12px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  border-radius: 6px;
+  background: var(--card-warm);
+  box-shadow: 0 1px 3px rgba(42, 38, 32, 0.3);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 17px,
+    rgba(83, 74, 183, 0.14) 17px,
+    rgba(83, 74, 183, 0.14) 18px
+  );
+}
+.sealseq__flap {
+  left: 0;
+  top: 0;
+  transform-origin: 50% 0;
+  backface-visibility: visible;
+}
+.sealseq__wax {
+  left: 103px;
+  top: 100px;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.3));
+}

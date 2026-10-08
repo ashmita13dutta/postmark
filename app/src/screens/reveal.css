@@ -135,6 +135,30 @@
   font: 500 16px/1.2 var(--font-ui);
   letter-spacing: 0.02em;
 }
+.reveal__secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: 52px;
+  margin-top: 10px;
+  padding: 0 24px;
+  border: 1px solid var(--postmark);
+  border-radius: var(--r-pill);
+  color: var(--postmark);
+  text-decoration: none;
+  font: 500 16px/1.2 var(--font-ui);
+  letter-spacing: 0.02em;
+}
+.reveal__back {
+  display: block;
+  margin-top: 6px;
+  padding: 12px;
+  text-align: center;
+  text-decoration: none;
+  font: 400 14px var(--font-ui);
+  color: var(--ink-60);
+}
 .reveal__badge {
   margin: 12px 0 0;
   text-align: center;

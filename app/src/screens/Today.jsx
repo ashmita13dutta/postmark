@@ -2,6 +2,7 @@ import { useLiveQuery } from 'dexie-react-hooks'
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Screen from '../app/Screen'
+import WaxSeal from '../components/postcard/WaxSeal'
 import Stamp from '../components/stamp/Stamp'
 import TeachPanel from '../components/teach/TeachPanel'
 import { feelings } from '../data/feelings.json'
@@ -74,8 +75,13 @@ function Editor({ day, existing }) {
     () => readNote({ text, day, hour: clock.hour, month: clock.month, lexicon, override }),
     [text, day, clock.hour, clock.month, lexicon, override],
   )
-  const palette = !hasNote ? BLANK_PALETTE : (custom ?? r.built.colors)
   const sealed = existing?.sealedAt != null
+  // once sealed, show the colors that were saved, not a fresh reading of the note
+  const palette = sealed ? existing.palette : !hasNote ? BLANK_PALETTE : (custom ?? r.built.colors)
+  const seal = useLiveQuery(
+    () => (sealed ? queries.getSeal(existing.id) : undefined),
+    [sealed, existing?.id],
+  )
 
   const saved =
     existing &&
@@ -125,15 +131,31 @@ function Editor({ day, existing }) {
         {streak > 0 ? `${streak}-day streak. Keep it going.` : 'Stamp today to start a streak.'}
       </p>
 
-      <textarea
-        className="today__note"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        rows={5}
-        placeholder={prompt}
-        aria-label="Your note"
-        readOnly={sealed}
-      />
+      {sealed ? (
+        // a sealed note is simply not shown until it is delivered (spec 6.2)
+        <div className="today__sealed">
+          {seal && (
+            <WaxSeal color={seal.color} emblem={seal.emblem} initial={seal.initial} size={56} />
+          )}
+          <p>
+            Sealed and on its way. Your note opens on{' '}
+            {new Date(existing.sealedUntil).toLocaleDateString('en-GB', {
+              day: 'numeric',
+              month: 'short',
+            })}
+            .
+          </p>
+        </div>
+      ) : (
+        <textarea
+          className="today__note"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          rows={5}
+          placeholder={prompt}
+          aria-label="Your note"
+        />
+      )}
 
       <div className="today__stage">
         <Stamp
@@ -168,7 +190,7 @@ function Editor({ day, existing }) {
         </button>
       )}
 
-      {hasNote && (
+      {hasNote && !sealed && (
         <section className="today__mood" aria-label="What the app read">
           <div className="today__read">
             <div>

@@ -191,13 +191,19 @@ export default function Reveal() {
       </motion.section>
 
       <motion.div className="reveal__actions" {...rise(t(AT.buttons))}>
-        <Link className="reveal__primary" to="/">
-          Back to Today
+        <Link className="reveal__primary" to="/postcard" state={{ intent: 'flip' }}>
+          Flip to read
+        </Link>
+        <Link className="reveal__secondary" to="/postcard" state={{ intent: 'seal' }}>
+          Seal &amp; send
         </Link>
         <p className="reveal__badge">
           Sealed until {shortDate(new Date(moment.sealedUntil).toLocaleDateString('en-CA'))} ·{' '}
           {dueIn} {dueIn === 1 ? 'day' : 'days'}
         </p>
+        <Link className="reveal__back" to="/">
+          Back to Today
+        </Link>
       </motion.div>
     </Screen>
   )

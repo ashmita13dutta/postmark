@@ -1,0 +1,45 @@
+import { seededRng } from './rng'
+
+/** A postcard holds about five decorations; the sixth gets a gentle "your postcard is full". */
+export const MAX_DECORATIONS = 5
+
+export const SCALE_RANGE = { min: 0.5, max: 2.5 }
+
+const clamp = (n, lo, hi) => Math.min(hi, Math.max(lo, n))
+const finite = (n, fallback) => (Number.isFinite(n) ? n : fallback)
+
+/**
+ * Keep a decoration's placement sane. x and y are the sticker's centre as a fraction of the card
+ * (0 to 1), so a postcard looks the same at any screen size. Rotation is degrees, wrapped to
+ * (-180, 180]. Fields not given are left out, so this works for patches too.
+ */
+export function clampPlacement(p) {
+  const out = {}
+  if ('x' in p) out.x = clamp(finite(p.x, 0.5), 0, 1)
+  if ('y' in p) out.y = clamp(finite(p.y, 0.5), 0, 1)
+  if ('scale' in p) out.scale = clamp(finite(p.scale, 1), SCALE_RANGE.min, SCALE_RANGE.max)
+  if ('rotation' in p) {
+    const r = finite(p.rotation, 0) % 360
+    out.rotation = r > 180 ? r - 360 : r <= -180 ? r + 360 : r
+  }
+  return out
+}
+
+/** The small random tilt a sticker gets when dropped (spec 8.4). Same key, same tilt. */
+export function dropTilt(key, maxDeg = 8) {
+  return (seededRng(`drop:${key}`)() * 2 - 1) * maxDeg
+}
+
+/**
+ * Where a new sticker lands: spiralling out from the middle so each new one is easy to tell apart
+ * from the last, with a little seeded wobble so it never looks like a grid.
+ */
+export function dropSpot(count, key) {
+  const rnd = seededRng(`spot:${key}`)
+  const angle = count * 2.4 + rnd() * 0.6
+  const radius = 0.08 + count * 0.07
+  return {
+    x: clamp(0.5 + Math.cos(angle) * radius * 0.9, 0.2, 0.8),
+    y: clamp(0.5 + Math.sin(angle) * radius, 0.2, 0.8),
+  }
+}

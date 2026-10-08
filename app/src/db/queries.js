@@ -1,4 +1,5 @@
 import { now } from '../lib/clock'
+import { MAX_DECORATIONS, clampPlacement } from '../lib/decor'
 import { clampDeliveryDay, sealedUntilFor } from '../lib/dates'
 import { applyFields, newMoment } from './moments'
 import { db as defaultDb } from './schema'
@@ -23,6 +24,15 @@ export class SealedError extends Error {
     this.name = 'SealedError'
   }
 }
+
+export class PostcardFullError extends Error {
+  constructor() {
+    super('Your postcard is full')
+    this.name = 'PostcardFullError'
+  }
+}
+
+const newId = () => globalThis.crypto.randomUUID()
 
 /**
  * All database operations. Built from a db instance so tests can use an isolated database;
@@ -136,6 +146,68 @@ export function makeQueries(db) {
     return opened
   }
 
+  // ---- postcard decorations ----
+
+  /** A moment's stickers, back to front. */
+  const decorationsFor = (momentId) => db.decorations.where('momentId').equals(momentId).sortBy('z')
+
+  const getSeal = (momentId) => db.seals.get(momentId)
+
+  async function editableMoment(momentId) {
+    const moment = await getMoment(momentId)
+    if (!moment) throw new Error(`No such moment: ${momentId}`)
+    if (moment.sealedAt != null) throw new SealedError()
+    return moment
+  }
+
+  /** Put a sticker on the back of a postcard. At most MAX_DECORATIONS; a sealed postcard is locked. */
+  async function addDecoration(momentId, { stickerId, ...placement }) {
+    return db.transaction('rw', db.moments, db.decorations, async () => {
+      await editableMoment(momentId)
+      const here = await db.decorations.where('momentId').equals(momentId).toArray()
+      if (here.length >= MAX_DECORATIONS) throw new PostcardFullError()
+      const deco = {
+        id: newId(),
+        momentId,
+        stickerId,
+        x: 0.5,
+        y: 0.5,
+        rotation: 0,
+        scale: 1,
+        ...clampPlacement(placement),
+        side: 'back',
+        z: here.reduce((top, d) => Math.max(top, d.z), 0) + 1,
+      }
+      await db.decorations.add(deco)
+      return deco
+    })
+  }
+
+  /** Move, turn or resize a sticker. `front: true` also brings it on top of the others. */
+  async function updateDecoration(id, { front, ...patch }) {
+    return db.transaction('rw', db.moments, db.decorations, async () => {
+      const deco = await db.decorations.get(id)
+      if (!deco) throw new Error(`No such decoration: ${id}`)
+      await editableMoment(deco.momentId)
+      const next = { ...deco, ...clampPlacement(patch) }
+      if (front) {
+        const all = await db.decorations.where('momentId').equals(deco.momentId).toArray()
+        next.z = all.reduce((top, d) => Math.max(top, d.z), 0) + 1
+      }
+      await db.decorations.put(next)
+      return next
+    })
+  }
+
+  async function removeDecoration(id) {
+    return db.transaction('rw', db.moments, db.decorations, async () => {
+      const deco = await db.decorations.get(id)
+      if (!deco) return
+      await editableMoment(deco.momentId)
+      await db.decorations.delete(id)
+    })
+  }
+
   // ---- media (photos) ----
 
   const saveMedia = async (media) => {
@@ -215,6 +287,11 @@ export function makeQueries(db) {
     saveMoment,
     sealMoment,
     markOpened,
+    decorationsFor,
+    getSeal,
+    addDecoration,
+    updateDecoration,
+    removeDecoration,
     saveMedia,
     mediaForMoment,
     deleteMediaForMoment,
