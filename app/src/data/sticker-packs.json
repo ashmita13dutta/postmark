@@ -1,4 +1,73 @@
 {
   "about": "Sticker packs for the postcard tray. To add your own: put images in app/stickers-src/<pack>/ (PNG, JPG or WebP; a white background is removed for you), then run  node scripts/build-stickers.mjs  from the app folder. It shrinks them into public/stickers/ and lists any new ones below. Then edit label (the name under a sticker) and keywords (what the search box matches). The order of packs here is the order of the tabs.",
-  "packs": []
+  "packs": [
+    {
+      "id": "cozy",
+      "label": "Cozy",
+      "stickers": [
+        { "file": "candle-jar", "label": "Candle jar", "keywords": ["candle", "jar", "light", "flame", "warm", "calm", "glow", "scented"], "w": 91, "h": 148 },
+        { "file": "cozy-sip", "label": "Cozy sip", "keywords": ["cozy", "sip", "girl", "woman", "tea", "coffee", "drink", "blanket", "hot", "relax"], "w": 116, "h": 131 },
+        { "file": "earmuffs", "label": "Earmuffs", "keywords": ["earmuffs", "winter", "cold", "fluffy", "warm", "headphones"], "w": 127, "h": 131 },
+        { "file": "mittens", "label": "Mittens", "keywords": ["mittens", "gloves", "winter", "cold", "knit", "warm"], "w": 109, "h": 110 },
+        { "file": "napping-girl", "label": "Napping girl", "keywords": ["napping", "girl", "woman", "sleep", "rest", "nap", "tired", "dream"], "w": 165, "h": 169 },
+        { "file": "puppy-blanket", "label": "Puppy blanket", "keywords": ["puppy", "blanket", "dog", "pet", "snug", "animal", "cute"], "w": 137, "h": 125 },
+        { "file": "scarf", "label": "Scarf", "keywords": ["scarf", "winter", "cold", "knit", "warm", "fashion"], "w": 112, "h": 164 },
+        { "file": "silk-pajamas", "label": "Silk pajamas", "keywords": ["silk", "pajamas", "pyjamas", "sleep", "night", "bedtime"], "w": 110, "h": 191 },
+        { "file": "sleeping-cat", "label": "Sleeping cat", "keywords": ["sleeping", "cat", "kitten", "pet", "sleep", "nap", "animal", "cute"], "w": 184, "h": 99 },
+        { "file": "tea-kettle", "label": "Tea kettle", "keywords": ["tea", "kettle", "chai", "drink", "hot", "home"], "w": 126, "h": 136 }
+      ]
+    },
+    {
+      "id": "cafe",
+      "label": "Café",
+      "stickers": [
+        { "file": "caramel-shake", "label": "Caramel shake", "keywords": ["caramel", "shake", "milkshake", "drink", "dessert", "sweet", "cold"], "w": 85, "h": 139 },
+        { "file": "cinnamon-roll", "label": "Cinnamon roll", "keywords": ["cinnamon", "roll", "bun", "pastry", "bake", "sweet", "dessert", "breakfast"], "w": 104, "h": 96 },
+        { "file": "cocoa-mug", "label": "Cocoa mug", "keywords": ["cocoa", "mug", "hot chocolate", "gingerbread", "drink", "winter", "christmas"], "w": 101, "h": 104 },
+        { "file": "coffee-cup", "label": "Coffee cup", "keywords": ["coffee", "cup", "espresso", "saucer", "drink", "cafe"], "w": 137, "h": 106 },
+        { "file": "cupcake", "label": "Cupcake", "keywords": ["cupcake", "cake", "dessert", "sweet", "birthday", "frosting", "bake"], "w": 95, "h": 116 },
+        { "file": "dumplings", "label": "Dumplings", "keywords": ["dumplings", "momo", "dumpling", "food", "dinner", "bowl", "lunch"], "w": 157, "h": 98 },
+        { "file": "espresso-machine", "label": "Espresso machine", "keywords": ["espresso", "machine", "coffee", "barista", "kitchen"], "w": 101, "h": 118 },
+        { "file": "knit-latte", "label": "Knit latte", "keywords": ["knit", "latte", "coffee", "mug", "drink", "cozy", "cappuccino"], "w": 115, "h": 102 },
+        { "file": "pancakes", "label": "Pancakes", "keywords": ["pancakes", "breakfast", "syrup", "butter", "food", "brunch", "sweet"], "w": 170, "h": 114 }
+      ]
+    },
+    {
+      "id": "autumn",
+      "label": "Autumn & winter",
+      "stickers": [
+        { "file": "autumn-candle", "label": "Autumn candle", "keywords": ["autumn", "candle", "maple", "leaf", "fall", "light", "flame"], "w": 117, "h": 129 },
+        { "file": "oak-leaf", "label": "Oak leaf", "keywords": ["oak", "leaf", "fall", "nature", "dry"], "w": 101, "h": 149 },
+        { "file": "ornament", "label": "Ornament", "keywords": ["ornament", "christmas", "bauble", "decoration", "holiday", "festive"], "w": 97, "h": 122 },
+        { "file": "pinecone", "label": "Pinecone", "keywords": ["pinecone", "pine", "cone", "forest", "nature", "winter"], "w": 112, "h": 131 },
+        { "file": "snowy-tree", "label": "Snowy tree", "keywords": ["snowy", "tree", "christmas", "winter", "snow", "holiday", "star"], "w": 110, "h": 174 }
+      ]
+    },
+    {
+      "id": "sweet",
+      "label": "Sweet",
+      "stickers": [
+        { "file": "cream-heart", "label": "Cream heart", "keywords": ["cream", "heart", "love", "soft", "valentine"], "w": 109, "h": 104 },
+        { "file": "daisy", "label": "Daisy", "keywords": ["daisy", "flower", "bloom", "petal", "spring", "floral", "white"], "w": 109, "h": 108 },
+        { "file": "gift-box", "label": "Gift box", "keywords": ["gift", "box", "present", "ribbon", "birthday", "surprise"], "w": 120, "h": 134 },
+        { "file": "gingham-bow", "label": "Gingham bow", "keywords": ["gingham", "bow", "ribbon", "check", "plaid", "gift", "fashion"], "w": 131, "h": 121 },
+        { "file": "lipstick", "label": "Lipstick", "keywords": ["lipstick", "makeup", "beauty", "lips", "cosmetics"], "w": 54, "h": 151 },
+        { "file": "ribbon-heart", "label": "Ribbon heart", "keywords": ["ribbon", "heart", "love", "valentine", "romance"], "w": 120, "h": 107 },
+        { "file": "rose-bouquet", "label": "Rose bouquet", "keywords": ["rose", "bouquet", "roses", "flowers", "love", "romantic", "floral"], "w": 149, "h": 176 },
+        { "file": "shell-earrings", "label": "Shell earrings", "keywords": ["shell", "earrings", "jewelry", "beach", "gold"], "w": 134, "h": 126 }
+      ]
+    },
+    {
+      "id": "memories",
+      "label": "Memories & travel",
+      "stickers": [
+        { "file": "airplane", "label": "Airplane", "keywords": ["airplane", "plane", "flight", "travel", "trip", "holiday", "journey"], "w": 149, "h": 108 },
+        { "file": "book-stack", "label": "Book stack", "keywords": ["book", "stack", "books", "read", "study", "library", "school"], "w": 115, "h": 110 },
+        { "file": "butterfly", "label": "Butterfly", "keywords": ["butterfly", "insect", "wings", "nature", "spring"], "w": 154, "h": 118 },
+        { "file": "camera", "label": "Camera", "keywords": ["camera", "photo", "picture", "film", "memories", "snap"], "w": 134, "h": 105 },
+        { "file": "grand-piano", "label": "Grand piano", "keywords": ["grand", "piano", "music", "instrument", "song", "keys"], "w": 166, "h": 172 },
+        { "file": "winter-trip", "label": "Winter trip", "keywords": ["winter", "trip", "earmuffs", "luggage", "suitcase", "travel", "headphones"], "w": 146, "h": 132 }
+      ]
+    }
+  ]
 }

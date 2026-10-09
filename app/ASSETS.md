@@ -7,6 +7,7 @@ Everything bundled in the app, where it came from, and under what license.
 | DM Serif Display, DM Sans, Kalam, Caveat, JetBrains Mono | npm `@fontsource/*` (Google Fonts) | SIL Open Font License 1.1 |
 | Noto Color Emoji (all emoji in the app) | npm `@fontsource/noto-color-emoji` (Google) | SIL Open Font License 1.1 |
 | App icon, launch screens, share card | Drawn for Postmark in `scripts/build-assets.mjs` (`npm run assets`) | Own work |
+| Sticker packs: 38 PNG stickers in `public/stickers/` (Cozy, Café, Autumn & winter, Sweet, Memories & travel), cut from a sticker sheet the owner supplied with `scripts/split-sheet.mjs`; two items with brand names on them were left out | Owner-supplied sheet; the original maker is not recorded | The owner confirmed on 2026-10-09 that they may use it in this app |
 
 Notes
 - Emoji always render as Noto, on every device, because Noto is listed first in the font stacks in `src/styles/tokens.css`. The font only covers emoji, and the plain digits, `#` and `*` are removed from its ranges in `src/styles/emoji.css`, so normal text is never affected.
