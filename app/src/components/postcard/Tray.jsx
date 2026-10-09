@@ -1,21 +1,78 @@
 import { motion, useDragControls, useReducedMotion } from 'framer-motion'
 import { useState } from 'react'
-import { STICKERS, TRAY_TABS } from '../../data/stickers'
+import { PACKS, findSticker, searchStickers } from '../../data/stickers'
 import Sticker, { stickerSize } from './Sticker'
 import './tray.css'
 
-// How far the tray slides down when collapsed, leaving the handle and tabs showing.
-const COLLAPSED_Y = 124
+// How far the tray slides down when collapsed, leaving the handle and the row of tabs showing.
+const COLLAPSED_Y = 200
+// A sticker is shown inside a tile no bigger than this many px.
+const TILE_ART = 72
+
+function HeartIcon({ filled }) {
+  return (
+    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+      <path
+        d="M12 20.5s-7.3-4.5-9.4-9C1 8 3.2 4.6 6.6 4.6c2 0 3.5 1.1 5.4 3.2 1.9-2.1 3.4-3.2 5.4-3.2 3.4 0 5.6 3.4 4 6.9-2.1 4.5-9.4 9-9.4 9z"
+        fill={filled ? 'currentColor' : 'none'}
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
+function SearchIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+      <circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" strokeWidth="2" />
+      <path d="M15.5 15.5 21 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  )
+}
 
 /**
  * The decorate tray: a bottom sheet you drag by its handle (or tap the handle) between open and
- * collapsed. Tapping a sticker hands its id to `onPick`.
+ * collapsed. A row of tabs holds your Recent and Saved stickers and every pack; the magnifier
+ * swaps that row for a search box that looks through every pack at once. Tapping a sticker hands
+ * its id to `onPick`; the heart on a tile saves it.
+ *
+ * `prefs` is useStickerPrefs(): { recent, favorites, toggleSaved }. The screen can own the open /
+ * closed state (`open`, `onOpenChange`) so it can fold the tray away when a sticker is selected and
+ * its toolbar needs the room; without them the tray looks after itself.
  */
-export default function Tray({ palette, onPick }) {
-  const [tab, setTab] = useState(TRAY_TABS[0].id)
-  const [open, setOpen] = useState(true)
+export default function Tray({ palette, onPick, prefs, open: openProp, onOpenChange }) {
+  const { recent, favorites, toggleSaved } = prefs
+  const [tab, setTab] = useState(PACKS[0]?.id ?? 'recent')
+  const [ownOpen, setOwnOpen] = useState(true)
+  const open = openProp ?? ownOpen
+  const setOpen = onOpenChange ?? setOwnOpen
+  const [searching, setSearching] = useState(false)
+  const [query, setQuery] = useState('')
   const controls = useDragControls()
   const reduced = useReducedMotion()
+
+  // ids can outlive their sticker (a pack was removed), so look each one up
+  const known = (ids) => ids.map(findSticker).filter(Boolean)
+  const recentItems = known(recent)
+  const savedItems = known(favorites)
+
+  const tabs = [
+    ...(recentItems.length ? [{ id: 'recent', label: 'Recent' }] : []),
+    ...(savedItems.length ? [{ id: 'saved', label: 'Saved' }] : []),
+    ...PACKS.map(({ id, label }) => ({ id, label })),
+  ]
+  const activeTab = tabs.some((t) => t.id === tab) ? tab : tabs[0]?.id
+
+  const q = query.trim()
+  const items = q
+    ? searchStickers(q)
+    : activeTab === 'recent'
+      ? recentItems
+      : activeTab === 'saved'
+        ? savedItems
+        : (PACKS.find((p) => p.id === activeTab)?.items ?? [])
 
   return (
     <motion.section
@@ -41,50 +98,101 @@ export default function Tray({ palette, onPick }) {
         aria-label={open ? 'Collapse stickers' : 'Show stickers'}
         aria-expanded={open}
         onPointerDown={(e) => controls.start(e)}
-        onClick={() => setOpen((o) => !o)}
+        onClick={() => setOpen(!open)}
       >
         <i />
       </button>
-      <div className="tray__tabs" role="tablist" aria-label="Sticker kinds">
-        {TRAY_TABS.map((t) => (
+
+      {searching ? (
+        <div className="tray__search" role="search">
+          <SearchIcon />
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search stickers"
+            aria-label="Search stickers"
+            autoFocus
+          />
           <button
-            key={t.id}
-            role="tab"
-            aria-selected={tab === t.id}
-            className={tab === t.id ? 'on' : ''}
             onClick={() => {
-              setTab(t.id)
+              setSearching(false)
+              setQuery('')
+            }}
+          >
+            Cancel
+          </button>
+        </div>
+      ) : (
+        <div className="tray__tabs">
+          <button
+            className="tray__searchbtn"
+            aria-label="Search stickers"
+            onClick={() => {
+              setSearching(true)
               setOpen(true)
             }}
           >
-            {t.label}
+            <SearchIcon />
           </button>
-        ))}
-      </div>
-      <ul className="tray__items">
-        {STICKERS[tab].map((s) => {
-          const { width, height } = stickerSize(s.id)
-          // fit the sticker into a 72px tile without changing its shape
-          const k = Math.min(1, 72 / Math.max(width, height))
-          return (
-            <li key={s.id}>
+          <div className="tray__tablist" role="tablist" aria-label="Sticker packs">
+            {tabs.map((t) => (
               <button
-                className="tray__item"
-                onClick={() => onPick(s.id)}
-                aria-label={`Add ${s.label}`}
+                key={t.id}
+                role="tab"
+                aria-selected={activeTab === t.id}
+                className={activeTab === t.id ? 'on' : ''}
+                onClick={() => {
+                  setTab(t.id)
+                  setOpen(true)
+                }}
               >
-                <span style={{ width: width * k, height: height * k }}>
-                  <span
-                    style={{ transform: `scale(${k})`, transformOrigin: '0 0', display: 'block' }}
-                  >
-                    <Sticker id={s.id} palette={palette} />
-                  </span>
-                </span>
+                {t.label}
               </button>
-            </li>
-          )
-        })}
-      </ul>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {items.length ? (
+        <ul className="tray__items">
+          {items.map((s) => {
+            const { width, height } = stickerSize(s.id)
+            // fit the sticker into the tile without changing its shape
+            const k = Math.min(1, TILE_ART / Math.max(width, height))
+            const saved = favorites.includes(s.id)
+            return (
+              <li key={s.id}>
+                <button
+                  className="tray__item"
+                  onClick={() => onPick(s.id)}
+                  aria-label={`Add ${s.label}`}
+                >
+                  <span style={{ width: width * k, height: height * k }}>
+                    <span
+                      style={{ transform: `scale(${k})`, transformOrigin: '0 0', display: 'block' }}
+                    >
+                      <Sticker id={s.id} palette={palette} />
+                    </span>
+                  </span>
+                </button>
+                <button
+                  className={saved ? 'tray__heart on' : 'tray__heart'}
+                  aria-pressed={saved}
+                  aria-label={saved ? `Remove ${s.label} from Saved` : `Save ${s.label}`}
+                  onClick={() => toggleSaved(s.id)}
+                >
+                  <HeartIcon filled={saved} />
+                </button>
+              </li>
+            )
+          })}
+        </ul>
+      ) : (
+        <p className="tray__empty">
+          {q ? `No stickers match “${q}”. Try a simpler word.` : 'Nothing here yet.'}
+        </p>
+      )}
     </motion.section>
   )
 }

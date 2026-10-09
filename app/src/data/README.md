@@ -198,3 +198,44 @@ What you taught is saved **on this phone only** and listed under **My words**, w
 
 To make a word part of the app for everyone (and for the tests), add it to `feelings.json` or
 `topics.json` instead. Words from "My words" are a good source of candidates.
+
+---
+
+## sticker-packs.json: the postcard stickers
+
+The decorate tray on the back of a postcard has a row of tabs: **Recent**, **Saved**, then one tab per
+pack, then the drawn **Stamps**, **Tape** and **Doodles**. The packs come from this file. You make
+them from your own pictures.
+
+**Adding stickers**
+
+1. Make a folder per pack inside `app/stickers-src/` and put images in it: `stickers-src/cozy/candle.png`.
+   PNG, JPG or WebP all work. If a picture sits on a plain white background, the white is removed for you.
+2. From the `app` folder run `node scripts/build-stickers.mjs`. It trims and shrinks each image (no
+   bigger than 256px on the long side), saves it under `public/stickers/`, and adds anything new to
+   this file.
+3. Open this file and tidy the entries it added. Each sticker looks like:
+
+   `{ "file": "candle", "label": "Candle", "keywords": ["candle", "light", "warm"], "w": 117, "h": 129 }`
+
+   - `file` is the image name without `.png`, lowercase letters, digits and dashes only. Leave it alone.
+   - `label` is the name (screen readers read it, and search matches it).
+   - `keywords` are what the **search box** matches. Add every word you might type: "tea", "chai", "kettle".
+   - `w` and `h` are filled in by the script.
+   - A pack's `label` is the tab name, and the order of packs here is the order of the tabs.
+
+Running the script again is safe: your labels and keywords are kept, only new pictures are added.
+
+**A sheet with many stickers on it?** Cut it into single stickers first:
+`node scripts/split-sheet.mjs sheet.jpg cozy` writes `stickers-src/cozy/sticker-01.png`, `sticker-02.png`
+and so on. Look at them, rename the good ones (`candle.png`), delete the rest, then run the build script.
+If two stickers touch and come out as one, run it again with `--split 4` (separates things that only
+touch) or draw a cut between them with `--cut x1,y1,x2,y2`.
+
+**Only use pictures you have the right to use.** This app is published on a public website, so whatever
+you put in `public/stickers/` is public too.
+
+**The look of a sticker.** Tap a sticker on the card and, under the toolbar, you can switch its white
+die-cut edge on or off, and wash a picture sticker in a tone (Original, Cream, Cocoa, Rose, Sage, Mono).
+The tones, and the colors in each, are listed in `src/data/stickers.js` (`TONES`). The last look you
+chose is what the next sticker starts with, so a card can share one cozy palette.

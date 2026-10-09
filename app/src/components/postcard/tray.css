@@ -31,12 +31,25 @@
   border-radius: 2px;
   background: var(--ink-15);
 }
+/* one row: the search button, then Recent / Saved / every pack, scrolling sideways */
 .tray__tabs {
   display: flex;
   gap: 8px;
-  padding-bottom: 10px;
+  margin: 0 -16px;
+  padding: 0 16px 10px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tray__tablist {
+  display: flex;
+  flex: none;
+  gap: 8px;
+}
+.tray__tabs::-webkit-scrollbar {
+  display: none;
 }
 .tray__tabs button {
+  flex: none;
   min-height: 36px;
   padding: 0 14px;
   border: 1px solid var(--ink-12);
@@ -44,23 +57,96 @@
   background: transparent;
   color: var(--ink-60);
   font: 500 13px var(--font-ui);
+  white-space: nowrap;
 }
 .tray__tabs button.on {
   border-color: var(--postmark);
   background: var(--postmark);
   color: var(--card-warm);
 }
-.tray__items {
+.tray__tabs .tray__searchbtn {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  padding: 0;
+  color: var(--ink);
+}
+
+/* the search box that takes the tab row's place */
+.tray__search {
   display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  margin-bottom: 10px;
+  padding: 0 4px 0 12px;
+  border: 1px solid var(--ink-12);
+  border-radius: var(--r-pill);
+  background: var(--paper);
+  color: var(--ink-60);
+}
+.tray__search input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font: 400 16px var(--font-ui); /* 16px so phones do not zoom the page when it is focused */
+}
+.tray__search input:focus {
+  outline: none;
+}
+.tray__search button {
+  min-height: 32px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: none;
+  color: var(--postmark);
+  font: 500 14px var(--font-ui);
+}
+
+/* two rows of tiles that scroll sideways */
+.tray__items {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(2, 84px);
+  grid-auto-columns: 84px;
   gap: 10px;
-  margin: 0;
-  padding: 2px 2px 4px;
+  margin: 0 -16px;
+  padding: 2px 16px 4px;
   list-style: none;
   overflow-x: auto;
   scrollbar-width: none;
 }
 .tray__items::-webkit-scrollbar {
   display: none;
+}
+.tray__items li {
+  position: relative;
+}
+.tray__heart {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--ink-45);
+}
+.tray__heart.on {
+  color: var(--c-red);
+}
+.tray__empty {
+  margin: 18px 4px 22px;
+  font: 400 14px/1.4 var(--font-ui);
+  color: var(--ink-60);
 }
 .tray__item {
   display: flex;

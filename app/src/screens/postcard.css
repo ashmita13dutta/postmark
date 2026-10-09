@@ -1,6 +1,6 @@
 /* room for the decorate tray above the tab bar */
 .screen:has(.tray) {
-  padding-bottom: calc(var(--tabbar-h) + var(--safe-bottom) + 270px);
+  padding-bottom: calc(var(--tabbar-h) + var(--safe-bottom) + 364px);
 }
 
 .pc__sendbtn {
@@ -80,4 +80,43 @@
   color: var(--card-warm);
   text-decoration: none;
   font: 500 16px/1.2 var(--font-ui);
+}
+
+/* the look of the selected sticker: white edge on/off, and a row of tone dots */
+.pc__style {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 10px;
+}
+.pc__chip {
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--ink-12);
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--ink-60);
+  font: 500 13px var(--font-ui);
+}
+.pc__chip.on {
+  border-color: var(--postmark);
+  background: var(--postmark);
+  color: var(--card-warm);
+}
+.pc__tones {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pc__tone {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px var(--ink-15);
+}
+.pc__tone.on {
+  box-shadow: 0 0 0 2.5px var(--postmark);
 }

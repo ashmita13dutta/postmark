@@ -1,0 +1,4 @@
+{
+  "about": "Sticker packs for the postcard tray. To add your own: put images in app/stickers-src/<pack>/ (PNG, JPG or WebP; a white background is removed for you), then run  node scripts/build-stickers.mjs  from the app folder. It shrinks them into public/stickers/ and lists any new ones below. Then edit label (the name under a sticker) and keywords (what the search box matches). The order of packs here is the order of the tabs.",
+  "packs": []
+}

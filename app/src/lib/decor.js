@@ -1,3 +1,4 @@
+import { TONES } from '../data/stickers'
 import { seededRng } from './rng'
 
 /** A postcard holds about five decorations; the sixth gets a gentle "your postcard is full". */
@@ -5,13 +6,16 @@ export const MAX_DECORATIONS = 5
 
 export const SCALE_RANGE = { min: 0.5, max: 2.5 }
 
+const TONE_IDS = TONES.map((t) => t.id)
+
 const clamp = (n, lo, hi) => Math.min(hi, Math.max(lo, n))
 const finite = (n, fallback) => (Number.isFinite(n) ? n : fallback)
 
 /**
- * Keep a decoration's placement sane. x and y are the sticker's centre as a fraction of the card
- * (0 to 1), so a postcard looks the same at any screen size. Rotation is degrees, wrapped to
- * (-180, 180]. Fields not given are left out, so this works for patches too.
+ * Keep a decoration's placement and look sane. x and y are the sticker's centre as a fraction of the
+ * card (0 to 1), so a postcard looks the same at any screen size. Rotation is degrees, wrapped to
+ * (-180, 180]. `tone` is one of the TONES ids (anything else becomes 'original') and `outline` is
+ * the white die-cut edge, on or off. Fields not given are left out, so this works for patches too.
  */
 export function clampPlacement(p) {
   const out = {}
@@ -22,6 +26,8 @@ export function clampPlacement(p) {
     const r = finite(p.rotation, 0) % 360
     out.rotation = r > 180 ? r - 360 : r <= -180 ? r + 360 : r
   }
+  if ('tone' in p) out.tone = TONE_IDS.includes(p.tone) ? p.tone : 'original'
+  if ('outline' in p) out.outline = Boolean(p.outline)
   return out
 }
 

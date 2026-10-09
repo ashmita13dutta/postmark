@@ -1,7 +1,9 @@
 import { useGesture } from '@use-gesture/react'
 import { useRef, useState } from 'react'
 import { SCALE_RANGE } from '../../lib/decor'
+import { canOutline, canTone, findSticker } from '../../data/stickers'
 import Sticker from './Sticker'
+import StickerFilters from './StickerFilters'
 import './decor.css'
 
 /**
@@ -59,6 +61,8 @@ function Decoration({ deco, palette, selected, locked, onSelect, onChange }) {
       ref={ref}
       className={`decor${selected ? ' decor--on' : ''}${live ? ' decor--lift' : ''}`}
       data-kind={deco.stickerId.split(':')[0]}
+      data-tone={canTone(deco.stickerId) ? (deco.tone ?? 'original') : undefined}
+      data-outline={canOutline(deco.stickerId) ? ((deco.outline ?? true) ? '1' : '0') : undefined}
       style={{
         left: `${p.x * 100}%`,
         top: `${p.y * 100}%`,
@@ -71,7 +75,7 @@ function Decoration({ deco, palette, selected, locked, onSelect, onChange }) {
       }}
       {...bind()}
       role="img"
-      aria-label={deco.stickerId.replace(':', ' ')}
+      aria-label={findSticker(deco.stickerId)?.label ?? deco.stickerId.replace(':', ' ')}
     >
       <Sticker id={deco.stickerId} palette={palette} />
     </div>
@@ -89,32 +93,7 @@ export default function DecorLayer({
 }) {
   return (
     <div className="decor-layer" onClick={() => onSelect(null)}>
-      {/* one shared glossy-highlight filter for the die-cut stickers (see styles/hig.css) */}
-      <svg width="0" height="0" aria-hidden="true" style={{ position: 'absolute' }}>
-        <filter id="sticker-gloss" x="-10%" y="-10%" width="120%" height="120%">
-          <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur" />
-          <feSpecularLighting
-            in="blur"
-            surfaceScale="3"
-            specularConstant="0.6"
-            specularExponent="20"
-            lightingColor="#fff"
-            result="spec"
-          >
-            <fePointLight x="-40" y="-60" z="120" />
-          </feSpecularLighting>
-          <feComposite in="spec" in2="SourceAlpha" operator="in" result="sheen" />
-          <feComposite
-            in="SourceGraphic"
-            in2="sheen"
-            operator="arithmetic"
-            k1="0"
-            k2="1"
-            k3="0.5"
-            k4="0"
-          />
-        </filter>
-      </svg>
+      <StickerFilters />
       {decorations.map((d) => (
         <Decoration
           key={d.id}

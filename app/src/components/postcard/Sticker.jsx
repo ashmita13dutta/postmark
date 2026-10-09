@@ -1,3 +1,5 @@
+import { IMAGE_BOX, findSticker } from '../../data/stickers'
+
 const RED = '#B14126'
 const PURPLE = '#534AB7'
 
@@ -16,8 +18,17 @@ const STAMP_TEXT = {
   return: { lines: ['RETURN TO', 'SENDER'], color: PURPLE },
 }
 
+/** A picture sticker, scaled to fit the standard box while keeping its shape. */
+function imageSize(id) {
+  const sticker = findSticker(id)
+  if (!sticker?.w || !sticker?.h) return SIZES.doodle
+  const k = IMAGE_BOX / Math.max(sticker.w, sticker.h)
+  return { width: Math.round(sticker.w * k), height: Math.round(sticker.h * k) }
+}
+
 export function stickerSize(id) {
   const [kind, name] = id.split(':')
+  if (kind === 'img') return imageSize(id)
   if (kind === 'stamp') return STAMP_TEXT[name]?.lines.length > 1 ? SIZES.handle : SIZES.stamp
   return SIZES[kind] ?? SIZES.doodle
 }
@@ -154,12 +165,51 @@ const DOODLES = {
   ),
 }
 
+/** Stands in for a picture sticker whose pack has since been removed, so it can still be removed. */
+function MissingSticker() {
+  return (
+    <svg viewBox="0 0 60 60" width={SIZES.doodle.width} height={SIZES.doodle.height}>
+      <rect
+        x="4"
+        y="4"
+        width="52"
+        height="52"
+        rx="8"
+        fill="none"
+        stroke="#2A2620"
+        strokeOpacity=".4"
+        strokeWidth="2"
+        strokeDasharray="5 4"
+      />
+      <text x="30" y="39" textAnchor="middle" fontSize="26" fill="#2A2620" fillOpacity=".4">
+        ?
+      </text>
+    </svg>
+  )
+}
+
 /**
  * One sticker, drawn at its natural size. `palette` is the day's five swatches ({hex}), used by
- * tape. Unknown ids draw nothing, so an old postcard never breaks the screen.
+ * tape. Unknown drawn ids draw nothing, so an old postcard never breaks the screen.
  */
 export default function Sticker({ id, palette = [] }) {
   const [kind, name] = id.split(':')
+  if (kind === 'img') {
+    const sticker = findSticker(id)
+    if (!sticker) return <MissingSticker />
+    const { width, height } = imageSize(id)
+    return (
+      <img
+        className="sticker-img"
+        src={`${import.meta.env.BASE_URL}${sticker.src}`}
+        width={width}
+        height={height}
+        alt=""
+        draggable={false}
+        decoding="async"
+      />
+    )
+  }
   if (kind === 'stamp' && STAMP_TEXT[name]) return <RubberStamp name={name} />
   if (kind === 'tape') return <Tape color={palette[Number(name)]?.hex ?? '#D5A737'} />
   if (kind === 'doodle' && DOODLES[name]) {

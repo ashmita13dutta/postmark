@@ -11,8 +11,11 @@ import PostcardCard, {
 } from '../components/postcard/PostcardCard'
 import SealPicker from '../components/postcard/SealPicker'
 import SealSequence from '../components/postcard/SealSequence'
+import StyleTools from '../components/postcard/StyleTools'
 import Tray from '../components/postcard/Tray'
+import useStickerPrefs from '../components/postcard/useStickerPrefs'
 import WaxSeal from '../components/postcard/WaxSeal'
+import { canOutline, canTone } from '../data/stickers'
 import { PostcardFullError, queries } from '../db/queries'
 import { now } from '../lib/clock'
 import { daysUntil, todayKey } from '../lib/dates'
@@ -38,11 +41,13 @@ function Board({ moment, intent }) {
   const palette = moment.palette
 
   const decorations = useLiveQuery(() => queries.decorationsFor(moment.id), [moment.id], [])
+  const prefs = useStickerPrefs()
   const seal = useLiveQuery(() => queries.getSeal(moment.id), [moment.id, sealed])
 
   // arriving from "Flip to read" starts on the front and turns over; otherwise start on the back
   const [flipped, setFlipped] = useState(intent !== 'flip')
   const [selectedId, setSelectedId] = useState(null)
+  const [trayOpen, setTrayOpen] = useState(true)
   const [message, setMessage] = useState(null)
   const [phase, setPhase] = useState(intent === 'seal' && !sealed ? 'pick' : null) // null | 'pick' | 'play'
   const [sealing, setSealing] = useState(null) // the wax chosen, while the send-off plays
@@ -62,6 +67,12 @@ function Board({ moment, intent }) {
   }, [message])
 
   const selected = decorations.find((d) => d.id === selectedId)
+
+  // selecting a sticker folds the tray down so the toolbar under the card is not hidden by it
+  const select = (id) => {
+    setSelectedId(id)
+    if (id) setTrayOpen(false)
+  }
   const showBack = flipped && !sealed
 
   const fail = (err) => setMessage(err.message)
@@ -70,12 +81,18 @@ function Board({ moment, intent }) {
     setFlipped(true)
     const n = decorations.length
     try {
+      // a new sticker starts with the look you last chose (tone, white edge)
+      const look = {}
+      if (canOutline(stickerId)) look.outline = prefs.style.outline
+      if (canTone(stickerId)) look.tone = prefs.style.tone
       const deco = await queries.addDecoration(moment.id, {
         stickerId,
         ...dropSpot(n, `${moment.id}:${n}`),
         rotation: dropTilt(`${moment.id}:${n}:${stickerId}`),
+        ...look,
       })
-      setSelectedId(deco.id)
+      select(deco.id)
+      prefs.used(stickerId)
     } catch (err) {
       setMessage(
         err instanceof PostcardFullError
@@ -91,6 +108,7 @@ function Board({ moment, intent }) {
   async function remove() {
     const id = selectedId
     setSelectedId(null)
+    setTrayOpen(true) // nothing is selected any more: bring the stickers back
     await queries.removeDecoration(id).catch(fail)
   }
 
@@ -157,7 +175,7 @@ function Board({ moment, intent }) {
                 palette={palette}
                 selectedId={selectedId}
                 locked={sealed}
-                onSelect={setSelectedId}
+                onSelect={select}
                 onChange={change}
               />
             </PostcardBack>
@@ -209,6 +227,15 @@ function Board({ moment, intent }) {
               {showBack ? 'Show the front' : 'Flip to the back'}
             </button>
           )}
+          {selected && (
+            <StyleTools
+              deco={selected}
+              onChange={(patch) => {
+                change(selected.id, patch)
+                prefs.setStyle(patch) // and the next sticker starts with this look too
+              }}
+            />
+          )}
           {message && (
             <p className="pc__msg" role="status">
               {message}
@@ -217,7 +244,15 @@ function Board({ moment, intent }) {
         </div>
       )}
 
-      {!sealed && <Tray palette={palette} onPick={pick} />}
+      {!sealed && (
+        <Tray
+          palette={palette}
+          onPick={pick}
+          prefs={prefs}
+          open={trayOpen}
+          onOpenChange={setTrayOpen}
+        />
+      )}
 
       {phase === 'pick' && (
         <SealPicker

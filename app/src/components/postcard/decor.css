@@ -28,3 +28,38 @@
   border-radius: 8px;
   pointer-events: none;
 }
+
+/* ---- picture stickers: a tone wash and a white die-cut edge, each switchable per sticker ---- */
+.sticker-img {
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+/* both looks are one filter each, set by data-tone and data-outline; "no-op" means nothing happens */
+.decor[data-kind='img'] {
+  --tone: drop-shadow(0 0 0 transparent);
+  --edge: drop-shadow(0 0 0 transparent);
+}
+.decor[data-kind='img'][data-tone='cream'] {
+  --tone: url(#tone-cream);
+}
+.decor[data-kind='img'][data-tone='cocoa'] {
+  --tone: url(#tone-cocoa);
+}
+.decor[data-kind='img'][data-tone='rose'] {
+  --tone: url(#tone-rose);
+}
+.decor[data-kind='img'][data-tone='sage'] {
+  --tone: url(#tone-sage);
+}
+.decor[data-kind='img'][data-tone='mono'] {
+  --tone: url(#tone-mono);
+}
+.decor[data-kind='img'][data-outline='1'] {
+  --edge: url(#sticker-outline);
+}
+/* tone first, then the white edge (so the edge stays white), then a soft shadow under it all */
+.decor[data-kind='img'] img {
+  filter: var(--tone) var(--edge) drop-shadow(0 2px 3px rgba(42, 38, 32, 0.28));
+}
