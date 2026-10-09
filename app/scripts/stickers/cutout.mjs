@@ -1,14 +1,53 @@
 /*
  * Pixel work for stickers, all on plain RGBA buffers so it can be tested without any image file:
- *   cutBackground  turn a near-white background transparent (and tidy the fringe)
- *   findObjects    find the separate objects on a sheet
- *   cropObject     cut one object out with its own transparency
- *   trimAlpha      shrink to the visible pixels
+ *   detectBackground  the flat color a sheet was made on (white, off-white, light grey...)
+ *   cutBackground     turn that background transparent (and tidy the fringe)
+ *   findObjects       find the separate objects on a sheet
+ *   cropObject        cut one object out with its own transparency
+ *   trimAlpha         shrink to the visible pixels
  *   hasTransparency / cornersAreLight   decide whether an image still needs its background removed
+ *
+ * Without a `bg` color the background is taken to be near white. With `bg` ([r, g, b], from
+ * detectBackground) any pixel within `tol` of that color counts, so grey sheets work too.
  */
 
 const idx = (w, x, y) => (y * w + x) * 4
 const minChannel = (rgba, i) => Math.min(rgba[i], rgba[i + 1], rgba[i + 2])
+/** The biggest difference in any one channel between a pixel and a color. */
+const maxDiff = (rgba, i, c) =>
+  Math.max(Math.abs(rgba[i] - c[0]), Math.abs(rgba[i + 1] - c[1]), Math.abs(rgba[i + 2] - c[2]))
+
+/**
+ * The color a sheet was made on, read from the picture's border: the most common color there, if it
+ * covers most of the border. Returns [r, g, b], or null when the border is not one flat color (a
+ * photo with no plain background).
+ */
+export function detectBackground(rgba, w, h, share = 0.6) {
+  const bins = new Map()
+  const border = []
+  for (let x = 0; x < w; x++) border.push(idx(w, x, 0), idx(w, x, h - 1))
+  for (let y = 1; y < h - 1; y++) border.push(idx(w, 0, y), idx(w, w - 1, y))
+  for (const i of border) {
+    const key = ((rgba[i] >> 3) << 10) | ((rgba[i + 1] >> 3) << 5) | (rgba[i + 2] >> 3)
+    const bin = bins.get(key) ?? { n: 0, r: 0, g: 0, b: 0 }
+    bin.n++
+    bin.r += rgba[i]
+    bin.g += rgba[i + 1]
+    bin.b += rgba[i + 2]
+    bins.set(key, bin)
+  }
+  let best = null
+  for (const bin of bins.values()) if (!best || bin.n > best.n) best = bin
+  if (!best) return null
+  const color = [
+    Math.round(best.r / best.n),
+    Math.round(best.g / best.n),
+    Math.round(best.b / best.n),
+  ]
+  // count everything close to that color, so noise across a bin edge does not split the vote
+  const close = border.filter((i) => maxDiff(rgba, i, color) <= 10).length
+  return close / border.length >= share ? color : null
+}
 
 /** True when any pixel is not fully opaque. */
 export function hasTransparency(rgba) {
@@ -51,19 +90,36 @@ function flood(w, h, seeds, ok, mark) {
  * pockets inside a sticker (the hole in a mug handle). Small white highlights are kept.
  * @returns {Uint8Array} 1 for background
  */
-export function backgroundMask(rgba, w, h, { white = 238, pure = 252, holeArea = 120 } = {}) {
+export function backgroundMask(
+  rgba,
+  w,
+  h,
+  { white = 238, pure = 252, holeArea = 120, bg: color = null, tol = 14 } = {},
+) {
   const n = w * h
   const bg = new Uint8Array(n)
-  const light = (p) => minChannel(rgba, p * 4) >= white
+  // "background-like": near white, or near the sheet's own color
+  const light = color
+    ? (p) => maxDiff(rgba, p * 4, color) <= tol
+    : (p) => minChannel(rgba, p * 4) >= white
+  // "exactly background": what a pocket inside a sticker must look like to be cut out too
+  const pureBg = color
+    ? (p) => maxDiff(rgba, p * 4, color) <= 6
+    : (p) => minChannel(rgba, p * 4) >= pure
   const seeds = []
   for (let x = 0; x < w; x++) seeds.push(x, (h - 1) * w + x)
   for (let y = 0; y < h; y++) seeds.push(y * w, y * w + w - 1)
   flood(w, h, seeds, light, bg)
 
+  // Pockets are only cut out on near-white sheets. On a grey or colored sheet a sticker can hold an
+  // area that is the very shade of the background (the white disc on a pool ball), and cutting it
+  // out would punch a hole in the sticker.
+  if (color && Math.min(...color) < white) return bg
+
   // pockets of pure white that the border fill could not reach
   const seen = new Uint8Array(n)
   for (let p = 0; p < n; p++) {
-    if (bg[p] || seen[p] || minChannel(rgba, p * 4) < pure) continue
+    if (bg[p] || seen[p] || !pureBg(p)) continue
     const cells = []
     const stack = [p]
     seen[p] = 1
@@ -78,7 +134,7 @@ export function backgroundMask(rgba, w, h, { white = 238, pure = 252, holeArea =
       if (y > 0) next.push(q - w)
       if (y < h - 1) next.push(q + w)
       for (const m of next) {
-        if (!seen[m] && !bg[m] && minChannel(rgba, m * 4) >= pure) {
+        if (!seen[m] && !bg[m] && pureBg(m)) {
           seen[m] = 1
           stack.push(m)
         }
@@ -117,8 +173,11 @@ export function cutBackground(rgba, w, h, options) {
         continue
       }
       if (!nearBg(x, y)) continue
-      // a light edge pixel is mostly background bleeding in: drop it; a dark one is the object
-      if (minChannel(rgba, i) >= 225) {
+      // an edge pixel that is nearly the background color is background bleeding in: drop it
+      const bleed = options?.bg
+        ? maxDiff(rgba, i, options.bg) <= (options.tol ?? 14) * 2
+        : minChannel(rgba, i) >= 225
+      if (bleed) {
         out[i + 3] = 0
         continue
       }

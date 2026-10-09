@@ -13,7 +13,7 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { basename, dirname, extname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { cornersAreLight, cutBackground, hasTransparency, trimAlpha } from './stickers/cutout.mjs'
+import { cutBackground, detectBackground, hasTransparency, trimAlpha } from './stickers/cutout.mjs'
 import { decode, encodePng, resize } from './stickers/image.mjs'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
@@ -57,9 +57,10 @@ function formatManifest(data) {
 /** One source image as finished sticker pixels. */
 function prepare(file) {
   let image = decode(readFileSync(file))
-  // a sticker exported on white: make the white see-through
-  if (!hasTransparency(image.rgba) && cornersAreLight(image.rgba, image.width, image.height)) {
-    image = { ...image, rgba: cutBackground(image.rgba, image.width, image.height) }
+  // a sticker on a plain background (white, off-white, light grey): make that see-through
+  if (!hasTransparency(image.rgba)) {
+    const bg = detectBackground(image.rgba, image.width, image.height)
+    if (bg) image = { ...image, rgba: cutBackground(image.rgba, image.width, image.height, { bg }) }
   }
   image = trimAlpha(image, 3)
   const longest = Math.max(image.width, image.height)

@@ -1,5 +1,5 @@
 import { motion, useDragControls, useReducedMotion } from 'framer-motion'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { PACKS, findSticker, searchStickers } from '../../data/stickers'
 import Sticker, { stickerSize } from './Sticker'
 import './tray.css'
@@ -64,6 +64,14 @@ export default function Tray({ palette, onPick, prefs, open: openProp, onOpenCha
     ...PACKS.map(({ id, label }) => ({ id, label })),
   ]
   const activeTab = tabs.some((t) => t.id === tab) ? tab : tabs[0]?.id
+
+  // with a dozen or more packs the row scrolls sideways, so keep the chosen one in view
+  const tabListRef = useRef(null)
+  useEffect(() => {
+    tabListRef.current
+      ?.querySelector('[aria-selected="true"]')
+      ?.scrollIntoView?.({ inline: 'center', block: 'nearest', behavior: 'smooth' })
+  }, [activeTab, searching])
 
   const q = query.trim()
   const items = q
@@ -135,7 +143,7 @@ export default function Tray({ palette, onPick, prefs, open: openProp, onOpenCha
           >
             <SearchIcon />
           </button>
-          <div className="tray__tablist" role="tablist" aria-label="Sticker packs">
+          <div className="tray__tablist" role="tablist" aria-label="Sticker packs" ref={tabListRef}>
             {tabs.map((t) => (
               <button
                 key={t.id}

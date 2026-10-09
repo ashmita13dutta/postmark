@@ -4,6 +4,7 @@ import {
   cornersAreLight,
   cropObject,
   cutBackground,
+  detectBackground,
   findObjects,
   hasTransparency,
   trimAlpha,
@@ -193,6 +194,67 @@ describe('finding the objects on a sheet', () => {
     expect(out.width).toBe(1 + 4)
     expect(out.height).toBe(1 + 4)
     expect(out.rgba[(2 * out.width + 2) * 4 + 3]).toBe(255)
+  })
+})
+
+describe('sheets on a grey or off-white background', () => {
+  const w = 120
+  const h = 90
+  /** A plain-colored sheet with rectangles painted on it (each rect: x, y, w, h, color). */
+  function sheet(bg, rects) {
+    const rgba = Buffer.alloc(w * h * 4)
+    for (let p = 0; p < w * h; p++) rgba.set([bg[0], bg[1], bg[2], 255], p * 4)
+    for (const [x, y, rw, rh, c] of rects) {
+      for (let j = y; j < y + rh; j++) {
+        for (let i = x; i < x + rw; i++) rgba.set([c[0], c[1], c[2], 255], (j * w + i) * 4)
+      }
+    }
+    return rgba
+  }
+  const grey = [228, 228, 228]
+
+  it('finds the color a sheet was made on', () => {
+    expect(detectBackground(sheet(grey, [[40, 30, 20, 20, [200, 60, 50]]]), w, h)).toEqual(grey)
+    expect(detectBackground(sheet([252, 252, 252], []), w, h)).toEqual([252, 252, 252])
+    expect(detectBackground(sheet([244, 244, 236], []), w, h)).toEqual([244, 244, 236])
+  })
+
+  it('says there is no plain background when the border is busy', () => {
+    const rgba = Buffer.alloc(w * h * 4, 255)
+    for (let p = 0; p < w * h; p++)
+      rgba.set([(p * 37) % 256, (p * 91) % 256, (p * 53) % 256, 255], p * 4)
+    expect(detectBackground(rgba, w, h)).toBeNull()
+  })
+
+  it('treats the grey as background and keeps a sticker’s own white border', () => {
+    // a red sticker with a 3px white border, on grey
+    const rgba = sheet(grey, [
+      [30, 20, 40, 40, [255, 255, 255]],
+      [33, 23, 34, 34, [200, 60, 50]],
+    ])
+    const cut = cutBackground(rgba, w, h, { bg: grey })
+    expect(alphaAt(cut, w, 5, 5)).toBe(0) // the grey
+    expect(alphaAt(cut, w, 50, 40)).toBe(255) // the sticker
+    expect(alphaAt(cut, w, 35, 25)).toBe(255) // inside the white border, kept as part of it
+  })
+
+  it('finds the separate stickers on a grey sheet', () => {
+    const rgba = sheet(grey, [
+      [10, 10, 30, 30, [200, 60, 50]],
+      [70, 10, 30, 30, [50, 90, 200]],
+      [40, 55, 30, 25, [60, 160, 90]],
+    ])
+    const { objects } = findObjects(rgba, w, h, { bg: grey, minArea: 100 })
+    expect(objects.map((o) => [o.x, o.y])).toEqual([
+      [10, 10],
+      [70, 10],
+      [40, 55],
+    ])
+  })
+
+  it('without a background color, a grey sheet is not understood (so the old rule needs white)', () => {
+    const rgba = sheet(grey, [[40, 30, 20, 20, [200, 60, 50]]])
+    expect(findObjects(rgba, w, h, { minArea: 100 }).objects).toHaveLength(1) // the whole sheet
   })
 })
 

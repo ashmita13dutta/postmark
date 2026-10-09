@@ -210,7 +210,7 @@ them from your own pictures.
 **Adding stickers**
 
 1. Make a folder per pack inside `app/stickers-src/` and put images in it: `stickers-src/cozy/candle.png`.
-   PNG, JPG or WebP all work. If a picture sits on a plain white background, the white is removed for you.
+   PNG, JPG or WebP all work. If a picture sits on a plain background (white, off-white or light grey), the background is removed for you.
 2. From the `app` folder run `node scripts/build-stickers.mjs`. It trims and shrinks each image (no
    bigger than 256px on the long side), saves it under `public/stickers/`, and adds anything new to
    this file.
@@ -230,7 +230,10 @@ Running the script again is safe: your labels and keywords are kept, only new pi
 `node scripts/split-sheet.mjs sheet.jpg cozy` writes `stickers-src/cozy/sticker-01.png`, `sticker-02.png`
 and so on. Look at them, rename the good ones (`candle.png`), delete the rest, then run the build script.
 If two stickers touch and come out as one, run it again with `--split 4` (separates things that only
-touch) or draw a cut between them with `--cut x1,y1,x2,y2`.
+touch) or draw a cut between them with `--cut x1,y1,x2,y2`. The sheet's background color is found
+automatically (white, off-white and light grey all work). Thin shiny things like chrome sparkles and
+wire clips need a gentler cut: `--tol 6 --split 0 --gap 8`. White objects on a white sheet (a white
+cup) can lose their edges, so check the results before you build.
 
 **Only use pictures you have the right to use.** This app is published on a public website, so whatever
 you put in `public/stickers/` is public too.

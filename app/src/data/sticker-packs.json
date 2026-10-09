@@ -14,7 +14,8 @@
         { "file": "scarf", "label": "Scarf", "keywords": ["scarf", "winter", "cold", "knit", "warm", "fashion"], "w": 112, "h": 164 },
         { "file": "silk-pajamas", "label": "Silk pajamas", "keywords": ["silk", "pajamas", "pyjamas", "sleep", "night", "bedtime"], "w": 110, "h": 191 },
         { "file": "sleeping-cat", "label": "Sleeping cat", "keywords": ["sleeping", "cat", "kitten", "pet", "sleep", "nap", "animal", "cute"], "w": 184, "h": 99 },
-        { "file": "tea-kettle", "label": "Tea kettle", "keywords": ["tea", "kettle", "chai", "drink", "hot", "home"], "w": 126, "h": 136 }
+        { "file": "tea-kettle", "label": "Tea kettle", "keywords": ["tea", "kettle", "chai", "drink", "hot", "home"], "w": 126, "h": 136 },
+        { "file": "hoodie-bear", "label": "Hoodie bear", "keywords": ["hoodie", "bear", "teddy", "toy", "cute", "winter"], "w": 180, "h": 256 }
       ]
     },
     {
@@ -26,10 +27,14 @@
         { "file": "cocoa-mug", "label": "Cocoa mug", "keywords": ["cocoa", "mug", "hot chocolate", "gingerbread", "drink", "winter", "christmas"], "w": 101, "h": 104 },
         { "file": "coffee-cup", "label": "Coffee cup", "keywords": ["coffee", "cup", "espresso", "saucer", "drink", "cafe"], "w": 137, "h": 106 },
         { "file": "cupcake", "label": "Cupcake", "keywords": ["cupcake", "cake", "dessert", "sweet", "birthday", "frosting", "bake"], "w": 95, "h": 116 },
-        { "file": "dumplings", "label": "Dumplings", "keywords": ["dumplings", "momo", "dumpling", "food", "dinner", "bowl", "lunch"], "w": 157, "h": 98 },
+        { "file": "dumplings", "label": "Dumplings", "keywords": ["dumplings", "momo", "dumpling", "food", "dinner", "bowl", "lunch"], "w": 250, "h": 155 },
         { "file": "espresso-machine", "label": "Espresso machine", "keywords": ["espresso", "machine", "coffee", "barista", "kitchen"], "w": 101, "h": 118 },
         { "file": "knit-latte", "label": "Knit latte", "keywords": ["knit", "latte", "coffee", "mug", "drink", "cozy", "cappuccino"], "w": 115, "h": 102 },
-        { "file": "pancakes", "label": "Pancakes", "keywords": ["pancakes", "breakfast", "syrup", "butter", "food", "brunch", "sweet"], "w": 170, "h": 114 }
+        { "file": "pancakes", "label": "Pancakes", "keywords": ["pancakes", "breakfast", "syrup", "butter", "food", "brunch", "sweet"], "w": 170, "h": 114 },
+        { "file": "choc-pancakes", "label": "Choc pancakes", "keywords": ["choc", "pancakes", "chocolate", "breakfast", "brunch"], "w": 231, "h": 191 },
+        { "file": "choc-waffle", "label": "Choc waffle", "keywords": ["choc", "waffle", "chocolate", "breakfast", "brunch"], "w": 226, "h": 187 },
+        { "file": "coconut", "label": "Coconut", "keywords": ["coconut", "fruit", "tropical", "summer", "drink"], "w": 207, "h": 198 },
+        { "file": "takeaway-coffee", "label": "Takeaway coffee", "keywords": ["takeaway", "coffee", "cup", "drink", "latte"], "w": 196, "h": 248 }
       ]
     },
     {
@@ -49,24 +54,219 @@
       "stickers": [
         { "file": "cream-heart", "label": "Cream heart", "keywords": ["cream", "heart", "love", "soft", "valentine"], "w": 109, "h": 104 },
         { "file": "daisy", "label": "Daisy", "keywords": ["daisy", "flower", "bloom", "petal", "spring", "floral", "white"], "w": 109, "h": 108 },
-        { "file": "gift-box", "label": "Gift box", "keywords": ["gift", "box", "present", "ribbon", "birthday", "surprise"], "w": 120, "h": 134 },
+        { "file": "gift-box", "label": "Gift box", "keywords": ["gift", "box", "present", "ribbon", "birthday", "surprise"], "w": 214, "h": 241 },
         { "file": "gingham-bow", "label": "Gingham bow", "keywords": ["gingham", "bow", "ribbon", "check", "plaid", "gift", "fashion"], "w": 131, "h": 121 },
         { "file": "lipstick", "label": "Lipstick", "keywords": ["lipstick", "makeup", "beauty", "lips", "cosmetics"], "w": 54, "h": 151 },
         { "file": "ribbon-heart", "label": "Ribbon heart", "keywords": ["ribbon", "heart", "love", "valentine", "romance"], "w": 120, "h": 107 },
         { "file": "rose-bouquet", "label": "Rose bouquet", "keywords": ["rose", "bouquet", "roses", "flowers", "love", "romantic", "floral"], "w": 149, "h": 176 },
-        { "file": "shell-earrings", "label": "Shell earrings", "keywords": ["shell", "earrings", "jewelry", "beach", "gold"], "w": 134, "h": 126 }
+        { "file": "shell-earrings", "label": "Shell earrings", "keywords": ["shell", "earrings", "jewelry", "beach", "gold"], "w": 134, "h": 126 },
+        { "file": "makeup-bag", "label": "Makeup bag", "keywords": ["makeup", "bag", "beauty", "brushes", "pouch", "cosmetics"], "w": 215, "h": 238 }
       ]
     },
     {
       "id": "memories",
       "label": "Memories & travel",
       "stickers": [
-        { "file": "airplane", "label": "Airplane", "keywords": ["airplane", "plane", "flight", "travel", "trip", "holiday", "journey"], "w": 149, "h": 108 },
+        { "file": "airplane", "label": "Airplane", "keywords": ["airplane", "plane", "flight", "travel", "trip", "holiday", "journey"], "w": 238, "h": 173 },
         { "file": "book-stack", "label": "Book stack", "keywords": ["book", "stack", "books", "read", "study", "library", "school"], "w": 115, "h": 110 },
         { "file": "butterfly", "label": "Butterfly", "keywords": ["butterfly", "insect", "wings", "nature", "spring"], "w": 154, "h": 118 },
         { "file": "camera", "label": "Camera", "keywords": ["camera", "photo", "picture", "film", "memories", "snap"], "w": 134, "h": 105 },
         { "file": "grand-piano", "label": "Grand piano", "keywords": ["grand", "piano", "music", "instrument", "song", "keys"], "w": 166, "h": 172 },
-        { "file": "winter-trip", "label": "Winter trip", "keywords": ["winter", "trip", "earmuffs", "luggage", "suitcase", "travel", "headphones"], "w": 146, "h": 132 }
+        { "file": "winter-trip", "label": "Winter trip", "keywords": ["winter", "trip", "earmuffs", "luggage", "suitcase", "travel", "headphones"], "w": 146, "h": 132 },
+        { "file": "tan-books", "label": "Tan books", "keywords": ["tan", "books", "stack", "read", "library", "study"], "w": 199, "h": 246 }
+      ]
+    },
+    {
+      "id": "post",
+      "label": "Post & letters",
+      "stickers": [
+        { "file": "heart-envelope", "label": "Heart envelope", "keywords": ["heart", "envelope", "love", "cream", "post", "mail", "letter"], "w": 209, "h": 119 },
+        { "file": "heart-wax-seal", "label": "Heart wax seal", "keywords": ["heart", "wax", "seal", "love", "stamp", "post", "mail", "letter"], "w": 175, "h": 162 },
+        { "file": "rose-wax-seal", "label": "Rose wax seal", "keywords": ["rose", "wax", "seal", "flower", "red", "stamp", "post", "mail", "letter"], "w": 162, "h": 202 },
+        { "file": "swan-wax-seal", "label": "Swan wax seal", "keywords": ["swan", "wax", "seal", "stamp", "mauve", "post", "mail", "letter"], "w": 175, "h": 162 },
+        { "file": "tulip-envelope", "label": "Tulip envelope", "keywords": ["tulip", "envelope", "tulips", "flowers", "white", "card", "post", "mail", "letter"], "w": 191, "h": 205 }
+      ]
+    },
+    {
+      "id": "cherry",
+      "label": "Cherry red",
+      "stickers": [
+        { "file": "cherries", "label": "Cherries", "keywords": ["cherries", "fruit", "pair", "cherry", "red", "burgundy"], "w": 128, "h": 153 },
+        { "file": "cherry-bow", "label": "Cherry bow", "keywords": ["cherry", "bow", "cherries", "ribbon", "red", "burgundy"], "w": 162, "h": 177 },
+        { "file": "cherry-kiss-can", "label": "Cherry kiss can", "keywords": ["cherry", "kiss", "can", "soda", "drink", "cola", "red", "burgundy"], "w": 119, "h": 192 },
+        { "file": "dice", "label": "Dice", "keywords": ["dice", "game", "luck", "cherry", "red", "burgundy"], "w": 117, "h": 122 },
+        { "file": "disco-ball", "label": "Disco ball", "keywords": ["disco", "ball", "party", "mirror", "dance", "cherry", "red", "burgundy"], "w": 175, "h": 175 },
+        { "file": "eight-ball", "label": "Eight ball", "keywords": ["eight", "ball", "pool", "billiards", "black", "8", "cherry", "red", "burgundy"], "w": 112, "h": 115 },
+        { "file": "four-of-hearts", "label": "Four of hearts", "keywords": ["four", "of", "hearts", "playing", "card", "cards", "game", "cherry", "red", "burgundy"], "w": 101, "h": 146 },
+        { "file": "glitter-star", "label": "Glitter star", "keywords": ["glitter", "star", "sparkle", "cherry", "red", "burgundy"], "w": 115, "h": 121 },
+        { "file": "glossy-lips", "label": "Glossy lips", "keywords": ["glossy", "lips", "lipgloss", "smile", "cherry", "red", "burgundy"], "w": 187, "h": 157 },
+        { "file": "kiss-lips", "label": "Kiss lips", "keywords": ["kiss", "lips", "lipstick", "cherry", "red", "burgundy"], "w": 156, "h": 149 },
+        { "file": "love-patch", "label": "Love patch", "keywords": ["love", "patch", "heart", "embroidered", "quote", "cherry", "red", "burgundy"], "w": 177, "h": 170 },
+        { "file": "love-song-cd", "label": "Love song cd", "keywords": ["love", "song", "cd", "disc", "music", "songs", "mixtape", "cherry", "red", "burgundy"], "w": 171, "h": 169 },
+        { "file": "music-note", "label": "Music note", "keywords": ["music", "note", "song", "melody", "cherry", "red", "burgundy"], "w": 75, "h": 86 },
+        { "file": "red-books", "label": "Red books", "keywords": ["red", "books", "stack", "read", "library", "cherry", "burgundy"], "w": 122, "h": 143 },
+        { "file": "red-bow", "label": "Red bow", "keywords": ["red", "bow", "ribbon", "satin", "cherry", "burgundy"], "w": 122, "h": 153 },
+        { "file": "red-camera", "label": "Red camera", "keywords": ["red", "camera", "photo", "retro", "film", "cherry", "burgundy"], "w": 141, "h": 143 },
+        { "file": "red-rose-bouquet", "label": "Red rose bouquet", "keywords": ["red", "rose", "bouquet", "roses", "flowers", "love", "cherry", "burgundy"], "w": 189, "h": 256 },
+        { "file": "red-tumbler", "label": "Red tumbler", "keywords": ["red", "tumbler", "cup", "drink", "thermos", "cherry", "burgundy"], "w": 120, "h": 213 },
+        { "file": "seven-ball", "label": "Seven ball", "keywords": ["seven", "ball", "pool", "billiards", "snooker", "lucky", "7", "cherry", "red", "burgundy"], "w": 122, "h": 118 },
+        { "file": "stardust-heart", "label": "Stardust heart", "keywords": ["stardust", "heart", "quote", "wishes", "note", "cherry", "red", "burgundy"], "w": 200, "h": 200 },
+        { "file": "target-heart", "label": "Target heart", "keywords": ["target", "heart", "love", "retro", "stripes", "cherry", "red", "burgundy"], "w": 142, "h": 137 },
+        { "file": "vinyl-record", "label": "Vinyl record", "keywords": ["vinyl", "record", "music", "lp", "cherry", "red", "burgundy"], "w": 183, "h": 184 }
+      ]
+    },
+    {
+      "id": "pink",
+      "label": "Pink",
+      "stickers": [
+        { "file": "armchair-blanket", "label": "Armchair blanket", "keywords": ["armchair", "blanket", "chair", "home", "cozy", "pink", "girly", "coquette", "pastel"], "w": 111, "h": 70 },
+        { "file": "ballerina-arabesque", "label": "Ballerina arabesque", "keywords": ["ballerina", "arabesque", "ballet", "dance", "pink", "girly", "coquette", "pastel"], "w": 102, "h": 116 },
+        { "file": "ballerina-pose", "label": "Ballerina pose", "keywords": ["ballerina", "pose", "ballet", "dance", "pink", "girly", "coquette", "pastel"], "w": 82, "h": 113 },
+        { "file": "berry-waffles", "label": "Berry waffles", "keywords": ["berry", "waffles", "berries", "breakfast", "brunch", "pink", "girly", "coquette", "pastel"], "w": 115, "h": 104 },
+        { "file": "blanket-girl", "label": "Blanket girl", "keywords": ["blanket", "girl", "tea", "cozy", "pink", "girly", "coquette", "pastel"], "w": 103, "h": 97 },
+        { "file": "bow-boots", "label": "Bow boots", "keywords": ["bow", "boots", "shoes", "winter", "pink", "girly", "coquette", "pastel"], "w": 114, "h": 97 },
+        { "file": "bow-disco-ball", "label": "Bow disco ball", "keywords": ["bow", "disco", "ball", "party", "mirror", "pink", "girly", "coquette", "pastel"], "w": 97, "h": 111 },
+        { "file": "churros", "label": "Churros", "keywords": ["churros", "snack", "dessert", "pink", "girly", "coquette", "pastel"], "w": 78, "h": 118 },
+        { "file": "cookie-jar", "label": "Cookie jar", "keywords": ["cookie", "jar", "cookies", "gingerbread", "bake", "sweet", "pink", "girly", "coquette", "pastel"], "w": 85, "h": 115 },
+        { "file": "folded-blanket", "label": "Folded blanket", "keywords": ["folded", "blanket", "cozy", "plaid", "home", "pink", "girly", "coquette", "pastel"], "w": 112, "h": 94 },
+        { "file": "glazed-croissant", "label": "Glazed croissant", "keywords": ["glazed", "croissant", "pastry", "breakfast", "bake", "pink", "girly", "coquette", "pastel"], "w": 116, "h": 95 },
+        { "file": "heart-hands", "label": "Heart hands", "keywords": ["heart", "hands", "love", "gesture", "pink", "girly", "coquette", "pastel"], "w": 111, "h": 76 },
+        { "file": "hibiscus", "label": "Hibiscus", "keywords": ["hibiscus", "flower", "tropical", "pink", "girly", "coquette", "pastel"], "w": 111, "h": 109 },
+        { "file": "iced-latte-bow", "label": "Iced latte bow", "keywords": ["iced", "latte", "bow", "coffee", "drink", "pink", "girly", "coquette", "pastel"], "w": 67, "h": 114 },
+        { "file": "marshmallow-cocoa", "label": "Marshmallow cocoa", "keywords": ["marshmallow", "cocoa", "hot", "chocolate", "mug", "winter", "pink", "girly", "coquette", "pastel"], "w": 115, "h": 102 },
+        { "file": "pink-bathtub", "label": "Pink bathtub", "keywords": ["pink", "bathtub", "bath", "spa", "self", "care", "girly", "coquette", "pastel"], "w": 113, "h": 81 },
+        { "file": "pink-books", "label": "Pink books", "keywords": ["pink", "books", "stack", "read", "girly", "coquette", "pastel"], "w": 114, "h": 98 },
+        { "file": "pink-boots", "label": "Pink boots", "keywords": ["pink", "boots", "shoes", "winter", "fluffy", "girly", "coquette", "pastel"], "w": 111, "h": 87 },
+        { "file": "pink-bow", "label": "Pink bow", "keywords": ["pink", "bow", "ribbon", "satin", "girly", "coquette", "pastel"], "w": 112, "h": 82 },
+        { "file": "pink-candle", "label": "Pink candle", "keywords": ["pink", "candle", "light", "scented", "cozy", "girly", "coquette", "pastel"], "w": 82, "h": 111 },
+        { "file": "pink-car", "label": "Pink car", "keywords": ["pink", "car", "sports", "drive", "girly", "coquette", "pastel"], "w": 115, "h": 72 },
+        { "file": "pink-cinnamon-roll", "label": "Pink cinnamon roll", "keywords": ["pink", "cinnamon", "roll", "bun", "pastry", "sweet", "girly", "coquette", "pastel"], "w": 114, "h": 95 },
+        { "file": "pink-cocoa-mug", "label": "Pink cocoa mug", "keywords": ["pink", "cocoa", "mug", "hot", "chocolate", "marshmallow", "girly", "coquette", "pastel"], "w": 115, "h": 104 },
+        { "file": "pink-coffee-cup", "label": "Pink coffee cup", "keywords": ["pink", "coffee", "cup", "drink", "takeaway", "girly", "coquette", "pastel"], "w": 67, "h": 96 },
+        { "file": "pink-cupcake", "label": "Pink cupcake", "keywords": ["pink", "cupcake", "cake", "dessert", "sweet", "girly", "coquette", "pastel"], "w": 83, "h": 82 },
+        { "file": "pink-gingham-bow", "label": "Pink gingham bow", "keywords": ["pink", "gingham", "bow", "ribbon", "check", "girly", "coquette", "pastel"], "w": 108, "h": 115 },
+        { "file": "pink-kiss", "label": "Pink kiss", "keywords": ["pink", "kiss", "lips", "girly", "coquette", "pastel"], "w": 204, "h": 161 },
+        { "file": "pink-lily", "label": "Pink lily", "keywords": ["pink", "lily", "flower", "bloom", "girly", "coquette", "pastel"], "w": 251, "h": 256 },
+        { "file": "pink-moon", "label": "Pink moon", "keywords": ["pink", "moon", "night", "full", "girly", "coquette", "pastel"], "w": 157, "h": 156 },
+        { "file": "pink-scrunchie", "label": "Pink scrunchie", "keywords": ["pink", "scrunchie", "hair", "accessory", "girly", "coquette", "pastel"], "w": 113, "h": 107 },
+        { "file": "pink-shell", "label": "Pink shell", "keywords": ["pink", "shell", "seashell", "beach", "girly", "coquette", "pastel"], "w": 114, "h": 100 },
+        { "file": "pink-swan", "label": "Pink swan", "keywords": ["pink", "swan", "bird", "feathers", "ballet", "girly", "coquette", "pastel"], "w": 107, "h": 110 },
+        { "file": "pink-tulip", "label": "Pink tulip", "keywords": ["pink", "tulip", "flower", "girly", "coquette", "pastel"], "w": 89, "h": 114 },
+        { "file": "pink-tulips", "label": "Pink tulips", "keywords": ["pink", "tulips", "flowers", "bouquet", "girly", "coquette", "pastel"], "w": 98, "h": 116 },
+        { "file": "rose-cake", "label": "Rose cake", "keywords": ["rose", "cake", "dessert", "roses", "wedding", "birthday", "pink", "girly", "coquette", "pastel"], "w": 86, "h": 97 },
+        { "file": "rose-teddy", "label": "Rose teddy", "keywords": ["rose", "teddy", "bear", "plush", "toy", "pink", "girly", "coquette", "pastel"], "w": 180, "h": 175 },
+        { "file": "soft-pink-bow", "label": "Soft pink bow", "keywords": ["soft", "pink", "bow", "ribbon", "watercolor", "girly", "coquette", "pastel"], "w": 215, "h": 201 },
+        { "file": "soft-pink-heart", "label": "Soft pink heart", "keywords": ["soft", "pink", "heart", "love", "watercolor", "girly", "coquette", "pastel"], "w": 131, "h": 120 },
+        { "file": "starfish", "label": "Starfish", "keywords": ["starfish", "beach", "sea", "pink", "girly", "coquette", "pastel"], "w": 104, "h": 86 },
+        { "file": "strawberry-latte", "label": "Strawberry latte", "keywords": ["strawberry", "latte", "drink", "cream", "pink", "girly", "coquette", "pastel"], "w": 68, "h": 114 },
+        { "file": "strawberry", "label": "Strawberry", "keywords": ["strawberry", "fruit", "pink", "girly", "coquette", "pastel"], "w": 95, "h": 111 },
+        { "file": "teddy-bear", "label": "Teddy bear", "keywords": ["teddy", "bear", "toy", "cute", "pink", "girly", "coquette", "pastel"], "w": 88, "h": 112 },
+        { "file": "three-ball", "label": "Three ball", "keywords": ["three", "ball", "pool", "billiards", "3", "pink", "girly", "coquette", "pastel"], "w": 177, "h": 178 },
+        { "file": "white-tulips", "label": "White tulips", "keywords": ["white", "tulips", "flowers", "bouquet", "pink", "girly", "coquette", "pastel"], "w": 105, "h": 115 }
+      ]
+    },
+    {
+      "id": "matcha",
+      "label": "Matcha green",
+      "stickers": [
+        { "file": "be-mine-heart", "label": "Be mine heart", "keywords": ["be", "mine", "heart", "candy", "valentine", "love", "green", "matcha", "sage", "pastel"], "w": 183, "h": 160 },
+        { "file": "flower-cd", "label": "Flower cd", "keywords": ["flower", "cd", "disc", "flowers", "music", "green", "matcha", "sage", "pastel"], "w": 132, "h": 132 },
+        { "file": "green-butterfly", "label": "Green butterfly", "keywords": ["green", "butterfly", "wings", "insect", "nature", "matcha", "sage", "pastel"], "w": 247, "h": 196 },
+        { "file": "green-gingham-bow", "label": "Green gingham bow", "keywords": ["green", "gingham", "bow", "ribbon", "check", "matcha", "sage", "pastel"], "w": 182, "h": 164 },
+        { "file": "green-orchid", "label": "Green orchid", "keywords": ["green", "orchid", "flower", "bloom", "matcha", "sage", "pastel"], "w": 203, "h": 173 },
+        { "file": "matcha-latte", "label": "Matcha latte", "keywords": ["matcha", "latte", "coffee", "drink", "art", "green", "sage", "pastel"], "w": 173, "h": 170 },
+        { "file": "matcha-milkshake", "label": "Matcha milkshake", "keywords": ["matcha", "milkshake", "drink", "shake", "straw", "green", "sage", "pastel"], "w": 104, "h": 256 },
+        { "file": "mochi", "label": "Mochi", "keywords": ["mochi", "dessert", "sweet", "japanese", "green", "matcha", "sage", "pastel"], "w": 256, "h": 170 },
+        { "file": "pistachio-cake", "label": "Pistachio cake", "keywords": ["pistachio", "cake", "slice", "dessert", "green", "matcha", "sage", "pastel"], "w": 212, "h": 169 }
+      ]
+    },
+    {
+      "id": "blue",
+      "label": "Blue",
+      "stickers": [
+        { "file": "blue-balloon", "label": "Blue balloon", "keywords": ["blue", "balloon", "party", "birthday", "navy"], "w": 99, "h": 256 },
+        { "file": "blue-camera", "label": "Blue camera", "keywords": ["blue", "camera", "photo", "retro", "navy"], "w": 256, "h": 176 },
+        { "file": "blue-flower", "label": "Blue flower", "keywords": ["blue", "flower", "bloom", "watercolor", "navy"], "w": 256, "h": 253 },
+        { "file": "blue-gingham-bow", "label": "Blue gingham bow", "keywords": ["blue", "gingham", "bow", "ribbon", "check", "navy"], "w": 185, "h": 192 },
+        { "file": "blue-heart-large", "label": "Blue heart large", "keywords": ["blue", "heart", "large", "love", "watercolor", "navy"], "w": 139, "h": 133 },
+        { "file": "blue-heart-small", "label": "Blue heart small", "keywords": ["blue", "heart", "small", "love", "watercolor", "navy"], "w": 62, "h": 60 },
+        { "file": "blue-heart", "label": "Blue heart", "keywords": ["blue", "heart", "love", "watercolor", "navy"], "w": 93, "h": 93 },
+        { "file": "blue-star-patch-2", "label": "Blue star patch 2", "keywords": ["blue", "star", "patch", "2", "embroidered", "navy"], "w": 186, "h": 183 },
+        { "file": "blue-star-patch", "label": "Blue star patch", "keywords": ["blue", "star", "patch", "embroidered", "navy"], "w": 183, "h": 184 },
+        { "file": "navy-bow", "label": "Navy bow", "keywords": ["navy", "bow", "ribbon", "satin", "blue"], "w": 256, "h": 190 },
+        { "file": "note-and-gifts", "label": "Note and gifts", "keywords": ["note", "and", "gifts", "clipboard", "memo", "presents", "stars", "blue", "navy"], "w": 249, "h": 256 },
+        { "file": "party-hat", "label": "Party hat", "keywords": ["party", "hat", "birthday", "celebrate", "blue", "navy"], "w": 105, "h": 166 },
+        { "file": "tulip-bouquet", "label": "Tulip bouquet", "keywords": ["tulip", "bouquet", "tulips", "flowers", "hearts", "white", "blue", "navy"], "w": 218, "h": 256 }
+      ]
+    },
+    {
+      "id": "sunshine",
+      "label": "Sunshine yellow",
+      "stickers": [
+        { "file": "big-yellow-bow", "label": "Big yellow bow", "keywords": ["big", "yellow", "bow", "ribbon", "satin", "sunshine", "sunny"], "w": 222, "h": 256 },
+        { "file": "gold-star-patch", "label": "Gold star patch", "keywords": ["gold", "star", "patch", "embroidered", "yellow", "sunshine", "sunny"], "w": 203, "h": 206 },
+        { "file": "lemon-cake", "label": "Lemon cake", "keywords": ["lemon", "cake", "dessert", "slice", "yellow", "sunshine", "sunny"], "w": 143, "h": 140 },
+        { "file": "plumeria", "label": "Plumeria", "keywords": ["plumeria", "frangipani", "flower", "tropical", "yellow", "sunshine", "sunny"], "w": 168, "h": 167 },
+        { "file": "star-button", "label": "Star button", "keywords": ["star", "button", "sewing", "yellow", "sunshine", "sunny"], "w": 203, "h": 199 },
+        { "file": "sunflower", "label": "Sunflower", "keywords": ["sunflower", "flower", "summer", "yellow", "sunshine", "sunny"], "w": 165, "h": 169 },
+        { "file": "typewriter", "label": "Typewriter", "keywords": ["typewriter", "writing", "letter", "retro", "yellow", "sunshine", "sunny"], "w": 218, "h": 242 },
+        { "file": "yellow-bunny", "label": "Yellow bunny", "keywords": ["yellow", "bunny", "rabbit", "plush", "toy", "cute", "sunshine", "sunny"], "w": 256, "h": 251 },
+        { "file": "yellow-butterfly", "label": "Yellow butterfly", "keywords": ["yellow", "butterfly", "wings", "nature", "sunshine", "sunny"], "w": 251, "h": 255 },
+        { "file": "yellow-gingham-bow", "label": "Yellow gingham bow", "keywords": ["yellow", "gingham", "bow", "check", "sunshine", "sunny"], "w": 169, "h": 238 },
+        { "file": "yellow-lily", "label": "Yellow lily", "keywords": ["yellow", "lily", "flower", "bloom", "sunshine", "sunny"], "w": 256, "h": 248 },
+        { "file": "yellow-ribbon", "label": "Yellow ribbon", "keywords": ["yellow", "ribbon", "bow", "satin", "sunshine", "sunny"], "w": 256, "h": 129 },
+        { "file": "yellow-star-flower", "label": "Yellow star flower", "keywords": ["yellow", "star", "flower", "bloom", "sunshine", "sunny"], "w": 242, "h": 256 }
+      ]
+    },
+    {
+      "id": "vintage",
+      "label": "Vintage gold",
+      "stickers": [
+        { "file": "burgundy-button", "label": "Burgundy button", "keywords": ["burgundy", "button", "sewing", "vintage", "gold", "antique"], "w": 168, "h": 168 },
+        { "file": "burgundy-hibiscus", "label": "Burgundy hibiscus", "keywords": ["burgundy", "hibiscus", "flower", "bloom", "vintage", "gold", "antique"], "w": 223, "h": 233 },
+        { "file": "cream-hibiscus", "label": "Cream hibiscus", "keywords": ["cream", "hibiscus", "flower", "bloom", "vintage", "gold", "antique"], "w": 213, "h": 201 },
+        { "file": "gold-button", "label": "Gold button", "keywords": ["gold", "button", "sewing", "vintage", "antique"], "w": 204, "h": 203 },
+        { "file": "gold-clip", "label": "Gold clip", "keywords": ["gold", "clip", "bulldog", "paper", "stationery", "vintage", "antique"], "w": 178, "h": 149 },
+        { "file": "heart-frame", "label": "Heart frame", "keywords": ["heart", "frame", "picture", "vintage", "gold", "antique"], "w": 244, "h": 256 },
+        { "file": "heart-locket", "label": "Heart locket", "keywords": ["heart", "locket", "necklace", "444", "angel", "number", "vintage", "gold", "antique"], "w": 191, "h": 228 },
+        { "file": "lace-butterfly", "label": "Lace butterfly", "keywords": ["lace", "butterfly", "embroidered", "vintage", "gold", "antique"], "w": 189, "h": 162 },
+        { "file": "lace-ribbon", "label": "Lace ribbon", "keywords": ["lace", "ribbon", "bow", "cream", "vintage", "gold", "antique"], "w": 145, "h": 256 },
+        { "file": "swan", "label": "Swan", "keywords": ["swan", "bird", "ornament", "vintage", "gold", "antique"], "w": 197, "h": 162 }
+      ]
+    },
+    {
+      "id": "chrome",
+      "label": "Chrome & Y2K",
+      "stickers": [
+        { "file": "chrome-heart", "label": "Chrome heart", "keywords": ["chrome", "heart", "love", "silver", "y2k", "shiny", "metal"], "w": 176, "h": 140 },
+        { "file": "chrome-loop", "label": "Chrome loop", "keywords": ["chrome", "loop", "infinity", "swirl", "rainbow", "silver", "y2k", "shiny", "metal"], "w": 216, "h": 219 },
+        { "file": "chrome-star", "label": "Chrome star", "keywords": ["chrome", "star", "silver", "y2k", "shiny", "metal"], "w": 194, "h": 194 },
+        { "file": "diamond-sparkle", "label": "Diamond sparkle", "keywords": ["diamond", "sparkle", "star", "outline", "chrome", "silver", "y2k", "shiny", "metal"], "w": 173, "h": 174 },
+        { "file": "double-ring", "label": "Double ring", "keywords": ["double", "ring", "rings", "orbit", "sparkle", "chrome", "silver", "y2k", "shiny", "metal"], "w": 248, "h": 233 },
+        { "file": "mini-sparkle", "label": "Mini sparkle", "keywords": ["mini", "sparkle", "star", "twinkle", "chrome", "silver", "y2k", "shiny", "metal"], "w": 68, "h": 74 },
+        { "file": "orbit-sparkles", "label": "Orbit sparkles", "keywords": ["orbit", "sparkles", "stars", "chrome", "silver", "y2k", "shiny", "metal"], "w": 167, "h": 179 },
+        { "file": "puffy-star-big", "label": "Puffy star big", "keywords": ["puffy", "star", "big", "chrome", "silver", "y2k", "shiny", "metal"], "w": 192, "h": 174 },
+        { "file": "puffy-star", "label": "Puffy star", "keywords": ["puffy", "star", "chrome", "silver", "y2k", "shiny", "metal"], "w": 136, "h": 141 },
+        { "file": "ring-sparkle", "label": "Ring sparkle", "keywords": ["ring", "sparkle", "orbit", "star", "chrome", "silver", "y2k", "shiny", "metal"], "w": 226, "h": 230 },
+        { "file": "saturn", "label": "Saturn", "keywords": ["saturn", "planet", "space", "ring", "chrome", "silver", "y2k", "shiny", "metal"], "w": 256, "h": 124 },
+        { "file": "star-outline", "label": "Star outline", "keywords": ["star", "outline", "chrome", "silver", "y2k", "shiny", "metal"], "w": 146, "h": 150 },
+        { "file": "thin-sparkle", "label": "Thin sparkle", "keywords": ["thin", "sparkle", "star", "twinkle", "chrome", "silver", "y2k", "shiny", "metal"], "w": 97, "h": 97 },
+        { "file": "twin-sparkles", "label": "Twin sparkles", "keywords": ["twin", "sparkles", "stars", "chrome", "silver", "y2k", "shiny", "metal"], "w": 185, "h": 222 },
+        { "file": "wide-sparkle", "label": "Wide sparkle", "keywords": ["wide", "sparkle", "star", "twinkle", "chrome", "silver", "y2k", "shiny", "metal"], "w": 131, "h": 131 }
+      ]
+    },
+    {
+      "id": "journal",
+      "label": "Journal bits",
+      "stickers": [
+        { "file": "bubbles", "label": "Bubbles", "keywords": ["bubbles", "soap", "sparkle", "journal", "scrapbook", "stationery", "metal"], "w": 200, "h": 212 },
+        { "file": "charm-pin-big", "label": "Charm pin big", "keywords": ["charm", "pin", "big", "safety", "heart", "jewelry", "journal", "scrapbook", "stationery", "metal"], "w": 256, "h": 128 },
+        { "file": "charm-pin", "label": "Charm pin", "keywords": ["charm", "pin", "safety", "heart", "jewelry", "journal", "scrapbook", "stationery", "metal"], "w": 215, "h": 108 },
+        { "file": "clip-and-pin", "label": "Clip and pin", "keywords": ["clip", "and", "pin", "bulldog", "safety", "journal", "scrapbook", "stationery", "metal"], "w": 256, "h": 139 },
+        { "file": "long-paperclip", "label": "Long paperclip", "keywords": ["long", "paperclip", "clip", "office", "paper", "journal", "scrapbook", "stationery", "metal"], "w": 182, "h": 160 },
+        { "file": "paperclip", "label": "Paperclip", "keywords": ["paperclip", "clip", "journal", "scrapbook", "stationery", "metal"], "w": 167, "h": 183 },
+        { "file": "push-pin", "label": "Push pin", "keywords": ["push", "pin", "thumbtack", "board", "wood", "journal", "scrapbook", "stationery", "metal"], "w": 145, "h": 196 },
+        { "file": "safety-pin", "label": "Safety pin", "keywords": ["safety", "pin", "journal", "scrapbook", "stationery", "metal"], "w": 188, "h": 178 }
       ]
     }
   ]
