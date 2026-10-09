@@ -1,0 +1,35 @@
+{
+  "about": "The on-device note reader's model, pinned to one exact revision. `npm run model` downloads these files into public/models/<id>/ and refuses any file whose size or sha256 differs, so every build uses the same model. To change models: edit this file, run `npm run model`, then `npm run train:head` (the trained head depends on the exact model).",
+  "id": "e5-small-v2",
+  "source": {
+    "repo": "Xenova/e5-small-v2",
+    "revision": "02af79985278377e65c724a76275707cb0333c70",
+    "upstream": "intfloat/e5-small-v2",
+    "license": "MIT"
+  },
+  "dtype": "q8",
+  "pooling": "mean",
+  "prefix": "query: ",
+  "files": [
+    {
+      "path": "config.json",
+      "bytes": 598,
+      "sha256": "a45cbfdbc729148119afa0284a366fcaea47522a260790a02cd8aafba9fd5896"
+    },
+    {
+      "path": "tokenizer.json",
+      "bytes": 711396,
+      "sha256": "d241a60d5e8f04cc1b2b3e9ef7a4921b27bf526d9f6050ab90f9267a1f9e5c66"
+    },
+    {
+      "path": "tokenizer_config.json",
+      "bytes": 366,
+      "sha256": "9261e7d79b44c8195c1cada2b453e55b00aeb81e907a6664974b4d7776172ab3"
+    },
+    {
+      "path": "onnx/model_quantized.onnx",
+      "bytes": 34014367,
+      "sha256": "7d9092cb25f2bd1c023b7e8d2aa459044a02030ac880e5a59fdaf27af69f1ded"
+    }
+  ]
+}

@@ -17,6 +17,7 @@ export const SETTING_DEFAULTS = {
   appLock: false,
   onboarded: false,
   stripFrames: 3, // photo-booth strip: 3 or 4 frames
+  smartReading: null, // the on-device note reader: null = not asked yet, 'on', or 'off'
 }
 
 export class SealedError extends Error {
@@ -57,6 +58,8 @@ export function makeQueries(db) {
     if (key === 'deliveryDay') return setDeliveryDay(value)
     if (key === 'stripFrames' && value !== 3 && value !== 4)
       throw new Error('stripFrames is 3 or 4')
+    if (key === 'smartReading' && value !== null && value !== 'on' && value !== 'off')
+      throw new Error("smartReading is null, 'on' or 'off'")
     await db.settings.put({ key, value })
   }
 
@@ -163,6 +166,32 @@ export function makeQueries(db) {
     await db.moments.put(opened)
     return opened
   }
+
+  // ---- corrections: notes you told the reader it had read wrong ----
+
+  const MAX_CORRECTIONS = 400 // plenty; the oldest go first
+
+  /** Remember how a day's note really felt. One per day: a new one replaces the old. */
+  async function saveCorrection(day, { text, vector, guess, feeling }) {
+    await db.transaction('rw', db.corrections, async () => {
+      await db.corrections.put({
+        id: day,
+        text,
+        vector: Array.from(vector, (v) => Math.round(v * 1e4) / 1e4),
+        guess,
+        feeling,
+        createdAt: now(),
+      })
+      const extra = (await db.corrections.count()) - MAX_CORRECTIONS
+      if (extra > 0) {
+        const oldest = await db.corrections.orderBy('createdAt').limit(extra).primaryKeys()
+        await db.corrections.bulkDelete(oldest)
+      }
+    })
+  }
+  const clearCorrection = (day) => db.corrections.delete(day)
+  const getCorrections = () => db.corrections.orderBy('createdAt').toArray()
+  const forgetCorrections = () => db.corrections.clear()
 
   // ---- postcard decorations ----
 
@@ -311,6 +340,10 @@ export function makeQueries(db) {
     decorationsFor,
     getSeal,
     allSeals,
+    saveCorrection,
+    clearCorrection,
+    getCorrections,
+    forgetCorrections,
     delayedForMonth,
     addDecoration,
     updateDecoration,

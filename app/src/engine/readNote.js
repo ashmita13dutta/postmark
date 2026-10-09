@@ -1,29 +1,80 @@
 import { feelings } from '../data/feelings.json'
 import { topics } from '../data/topics.json'
-import { detectMood } from './mood'
+import { VIVID_FEELINGS, detectMood } from './mood'
 import { buildPalette } from './palette'
+import { mixSignals } from './reader/mix'
 
 /**
- * Everything the Today screen needs from a note: what the engine read, what you corrected, and the
+ * Everything the Today screen needs from a note: what the app read, what you corrected, and the
  * stamp colors that result.
  *
- *   readNote({ text, day, hour, month, lexicon, override }) -> { mood, feeling, topic, built, corrected }
+ *   readNote({ text, day, hour, month, lexicon, override, reader, corrections })
+ *     -> { mood, guess, feeling, topic, energy, built, corrected }
  *
- * `override` is what you said it really was: { feeling?, topic? }. A correction wins over the
- * engine's guess, and the palette is rebuilt from it. Unknown ids are ignored, so a stale value
- * can never break the screen. `mood` is always the engine's own untouched reading.
+ * HOW A FEELING IS CHOSEN
+ *   - `reader` is the on-device language model's reading of this note ({ vector, probs } from
+ *     reader/client.js). When it has one, the reader decides the feeling, adjusted by words you
+ *     taught and by earlier corrections of near-identical notes. Without it (not downloaded, still
+ *     loading, unsupported) the built-in keyword method decides, exactly as before.
+ *   - `override` is what you said it really was: { feeling?, topic? }. A correction always wins over
+ *     the app's guess, and the palette is rebuilt from it. Unknown ids are ignored, so a stale value
+ *     can never break the screen.
+ *
+ * `mood` is always the keyword engine's own untouched reading (it also supplies the topic, color
+ * words and taught words). `guess` is the app's feeling before your correction:
+ *   { feeling, source: 'reader' | 'words', ranked: [{ id, p }] }  (ranked is best first; p is a
+ *   probability for the reader and null for the keyword method)
  */
-export function readNote({ text, day, hour, month, profile, lexicon, override = {} }) {
+export function readNote({
+  text,
+  day,
+  hour,
+  month,
+  profile,
+  lexicon,
+  override = {},
+  reader = null,
+  corrections = [],
+}) {
   const mood = detectMood({ text, hour, month, profile, lexicon })
-  const feeling = feelings[override.feeling] ? override.feeling : mood.feeling
+
+  let guess = {
+    feeling: mood.feeling,
+    source: 'words',
+    ranked: [
+      { id: mood.feeling, p: null },
+      ...mood.scores.feelings
+        .filter(([id]) => id !== mood.feeling)
+        .map(([id]) => ({ id, p: null })),
+    ],
+  }
+  if (reader && text.trim()) {
+    const mixed = mixSignals({
+      probs: reader.probs,
+      vector: reader.vector,
+      corrections,
+      taughtFeelings: mood.taughtFeelings,
+    })
+    guess = { feeling: mixed.ranked[0].id, source: 'reader', ranked: mixed.ranked }
+  }
+
+  const feeling = feelings[override.feeling] ? override.feeling : guess.feeling
   const topic = topics[override.topic] ? override.topic : mood.topic
   const corrected = {
-    feeling: feeling !== mood.feeling,
+    feeling: feeling !== guess.feeling,
     topic: topic !== mood.topic,
   }
-  // a corrected feeling is yours, not the engine's: it is neither "vivid" by guesswork nor tinted
-  // by words that were read for a different feeling
-  const energy = corrected.feeling ? 'soft' : mood.energy
+
+  // How bright should the stamp be? A corrected feeling is yours, not the app's, so it is soft. The
+  // keyword method works it out itself. For the reader: a loud feeling stays vivid when the note
+  // has an exclamation mark or the reader is quite sure.
+  let energy = mood.energy
+  if (corrected.feeling) energy = 'soft'
+  else if (guess.source === 'reader') {
+    const sure = guess.ranked[0].p >= 0.5 || text.includes('!')
+    energy = VIVID_FEELINGS.has(feeling) && sure ? 'vivid' : 'soft'
+  }
+
   const built = buildPalette({
     feeling,
     topic,
@@ -35,5 +86,5 @@ export function readNote({ text, day, hour, month, profile, lexicon, override = 
     tints: mood.tints,
     tintStrong: mood.tintStrong,
   })
-  return { mood, feeling, topic, built, corrected }
+  return { mood, guess, feeling, topic, energy, built, corrected }
 }

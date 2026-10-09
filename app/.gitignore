@@ -4,3 +4,6 @@ dev-dist
 *.local
 .DS_Store
 tests/corpus/.last-run.txt
+# the note reader's model is downloaded by `npm run model`; the training cache is generated
+public/models/
+.cache/

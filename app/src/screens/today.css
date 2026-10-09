@@ -216,3 +216,24 @@
   font: 400 12px var(--font-ui);
   color: var(--ink-60);
 }
+
+/* the reader's other guesses, one tap away under Felt / About */
+.today__alts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+.today__alts button {
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--ink-15);
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--ink);
+  font: 400 14px var(--font-ui);
+}
+.today__alts button:active {
+  background: var(--ink-08);
+}

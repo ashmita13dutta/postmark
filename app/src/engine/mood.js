@@ -166,7 +166,7 @@ const POSITIVE = new Set([
   'inspired',
 ])
 // Feelings that can be loud. An emphatic note in one of these gets a vivid palette.
-const VIVID_FEELINGS = new Set(['joyful', 'excited', 'proud', 'loving', 'angry'])
+export const VIVID_FEELINGS = new Set(['joyful', 'excited', 'proud', 'loving', 'angry'])
 
 /**
  * The forms a keyword can take in a note: rain -> rains, rained, raining. We expand the keyword
@@ -676,6 +676,8 @@ export function detectMood({ text = '', hour, month, profile, lexicon }) {
     tintWords: tintList,
     // which of YOUR taught words shaped this reading
     taught: [...new Set(hits.filter((h) => h.taught).map((h) => h.word))],
+    // the feelings those taught words stand for (the reader gives them extra weight)
+    taughtFeelings: [...new Set(hits.filter((h) => h.taught && h.kind === 'feeling').map((h) => h.id))],
     secondaryTopic,
     feelingWords: f.words.get(rankedFeelings[0]) ?? [],
     topicWords: t.words.get(topicFromWords) ?? [],

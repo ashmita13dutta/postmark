@@ -1,8 +1,9 @@
 import { useLiveQuery } from 'dexie-react-hooks'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Screen from '../app/Screen'
 import WaxSeal from '../components/postcard/WaxSeal'
+import ReaderCard from '../components/reader/ReaderCard'
 import Stamp from '../components/stamp/Stamp'
 import TeachPanel from '../components/teach/TeachPanel'
 import { feelings } from '../data/feelings.json'
@@ -12,6 +13,8 @@ import { BLANK_PALETTE } from '../db/moments'
 import { queries } from '../db/queries'
 import { buildLexicon, contextAt } from '../engine/mood'
 import { setSwatch } from '../engine/palette'
+import { classify } from '../engine/reader/client'
+import { useReader } from '../engine/reader/useReader'
 import { readNote } from '../engine/readNote'
 import { now } from '../lib/clock'
 import { dayOfYear, parseDay, todayKey } from '../lib/dates'
@@ -72,6 +75,12 @@ function Editor({ day, existing }) {
     existing?.paletteSource === 'manual' ? existing.palette : null,
   )
   const [fixing, setFixing] = useState(false)
+  // the on-device reader's latest reading of the note: { text, vector, probs }, or { text, none: true }
+  // when it could not read it
+  const [read, setRead] = useState(null)
+  // what you did about the feeling this visit: 'set' (picked one), 'clear' (took the app's), or null
+  const [intent, setIntent] = useState(null)
+  const reader = useReader()
   const [status, setStatus] = useState(null)
   const [busy, setBusy] = useState(false)
   const navigate = useNavigate()
@@ -85,14 +94,50 @@ function Editor({ day, existing }) {
     null,
   )
   const lexiconRows = useLiveQuery(() => queries.getLexicon(), [], [])
+  // notes you corrected on other days (today's own does not count towards itself)
+  const corrections = useLiveQuery(
+    async () => (await queries.getCorrections()).filter((c) => c.id !== day),
+    [day],
+    [],
+  )
   const lexicon = useMemo(() => buildLexicon(lexiconRows), [lexiconRows])
 
   const hasNote = text.trim().length > 0
   const r = useMemo(
-    () => readNote({ text, day, hour: clock.hour, month: clock.month, lexicon, override }),
-    [text, day, clock.hour, clock.month, lexicon, override],
+    () =>
+      readNote({
+        text,
+        day,
+        hour: clock.hour,
+        month: clock.month,
+        lexicon,
+        override,
+        reader: hasNote && read && !read.none ? read : null,
+        corrections,
+      }),
+    [text, hasNote, day, clock.hour, clock.month, lexicon, override, read, corrections],
   )
   const sealed = existing?.sealedAt != null
+  // Stamp it waits a moment after you stop typing, until the reader has read what is in the box, so
+  // the saved feeling never comes from a slightly older version of the note
+  const waitingOnReader =
+    reader.status === 'ready' && !sealed && hasNote && read?.text !== text.trim()
+
+  // let the reader read the note whenever typing pauses (the stamp keeps its last reading meanwhile)
+  useEffect(() => {
+    const note = text.trim()
+    if (reader.status !== 'ready' || sealed || !note) return
+    let live = true
+    const timer = setTimeout(async () => {
+      const giveUp = new Promise((resolve) => setTimeout(() => resolve(null), 8000))
+      const result = await Promise.race([classify(note), giveUp]).catch(() => null)
+      if (live) setRead(result ? { text: note, ...result } : { text: note, none: true })
+    }, 450)
+    return () => {
+      live = false
+      clearTimeout(timer)
+    }
+  }, [text, reader.status, sealed])
   // once sealed, show the colors that were saved, not a fresh reading of the note
   const palette = sealed ? existing.palette : !hasNote ? BLANK_PALETTE : (custom ?? r.built.colors)
   const seal = useLiveQuery(
@@ -107,11 +152,18 @@ function Editor({ day, existing }) {
     existing.topic === r.topic &&
     existing.palette.map((c) => c.hex).join() === palette.map((c) => c.hex).join()
 
+  // the reader's next two guesses, one tap away (the right feeling is among its top three about
+  // 95% of the time)
+  const alternatives =
+    r.guess.source === 'reader' ? r.guess.ranked.filter((a) => a.id !== r.feeling).slice(0, 2) : []
+
   const streak = currentStreak(days, day)
   const prompt = prompts[dayOfYear(day) % prompts.length]
 
   function pickFeeling(id) {
-    setOverride((o) => ({ ...o, feeling: id === r.mood.feeling ? undefined : id }))
+    const same = id === r.guess.feeling
+    setOverride((o) => ({ ...o, feeling: same ? undefined : id }))
+    setIntent(same ? 'clear' : 'set')
     setCustom(null)
   }
   function pickTopic(id) {
@@ -120,6 +172,29 @@ function Editor({ day, existing }) {
   }
   function recolor(i, hex) {
     setCustom(setSwatch(palette, i, hex).palette)
+  }
+
+  // Keep a feeling you chose (with the note's exact words) so a near-identical note follows it, or
+  // forget it if you went back to the app's own reading. Never blocks stamping.
+  async function rememberCorrection() {
+    try {
+      if (intent === 'clear') await queries.clearCorrection(day)
+      else if (intent === 'set' && override.feeling && override.feeling !== r.guess.feeling) {
+        const result = await classify(text.trim())
+        if (result) {
+          await queries.saveCorrection(day, {
+            text: text.trim(),
+            vector: result.vector,
+            guess: r.guess.feeling,
+            feeling: override.feeling,
+          })
+        }
+      }
+    } catch {
+      /* the stamp matters more than the memory */
+    } finally {
+      setIntent(null)
+    }
   }
 
   async function stampIt() {
@@ -133,6 +208,7 @@ function Editor({ day, existing }) {
         palette,
         paletteSource: custom ? 'manual' : 'moment',
       })
+      await rememberCorrection()
       setStatus({ ok: true, text: `Stamped as No. ${m.stampNo}. You can still change it today.` })
       navigate('/reveal')
     } catch (err) {
@@ -154,6 +230,8 @@ function Editor({ day, existing }) {
         </Link>
       )}
 
+      <ReaderCard />
+
       {sealed ? (
         // a sealed note is simply not shown until it is delivered (spec 6.2)
         <div className="today__sealed">
@@ -173,7 +251,10 @@ function Editor({ day, existing }) {
         <textarea
           className="today__note"
           value={text}
-          onChange={(e) => setText(e.target.value)}
+          onChange={(e) => {
+            setText(e.target.value)
+            if (!e.target.value.trim()) setRead(null)
+          }}
           rows={5}
           placeholder={prompt}
           aria-label="Your note"
@@ -232,9 +313,19 @@ function Editor({ day, existing }) {
               {fixing ? 'Done' : 'Not quite?'}
             </button>
           </div>
+          {!fixing && alternatives.length > 0 && (
+            <div className="today__alts" role="group" aria-label="Or did it feel">
+              <span className="lbl">Or</span>
+              {alternatives.map((a) => (
+                <button key={a.id} onClick={() => pickFeeling(a.id)}>
+                  {feelings[a.id].label}
+                </button>
+              ))}
+            </div>
+          )}
           {(r.corrected.feeling || r.corrected.topic) && !fixing && (
             <p className="today__fixed">
-              You set this. The app read “{feelings[r.mood.feeling].label}”.
+              You set this. The app read “{feelings[r.guess.feeling].label}”.
             </p>
           )}
 
@@ -250,7 +341,7 @@ function Editor({ day, existing }) {
                     onClick={() => pickFeeling(f)}
                   >
                     {feelings[f].label}
-                    {r.mood.feeling === f && <small> · app’s guess</small>}
+                    {r.guess.feeling === f && <small> · app’s guess</small>}
                   </button>
                 ))}
               </div>
@@ -273,13 +364,19 @@ function Editor({ day, existing }) {
                 ))}
               </select>
               {(r.corrected.feeling || r.corrected.topic) && (
-                <button className="today__link" onClick={() => setOverride({})}>
+                <button
+                  className="today__link"
+                  onClick={() => {
+                    setOverride({})
+                    setIntent('clear')
+                  }}
+                >
                   Let the app read it again
                 </button>
               )}
               <TeachPanel
                 text={text}
-                mood={r.mood}
+                mood={{ ...r.mood, feeling: r.guess.feeling }}
                 lexicon={lexicon}
                 onSave={(entries) => queries.teachWords(entries)}
                 preset={
@@ -301,8 +398,20 @@ function Editor({ day, existing }) {
             {status.text}
           </p>
         )}
-        <button className="today__stamp" onClick={stampIt} disabled={!hasNote || busy || sealed}>
-          {sealed ? 'Sealed' : saved ? 'Stamped ✓' : existing ? 'Update stamp' : 'Stamp it'}
+        <button
+          className="today__stamp"
+          onClick={stampIt}
+          disabled={!hasNote || busy || sealed || waitingOnReader}
+        >
+          {sealed
+            ? 'Sealed'
+            : waitingOnReader
+              ? 'Reading…'
+              : saved
+                ? 'Stamped ✓'
+                : existing
+                  ? 'Update stamp'
+                  : 'Stamp it'}
         </button>
       </div>
     </Screen>

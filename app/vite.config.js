@@ -19,6 +19,13 @@ function commit() {
 
 export default defineConfig({
   base,
+  resolve: {
+    // The note reader runs a language model in a web worker. This picks the build of the model
+    // runtime that expects us to hand it its WebAssembly file (see src/engine/reader/reader.worker.js), so
+    // the app hosts it itself instead of fetching a bigger copy from a public CDN.
+    conditions: ['onnxruntime-web-use-extern-wasm'],
+  },
+  worker: { format: 'es' },
   define: {
     __APP_COMMIT__: JSON.stringify(commit()),
     __APP_BUILT__: JSON.stringify(new Date().toISOString()),
@@ -66,7 +73,15 @@ export default defineConfig({
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,woff2,json}'],
         // launch screens and the share card are only fetched by the phone / link previewers, no need offline
-        globIgnores: ['splash/**', '**/noto-color-emoji-*', 'og-card.png', 'icon-1024.png'],
+        globIgnores: [
+          'splash/**',
+          '**/noto-color-emoji-*',
+          'og-card.png',
+          'icon-1024.png',
+          // the reader's model (about 34 MB) is only fetched when you turn smart reading on, and the
+          // reader caches it itself, so it must not be part of the install
+          'models/**',
+        ],
         // emoji font chunks are big (up to ~1 MB each), so cache each one the first time it is shown
         runtimeCaching: [
           {

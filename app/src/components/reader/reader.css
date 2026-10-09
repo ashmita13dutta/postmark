@@ -1,0 +1,127 @@
+/* Today's card for the on-device note reader, and the matching row on You. Uses the frosted-glass
+   variables when the visual layer defines them and plain card colors when it does not. */
+.reader {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border: var(--glass-border, 1px solid var(--ink-12));
+  border-radius: 14px;
+  background: var(--glass-bg, var(--card-warm));
+  -webkit-backdrop-filter: var(--glass-blur, none);
+  backdrop-filter: var(--glass-blur, none);
+  box-shadow: var(--glass-shadow, none);
+  /* a reader that opens from the cache in a second or two never needs to be seen */
+  animation: reader-in 0.25s ease 0.8s both;
+}
+.reader h2 {
+  margin: 0 0 4px;
+  font: 500 15px var(--font-ui);
+}
+.reader p {
+  margin: 0;
+  font: 400 13px/1.45 var(--font-ui);
+  color: var(--ink-60);
+}
+.reader--quiet p {
+  font-size: 12px;
+}
+.reader__actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+.reader__yes,
+.reader__no {
+  flex: 1;
+  min-height: 44px;
+  border-radius: var(--r-pill);
+  font: 500 14px var(--font-ui);
+}
+.reader__yes {
+  border: 0;
+  background: var(--postmark);
+  color: var(--card-warm);
+}
+.reader__no {
+  border: 1px solid var(--ink-15);
+  background: transparent;
+  color: var(--ink);
+}
+.reader__bar {
+  height: 4px;
+  margin-top: 8px;
+  border-radius: 2px;
+  background: var(--ink-08);
+  overflow: hidden;
+}
+.reader__bar i {
+  display: block;
+  height: 100%;
+  border-radius: 2px;
+  background: var(--postmark);
+  transition: width 0.2s linear;
+}
+.reader__bar--wait i {
+  width: 35%;
+  animation: reader-wait 1.2s ease-in-out infinite;
+}
+
+@keyframes reader-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes reader-wait {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(290%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reader,
+  .reader__bar--wait i {
+    animation: none;
+  }
+}
+
+/* the row on You */
+.reader-setting {
+  margin-top: 18px;
+  padding: 14px 16px;
+  border: var(--glass-border, 1px solid var(--ink-12));
+  border-radius: 14px;
+  background: var(--glass-bg, var(--card-warm));
+}
+.reader-setting h2 {
+  margin: 0 0 4px;
+  font: 500 15px var(--font-ui);
+}
+.reader-setting p {
+  margin: 0;
+  font: 400 13px/1.45 var(--font-ui);
+  color: var(--ink-60);
+}
+.reader-setting__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+.reader-setting button {
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--ink-15);
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--ink);
+  font: 500 14px var(--font-ui);
+}
+.reader-setting button.primary {
+  border: 0;
+  background: var(--postmark);
+  color: var(--card-warm);
+}

@@ -2,3 +2,5 @@ dist
 dev-dist
 # hand-edited content: keep the compact layout so it is easy to read and review
 src/data/*.json
+# the labelled notes are laid out one note per line; reformatting them makes huge diffs
+tests/corpus/*.json

@@ -239,3 +239,19 @@ you put in `public/stickers/` is public too.
 die-cut edge on or off, and wash a picture sticker in a tone (Original, Cream, Cocoa, Rose, Sage, Mono).
 The tones, and the colors in each, are listed in `src/data/stickers.js` (`TONES`). The last look you
 chose is what the next sticker starts with, so a card can share one cozy palette.
+
+---
+
+## feelingHead.json (generated: do not edit)
+
+The note reader (the on-device language model, see the main README) turns a note into 384 numbers.
+`feelingHead.json` holds the last layer that turns those numbers into a probability for each of the
+16 feelings. It is **generated** from the labelled notes in `tests/corpus/`, so it is not edited by
+hand like the other files here. To change what the reader thinks:
+
+1. add or fix labelled notes in `tests/corpus/` (one note per line: `["text", ["feeling", ...], ["topic", ...]]`),
+2. run `npm run train:head` (add `-- --cv` to see a cross-validated score first),
+3. run `npm test`, which checks the file still matches the model in `scripts/model/manifest.json`.
+
+The built-in keyword method (`feelings.json` and the rest of this page) is unaffected. It still
+supplies the topic, color words, anything you taught, and the whole reading when the reader is off.

@@ -19,6 +19,10 @@
  *  redeliveries     { monthKey, momentId }                  delayed-in-transit pick, fixed per month
  *  volumes          { year, coverStickers, closedAt }
  *  settings         { key, value }
+ *  corrections      { id (the day), text, vector: number[384], guess, feeling, createdAt }
+ *                   a note you told the app it had read wrong: the note, its embedding from the
+ *                   on-device reader, what the app guessed, and the feeling you chose. One per day.
+ *                   Later near-identical notes follow it; it is also real, labelled data.
  *  lexicon          { word, kind: 'feeling'|'topic', id, parts, example, createdAt }   words you taught
  *                   `word` is the word or phrase written joined ("bekaar", "passedaway"); one row
  *                   per word, so teaching a word again replaces what it meant before.
@@ -27,7 +31,7 @@
  */
 import Dexie from 'dexie'
 
-export const SCHEMA_VERSION = 2
+export const SCHEMA_VERSION = 3
 
 export class PostmarkDB extends Dexie {
   constructor(name = 'postmark') {
@@ -51,6 +55,10 @@ export class PostmarkDB extends Dexie {
     // v2: the words you teach the mood engine. Only the new table is listed; the rest carry over.
     this.version(2).stores({
       lexicon: 'word, kind, id',
+    })
+    // v3: notes you corrected, kept for the on-device reader. Only the new table is listed.
+    this.version(3).stores({
+      corrections: 'id, createdAt',
     })
   }
 }
