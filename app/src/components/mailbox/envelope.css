@@ -6,6 +6,23 @@
 .env svg {
   display: block;
 }
+/* the layered paper envelope is drawn at 270 x 190 and scaled to fit */
+.env__paper {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 270px;
+  height: 190px;
+  transform-origin: 0 0;
+}
+.env__paper > svg {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.env__flap {
+  filter: drop-shadow(0 2px 1.5px rgba(60, 35, 10, 0.35));
+}
 /* the wax sits on the tip of the flap: 50% across, about two thirds down */
 .env__wax {
   position: absolute;
@@ -16,7 +33,7 @@
 }
 .env--aged {
   transform: rotate(-2.5deg);
-  filter: sepia(0.35) drop-shadow(0 3px 3px rgba(42, 38, 32, 0.18));
+  filter: sepia(0.2) drop-shadow(0 3px 3px rgba(42, 38, 32, 0.18));
 }
 .env--ghost {
   filter: none;
@@ -28,7 +45,8 @@
   stroke-dasharray: 8 7;
 }
 
+
 /* a delayed letter has its top-right corner torn off */
-.env--delayed svg {
+.env--delayed .env__paper > svg:not(.env__marks) {
   clip-path: polygon(0 0, 81% 0, 87% 7%, 84.5% 13.5%, 91.5% 19%, 100% 16%, 100% 100%, 0 100%);
 }

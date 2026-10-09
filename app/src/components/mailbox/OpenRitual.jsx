@@ -4,10 +4,9 @@ import { queries } from '../../db/queries'
 import WaxSeal from '../postcard/WaxSeal'
 import LetterView from './LetterView'
 import './open-ritual.css'
+import Paper from './Paper'
 
-const KRAFT = '#d8c6a0'
-const KRAFT_DARK = '#c2ad82'
-const DEFAULT_WAX = { color: '#B14126', emblem: 'heart' }
+const DEFAULT_WAX = { color: '#B14126', emblem: 'rose' }
 
 /**
  * The opening ritual (spec 8.6): tap the envelope, the wax seal cracks in two, the flap opens,
@@ -70,30 +69,16 @@ export default function OpenRitual({ moment, seal, onClose }) {
           disabled={phase === 'opening'}
           aria-label="Open the envelope"
         >
-          <svg className="ritual__back" viewBox="0 0 270 190" width="270" height="190">
-            <rect width="270" height="190" rx="6" fill={KRAFT_DARK} />
-          </svg>
+          <Paper part="back" className="ritual__back" />
           <span className="ritual__card" data-p="card" style={{ transform: 'translateY(100px)' }} />
-          <svg className="ritual__front" viewBox="0 0 270 190" width="270" height="190">
-            <path d="M0 0 L135 125 L270 0 V190 H0 Z" fill={KRAFT} />
-            <path d="M0 0 L135 125 L270 0" fill="none" stroke={KRAFT_DARK} strokeWidth="2" />
-            <path d="M0 190 L100 105 M270 190 L170 105" stroke={KRAFT_DARK} strokeWidth="1.5" />
-          </svg>
-          <svg
-            className="ritual__flap"
-            data-p="flap"
-            viewBox="0 0 270 130"
-            width="270"
-            height="130"
-          >
-            <path d="M0 0 H270 L135 125 Z" fill="#cdb98f" stroke={KRAFT_DARK} strokeWidth="2" />
-          </svg>
+          <Paper part="front" className="ritual__front" />
+          <Paper part="flap" className="ritual__flap" data-p="flap" />
           <span className="ritual__wax">
             <span data-p="waxL" className="ritual__half ritual__half--l">
-              <WaxSeal color={wax.color} emblem={wax.emblem} initial={wax.initial} size={64} />
+              <WaxSeal color={wax.color} emblem={wax.emblem} initial={wax.initial} size={84} />
             </span>
             <span data-p="waxR" className="ritual__half ritual__half--r">
-              <WaxSeal color={wax.color} emblem={wax.emblem} initial={wax.initial} size={64} />
+              <WaxSeal color={wax.color} emblem={wax.emblem} initial={wax.initial} size={84} />
             </span>
           </span>
         </button>

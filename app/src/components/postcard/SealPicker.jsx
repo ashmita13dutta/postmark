@@ -1,28 +1,18 @@
 import { useState } from 'react'
-import { WAX_COLORS, WAX_EMBLEMS } from '../../data/stickers'
+import { WAX_COLORS } from '../../data/stickers'
 import WaxSeal from './WaxSeal'
 import './sealpicker.css'
 
 /**
- * "Choose your wax seal": colour and emblem, with a live preview. `onSeal({ color, emblem,
- * initial? })` is called when you confirm; `onCancel` when you back out.
+ * "Choose your wax seal": pick the wax colour, with a live preview of the pressed seal.
+ * `onSeal({ color, emblem })` is called when you confirm; `onCancel` when you back out.
  */
 export default function SealPicker({ busy, error, onSeal, onCancel }) {
   const [color, setColor] = useState(WAX_COLORS[0].hex)
-  const [emblem, setEmblem] = useState('heart')
-  const [initial, setInitial] = useState('')
-  const [problem, setProblem] = useState(null)
+  const emblem = 'rose'
 
   function confirm() {
-    if (emblem === 'initial' && !initial.trim()) {
-      setProblem('Type a letter for your seal')
-      return
-    }
-    onSeal(
-      emblem === 'initial'
-        ? { color, emblem, initial: initial.trim().slice(0, 1).toUpperCase() }
-        : { color, emblem },
-    )
+    onSeal({ color, emblem })
   }
 
   return (
@@ -37,7 +27,7 @@ export default function SealPicker({ busy, error, onSeal, onCancel }) {
         <h2>Choose your wax seal</h2>
         <p className="sealpick__sub">Once it is sealed, the note is hidden until it arrives.</p>
         <div className="sealpick__preview">
-          <WaxSeal color={color} emblem={emblem} initial={initial} size={104} />
+          <WaxSeal color={color} emblem={emblem} size={120} />
         </div>
 
         <div className="sealpick__row" role="radiogroup" aria-label="Wax color">
@@ -54,41 +44,9 @@ export default function SealPicker({ busy, error, onSeal, onCancel }) {
           ))}
         </div>
 
-        <div className="sealpick__row" role="radiogroup" aria-label="Emblem">
-          {WAX_EMBLEMS.map((e) => (
-            <button
-              key={e.id}
-              role="radio"
-              aria-checked={emblem === e.id}
-              className={`sealpick__chip${emblem === e.id ? ' on' : ''}`}
-              onClick={() => {
-                setEmblem(e.id)
-                setProblem(null)
-              }}
-            >
-              {e.label}
-            </button>
-          ))}
-        </div>
-
-        {emblem === 'initial' && (
-          <label className="sealpick__initial">
-            Your letter
-            <input
-              value={initial}
-              maxLength={1}
-              autoCapitalize="characters"
-              onChange={(e) => {
-                setInitial(e.target.value)
-                setProblem(null)
-              }}
-              aria-invalid={!!problem}
-            />
-          </label>
-        )}
-        {(problem || error) && (
+        {error && (
           <p className="sealpick__error" role="alert">
-            {problem ?? error}
+            {error}
           </p>
         )}
 

@@ -157,3 +157,9 @@ export const WAX_EMBLEMS = [
   { id: 'moon', label: 'Moon' },
   { id: 'initial', label: 'Initial' },
 ]
+  { hex: '#7A1F26', name: 'Oxblood' },
+  { hex: '#D98A9B', name: 'Rose petal' },
+  { hex: '#2B3350', name: 'Midnight' },
+  { hex: '#2F6B68', name: 'Teal river' },
+  { hex: '#3A3633', name: 'Charcoal' },
+  { id: 'rose', label: 'Rose' },

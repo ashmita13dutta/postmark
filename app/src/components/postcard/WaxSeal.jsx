@@ -1,69 +1,85 @@
 import { useId } from 'react'
+import { hexToRgb } from '../../lib/color'
 
-// A slightly wobbly disc, like wax that has been pressed and has squeezed out at the edges.
-const BLOB =
-  'M50 5 C62 3 72 9 79 17 C90 20 96 31 94 43 C99 54 95 66 87 74 C84 86 72 93 60 93 C52 99 40 98 33 91 C21 90 11 81 10 69 C2 59 3 46 10 37 C10 23 21 13 34 12 C39 7 44 5 50 5Z'
+const SEAL_SRC = `${import.meta.env.BASE_URL}wax/seal-rose.png`
+// the photo is 480 x 505: sit it in a square box so every caller can keep sizing it as before
+const BOX = 505
 
-const EMBLEMS = {
-  heart: 'M50 70 C32 58 30 44 39 39 C45 36 50 40 50 45 C50 40 55 36 61 39 C70 44 68 58 50 70Z',
-  star: 'M50 30 L55.5 43.5 L70 44.5 L59 54 L62.5 68 L50 60.5 L37.5 68 L41 54 L30 44.5 L44.5 43.5Z',
-  moon: 'M56 31 A20 20 0 1 0 68 58 A15 15 0 0 1 56 31Z',
+const mix = ([r, g, b], [r2, g2, b2], t) => [r + (r2 - r) * t, g + (g2 - g) * t, b + (b2 - b) * t]
+const channel = (rgbs, i) => rgbs.map((c) => (c[i] / 255).toFixed(3)).join(' ')
+
+/** Five wax tones, from the deepest groove to the brightest shine, for any wax colour. */
+export function waxRamp(hex) {
+  const base = hexToRgb(hex)
+  return [
+    mix(base, [10, 2, 2], 0.7),
+    mix(base, [10, 2, 2], 0.38),
+    base,
+    mix(base, [255, 245, 235], 0.3),
+    mix(base, [255, 250, 245], 0.72),
+  ]
+}
+
+/** A small, steady tilt per seal, so a stack of same-colour seals never looks stamped by a machine. */
+function tiltFor(seed) {
+  let h = 2166136261
+  for (const ch of String(seed)) h = Math.imul(h ^ ch.charCodeAt(0), 16777619)
+  return (((h >>> 0) % 2100) / 100 - 10.5).toFixed(1)
 }
 
 /**
- * A stick of sealing wax pressed into a postcard.
+ * A real stick of sealing wax pressed into a postcard: a photograph of a rose seal, recoloured
+ * through its own light and shadow so the relief, sheen and rough rim stay real in any colour.
  *  - color:   the wax, any hex
- *  - emblem:  'heart' | 'star' | 'moon' | 'initial'
- *  - initial: the letter shown when emblem is 'initial'
+ *  - emblem:  kept for older seals ('heart', 'star', 'moon', 'initial', 'rose'); every seal now
+ *             carries the rose impression
+ *  - initial: unused, kept so stored seals still load
  *  - size:    px
+ *  - seed:    anything steady (a moment id); picks this seal's tilt
  */
-export default function WaxSeal({ color = '#B14126', emblem = 'heart', initial = '', size = 96 }) {
+export default function WaxSeal({ color = '#B14126', emblem, initial, seed, size = 96 }) {
   const uid = useId().replace(/[^a-zA-Z0-9]/g, '')
+  const ramp = waxRamp(color)
   return (
-    <svg viewBox="0 0 100 100" width={size} height={size} role="img" aria-label="Wax seal">
+    <svg
+      viewBox={`0 0 ${BOX} ${BOX}`}
+      width={size}
+      height={size}
+      role="img"
+      aria-label="Wax seal"
+      data-emblem={emblem}
+      data-initial={initial}
+      style={{ overflow: 'visible' }}
+    >
       <defs>
-        <radialGradient id={`${uid}g`} cx="0.35" cy="0.3" r="0.85">
-          <stop offset="0" stopColor="#fff" stopOpacity=".45" />
-          <stop offset="0.45" stopColor="#fff" stopOpacity="0" />
-          <stop offset="1" stopColor="#000" stopOpacity=".4" />
-        </radialGradient>
+        <filter id={`${uid}w`} colorInterpolationFilters="sRGB" x="0" y="0" width="1" height="1">
+          <feColorMatrix
+            type="matrix"
+            values="0.43 1.43 0.14 0 0  0.43 1.43 0.14 0 0  0.43 1.43 0.14 0 0  0 0 0 1 0"
+          />
+          <feComponentTransfer>
+            <feFuncR type="table" tableValues={channel(ramp, 0)} />
+            <feFuncG type="table" tableValues={channel(ramp, 1)} />
+            <feFuncB type="table" tableValues={channel(ramp, 2)} />
+          </feComponentTransfer>
+        </filter>
+        <filter id={`${uid}s`} x="-20%" y="-20%" width="140%" height="150%">
+          <feDropShadow dx="0" dy="9" stdDeviation="9" floodColor="#2a0d08" floodOpacity="0.38" />
+        </filter>
       </defs>
-      <path d={BLOB} fill={color} />
-      <path d={BLOB} fill={`url(#${uid}g)`} />
-      <circle
-        cx="50"
-        cy="50"
-        r="31"
-        fill="none"
-        stroke="#000"
-        strokeOpacity=".28"
-        strokeWidth="2"
-      />
-      <circle
-        cx="50"
-        cy="50"
-        r="31"
-        fill="none"
-        stroke="#fff"
-        strokeOpacity=".22"
-        strokeWidth="1"
-        transform="translate(1 1)"
-      />
-      {emblem === 'initial' ? (
-        <text
-          x="50"
-          y="63"
-          textAnchor="middle"
-          fontSize="36"
-          fontFamily="var(--font-display)"
-          fill="#000"
-          fillOpacity=".38"
-        >
-          {(initial || '').slice(0, 1).toUpperCase()}
-        </text>
-      ) : (
-        <path d={EMBLEMS[emblem] ?? EMBLEMS.heart} fill="#000" fillOpacity=".34" />
-      )}
+      <g
+        filter={`url(#${uid}s)`}
+        transform={`rotate(${tiltFor(seed ?? color)} ${BOX / 2} ${BOX / 2})`}
+      >
+        <image
+          href={SEAL_SRC}
+          x={(BOX - 480) / 2}
+          y="0"
+          width="480"
+          height="505"
+          filter={`url(#${uid}w)`}
+        />
+      </g>
     </svg>
   )
 }

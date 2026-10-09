@@ -1,11 +1,10 @@
 import { useAnimate } from 'framer-motion'
 import { useEffect, useRef } from 'react'
+import Paper from '../mailbox/Paper'
 import Stamp from '../stamp/Stamp'
 import WaxSeal from './WaxSeal'
 import './sealsequence.css'
 
-const KRAFT = '#d8c6a0'
-const KRAFT_DARK = '#c2ad82'
 
 /**
  * Seal & send: the postcard slides into an envelope, the flap closes, the wax seal presses down,
@@ -56,29 +55,19 @@ export default function SealSequence({ moment, seal, onDone }) {
   return (
     <div className="sealseq" ref={scope} aria-hidden="true">
       <div className="sealseq__env" data-p="env" style={{ opacity: 0 }}>
-        <svg className="sealseq__back" viewBox="0 0 270 190" width="270" height="190">
-          <rect width="270" height="190" rx="6" fill={KRAFT_DARK} />
-        </svg>
+        <Paper part="back" className="sealseq__back" />
         <div className="sealseq__card" data-p="card">
           <Stamp colors={moment.palette.map((c) => c.hex)} seed={moment.day} width={54} small />
         </div>
-        <svg className="sealseq__front" viewBox="0 0 270 190" width="270" height="190">
-          <path d="M0 0 L135 125 L270 0 V190 H0 Z" fill={KRAFT} />
-          <path d="M0 0 L135 125 L270 0" fill="none" stroke={KRAFT_DARK} strokeWidth="2" />
-          <path d="M0 190 L100 105 M270 190 L170 105" stroke={KRAFT_DARK} strokeWidth="1.5" />
-        </svg>
-        <svg
+        <Paper part="front" className="sealseq__front" />
+        <Paper
+          part="flap"
           className="sealseq__flap"
           data-p="flap"
-          viewBox="0 0 270 130"
-          width="270"
-          height="130"
           style={{ transform: 'rotateX(180deg)' }}
-        >
-          <path d="M0 0 H270 L135 125 Z" fill="#cdb98f" stroke={KRAFT_DARK} strokeWidth="2" />
-        </svg>
+        />
         <div className="sealseq__wax" data-p="wax" style={{ opacity: 0 }}>
-          <WaxSeal color={seal.color} emblem={seal.emblem} initial={seal.initial} size={64} />
+          <WaxSeal color={seal.color} emblem={seal.emblem} initial={seal.initial} size={84} />
         </div>
       </div>
     </div>
