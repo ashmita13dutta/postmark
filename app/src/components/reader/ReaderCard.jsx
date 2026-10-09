@@ -9,7 +9,7 @@ import './reader.css'
 const mb = (bytes) => Math.round(bytes / 1e6)
 
 /**
- * Today's card for the on-device note reader. It asks once (a one-time download of about 50 MB),
+ * Today's card for the on-device note reader. It asks once (a one-time download of about 30 MB),
  * shows the download, and offers a retry if it fails. When the reader is ready, or the browser
  * cannot run it, or you said no, it shows nothing and the screen is exactly as before.
  */
@@ -31,7 +31,7 @@ export default function ReaderCard() {
         <h2>Read my notes more carefully</h2>
         <p>
           A small reader that lives on your phone and understands what you wrote. It is a one-time
-          download of about 50 MB, then it works offline. Your notes never leave your phone.
+          download of about 30 MB, then it works offline. Your notes never leave your phone.
         </p>
         <div className="reader__actions">
           <button

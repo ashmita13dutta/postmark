@@ -41,8 +41,9 @@ and always works, offline, from the first launch. The **note reader** is a small
 the roommates." reads as content instead of bored. It runs in a web worker on the phone: **your
 notes never leave the phone**, and after the first download it works offline.
 
-- It is opt-in. Today asks once, then downloads about 50 MB (the model plus its runtime), kept in the
-  browser's cache. You can switch it off or on again under You.
+- It is opt-in. Today asks once, then downloads about 30 MB (the model plus its runtime, compressed;
+  about 50 MB of space once unpacked), kept in the browser's cache. You can switch it off or on again
+  under You.
 - Where it is not available (not downloaded yet, still loading, an old browser) the built-in way is
   used, exactly as before.
 - The model is not in git. `npm run model` downloads it from Hugging Face at one pinned revision and

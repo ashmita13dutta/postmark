@@ -61,7 +61,7 @@ export default function ReaderSetting() {
                 startReader()
               }}
             >
-              Turn on (about 50 MB, once)
+              Turn on (about 30 MB, once)
             </button>
           ))}
         {on && reader.status === 'error' && (
