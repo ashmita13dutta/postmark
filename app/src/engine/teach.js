@@ -59,14 +59,15 @@ export function suggestSelection(tokens) {
  * phrase ("passed" + "away" -> "passedaway"), up to five words. A lone filler word is skipped.
  * @param {ReturnType<typeof teachableTokens>} tokens
  * @param {Iterable<number>} selected token indexes
- * @param {'feeling'|'topic'} kind
- * @param {string} id a feeling or topic id
+ * @param {'feeling'|'topic'|'tint'} kind
+ * @param {string} id a feeling, topic or color (or, for a feeling, the id of one of your moods)
+ * @param {Map} [moods] your moods (buildMoods)
  * @returns {{ word: string, kind: string, id: string, parts: number }[]}
  */
-export function entriesFromSelection(tokens, selected, kind, id) {
+export function entriesFromSelection(tokens, selected, kind, id, moods) {
   const known =
     kind === 'feeling'
-      ? feelings[id]
+      ? feelings[id] || moods?.has(id)
       : kind === 'topic'
         ? topics[id]
         : kind === 'tint' && /^#[0-9A-Fa-f]{6}$/.test(id ?? '')

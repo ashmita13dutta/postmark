@@ -5,7 +5,7 @@ import colorNames from '../src/data/colornames.json'
 import { feelings, defaultFeeling } from '../src/data/feelings.json'
 import palettes from '../src/data/palettes.json'
 import { topics, fallback } from '../src/data/topics.json'
-import { chroma, hexDistance, hexToOklab } from '../src/lib/color'
+import { chroma, hexDistance, hexToOklab, oklabDistance } from '../src/lib/color'
 import { LIMITS } from '../src/lib/contentRules'
 
 const HEX = /^#[0-9A-Fa-f]{6}$/
@@ -175,8 +175,12 @@ describe('colornames.json', () => {
       ...Object.values(palettes).flatMap((l) => l.flatMap((p) => p.colors)),
       ...topicIds.flatMap((id) => topics[id].accents),
     ]
+    // each name is converted once; converting both colors for every pair made this test slow enough
+    // to time out when the machine was busy
+    const nameLabs = colorNames.map((c) => hexToOklab(c.hex))
     for (const hex of hexes) {
-      const best = Math.min(...colorNames.map((c) => hexDistance(hex, c.hex)))
+      const lab = hexToOklab(hex)
+      const best = Math.min(...nameLabs.map((n) => oklabDistance(lab, n)))
       expect(best, `${hex} needs a color name nearby`).toBeLessThanOrEqual(LIMITS.nameMatch)
     }
   })

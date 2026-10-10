@@ -12,6 +12,7 @@ import { topics, fallback } from '../data/topics.json'
 import { namePalette } from '../engine/colorNames'
 import { paletteFromImageFile } from '../engine/colorExtract'
 import { buildLexicon, detectMood, contextAt } from '../engine/mood'
+import { buildMoods } from '../engine/moods'
 import { buildPalette, composePalette } from '../engine/palette'
 import { queries } from '../db/queries'
 import { now } from '../lib/clock'
@@ -124,6 +125,10 @@ function NoteView() {
   // the words you taught live in this phone's database; the page re-reads when they change
   const lexiconRows = useLiveQuery(() => queries.getLexicon(), [], [])
   const lexicon = useMemo(() => buildLexicon(lexiconRows), [lexiconRows])
+  // only so that words taught to one of your moods show its name here; this page reads notes with the
+  // built-in moods alone
+  const moodRows = useLiveQuery(() => queries.getMoods(), [], [])
+  const moods = useMemo(() => buildMoods(moodRows), [moodRows])
 
   const mood = useMemo(
     () => detectMood({ text, hour, month, profile, lexicon }),
@@ -291,6 +296,7 @@ function NoteView() {
 
       <MyWords
         lexicon={lexiconRows}
+        moods={moods}
         onForget={(word) => queries.forgetWord(word)}
         onForgetAll={() => queries.forgetAllWords()}
       />

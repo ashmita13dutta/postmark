@@ -2,8 +2,13 @@ import { useMemo, useState } from 'react'
 import { feelings } from '../../data/feelings.json'
 import { topics } from '../../data/topics.json'
 import tintData from '../../data/tints.json'
+import { moodLabel } from '../../engine/moods'
 import { entriesFromSelection, suggestSelection, teachableTokens } from '../../engine/teach'
+import MoodEditor from '../moods/MoodEditor'
+import MoodStrip from '../moods/MoodStrip'
 import './teach.css'
+
+const NO_MOODS = new Map()
 
 const FEELING_IDS = Object.keys(feelings)
 const TINTS = tintData.tints
@@ -28,9 +33,33 @@ const GROUPS = Object.entries(topics).reduce((acc, [id, t]) => {
  *  - preset:    optional { kind, target } to start with (the Today screen passes the feeling you
  *               just chose, so you only have to tap the words)
  *  - label:     optional text for the button that opens the panel
+ *  - moods:     optional Map of the moods you made up (buildMoods): they are offered with the built-in
+ *               feelings
+ *  - onCreateMood: optional async ({ label, colors }) => the new mood; when given, "+ New mood" lets
+ *               you make one right here and teach it the words you tapped
  */
-export default function TeachPanel({ text, mood, lexicon, onSave, preset, label }) {
+export default function TeachPanel({
+  text,
+  mood,
+  lexicon,
+  onSave,
+  preset,
+  label,
+  moods: savedMoods = NO_MOODS,
+  onCreateMood,
+}) {
   const [open, setOpen] = useState(false)
+  const [creating, setCreating] = useState(false)
+  // a mood made a moment ago is chosen straight away, before the parent's list of moods (a live
+  // query) has caught up, so it is remembered here until that list has it
+  const [justMade, setJustMade] = useState(null)
+  const moods = useMemo(
+    () =>
+      justMade && !savedMoods.has(justMade.id)
+        ? new Map([...savedMoods, [justMade.id, justMade]])
+        : savedMoods,
+    [savedMoods, justMade],
+  )
   const [kind, setKind] = useState('feeling')
   const [target, setTarget] = useState(null)
   const [selected, setSelected] = useState(() => new Set())
@@ -38,20 +67,25 @@ export default function TeachPanel({ text, mood, lexicon, onSave, preset, label 
   const [busy, setBusy] = useState(false)
 
   const tokens = useMemo(() => teachableTokens(text, lexicon), [text, lexicon])
-  const entries = useMemo(
-    () => (target ? entriesFromSelection(tokens, selected, kind, target) : []),
-    [tokens, selected, kind, target],
-  )
+  const entries = useMemo(() => {
+    if (!target) return []
+    try {
+      return entriesFromSelection(tokens, selected, kind, target, moods)
+    } catch {
+      return [] // the chosen mood was deleted meanwhile: nothing to teach until another is picked
+    }
+  }, [tokens, selected, kind, target, moods])
   const canSave = !!target && entries.length > 0 && !busy
 
   function targetLabel() {
-    if (kind === 'feeling') return feelings[target].label
+    if (kind === 'feeling') return moodLabel(target, moods)
     if (kind === 'topic') return topics[target].label
     return tintName(target)
   }
 
   function begin() {
     setOpen(true)
+    setCreating(false)
     setMessage(null)
     setKind(preset?.kind ?? 'feeling')
     setTarget(preset?.target ?? null)
@@ -116,6 +150,7 @@ export default function TeachPanel({ text, mood, lexicon, onSave, preset, label 
             onClick={() => {
               setKind(k)
               setTarget(null)
+              setCreating(false)
             }}
           >
             {label}
@@ -124,14 +159,53 @@ export default function TeachPanel({ text, mood, lexicon, onSave, preset, label 
       </div>
 
       {kind === 'feeling' ? (
-        <div className="chips chips--wrap" role="group" aria-label="The real feeling">
-          {FEELING_IDS.map((f) => (
-            <button key={f} className={target === f ? 'on' : ''} onClick={() => setTarget(f)}>
-              {feelings[f].label}
-              {mood?.feeling === f && <small> · now</small>}
-            </button>
-          ))}
-        </div>
+        <>
+          <div className="chips chips--wrap" role="group" aria-label="The real feeling">
+            {FEELING_IDS.map((f) => (
+              <button key={f} className={target === f ? 'on' : ''} onClick={() => setTarget(f)}>
+                {feelings[f].label}
+                {mood?.feeling === f && <small> · now</small>}
+              </button>
+            ))}
+          </div>
+          {(moods.size > 0 || onCreateMood) && (
+            <>
+              <p className="teach__label">My moods</p>
+              <div className="chips chips--wrap chips--mine" role="group" aria-label="My moods">
+                {[...moods.values()].map((m) => (
+                  <button
+                    key={m.id}
+                    className={target === m.id ? 'on' : ''}
+                    onClick={() => {
+                      setTarget(m.id)
+                      setCreating(false)
+                    }}
+                  >
+                    <MoodStrip mood={m} /> {m.label}
+                    {mood?.feeling === m.id && <small> · now</small>}
+                  </button>
+                ))}
+                {onCreateMood && (
+                  <button className="chips__new" onClick={() => setCreating((c) => !c)}>
+                    + New mood
+                  </button>
+                )}
+              </div>
+            </>
+          )}
+          {creating && onCreateMood && (
+            <MoodEditor
+              onSave={async (input) => {
+                const made = await onCreateMood(input)
+                setJustMade(made)
+                setTarget(made.id)
+                setCreating(false)
+              }}
+              onCancel={() => setCreating(false)}
+              saveLabel="Make this mood"
+            />
+          )}
+        </>
       ) : kind === 'tint' ? (
         <div className="tints">
           <div className="chips chips--wrap" role="group" aria-label="The color it brings to mind">

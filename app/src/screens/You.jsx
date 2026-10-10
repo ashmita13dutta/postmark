@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import Screen from '../app/Screen'
 import DemoTools from '../components/demo/DemoTools'
+import MyMoods from '../components/moods/MyMoods'
 import ReaderSetting from '../components/reader/ReaderSetting'
 import { versionLabel } from '../lib/version'
 
@@ -8,6 +9,7 @@ export default function You() {
   return (
     <Screen caption="Postmaster" title="You">
       <ReaderSetting />
+      <MyMoods />
       <DemoTools />
       <p className="screen__note">Coming soon.</p>
       <p className="screen__note">

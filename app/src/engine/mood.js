@@ -333,16 +333,17 @@ export function unstretch(word) {
  * Your own taught words, ready for lookup. Each entry is { word, kind: 'feeling' | 'topic', id,
  * parts }: `word` is the word or phrase written joined ("bekaar", "passedaway") and `parts` how
  * many words it is. Single words also match their usual forms (taught "cook" also matches
- * "cooked"), but never over a word you taught exactly.
+ * "cooked"), but never over a word you taught exactly. `moods` (buildMoods) are the moods you made
+ * up: words taught to one of them are only used while that mood exists.
  * @returns {Map<string, object>}
  */
-export function buildLexicon(entries = []) {
+export function buildLexicon(entries = [], moods) {
   const map = new Map()
   const tints = new Map() // words you tied to a color
   const valid = (e) =>
     !!e?.word &&
     (e.kind === 'feeling'
-      ? feelings[e.id]
+      ? feelings[e.id] || moods?.has(e.id)
       : e.kind === 'topic'
         ? topics[e.id]
         : e.kind === 'tint' && HEX.test(e.id ?? ''))

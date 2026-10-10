@@ -2,6 +2,7 @@ import { now } from '../lib/clock'
 import { MAX_DECORATIONS, clampPlacement } from '../lib/decor'
 import { clampDeliveryDay, dayKey, sealedUntilFor } from '../lib/dates'
 import { eligibleForDelay, pickDelayed } from '../lib/mailbox'
+import { MAX_MOODS, buildMoods, cleanMood, isMyMood } from '../engine/moods'
 import { applyFields, newMoment } from './moments'
 import { db as defaultDb } from './schema'
 
@@ -306,7 +307,12 @@ export function makeQueries(db) {
         createdAt: now(),
       }))
     if (!clean.length) return []
-    return db.transaction('rw', db.lexicon, async () => {
+    return db.transaction('rw', db.lexicon, db.moods, async () => {
+      // a word can only be taught to a mood of yours that still exists
+      for (const e of clean) {
+        if (e.kind === 'feeling' && isMyMood(e.id) && !(await db.moods.get(e.id)))
+          throw new Error('That mood no longer exists.')
+      }
       if ((await db.lexicon.count()) + clean.length > MAX_LEXICON) {
         throw new Error('Your word list is full. Remove some words first.')
       }
@@ -319,11 +325,56 @@ export function makeQueries(db) {
   const forgetWord = (key) => db.lexicon.delete(key)
   const forgetAllWords = () => db.lexicon.clear()
 
+  // ---- moods: feelings you made up (see engine/moods.js) ----
+
+  /** Your moods, oldest first. Feed it to buildMoods. */
+  const getMoods = () => db.moods.orderBy('createdAt').toArray()
+
+  /**
+   * Make a mood ({ label, colors }) or, with `id`, change one. The name and colors are checked and
+   * tidied (cleanMood). Returns the saved mood.
+   */
+  async function saveMood({ id, label, colors }) {
+    return db.transaction('rw', db.moods, async () => {
+      const rows = await db.moods.toArray()
+      const existing = id ? rows.find((r) => r.id === id) : null
+      if (id && !existing) throw new Error('That mood no longer exists.')
+      if (!existing && rows.length >= MAX_MOODS)
+        throw new Error(`You can have up to ${MAX_MOODS} moods. Delete one first.`)
+      const cleaned = cleanMood({ label, colors }, buildMoods(rows), id)
+      const row = existing
+        ? { ...existing, ...cleaned }
+        : { id: `my:${newId().slice(0, 8)}`, ...cleaned, createdAt: now() }
+      await db.moods.put(row)
+      return row
+    })
+  }
+
+  /**
+   * Delete a mood and the words you taught it. Postcards that used it keep their colors; they just
+   * stop knowing its name. Returns how many taught words went with it.
+   */
+  async function deleteMood(id) {
+    return db.transaction('rw', db.moods, db.lexicon, async () => {
+      const words = await db.lexicon
+        .where('id')
+        .equals(id)
+        .filter((w) => w.kind === 'feeling')
+        .primaryKeys()
+      await db.lexicon.bulkDelete(words)
+      await db.moods.delete(id)
+      return words.length
+    })
+  }
+
   return {
     getLexicon,
     teachWords,
     forgetWord,
     forgetAllWords,
+    getMoods,
+    saveMood,
+    deleteMood,
     getSetting,
     getSettings,
     setSetting,

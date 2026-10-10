@@ -1,15 +1,20 @@
 import { useState } from 'react'
-import { feelings } from '../../data/feelings.json'
 import { topics } from '../../data/topics.json'
+import { moodLabel } from '../../engine/moods'
 import './teach.css'
 
-const labelOf = (e) =>
+const labelOf = (e, moods) =>
   e.kind === 'tint'
     ? 'a color'
-    : ((e.kind === 'feeling' ? feelings[e.id]?.label : topics[e.id]?.label) ?? e.id)
+    : e.kind === 'feeling'
+      ? moodLabel(e.id, moods)
+      : (topics[e.id]?.label ?? e.id)
 
-/** The words you have taught, with a way to take each one back. Everything stays on this phone. */
-export default function MyWords({ lexicon, onForget, onForgetAll }) {
+/**
+ * The words you have taught, with a way to take each one back. Everything stays on this phone.
+ * `moods` (buildMoods) lets words taught to a mood you made up show its name.
+ */
+export default function MyWords({ lexicon, onForget, onForgetAll, moods }) {
   const [confirm, setConfirm] = useState(false)
   if (!lexicon.length) {
     return (
@@ -30,7 +35,7 @@ export default function MyWords({ lexicon, onForget, onForgetAll }) {
               {e.kind === 'tint' && (
                 <i className="dot" style={{ background: e.id }} aria-hidden="true" />
               )}{' '}
-              {labelOf(e)}
+              {labelOf(e, moods)}
               <small>{e.kind === 'topic' ? ' · topic' : ''}</small>
             </span>
             <button onClick={() => onForget(e.key)} aria-label={`Forget ${e.example ?? e.word}`}>

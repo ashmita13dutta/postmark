@@ -23,6 +23,9 @@
  *                   a note you told the app it had read wrong: the note, its embedding from the
  *                   on-device reader, what the app guessed, and the feeling you chose. One per day.
  *                   Later near-identical notes follow it; it is also real, labelled data.
+ *  moods            { id ('my:' + 8 characters), label, colors: [{hex, name} x5], createdAt }
+ *                   a feeling you made up. Words taught to it are lexicon rows with kind 'feeling'
+ *                   and this id; a postcard keeps the id as its `feeling` and its own five colors.
  *  lexicon          { word, kind: 'feeling'|'topic', id, parts, example, createdAt }   words you taught
  *                   `word` is the word or phrase written joined ("bekaar", "passedaway"); one row
  *                   per word, so teaching a word again replaces what it meant before.
@@ -31,7 +34,7 @@
  */
 import Dexie from 'dexie'
 
-export const SCHEMA_VERSION = 3
+export const SCHEMA_VERSION = 4
 
 export class PostmarkDB extends Dexie {
   constructor(name = 'postmark') {
@@ -59,6 +62,10 @@ export class PostmarkDB extends Dexie {
     // v3: notes you corrected, kept for the on-device reader. Only the new table is listed.
     this.version(3).stores({
       corrections: 'id, createdAt',
+    })
+    // v4: the moods you make up. Only the new table is listed.
+    this.version(4).stores({
+      moods: 'id, createdAt',
     })
   }
 }

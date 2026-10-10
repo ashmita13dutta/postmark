@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Screen from '../app/Screen'
 import WaxSeal from '../components/postcard/WaxSeal'
+import MoodStrip from '../components/moods/MoodStrip'
 import ReaderCard from '../components/reader/ReaderCard'
 import Stamp from '../components/stamp/Stamp'
 import TeachPanel from '../components/teach/TeachPanel'
@@ -12,6 +13,7 @@ import { topics } from '../data/topics.json'
 import { BLANK_PALETTE } from '../db/moments'
 import { queries } from '../db/queries'
 import { buildLexicon, contextAt } from '../engine/mood'
+import { buildMoods, isMyMood, moodLabel } from '../engine/moods'
 import { setSwatch } from '../engine/palette'
 import { classify } from '../engine/reader/client'
 import { useReader } from '../engine/reader/useReader'
@@ -23,6 +25,7 @@ import { currentStreak } from '../lib/streak'
 import './today.css'
 
 const FEELING_IDS = Object.keys(feelings)
+const NO_ROWS = []
 // topics grouped for the picker, in file order
 const GROUPS = Object.entries(topics).reduce((acc, [id, t]) => {
   ;(acc[t.group] ??= []).push(id)
@@ -107,13 +110,17 @@ export function Editor({ day, existing, demo }) {
     null,
   )
   const lexiconRows = useLiveQuery(() => queries.getLexicon(), [], [])
+  // the moods you made up, and the words you taught them (read together, so a word is only known
+  // while its mood exists)
+  const moodRows = useLiveQuery(() => queries.getMoods(), [], NO_ROWS)
   // notes you corrected on other days (today's own does not count towards itself)
   const corrections = useLiveQuery(
     async () => (await queries.getCorrections()).filter((c) => c.id !== day),
     [day],
     [],
   )
-  const lexicon = useMemo(() => buildLexicon(lexiconRows), [lexiconRows])
+  const moods = useMemo(() => buildMoods(moodRows), [moodRows])
+  const lexicon = useMemo(() => buildLexicon(lexiconRows, moods), [lexiconRows, moods])
 
   const hasNote = text.trim().length > 0
   const r = useMemo(
@@ -127,8 +134,9 @@ export function Editor({ day, existing, demo }) {
         override,
         reader: hasNote && read && !read.none ? read : null,
         corrections,
+        moods,
       }),
-    [text, hasNote, day, clock.hour, clock.month, lexicon, override, read, corrections],
+    [text, hasNote, day, clock.hour, clock.month, lexicon, override, read, corrections, moods],
   )
   const sealed = !demo && existing?.sealedAt != null
   // Stamp it waits a moment after you stop typing, until the reader has read what is in the box, so
@@ -167,8 +175,9 @@ export function Editor({ day, existing, demo }) {
 
   // the reader's next two guesses, one tap away (the right feeling is among its top three about
   // 95% of the time)
-  const alternatives =
-    r.guess.source === 'reader' ? r.guess.ranked.filter((a) => a.id !== r.feeling).slice(0, 2) : []
+  const alternatives = r.guess.ranked.some((a) => a.p != null)
+    ? r.guess.ranked.filter((a) => a.id !== r.feeling && !isMyMood(a.id)).slice(0, 2)
+    : []
 
   const streak = currentStreak(days, day)
   const prompt = prompts[dayOfYear(day) % prompts.length]
@@ -192,6 +201,8 @@ export function Editor({ day, existing, demo }) {
   async function rememberCorrection() {
     try {
       if (intent === 'clear') await queries.clearCorrection(day)
+      // the reader cannot learn a mood you made up, so an older correction for today no longer holds
+      else if (intent === 'set' && isMyMood(override.feeling)) await queries.clearCorrection(day)
       else if (intent === 'set' && override.feeling && override.feeling !== r.guess.feeling) {
         const result = await classify(text.trim())
         if (result) {
@@ -334,7 +345,7 @@ export function Editor({ day, existing, demo }) {
           <div className="today__read">
             <div>
               <span className="lbl">Felt</span>
-              <b>{feelings[r.feeling].label}</b>
+              <b>{moodLabel(r.feeling, moods)}</b>
             </div>
             <div>
               <span className="lbl">About</span>
@@ -360,7 +371,7 @@ export function Editor({ day, existing, demo }) {
           )}
           {(r.corrected.feeling || r.corrected.topic) && !fixing && (
             <p className="today__fixed">
-              You set this. The app read “{feelings[r.guess.feeling].label}”.
+              You set this. The app read “{moodLabel(r.guess.feeling, moods)}”.
             </p>
           )}
 
@@ -377,6 +388,17 @@ export function Editor({ day, existing, demo }) {
                   >
                     {feelings[f].label}
                     {r.guess.feeling === f && <small> · app’s guess</small>}
+                  </button>
+                ))}
+                {[...moods.values()].map((m) => (
+                  <button
+                    key={m.id}
+                    className={r.feeling === m.id ? 'on' : ''}
+                    aria-pressed={r.feeling === m.id}
+                    onClick={() => pickFeeling(m.id)}
+                  >
+                    <MoodStrip mood={m} /> {m.label}
+                    {r.guess.feeling === m.id && <small> · app’s guess</small>}
                   </button>
                 ))}
               </div>
@@ -413,7 +435,20 @@ export function Editor({ day, existing, demo }) {
                 text={text}
                 mood={{ ...r.mood, feeling: r.guess.feeling }}
                 lexicon={lexicon}
-                onSave={(entries) => queries.teachWords(entries)}
+                moods={moods}
+                onCreateMood={(input) => queries.saveMood(input)}
+                onSave={async (entries) => {
+                  const saved = await queries.teachWords(entries)
+                  // if you had picked a feeling by hand, you now mean the mood you just taught; if
+                  // not, the note is simply read again with its new word
+                  const mine = saved.find((e) => e.kind === 'feeling' && isMyMood(e.id))
+                  if (mine && override.feeling) {
+                    setOverride((o) => ({ ...o, feeling: mine.id }))
+                    setIntent('set')
+                    setCustom(null)
+                  }
+                  return saved
+                }}
                 preset={
                   override.feeling ? { kind: 'feeling', target: override.feeling } : undefined
                 }

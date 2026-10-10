@@ -199,6 +199,34 @@ What you taught is saved **on this phone only** and listed under **My words**, w
 To make a word part of the app for everyone (and for the tests), add it to `feelings.json` or
 `topics.json` instead. Words from "My words" are a good source of candidates.
 
+## My moods: feelings you make up
+
+The 16 built-in feelings are not always the right word. **You > My moods** lets you make up your own:
+a name (up to 24 letters, not one of the built-in names) and **exactly five colors**. "Start from"
+fills the colors from a built-in mood's palettes, and you can change any of them. You can have up to 20.
+
+You teach a mood its words the same way as before. On Today (or on a demo postcard) tap
+**Not quite?**, then **Teach it the words that show this**, and under **My moods** pick one of yours,
+or **+ New mood** to make one on the spot. Tap the words and **Teach it**.
+
+How a mood of yours is used:
+
+- It is the reading when your own words for it **outweigh the built-in keywords** in the note (a
+  word you taught counts a little extra). A note full of strong built-in words still wins, so a
+  single taught word does not take over a note.
+- The on-device reader has never heard of your moods, so it cannot choose one. If the keyword reading
+  picks yours, that wins over the reader.
+- The stamp is **exactly your five colors**: no time-of-day or season shift, and no topic accents.
+  The colors can still be changed by hand on the day, like any stamp.
+- You can also pick one yourself in **Not quite?**. Corrections to a mood of yours are not kept for
+  the reader (it cannot learn a mood it was never trained on).
+- A postcard keeps its own five colors, so **deleting a mood never changes an old postcard**; the
+  mood's words are deleted with it, and the postcard just stops knowing its name.
+
+Moods live in the `moods` table of the phone's database (words taught to them stay in `lexicon`, with
+the mood's `my:` id), not in these files, and the review page's "My words" lists them by name. See
+`src/engine/moods.js`.
+
 ---
 
 ## sticker-packs.json: the postcard stickers

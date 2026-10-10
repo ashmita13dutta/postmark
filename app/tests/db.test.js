@@ -30,8 +30,8 @@ afterEach(async () => {
 })
 
 describe('schema', () => {
-  it('declares version 3 with all tables', () => {
-    expect(SCHEMA_VERSION).toBe(3)
+  it('declares version 4 with all tables', () => {
+    expect(SCHEMA_VERSION).toBe(4)
     expect(db.tables.map((t) => t.name).sort()).toEqual(
       [
         'calendarStickers',
@@ -42,6 +42,7 @@ describe('schema', () => {
         'lexicon',
         'media',
         'moments',
+        'moods',
         'redeliveries',
         'rewards',
         'seals',

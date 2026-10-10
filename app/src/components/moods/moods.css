@@ -1,0 +1,211 @@
+/* My moods: the editor, the list on You, and the dots shown next to a mood's name. */
+
+.moodedit {
+  margin-top: 12px;
+  padding: 14px;
+  border: 1px solid var(--ink-12);
+  border-radius: 14px;
+  background: var(--card-warm);
+}
+.moodedit__name {
+  display: grid;
+  gap: 6px;
+}
+.moodedit__name .teach__label {
+  margin: 0;
+}
+.moodedit__name input {
+  min-height: var(--tap);
+  padding: 0 12px;
+  border: 1px solid var(--ink-12);
+  border-radius: 12px;
+  background: var(--card);
+  color: var(--ink);
+  font: 400 16px var(--font-ui);
+}
+.moodedit__name input:focus {
+  outline: 2px solid var(--postmark);
+  outline-offset: 1px;
+}
+.moodedit__colors {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+}
+.moodedit__swatches {
+  display: flex;
+  flex: 1;
+  gap: 6px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.moodedit__swatches li {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+.moodedit__swatches label {
+  position: relative;
+  display: block;
+}
+.moodedit__chip {
+  display: block;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 1px rgba(42, 38, 32, 0.15);
+}
+.moodedit__swatches input[type='color'] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+.moodedit__swatches small {
+  max-width: 100%;
+  font: 400 10px/1.2 var(--font-ui);
+  color: var(--ink-60);
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.moodedit__starts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.moodedit__starts button {
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid var(--ink-12);
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--ink-60);
+  font: 500 12px var(--font-ui);
+}
+.moodedit__starts button:active {
+  background: var(--ink-08);
+}
+
+/* the five colors of a mood as a small strip, beside its name */
+.moodstrip {
+  display: inline-flex;
+  overflow: hidden;
+  width: 1.9em;
+  height: 0.9em;
+  border-radius: 0.3em;
+  vertical-align: -0.1em;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+}
+.moodstrip i {
+  flex: 1;
+}
+
+/* the list on You */
+.moods {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border: var(--glass-border, 1px solid var(--ink-12));
+  border-radius: 14px;
+  background: var(--glass-bg, var(--card-warm));
+  -webkit-backdrop-filter: var(--glass-blur, none);
+  backdrop-filter: var(--glass-blur, none);
+  box-shadow: var(--glass-shadow, none);
+}
+.moods h2 {
+  margin: 0 0 4px;
+  font: 500 15px var(--font-ui);
+}
+.moods > p {
+  margin: 0;
+  font: 400 13px/1.45 var(--font-ui);
+  color: var(--ink-60);
+}
+.moods__list {
+  display: grid;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.moods__list > li {
+  padding: 10px 0;
+  border-top: 1px solid var(--ink-08);
+}
+.moods__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font: 500 15px var(--font-ui);
+}
+.moods__head .moodstrip {
+  flex: none;
+  width: 44px;
+  height: 22px;
+  border-radius: 6px;
+}
+.moods__name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.moods__words {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.moods__words li {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--ink-12);
+  border-radius: var(--r-pill);
+  padding-left: 10px;
+  font: 400 14px var(--font-hand);
+}
+.moods__words button {
+  min-width: 32px;
+  min-height: 30px;
+  border: 0;
+  background: none;
+  color: var(--ink-60);
+  font: 400 16px var(--font-ui);
+}
+.moods__none {
+  margin: 8px 0 0;
+  font: 400 12px/1.45 var(--font-ui);
+  color: var(--ink-60);
+}
+.moods__row {
+  display: flex;
+  gap: 4px;
+  margin-top: 4px;
+}
+.moods__row button,
+.moods__new {
+  min-height: 36px;
+  border: 0;
+  background: none;
+  color: var(--postmark);
+  font: 500 13px var(--font-ui);
+  text-decoration: underline;
+}
+.moods__row .moods__delete {
+  margin-left: auto;
+  color: var(--c-red-deep);
+}
+.moods__new {
+  display: block;
+  margin-top: 8px;
+  padding: 0;
+}
