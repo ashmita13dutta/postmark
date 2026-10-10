@@ -1,7 +1,7 @@
 import { useReducedMotion } from 'framer-motion'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useCallback, useEffect, useState } from 'react'
-import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useLocation, useNavigate, useParams } from 'react-router-dom'
 import Screen from '../app/Screen'
 import DecorLayer from '../components/postcard/DecorLayer'
 import PostcardCard, {
@@ -23,21 +23,31 @@ import { dropSpot, dropTilt } from '../lib/decor'
 import './postcard.css'
 
 const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`
-/** Today's postcard: flip it over, decorate the back, then seal it with wax and send it off. */
+/**
+ * Today's postcard: flip it over, decorate the back, then seal it with wax and send it off. With an
+ * `:id` in the address (/you/demo/:id/stickers) it is a demo postcard from the testing tools on You:
+ * the same board and tray, but never sealed, so you can keep trying stickers on it.
+ */
 export default function Postcard() {
   const day = todayKey()
+  const { id } = useParams()
   const intent = useLocation().state?.intent // 'flip' | 'seal' | nothing
-  const moment = useLiveQuery(async () => (await queries.getMomentByDay(day)) ?? null, [day])
+  const moment = useLiveQuery(
+    async () => (id ? await queries.getMoment(id) : await queries.getMomentByDay(day)) ?? null,
+    [id, day],
+  )
   if (moment === undefined) return <Screen caption="Postcard" title=" " />
-  // nothing stamped today, so there is no postcard yet
-  if (moment === null) return <Navigate to="/" replace />
+  // nothing stamped today, so there is no postcard yet (or no such demo postcard)
+  if (moment === null || (id && !moment.demo)) return <Navigate to={id ? '/you' : '/'} replace />
   return <Board key={moment.id} moment={moment} intent={intent} />
 }
 
 function Board({ moment, intent }) {
   const navigate = useNavigate()
   const reduced = useReducedMotion()
-  const sealed = moment.sealedAt != null
+  const demo = moment.demo === true
+  // a demo postcard is made sealed, but is always open for decorating
+  const sealed = moment.sealedAt != null && !demo
   const palette = moment.palette
 
   const decorations = useLiveQuery(() => queries.decorationsFor(moment.id), [moment.id], [])
@@ -138,12 +148,18 @@ function Board({ moment, intent }) {
   return (
     <Screen
       caption={`From ${shortDate(moment.day)}`}
-      title="Your postcard"
+      title={demo ? 'Demo postcard' : 'Your postcard'}
       action={
-        !sealed && (
-          <button className="pc__sendbtn" onClick={() => setPhase('pick')}>
-            Seal &amp; send
+        demo ? (
+          <button className="pc__sendbtn" onClick={() => navigate('/mailbox')}>
+            Done
           </button>
+        ) : (
+          !sealed && (
+            <button className="pc__sendbtn" onClick={() => setPhase('pick')}>
+              Seal &amp; send
+            </button>
+          )
         )
       }
     >
@@ -240,6 +256,11 @@ function Board({ moment, intent }) {
             <p className="pc__msg" role="status">
               {message}
             </p>
+          )}
+          {demo && (
+            <Link className="pc__demo" to={`/you/demo/${moment.id}`}>
+              Change the note, mood or colors
+            </Link>
           )}
         </div>
       )}

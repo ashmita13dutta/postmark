@@ -206,7 +206,8 @@ export function makeQueries(db) {
   async function editableMoment(momentId) {
     const moment = await getMoment(momentId)
     if (!moment) throw new Error(`No such moment: ${momentId}`)
-    if (moment.sealedAt != null) throw new SealedError()
+    // a demo postcard is made already sealed, but stays decoratable so stickers can be tested on it
+    if (moment.sealedAt != null && !moment.demo) throw new SealedError()
     return moment
   }
 

@@ -7,12 +7,13 @@ import {
   dayKey,
   daysInMonth,
   monthKey,
+  parseDay,
   parseMonthKey,
   yearAgoDays,
 } from '../lib/dates'
 import { dropSpot, dropTilt } from '../lib/decor'
 import { seededRng } from '../lib/rng'
-import { newMoment } from './moments'
+import { applyFields, newMoment } from './moments'
 import { db as defaultDb } from './schema'
 
 /**
@@ -21,14 +22,19 @@ import { db as defaultDb } from './schema'
  *  - addPostcards: a month of already-delivered, unopened postcards (written last month), one from
  *    exactly a year ago, and an old opened one that shows up as "delayed in transit". They are
  *    marked `demo: true`, so they can be removed without touching your own stamps.
+ *  - savePostcard: a demo postcard you write yourself (any note, any past day), to try the note
+ *    reader, the mood, the palette and the stickers. Marked `custom: true` as well, so "Reset"
+ *    keeps it and only "Remove" deletes it.
  *  - deliverToday: delivers today's sealed postcard right now (its real delivery date is kept, so
  *    removeDemo can put it back).
  *  - removeDemo: deletes the demo postcards and puts early-delivered ones back as they were.
  *
  * Demo postcards use stamp number 0, so they never change the numbering of your real stamps.
+ * A demo postcard can be decorated even though it is already sealed (see editableMoment).
  */
 
-const NOTES = [
+/** Notes to try: a mix of moods, also offered as "Fill in a sample note" on the demo screen. */
+export const SAMPLE_NOTES = [
   'Rain at the tram stop, chai in a clay cup, and nobody in a hurry for once.',
   'Finally finished the viva! Cried a little in the corridor, then ate rolls with the gang.',
   'Maa called. Dadu’s old radio still plays Kishore Kumar. I miss home today.',
@@ -69,31 +75,25 @@ export function makeDemo(db) {
     })
   }
 
-  /** One delivered demo postcard (a moment, its wax seal and a few stickers), unless the day is taken. */
-  async function putDemo({ day, noteIndex, nowMs, deliveryDay, opened = false, sealedAtMs }) {
-    if (await db.moments.where('day').equals(day).first()) return null
-    const text = NOTES[noteIndex % NOTES.length]
-    const read = readNote({ text, day, hour: 12, month: Number(day.slice(5, 7)) })
-    const base = newMoment({
-      day,
-      stampNo: 0,
-      nowMs,
-      deliveryDay,
-      fields: {
-        note: text,
-        feeling: read.feeling,
-        topic: read.topic,
-        palette: read.built.colors,
-        paletteSource: 'moment',
-      },
-    })
+  /** One delivered demo postcard with its wax seal. `fields` are the editable moment fields. */
+  async function addDemoMoment({
+    day,
+    fields,
+    nowMs,
+    deliveryDay,
+    sealedAtMs,
+    openedAtMs,
+    custom,
+  }) {
+    const base = newMoment({ day, stampNo: 0, nowMs, deliveryDay, fields })
     const moment = {
       ...base,
       demo: true,
+      ...(custom ? { custom: true } : {}),
       // always already delivered, even if this month's delivery day has not come yet
       sealedUntil: Math.min(base.sealedUntil, nowMs - 60_000),
       sealedAt: sealedAtMs,
-      openedAt: opened ? nowMs - 30 * 86_400_000 : null,
+      openedAt: openedAtMs ?? null,
     }
     await db.moments.add(moment)
     const rnd = seededRng(`demo-seal:${day}`)
@@ -104,14 +104,34 @@ export function makeDemo(db) {
       emblem,
       ...(emblem === 'initial' ? { initial: 'A' } : {}),
     })
+    return moment
+  }
+
+  /** One sample postcard (a moment, its wax seal and a few stickers), unless the day is taken. */
+  async function putDemo({ day, noteIndex, nowMs, deliveryDay, opened = false, sealedAtMs }) {
+    if (await db.moments.where('day').equals(day).first()) return null
+    const text = SAMPLE_NOTES[noteIndex % SAMPLE_NOTES.length]
+    const read = readNote({ text, day, hour: 12, month: Number(day.slice(5, 7)) })
+    const moment = await addDemoMoment({
+      day,
+      nowMs,
+      deliveryDay,
+      sealedAtMs,
+      openedAtMs: opened ? nowMs - 30 * 86_400_000 : null,
+      fields: {
+        note: text,
+        feeling: read.feeling,
+        topic: read.topic,
+        palette: read.built.colors,
+        paletteSource: 'moment',
+      },
+    })
     await db.decorations.bulkAdd(decorationsFor(moment.id, day))
     return moment
   }
 
-  /** Delete the demo postcards and put early-delivered ones back. Call inside a transaction. */
-  async function removeDemoInTransaction() {
-    const all = await db.moments.toArray()
-    const demos = all.filter((m) => m.demo === true)
+  /** Delete these demo postcards with their seals and stickers. Call inside a transaction. */
+  async function deleteDemoMoments(demos) {
     for (const m of demos) {
       await db.decorations.where('momentId').equals(m.id).delete()
       await db.seals.delete(m.id)
@@ -122,6 +142,16 @@ export function makeDemo(db) {
     for (const row of await db.redeliveries.toArray()) {
       if (row.momentId && demoIds.has(row.momentId)) await db.redeliveries.delete(row.monthKey)
     }
+  }
+
+  /**
+   * Delete the demo postcards and put early-delivered ones back. Call inside a transaction.
+   * `keepOwn` leaves the ones you made yourself (savePostcard) alone.
+   */
+  async function removeDemoInTransaction({ keepOwn = false } = {}) {
+    const all = await db.moments.toArray()
+    const demos = all.filter((m) => m.demo === true && !(keepOwn && m.custom === true))
+    await deleteDemoMoments(demos)
     let restored = 0
     for (const m of all.filter((x) => !x.demo && x.earlySealedUntil != null)) {
       const { earlySealedUntil, ...rest } = m
@@ -137,7 +167,8 @@ export function makeDemo(db) {
       'rw',
       [db.moments, db.seals, db.decorations, db.redeliveries, db.settings],
       async () => {
-        await removeDemoInTransaction()
+        // the sample set is remade; postcards you wrote yourself stay
+        await removeDemoInTransaction({ keepOwn: true })
         const deliveryDay = (await db.settings.get('deliveryDay'))?.value ?? 1
         const today = dayKey(nowMs)
         const { y, m } = parseMonthKey(addMonths(monthKey(today), -1))
@@ -211,16 +242,84 @@ export function makeDemo(db) {
     )
   }
 
-  /** What is currently set up: demo postcards, and postcards delivered early. */
+  /** The nearest day before today with no postcard, to start a new demo postcard on. */
+  async function freeDay(nowMs = now()) {
+    let day = addDays(dayKey(nowMs), -1)
+    for (let i = 0; i < 1000 && (await db.moments.where('day').equals(day).first()); i++) {
+      day = addDays(day, -1)
+    }
+    return day
+  }
+
+  /**
+   * Write a demo postcard yourself, or change one: `{ day, note, feeling, topic, palette,
+   * paletteSource, opened }`. It lands already delivered, so it shows in the Mailbox at once (ready
+   * to open, or already opened if `opened`). The day must be before today and must not hold one of
+   * your real postcards; a demo postcard already on that day is updated (stickers and wax kept).
+   */
+  async function savePostcard({ day, opened = false, ...fields }, nowMs = now()) {
+    if (!(day < dayKey(nowMs))) throw new Error('Pick a day before today.')
+    return db.transaction('rw', [db.moments, db.seals, db.settings], async () => {
+      const existing = await db.moments.where('day').equals(day).first()
+      if (existing && !existing.demo) {
+        throw new Error('You already have a real postcard on that day. Pick another day.')
+      }
+      if (existing) {
+        const next = {
+          ...applyFields(existing, fields),
+          custom: true,
+          updatedAt: nowMs,
+          openedAt: opened ? (existing.openedAt ?? nowMs) : null,
+        }
+        await db.moments.put(next)
+        return next
+      }
+      const { y, m, d } = parseDay(day)
+      return addDemoMoment({
+        day,
+        fields,
+        nowMs,
+        deliveryDay: (await db.settings.get('deliveryDay'))?.value ?? 1,
+        sealedAtMs: new Date(y, m - 1, d, 21).getTime(), // sealed the evening it was written
+        openedAtMs: opened ? nowMs : null,
+        custom: true,
+      })
+    })
+  }
+
+  /** Delete one demo postcard. Your real ones are never touched. */
+  async function removeOne(id) {
+    return db.transaction(
+      'rw',
+      [db.moments, db.seals, db.decorations, db.redeliveries],
+      async () => {
+        const moment = await db.moments.get(id)
+        if (moment?.demo !== true) return false
+        await deleteDemoMoments([moment])
+        return true
+      },
+    )
+  }
+
+  /** The demo postcards, newest day first, for the list in the testing tools. */
+  async function list() {
+    const all = await db.moments.orderBy('day').reverse().toArray()
+    return all
+      .filter((m) => m.demo === true)
+      .map((m) => ({ id: m.id, day: m.day, note: m.note, own: m.custom === true }))
+  }
+
+  /** What is currently set up: demo postcards (and how many you wrote), and postcards delivered early. */
   async function status() {
     const all = await db.moments.toArray()
     return {
       demo: all.filter((m) => m.demo === true).length,
+      own: all.filter((m) => m.demo === true && m.custom === true).length,
       early: all.filter((m) => !m.demo && m.earlySealedUntil != null).length,
     }
   }
 
-  return { addPostcards, deliverToday, removeDemo, status }
+  return { addPostcards, savePostcard, deliverToday, removeDemo, removeOne, freeDay, list, status }
 }
 
 export const demo = makeDemo(defaultDb)

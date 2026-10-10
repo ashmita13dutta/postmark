@@ -136,7 +136,7 @@ describe('opening today’s postcard now', () => {
     expect(await demo.deliverToday(NOW)).toBe('delivered')
     expect((await q.deliveredMoments(NOW)).map((x) => x.id)).toContain(m.id)
     expect(await demo.deliverToday(NOW)).toBe('already')
-    expect(await demo.status()).toEqual({ demo: 0, early: 1 })
+    expect(await demo.status()).toEqual({ demo: 0, own: 0, early: 1 })
 
     // open it, then remove: it goes back to being sealed and unopened, on its real date
     await q.markOpened(m.id)
@@ -147,5 +147,129 @@ describe('opening today’s postcard now', () => {
     expect(back.openedAt).toBeNull()
     expect(back.earlySealedUntil).toBeUndefined()
     expect((await q.deliveredMoments(NOW)).map((x) => x.id)).not.toContain(m.id)
+  })
+})
+
+describe('a demo postcard you write yourself', () => {
+  const fields = {
+    note: 'Failed the viva. Sat on the stairs and could not stop crying.',
+    feeling: 'sad',
+    topic: 'exams',
+    palette: Array.from({ length: 5 }, (_, i) => ({ hex: `#10${i}0A0`, name: `Swatch ${i}` })),
+    paletteSource: 'manual',
+  }
+
+  it('lands delivered, unopened and numbered 0, with a wax seal and no stickers yet', async () => {
+    const m = await demo.savePostcard({ day: '2026-09-14', ...fields }, NOW)
+    expect(m).toMatchObject({ demo: true, custom: true, stampNo: 0, openedAt: null, ...fields })
+    expect((await q.deliveredMoments(NOW)).map((x) => x.id)).toContain(m.id)
+    expect(m.sealedAt).not.toBeNull()
+    expect(await q.getSeal(m.id)).toBeTruthy()
+    expect(await q.decorationsFor(m.id)).toHaveLength(0)
+  })
+
+  it('can be saved as already opened', async () => {
+    const m = await demo.savePostcard({ day: '2026-09-14', opened: true, ...fields }, NOW)
+    expect(m.openedAt).toBe(NOW)
+  })
+
+  it('turns up in the Mailbox grouped under its month', async () => {
+    await demo.savePostcard({ day: '2026-09-14', ...fields }, NOW)
+    const headline = headlineGroup(groupByMonth(await q.deliveredMoments(NOW)))
+    expect(headline.monthKey).toBe('2026-09')
+    expect(headline.total).toBe(1)
+  })
+
+  it('only takes a day before today, and never a day holding a real postcard', async () => {
+    await expect(demo.savePostcard({ day: '2026-10-10', ...fields }, NOW)).rejects.toThrow(
+      /before today/,
+    )
+    await expect(demo.savePostcard({ day: '2026-11-02', ...fields }, NOW)).rejects.toThrow(
+      /before today/,
+    )
+    const mine = await q.saveMoment('2026-09-12', { note: 'my own real note' })
+    await expect(demo.savePostcard({ day: '2026-09-12', ...fields }, NOW)).rejects.toThrow(
+      /real postcard/,
+    )
+    expect((await q.getMoment(mine.id)).note).toBe('my own real note')
+  })
+
+  it('refuses a palette that is not five colors, and saves nothing', async () => {
+    await expect(
+      demo.savePostcard({ day: '2026-09-14', ...fields, palette: fields.palette.slice(0, 3) }, NOW),
+    ).rejects.toThrow(/5 palette colors/)
+    expect(await db.moments.count()).toBe(0)
+    expect(await db.seals.count()).toBe(0)
+  })
+
+  it('is changed in place when saved again on the same day, keeping its stickers and wax', async () => {
+    const first = await demo.savePostcard({ day: '2026-09-14', ...fields }, NOW)
+    await q.addDecoration(first.id, { stickerId: 'doodle:heart' })
+    const seal = await q.getSeal(first.id)
+    const again = await demo.savePostcard(
+      { day: '2026-09-14', ...fields, note: 'Rewritten.', feeling: 'content', opened: true },
+      NOW + 1000,
+    )
+    expect(again.id).toBe(first.id)
+    expect(again).toMatchObject({ note: 'Rewritten.', feeling: 'content', openedAt: NOW + 1000 })
+    expect(await db.moments.count()).toBe(1)
+    expect(await q.decorationsFor(first.id)).toHaveLength(1)
+    expect(await q.getSeal(first.id)).toEqual(seal)
+  })
+
+  it('can be decorated although it is sealed, unlike a real sealed postcard', async () => {
+    const m = await demo.savePostcard({ day: '2026-09-14', ...fields }, NOW)
+    await q.addDecoration(m.id, { stickerId: 'doodle:heart' })
+    const [deco] = await q.decorationsFor(m.id)
+    await q.updateDecoration(deco.id, { rotation: 20 })
+    await q.removeDecoration(deco.id)
+    expect(await q.decorationsFor(m.id)).toHaveLength(0)
+
+    const real = await q.saveMoment('2026-10-10', { note: 'real' })
+    await q.sealMoment(real.id, { color: '#B14126', emblem: 'heart' })
+    await expect(q.addDecoration(real.id, { stickerId: 'doodle:heart' })).rejects.toThrow(/sealed/)
+  })
+
+  it('survives "Reset the sample postcards", but not "Remove"', async () => {
+    const mine = await demo.savePostcard({ day: '2026-09-12', ...fields }, NOW)
+    await q.addDecoration(mine.id, { stickerId: 'doodle:heart' })
+    const { added } = await demo.addPostcards(NOW)
+    expect(added).toBe(7) // the sample on 12 Sep is skipped: that day is yours
+    await demo.addPostcards(NOW) // and again
+    expect((await q.getMoment(mine.id)).note).toBe(fields.note)
+    expect(await q.decorationsFor(mine.id)).toHaveLength(1)
+    expect(await demo.status()).toEqual({ demo: 8, own: 1, early: 0 })
+
+    const { removed } = await demo.removeDemo()
+    expect(removed).toBe(8)
+    expect(await q.getMoment(mine.id)).toBeUndefined()
+    expect(await q.decorationsFor(mine.id)).toHaveLength(0)
+  })
+
+  it('starts on yesterday, or the nearest earlier day with nothing on it', async () => {
+    expect(await demo.freeDay(NOW)).toBe('2026-10-09')
+    await q.saveMoment('2026-10-09', { note: 'taken' })
+    await demo.savePostcard({ day: '2026-10-08', ...fields }, NOW)
+    expect(await demo.freeDay(NOW)).toBe('2026-10-07')
+  })
+
+  it('lists the demo postcards, and deletes one without touching a real one', async () => {
+    const real = await q.saveMoment('2026-10-09', { note: 'real' })
+    const a = await demo.savePostcard({ day: '2026-09-14', ...fields }, NOW)
+    await demo.savePostcard({ day: '2026-09-02', ...fields, note: 'Earlier.' }, NOW)
+    await q.addDecoration(a.id, { stickerId: 'doodle:heart' })
+
+    const rows = await demo.list()
+    expect(rows.map((r) => [r.day, r.own])).toEqual([
+      ['2026-09-14', true],
+      ['2026-09-02', true],
+    ])
+
+    expect(await demo.removeOne(a.id)).toBe(true)
+    expect(await q.getSeal(a.id)).toBeUndefined()
+    expect(await q.decorationsFor(a.id)).toHaveLength(0)
+    expect(await demo.removeOne(real.id)).toBe(false) // not a demo postcard
+    expect(await q.getMoment(real.id)).toBeTruthy()
+    expect((await demo.list()).map((r) => r.day)).toEqual(['2026-09-02'])
   })
 })

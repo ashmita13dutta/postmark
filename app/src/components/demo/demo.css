@@ -50,3 +50,128 @@
 .demo__msg--err {
   color: var(--c-red-deep);
 }
+
+/* the link that looks like the other buttons */
+.demo__actions a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: var(--tap);
+  border: 0;
+  border-radius: var(--r-pill);
+  background: var(--postmark);
+  color: var(--card-warm);
+  font: 500 14px var(--font-ui);
+  text-decoration: none;
+}
+
+/* the postcards that exist, each with a way to change or delete it */
+.demo__postcards {
+  margin-top: 10px;
+}
+.demo__postcards summary {
+  min-height: 36px;
+  font: 500 13px var(--font-ui);
+  color: var(--postmark);
+}
+.demo__list {
+  display: grid;
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.demo__list li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  column-gap: 10px;
+  padding: 8px 0;
+  border-top: 1px solid var(--ink-08);
+  font: 400 13px var(--font-ui);
+}
+.demo__list time {
+  font: 500 11px var(--font-mono);
+  letter-spacing: 0.04em;
+  color: var(--ink-60);
+}
+.demo__list span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.demo__list em {
+  font-style: normal;
+  color: var(--postmark);
+}
+.demo__list div {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 4px;
+}
+.demo__list a,
+.demo__list button {
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 10px 0 0;
+  border: 0;
+  background: none;
+  color: var(--postmark);
+  font: 500 13px var(--font-ui);
+  text-decoration: underline;
+}
+.demo__list button {
+  margin-left: auto;
+  padding-right: 0;
+  color: var(--c-red-deep);
+}
+
+/* the date and "already opened" choices at the top of the demo postcard editor */
+.demo__pick {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+  padding: 14px;
+  border: 1px dashed var(--ink-15);
+  border-radius: 14px;
+}
+.demo__field {
+  display: grid;
+  gap: 4px;
+}
+.demo__field input {
+  min-height: var(--tap);
+  padding: 0 12px;
+  border: 1px solid var(--ink-12);
+  border-radius: 12px;
+  background: var(--card-warm);
+  color: var(--ink);
+  font: 400 16px var(--font-ui);
+}
+.demo__check {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  column-gap: 10px;
+  min-height: var(--tap);
+  font: 500 14px var(--font-ui);
+}
+.demo__check input {
+  width: 22px;
+  height: 22px;
+}
+.demo__check small {
+  grid-column: 2;
+  font: 400 12px/1.4 var(--font-ui);
+  color: var(--ink-60);
+}
+.demo__help {
+  margin: 0;
+  font: 400 12px/1.45 var(--font-ui);
+  color: var(--ink-60);
+}
+.demo__pick .demo__msg {
+  margin: 0;
+}

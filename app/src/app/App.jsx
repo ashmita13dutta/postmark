@@ -1,6 +1,7 @@
 import { HashRouter, Route, Routes } from 'react-router-dom'
 import Album from '../screens/Album'
 import Calendar from '../screens/Calendar'
+import DemoPostcard from '../screens/DemoPostcard'
 import Mailbox from '../screens/Mailbox'
 import Palettes from '../screens/Palettes'
 import Postcard from '../screens/Postcard'
@@ -24,6 +25,9 @@ export default function App() {
         <Route path="/mailbox" element={<Mailbox />} />
         <Route path="/album" element={<Album />} />
         <Route path="/you" element={<You />} />
+        <Route path="/you/demo" element={<DemoPostcard />} />
+        <Route path="/you/demo/:id" element={<DemoPostcard />} />
+        <Route path="/you/demo/:id/stickers" element={<Postcard />} />
         <Route path="/palettes" element={<Palettes />} />
         <Route path="*" element={<Today />} />
       </Routes>

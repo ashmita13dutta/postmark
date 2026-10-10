@@ -64,8 +64,20 @@ export default function Today() {
   return <Editor key="editor" day={day} existing={existing} />
 }
 
-function Editor({ day, existing }) {
-  const clock = contextAt(now())
+/**
+ * The note editor. `demo` turns it into the demo-postcard editor on You (src/screens/DemoPostcard.jsx):
+ * the same reading, stamp, colors and "Not quite?" fixes, but for a past day, saved as a demo
+ * postcard, and without the real streak, year-ago banner or taught corrections.
+ *   demo = { controls, blocked, samples, onSave(fields) }
+ *     controls: extra content under the title (the date picker)
+ *     blocked:  true while this day cannot take a demo postcard
+ *     samples:  notes to offer under the box
+ *     onSave:   saves `fields` ({ note, feeling, topic, palette, paletteSource }) and moves on
+ */
+export function Editor({ day, existing, demo }) {
+  const now_ = contextAt(now())
+  // a past day's colors follow that day's season; the hour is still the hour you are testing at
+  const clock = demo ? { ...now_, month: parseDay(day).m } : now_
   const [text, setText] = useState(existing?.note ?? '')
   const [override, setOverride] = useState(
     existing ? { feeling: existing.feeling, topic: existing.topic } : {},
@@ -83,6 +95,7 @@ function Editor({ day, existing }) {
   const reader = useReader()
   const [status, setStatus] = useState(null)
   const [busy, setBusy] = useState(false)
+  const [sample, setSample] = useState(0)
   const navigate = useNavigate()
 
   const days = useLiveQuery(async () => (await queries.allMoments()).map((m) => m.day), [], [])
@@ -117,7 +130,7 @@ function Editor({ day, existing }) {
       }),
     [text, hasNote, day, clock.hour, clock.month, lexicon, override, read, corrections],
   )
-  const sealed = existing?.sealedAt != null
+  const sealed = !demo && existing?.sealedAt != null
   // Stamp it waits a moment after you stop typing, until the reader has read what is in the box, so
   // the saved feeling never comes from a slightly older version of the note
   const waitingOnReader =
@@ -201,13 +214,18 @@ function Editor({ day, existing }) {
     setBusy(true)
     setStatus(null)
     try {
-      const m = await queries.saveMoment(day, {
+      const fields = {
         note: text.trim(),
         feeling: r.feeling,
         topic: r.topic,
         palette,
         paletteSource: custom ? 'manual' : 'moment',
-      })
+      }
+      if (demo) {
+        await demo.onSave(fields)
+        return
+      }
+      const m = await queries.saveMoment(day, fields)
       await rememberCorrection()
       setStatus({ ok: true, text: `Stamped as No. ${m.stampNo}. You can still change it today.` })
       navigate('/reveal')
@@ -219,11 +237,15 @@ function Editor({ day, existing }) {
   }
 
   return (
-    <Screen caption={dateLine(day)} title={greeting(clock.hour)}>
-      <p className="today__streak">
-        {streak > 0 ? `${streak}-day streak. Keep it going.` : 'Stamp today to start a streak.'}
-      </p>
-      {yearAgo && (
+    <Screen caption={dateLine(day)} title={demo ? 'Demo postcard' : greeting(clock.hour)}>
+      {demo ? (
+        demo.controls
+      ) : (
+        <p className="today__streak">
+          {streak > 0 ? `${streak}-day streak. Keep it going.` : 'Stamp today to start a streak.'}
+        </p>
+      )}
+      {!demo && yearAgo && (
         <Link className="today__letter" to="/mailbox">
           A letter from past you arrived
           <small>From {longAgo(yearAgo.day)}</small>
@@ -260,11 +282,24 @@ function Editor({ day, existing }) {
           aria-label="Your note"
         />
       )}
+      {demo?.samples && (
+        <button
+          className="today__link"
+          onClick={() => {
+            setText(demo.samples[sample % demo.samples.length])
+            setSample((i) => i + 1)
+            setOverride({})
+            setCustom(null)
+          }}
+        >
+          Fill in a sample note
+        </button>
+      )}
 
       <div className="today__stage">
         <Stamp
           colors={palette.map((c) => c.hex)}
-          no={existing?.stampNo ?? nextNo}
+          no={existing?.stampNo ?? (demo ? 0 : nextNo)}
           seed={day}
           width={170}
           label={`Today's stamp: ${palette.map((c) => c.name).join(', ')}`}
@@ -401,17 +436,19 @@ function Editor({ day, existing }) {
         <button
           className="today__stamp"
           onClick={stampIt}
-          disabled={!hasNote || busy || sealed || waitingOnReader}
+          disabled={!hasNote || busy || sealed || waitingOnReader || demo?.blocked}
         >
           {sealed
             ? 'Sealed'
             : waitingOnReader
               ? 'Reading…'
-              : saved
-                ? 'Stamped ✓'
-                : existing
-                  ? 'Update stamp'
-                  : 'Stamp it'}
+              : demo
+                ? 'Save & add stickers'
+                : saved
+                  ? 'Stamped ✓'
+                  : existing
+                    ? 'Update stamp'
+                    : 'Stamp it'}
         </button>
       </div>
     </Screen>

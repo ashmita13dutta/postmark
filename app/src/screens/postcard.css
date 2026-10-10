@@ -120,3 +120,13 @@
 .pc__tone.on {
   box-shadow: 0 0 0 2.5px var(--postmark);
 }
+
+/* a demo postcard: the way back to its note, mood and colors */
+.pc__demo {
+  display: block;
+  margin: 12px auto 0;
+  padding: 6px 4px;
+  color: var(--postmark);
+  font: 500 13px var(--font-ui);
+  text-decoration: underline;
+}
