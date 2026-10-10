@@ -1,3 +1,4 @@
+import { useId } from 'react'
 import { IMAGE_BOX, findSticker } from '../../data/stickers'
 
 const RED = '#B14126'
@@ -37,30 +38,60 @@ function RubberStamp({ name }) {
   const { lines, color } = STAMP_TEXT[name]
   const { width, height } = stickerSize(`stamp:${name}`)
   const size = lines.length > 1 ? 14 : 19
+  // each stamp carries its own ink filter, so it works wherever the stamp is drawn (card or tray)
+  const grain = `ink-${useId().replace(/[^a-zA-Z0-9_-]/g, '')}`
   return (
     <svg viewBox={`0 0 ${width} ${height}`} width={width} height={height} fill="none">
-      <g stroke={color} opacity=".82">
-        <rect x="2" y="2" width={width - 4} height={height - 4} rx="4" strokeWidth="2.4" />
-        <rect x="6" y="6" width={width - 12} height={height - 12} rx="2" strokeWidth="1" />
-      </g>
-      <g
-        fill={color}
-        opacity=".85"
-        fontFamily="var(--font-mono)"
-        fontWeight="700"
-        textAnchor="middle"
-      >
-        {lines.map((line, i) => (
-          <text
-            key={line}
-            x={width / 2}
-            y={height / 2 + (lines.length > 1 ? (i === 0 ? -3 : 13) : 7)}
-            fontSize={size}
-            letterSpacing="1.5"
-          >
-            {line}
-          </text>
-        ))}
+      <defs>
+        {/* worn rubber: noise becomes see-through flecks, so the ink thins out and drops here and there */}
+        <filter
+          id={grain}
+          x="-5%"
+          y="-5%"
+          width="110%"
+          height="110%"
+          colorInterpolationFilters="sRGB"
+        >
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency="0.85"
+            numOctaves="2"
+            seed={lines.join('').length}
+            result="noise"
+          />
+          <feColorMatrix
+            in="noise"
+            type="matrix"
+            values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  12 0 0 0 -3.1"
+            result="flecks"
+          />
+          <feComposite in="SourceGraphic" in2="flecks" operator="in" />
+        </filter>
+      </defs>
+      <g filter={`url(#${grain})`}>
+        <g stroke={color} opacity=".82">
+          <rect x="2" y="2" width={width - 4} height={height - 4} rx="4" strokeWidth="2.4" />
+          <rect x="6" y="6" width={width - 12} height={height - 12} rx="2" strokeWidth="1" />
+        </g>
+        <g
+          fill={color}
+          opacity=".85"
+          fontFamily="var(--font-mono)"
+          fontWeight="700"
+          textAnchor="middle"
+        >
+          {lines.map((line, i) => (
+            <text
+              key={line}
+              x={width / 2}
+              y={height / 2 + (lines.length > 1 ? (i === 0 ? -3 : 13) : 7)}
+              fontSize={size}
+              letterSpacing="1.5"
+            >
+              {line}
+            </text>
+          ))}
+        </g>
       </g>
     </svg>
   )

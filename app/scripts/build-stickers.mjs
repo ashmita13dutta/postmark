@@ -1,27 +1,37 @@
 /*
  * Turn your own images into tray stickers.
  *
- *   1. Put images in  app/stickers-src/<pack>/   (PNG, JPG or WebP; one folder per pack)
+ *   1. Put images in  app/stickers-src/<pack>/   (PNG, JPG, WebP or SVG; one folder per pack)
  *   2. From the app folder run:   node scripts/build-stickers.mjs
  *
- * For each image it removes a white background (if there is one and the image has no transparency
- * yet), trims the empty edges, shrinks anything bigger than 256px, and writes a PNG into
- * public/stickers/<pack>/. New stickers are added to src/data/sticker-packs.json with a name and
- * search keywords taken from the file name; the names and keywords already in that file are kept,
- * so edit them there freely. A sheet of many stickers? Cut it up first with split-sheet.mjs.
+ * PNG and JPG pictures: a white background is removed (if there is one and the image has no
+ * transparency yet), the empty edges are trimmed, anything bigger than 256px is shrunk, and a PNG is
+ * written into public/stickers/<pack>/.
+ * SVG drawings, and WebP pictures that already have a see-through background (up to 1024px), are
+ * copied across as they are, so they stay as sharp as you made them.
+ *
+ * New stickers are added to src/data/sticker-packs.json with a name and search keywords taken from
+ * the file name; the names and keywords already in that file are kept, so edit them there freely.
+ * A sheet of many stickers? Cut it up first with split-sheet.mjs.
  */
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { basename, dirname, extname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { cutBackground, detectBackground, hasTransparency, trimAlpha } from './stickers/cutout.mjs'
+import { svgProblem, svgSize, webpInfo } from './stickers/formats.mjs'
 import { decode, encodePng, resize } from './stickers/image.mjs'
 
-const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
+// STICKER_ROOT points the script at another folder with the same layout (the tests use this)
+const root = process.env.STICKER_ROOT ?? resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const SRC = resolve(root, 'stickers-src')
 const OUT = resolve(root, 'public/stickers')
 const MANIFEST = resolve(root, 'src/data/sticker-packs.json')
 const MAX_EDGE = 256
-const IMAGE_EXT = new Set(['.png', '.jpg', '.jpeg', '.webp'])
+// a see-through WebP is kept as it is up to this size (it cannot be shrunk without a WebP encoder)
+const WEBP_MAX_EDGE = 1024
+const FILE_WARN_BYTES = 300_000
+const IMAGE_EXT = new Set(['.png', '.jpg', '.jpeg', '.webp', '.svg'])
+const OUT_EXT = ['png', 'webp', 'svg']
 
 /** 'Warm Candle!.png' -> 'warm-candle' */
 const slug = (name) =>
@@ -46,9 +56,10 @@ function formatManifest(data) {
   const packs = data.packs.map((pack) => {
     const stickers = pack.stickers.map(
       (s) =>
-        `        { "file": ${q(s.file)}, "label": ${q(s.label)}, "keywords": [${(s.keywords ?? []).map(q).join(', ')}], "w": ${s.w}, "h": ${s.h} }`,
+        `        { "file": ${q(s.file)}, "label": ${q(s.label)}, "keywords": [${(s.keywords ?? []).map(q).join(', ')}], "w": ${s.w}, "h": ${s.h}${s.ext ? `, "ext": ${q(s.ext)}` : ''} }`,
     )
-    return `    {\n      "id": ${q(pack.id)},\n      "label": ${q(pack.label)},\n      "stickers": [\n${stickers.join(',\n')}\n      ]\n    }`
+    const ink = pack.ink ? `      "ink": true,\n` : ''
+    return `    {\n      "id": ${q(pack.id)},\n      "label": ${q(pack.label)},\n${ink}      "stickers": [\n${stickers.join(',\n')}\n      ]\n    }`
   })
   const list = packs.length ? `[\n${packs.join(',\n')}\n  ]` : '[]'
   return `{\n  "about": ${q(data.about)},\n  "packs": ${list}\n}\n`
@@ -73,6 +84,37 @@ function prepare(file) {
     )
   }
   return image
+}
+
+/**
+ * One source file as { ext, data, width, height } ready to write, or null when it cannot be used.
+ * SVG and see-through WebP keep their own format; everything else becomes a PNG.
+ */
+function build(file) {
+  const ext = extname(file).toLowerCase()
+  const name = basename(file)
+  if (ext === '.svg') {
+    const text = readFileSync(file, 'utf8')
+    const problem = svgProblem(text)
+    if (problem) return console.warn(`  skipped ${name}: ${problem}`)
+    const size = svgSize(text)
+    if (!size) return console.warn(`  skipped ${name}: it needs a viewBox (or a width and height)`)
+    return { ext: 'svg', data: Buffer.from(text), ...size }
+  }
+  if (ext === '.webp') {
+    const data = readFileSync(file)
+    const info = webpInfo(data)
+    if (info?.alpha && Math.max(info.width, info.height) <= WEBP_MAX_EDGE) {
+      if (data.length > FILE_WARN_BYTES)
+        console.warn(
+          `  note: ${name} is ${Math.round(data.length / 1024)} KB; smaller loads faster`,
+        )
+      return { ext: 'webp', data, width: info.width, height: info.height }
+    }
+    // a WebP with a solid background (or an oversized one) is treated like a JPG: cut, trim, shrink
+  }
+  const image = prepare(file)
+  return { ext: 'png', data: encodePng(image.width, image.height, image.rgba), ...image }
 }
 
 if (!existsSync(SRC)) {
@@ -105,12 +147,18 @@ for (const dirName of packDirs) {
     let stem = slug(basename(f, extname(f))) || 'sticker'
     for (let n = 2; used.has(stem); n++) stem = `${stem.replace(/-\d+$/, '')}-${n}`
     used.add(stem)
-    const image = prepare(resolve(SRC, dirName, f))
-    writeFileSync(resolve(OUT, id, `${stem}.png`), encodePng(image.width, image.height, image.rgba))
+    const image = build(resolve(SRC, dirName, f))
+    if (!image) continue
+    // a picture re-made in another format must not leave its old file behind
+    for (const other of OUT_EXT) rmSync(resolve(OUT, id, `${stem}.${other}`), { force: true })
+    writeFileSync(resolve(OUT, id, `${stem}.${image.ext}`), image.data)
+    const ext = image.ext === 'png' ? undefined : image.ext
     const known = pack.stickers.find((s) => s.file === stem)
     if (known) {
       known.w = image.width
       known.h = image.height
+      if (ext) known.ext = ext
+      else delete known.ext
       updated++
     } else {
       pack.stickers.push({
@@ -119,6 +167,7 @@ for (const dirName of packDirs) {
         keywords: keywordsFrom(stem),
         w: image.width,
         h: image.height,
+        ...(ext ? { ext } : {}),
       })
       added++
     }

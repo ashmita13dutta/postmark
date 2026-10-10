@@ -71,7 +71,8 @@ export default defineConfig({
         ],
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,svg,png,woff2,json}'],
+        // webp is here for sticker packs that use it (see scripts/build-stickers.mjs)
+        globPatterns: ['**/*.{js,css,html,svg,png,webp,woff2,json}'],
         // launch screens and the share card are only fetched by the phone / link previewers, no need offline
         globIgnores: [
           'splash/**',

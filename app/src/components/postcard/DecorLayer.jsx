@@ -1,7 +1,7 @@
 import { useGesture } from '@use-gesture/react'
 import { useRef, useState } from 'react'
 import { SCALE_RANGE } from '../../lib/decor'
-import { canOutline, canTone, findSticker } from '../../data/stickers'
+import { canOutline, canTone, findSticker, isInk } from '../../data/stickers'
 import Sticker from './Sticker'
 import StickerFilters from './StickerFilters'
 import './decor.css'
@@ -63,10 +63,13 @@ function Decoration({ deco, palette, selected, locked, onSelect, onChange }) {
       data-kind={deco.stickerId.split(':')[0]}
       data-tone={canTone(deco.stickerId) ? (deco.tone ?? 'original') : undefined}
       data-outline={canOutline(deco.stickerId) ? ((deco.outline ?? true) ? '1' : '0') : undefined}
+      data-ink={isInk(deco.stickerId) ? '1' : undefined}
       style={{
         left: `${p.x * 100}%`,
         top: `${p.y * 100}%`,
         zIndex: deco.z,
+        // the shadow is measured against this, so it keeps falling straight down as the sticker turns
+        '--rot': `${p.rotation}deg`,
         transform: `translate(-50%, -50%) rotate(${p.rotation}deg) scale(${p.scale})`,
       }}
       onClick={(e) => {

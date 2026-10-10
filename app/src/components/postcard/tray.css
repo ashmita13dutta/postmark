@@ -167,3 +167,13 @@
   display: block;
   overflow: visible;
 }
+/* a tile shows the sticker as it will land: a thin white edge and a soft shadow under it */
+.tray__item .sticker-img {
+  filter: drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0 0 #fff) drop-shadow(0 1px 0 #fff)
+    drop-shadow(0 -1px 0 #fff) drop-shadow(0 2px 3px rgba(42, 38, 32, 0.22));
+}
+/* ink has no edge or shadow, and sinks into the tile the way it will into the card */
+.tray__item[data-ink='1'] .sticker-img {
+  filter: none;
+  mix-blend-mode: multiply;
+}

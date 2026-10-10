@@ -210,21 +210,33 @@ them from your own pictures.
 **Adding stickers**
 
 1. Make a folder per pack inside `app/stickers-src/` and put images in it: `stickers-src/cozy/candle.png`.
-   PNG, JPG or WebP all work. If a picture sits on a plain background (white, off-white or light grey), the background is removed for you.
-2. From the `app` folder run `node scripts/build-stickers.mjs`. It trims and shrinks each image (no
-   bigger than 256px on the long side), saves it under `public/stickers/`, and adds anything new to
-   this file.
+   PNG, JPG, WebP and SVG all work. If a picture sits on a plain background (white, off-white or light grey), the background is removed for you.
+2. From the `app` folder run `node scripts/build-stickers.mjs`. It trims and shrinks each PNG or JPG
+   (no bigger than 256px on the long side), saves it under `public/stickers/`, and adds anything
+   new to this file.
+   - **SVG drawings** and **WebP pictures that already have a see-through background** (up to 1024px)
+     are copied across exactly as they are, so they stay as sharp as you made them. A WebP on a solid
+     background is cut out and saved as a PNG, like a JPG. Keep each file small (under about 300 KB)
+     because every sticker is stored on the phone for offline use. An SVG that contains a `<script>`
+     is skipped, and the script says so.
 3. Open this file and tidy the entries it added. Each sticker looks like:
 
    `{ "file": "candle", "label": "Candle", "keywords": ["candle", "light", "warm"], "w": 117, "h": 129 }`
 
-   - `file` is the image name without `.png`, lowercase letters, digits and dashes only. Leave it alone.
+   - `file` is the image name without the ending (`.png`, `.webp` or `.svg`), lowercase letters, digits and dashes only. Leave it alone.
    - `label` is the name (screen readers read it, and search matches it).
    - `keywords` are what the **search box** matches. Add every word you might type: "tea", "chai", "kettle".
-   - `w` and `h` are filled in by the script.
+   - `w` and `h` are filled in by the script (only their shape matters).
+   - `ext` is `"webp"` or `"svg"` when the file is not a PNG. The script writes it; leave it alone.
    - A pack's `label` is the tab name, and the order of packs here is the order of the tabs.
 
 Running the script again is safe: your labels and keywords are kept, only new pictures are added.
+
+**Stamps and postal marks.** A pack with `"ink": true` next to its `label` holds ink, not stickers:
+cancellation marks, rubber stamps, date stamps. Ink gets no white edge and no shadow, and its colors
+multiply into the paper underneath, so the ruled lines and the handwriting show through it the way they
+do through a real stamp. Draw it as one color on a see-through background (an SVG or WebP) and it
+looks pressed in. The script keeps this line when it rewrites the file.
 
 **A sheet with many stickers on it?** Cut it into single stickers first:
 `node scripts/split-sheet.mjs sheet.jpg cozy` writes `stickers-src/cozy/sticker-01.png`, `sticker-02.png`
@@ -242,6 +254,15 @@ you put in `public/stickers/` is public too.
 die-cut edge on or off, and wash a picture sticker in a tone (Original, Cream, Cocoa, Rose, Sage, Mono).
 The tones, and the colors in each, are listed in `src/data/stickers.js` (`TONES`). The last look you
 chose is what the next sticker starts with, so a card can share one cozy palette.
+
+A sticker sits on the card like a real one: a thin white edge, a tight shadow where the edge meets
+the paper, and a soft shadow for its thickness. The light comes from straight above, so the shadow
+keeps falling downward even when you turn the sticker over, and it deepens while you hold it. These
+numbers live in `src/components/postcard/decor.css` (`--contact` and `--ambient`).
+
+**How a sticker lands.** Each new sticker is dropped slightly crooked, as if pressed on by hand: a tilt
+somewhere from 3 degrees to the left to 4 degrees to the right. Change the range in `DROP_TILT` in
+`src/lib/decor.js`. The tilt is saved with the sticker, so the card looks the same every time.
 
 ---
 

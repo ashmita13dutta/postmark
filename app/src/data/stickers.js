@@ -65,7 +65,13 @@ const DRAWN_PACKS = [
   ]),
 ]
 
-/** Picture packs from sticker-packs.json, with ids and file paths filled in. */
+/** The picture formats a sticker file can be in. PNG is the default; WebP and SVG are listed as `ext`. */
+export const IMAGE_FORMATS = ['png', 'webp', 'svg']
+
+/**
+ * Picture packs from sticker-packs.json, with ids and file paths filled in. A pack marked
+ * `"ink": true` holds stamps and postal marks: they are pressed into the paper (see isInk).
+ */
 const IMAGE_PACKS = packData.packs.map((pack) => ({
   id: pack.id,
   label: pack.label,
@@ -76,7 +82,8 @@ const IMAGE_PACKS = packData.packs.map((pack) => ({
     keywords: s.keywords ?? [],
     w: s.w,
     h: s.h,
-    src: `stickers/${pack.id}/${s.file}.png`,
+    ink: Boolean(pack.ink),
+    src: `stickers/${pack.id}/${s.file}.${IMAGE_FORMATS.includes(s.ext) ? s.ext : 'png'}`,
   })),
 }))
 
@@ -98,9 +105,16 @@ export const findSticker = (id) => BY_ID.get(id)
 /** 'img', 'stamp', 'tape' or 'doodle': the part of the id before the colon. */
 export const kindOf = (id) => id.split(':')[0]
 
-/** Which looks make sense for a sticker: ink stamps and tape keep their own look. */
-export const canOutline = (id) => ['img', 'doodle'].includes(kindOf(id))
-export const canTone = (id) => kindOf(id) === 'img'
+/**
+ * Ink is pressed into the paper rather than stuck on it: the drawn rubber stamps, and any picture
+ * from a pack marked `"ink": true`. It has no white edge, no shadow and no tone, and its colors
+ * multiply into whatever is underneath.
+ */
+export const isInk = (id) => kindOf(id) === 'stamp' || Boolean(findSticker(id)?.ink)
+
+/** Which looks make sense for a sticker: ink and tape keep their own look. */
+export const canOutline = (id) => ['img', 'doodle'].includes(kindOf(id)) && !isInk(id)
+export const canTone = (id) => kindOf(id) === 'img' && !isInk(id)
 
 /**
  * Stickers matching a search, best first. Every word you type must match the sticker's name, one of
@@ -149,17 +163,17 @@ export const WAX_COLORS = [
   { hex: '#3F6B4A', name: 'Banyan green' },
   { hex: '#6B3F6B', name: 'Jamun plum' },
   { hex: '#B8902B', name: 'Zari gold' },
-]
-
-export const WAX_EMBLEMS = [
-  { id: 'heart', label: 'Heart' },
-  { id: 'star', label: 'Star' },
-  { id: 'moon', label: 'Moon' },
-  { id: 'initial', label: 'Initial' },
-]
   { hex: '#7A1F26', name: 'Oxblood' },
   { hex: '#D98A9B', name: 'Rose petal' },
   { hex: '#2B3350', name: 'Midnight' },
   { hex: '#2F6B68', name: 'Teal river' },
   { hex: '#3A3633', name: 'Charcoal' },
+]
+
+export const WAX_EMBLEMS = [
   { id: 'rose', label: 'Rose' },
+  { id: 'heart', label: 'Heart' },
+  { id: 'star', label: 'Star' },
+  { id: 'moon', label: 'Moon' },
+  { id: 'initial', label: 'Initial' },
+]

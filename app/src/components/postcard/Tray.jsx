@@ -1,6 +1,6 @@
 import { motion, useDragControls, useReducedMotion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
-import { PACKS, findSticker, searchStickers } from '../../data/stickers'
+import { PACKS, findSticker, isInk, searchStickers } from '../../data/stickers'
 import Sticker, { stickerSize } from './Sticker'
 import './tray.css'
 
@@ -173,6 +173,7 @@ export default function Tray({ palette, onPick, prefs, open: openProp, onOpenCha
               <li key={s.id}>
                 <button
                   className="tray__item"
+                  data-ink={isInk(s.id) ? '1' : undefined}
                   onClick={() => onPick(s.id)}
                   aria-label={`Add ${s.label}`}
                 >

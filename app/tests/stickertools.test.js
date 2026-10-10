@@ -1,4 +1,17 @@
-import { describe, expect, it } from 'vitest'
+import { spawnSync } from 'node:child_process'
+import {
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  readdirSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs'
+import { tmpdir } from 'node:os'
+import { resolve } from 'node:path'
+import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import { svgProblem, svgSize, webpInfo } from '../scripts/stickers/formats.mjs'
 import {
   backgroundMask,
   cornersAreLight,
@@ -278,5 +291,190 @@ describe('image reading and writing', { timeout: 30_000 }, () => {
   it('refuses something that is not an image', () => {
     expect(imageType(Buffer.from('hello world, definitely not a picture'))).toBeNull()
     expect(() => decode(Buffer.from('hello world, definitely not a picture'))).toThrow()
+  })
+})
+
+// ---- SVG and WebP stickers, kept as they are ----
+
+/** Just the header of a WebP file: enough for the sticker tools, which never draw these files. */
+function webpHeader(kind, { width, height, alpha = false, animated = false }) {
+  const buf = Buffer.alloc(40)
+  buf.write('RIFF', 0, 'ascii')
+  buf.writeUInt32LE(32, 4)
+  buf.write('WEBP', 8, 'ascii')
+  if (kind === 'VP8X') {
+    buf.write('VP8X', 12, 'ascii')
+    buf.writeUInt32LE(10, 16)
+    buf[20] = (alpha ? 0x10 : 0) | (animated ? 0x02 : 0)
+    buf.writeUIntLE(width - 1, 24, 3)
+    buf.writeUIntLE(height - 1, 27, 3)
+  } else if (kind === 'VP8L') {
+    buf.write('VP8L', 12, 'ascii')
+    buf.writeUInt32LE(5, 16)
+    buf[20] = 0x2f
+    buf.writeUInt32LE(((alpha ? 1 : 0) << 28) | ((height - 1) << 14) | (width - 1), 21)
+  } else {
+    buf.write('VP8 ', 12, 'ascii')
+    buf.writeUInt32LE(10, 16)
+    buf.set([0x9d, 0x01, 0x2a], 23)
+    buf.writeUInt16LE(width, 26)
+    buf.writeUInt16LE(height, 28)
+  }
+  return buf
+}
+
+describe('SVG stickers', () => {
+  it('takes the shape from the viewBox, scaled so the long side is 256', () => {
+    expect(svgSize('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50"></svg>')).toEqual({
+      width: 256,
+      height: 128,
+    })
+    expect(svgSize(`<svg viewBox='0, 0, 40, 80' width="999" height="1"/>`)).toEqual({
+      width: 128,
+      height: 256,
+    })
+  })
+
+  it('falls back to width and height, but not to percentages', () => {
+    expect(svgSize('<svg width="120px" height="60"></svg>')).toEqual({ width: 256, height: 128 })
+    expect(svgSize('<svg width="100%" height="100%"></svg>')).toBeNull()
+    expect(svgSize('<svg></svg>')).toBeNull()
+    expect(svgSize('not an svg at all')).toBeNull()
+  })
+
+  it('refuses scripts and event handlers, but not words that only look like them', () => {
+    expect(svgProblem('<svg viewBox="0 0 1 1"><script>alert(1)</script></svg>')).toMatch(/script/)
+    expect(svgProblem('<svg viewBox="0 0 1 1"><rect onclick="x()"/></svg>')).toMatch(/event/)
+    expect(svgProblem('<svg viewBox="0 0 1 1"><text>onclick = nothing</text></svg>')).toBeNull()
+    expect(svgProblem('<svg viewBox="0 0 1 1"><circle r="1"/></svg>')).toBeNull()
+  })
+})
+
+describe('WebP stickers', () => {
+  it('reads the size and whether there is a see-through channel, from any of the three layouts', () => {
+    expect(webpInfo(webpHeader('VP8X', { width: 300, height: 200, alpha: true }))).toEqual({
+      width: 300,
+      height: 200,
+      alpha: true,
+      animated: false,
+    })
+    expect(webpInfo(webpHeader('VP8X', { width: 300, height: 200 }))).toMatchObject({
+      alpha: false,
+    })
+    expect(webpInfo(webpHeader('VP8X', { width: 8, height: 8, animated: true }))).toMatchObject({
+      animated: true,
+    })
+    expect(webpInfo(webpHeader('VP8L', { width: 123, height: 77, alpha: true }))).toMatchObject({
+      width: 123,
+      height: 77,
+      alpha: true,
+    })
+    expect(webpInfo(webpHeader('VP8L', { width: 123, height: 77 }))).toMatchObject({ alpha: false })
+    // a plain lossy WebP cannot be see-through
+    expect(webpInfo(webpHeader('VP8 ', { width: 64, height: 48 }))).toEqual({
+      width: 64,
+      height: 48,
+      alpha: false,
+      animated: false,
+    })
+  })
+
+  it('is null for anything that is not a WebP', () => {
+    expect(webpInfo(Buffer.from('hello'))).toBeNull()
+    expect(webpInfo(encodePng(1, 1, Buffer.from([1, 2, 3, 255])))).toBeNull()
+  })
+})
+
+describe('building a pack of SVG and WebP stickers', { timeout: 60_000 }, () => {
+  let dir
+  /** Runs the build script on the temp folder; returns everything it printed, warnings included. */
+  const run = () => {
+    const out = spawnSync(process.execPath, [resolve(__dirname, '../scripts/build-stickers.mjs')], {
+      env: { ...process.env, STICKER_ROOT: dir },
+      encoding: 'utf8',
+    })
+    expect(out.status, out.stderr).toBe(0)
+    return out.stdout + out.stderr
+  }
+  const manifest = () =>
+    JSON.parse(readFileSync(resolve(dir, 'src/data/sticker-packs.json'), 'utf8'))
+
+  beforeAll(() => {
+    dir = mkdtempSync(resolve(tmpdir(), 'postmark-stickers-'))
+    mkdirSync(resolve(dir, 'src/data'), { recursive: true })
+    mkdirSync(resolve(dir, 'stickers-src/marks'), { recursive: true })
+    // an ink pack that already exists, with a name the owner wrote by hand
+    writeFileSync(
+      resolve(dir, 'src/data/sticker-packs.json'),
+      JSON.stringify({
+        about: 'x',
+        packs: [
+          {
+            id: 'marks',
+            label: 'Postal marks',
+            ink: true,
+            stickers: [{ file: 'round', label: 'My round mark', keywords: ['mine'], w: 1, h: 1 }],
+          },
+        ],
+      }),
+    )
+    const src = resolve(dir, 'stickers-src/marks')
+    writeFileSync(
+      resolve(src, 'round.svg'),
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 60"><circle cx="30" cy="30" r="25"/></svg>',
+    )
+    writeFileSync(
+      resolve(src, 'airmail.webp'),
+      webpHeader('VP8X', { width: 400, height: 160, alpha: true }),
+    )
+    writeFileSync(
+      resolve(src, 'evil.svg'),
+      '<svg viewBox="0 0 1 1"><script>alert(1)</script></svg>',
+    )
+    writeFileSync(
+      resolve(src, 'plain.png'),
+      encodePng(8, 6, Buffer.alloc(8 * 6 * 4, 255).fill(0, 0, 4)),
+    )
+  })
+  afterAll(() => rmSync(dir, { recursive: true, force: true }))
+
+  it('copies SVG and see-through WebP untouched, and turns a PNG into a PNG', () => {
+    const out = run()
+    expect(out).toMatch(/skipped evil\.svg: it contains a <script>/)
+    const pub = resolve(dir, 'public/stickers/marks')
+    expect(readdirSync(pub).sort()).toEqual(['airmail.webp', 'plain.png', 'round.svg'])
+    expect(readFileSync(resolve(pub, 'round.svg'), 'utf8')).toContain('<circle')
+    expect(imageType(readFileSync(resolve(pub, 'airmail.webp')))).toBe('webp')
+  })
+
+  it('lists them with their file type and shape, keeps the owner’s words and the ink flag', () => {
+    const pack = manifest().packs[0]
+    expect(pack).toMatchObject({ id: 'marks', label: 'Postal marks', ink: true })
+    const by = Object.fromEntries(pack.stickers.map((s) => [s.file, s]))
+    expect(by.round).toMatchObject({
+      label: 'My round mark',
+      keywords: ['mine'],
+      ext: 'svg',
+      w: 256,
+      h: 171,
+    })
+    expect(by.airmail).toMatchObject({ ext: 'webp', w: 400, h: 160 })
+    expect(by.plain.ext).toBeUndefined() // PNG is the default, so it is not written down
+    expect(by.evil).toBeUndefined()
+  })
+
+  it('leaves no old copy behind when a picture is re-made in another format', () => {
+    const pub = resolve(dir, 'public/stickers/marks')
+    rmSync(resolve(dir, 'stickers-src/marks/round.svg'))
+    writeFileSync(
+      resolve(dir, 'stickers-src/marks/round.png'),
+      encodePng(8, 8, Buffer.alloc(8 * 8 * 4, 0).fill(255, 0, 4)),
+    )
+    run()
+    expect(existsSync(resolve(pub, 'round.svg'))).toBe(false)
+    expect(existsSync(resolve(pub, 'round.png'))).toBe(true)
+    const round = manifest().packs[0].stickers.find((s) => s.file === 'round')
+    expect(round.ext).toBeUndefined()
+    expect(round.label).toBe('My round mark')
   })
 })

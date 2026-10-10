@@ -1,10 +1,11 @@
 import 'fake-indexeddb/auto'
 import { existsSync } from 'node:fs'
 import { resolve } from 'node:path'
-import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import packData from '../src/data/sticker-packs.json'
 import {
   DEFAULT_STYLE,
+  IMAGE_FORMATS,
   PACKS,
   STICKERS,
   TONES,
@@ -79,13 +80,93 @@ describe('sticker-packs.json (yours to edit)', () => {
     }
   })
 
+  it('names a known picture format and a true-or-false ink flag, when it names them at all', () => {
+    for (const pack of packData.packs) {
+      if ('ink' in pack) expect(typeof pack.ink, `ink of pack ${pack.id}`).toBe('boolean')
+      for (const s of pack.stickers) {
+        if ('ext' in s) expect(IMAGE_FORMATS, `ext of ${pack.id}/${s.file}`).toContain(s.ext)
+      }
+    }
+  })
+
   it('has an image file for every sticker it lists', () => {
     for (const pack of packData.packs) {
       for (const s of pack.stickers) {
-        const file = resolve(__dirname, '../public/stickers', pack.id, `${s.file}.png`)
-        expect(existsSync(file), `missing public/stickers/${pack.id}/${s.file}.png`).toBe(true)
+        const name = `${s.file}.${s.ext ?? 'png'}`
+        const file = resolve(__dirname, '../public/stickers', pack.id, name)
+        expect(existsSync(file), `missing public/stickers/${pack.id}/${name}`).toBe(true)
       }
     }
+  })
+})
+
+describe('picture formats and ink packs', () => {
+  const manifest = {
+    about: '',
+    packs: [
+      {
+        id: 'marks',
+        label: 'Postal marks',
+        ink: true,
+        stickers: [
+          { file: 'round', label: 'Round mark', w: 100, h: 100, ext: 'svg' },
+          { file: 'airmail', label: 'Airmail', w: 200, h: 80, ext: 'webp' },
+        ],
+      },
+      {
+        id: 'fun',
+        label: 'Fun',
+        stickers: [
+          { file: 'kite', label: 'Kite', w: 90, h: 120 },
+          { file: 'frog', label: 'Frog', w: 90, h: 90, ext: 'svg' },
+          { file: 'odd', label: 'Odd', w: 90, h: 90, ext: 'gif' },
+        ],
+      },
+    ],
+  }
+  let cat
+
+  beforeEach(async () => {
+    vi.resetModules()
+    vi.doMock('../src/data/sticker-packs.json', () => ({ default: manifest }))
+    cat = await import('../src/data/stickers')
+  })
+  afterEach(() => {
+    vi.doUnmock('../src/data/sticker-packs.json')
+    vi.resetModules()
+  })
+
+  it('points each sticker at its own file type, PNG when none is given', () => {
+    expect(cat.findSticker('img:marks/round').src).toBe('stickers/marks/round.svg')
+    expect(cat.findSticker('img:marks/airmail').src).toBe('stickers/marks/airmail.webp')
+    expect(cat.findSticker('img:fun/kite').src).toBe('stickers/fun/kite.png')
+    expect(cat.findSticker('img:fun/frog').src).toBe('stickers/fun/frog.svg')
+    // a type that is not one of ours is not trusted with a path
+    expect(cat.findSticker('img:fun/odd').src).toBe('stickers/fun/odd.png')
+  })
+
+  it('presses stamps and a pack marked ink into the paper, and sticks everything else on', () => {
+    expect(cat.isInk('stamp:fragile')).toBe(true)
+    expect(cat.isInk('img:marks/round')).toBe(true)
+    expect(cat.isInk('img:marks/airmail')).toBe(true)
+    expect(cat.isInk('img:fun/kite')).toBe(false)
+    expect(cat.isInk('doodle:heart')).toBe(false)
+    expect(cat.isInk('tape:0')).toBe(false)
+    expect(cat.isInk('img:gone/forever')).toBe(false)
+  })
+
+  it('gives ink no white edge and no tone, but pictures still get both', () => {
+    expect(cat.canOutline('img:marks/round')).toBe(false)
+    expect(cat.canTone('img:marks/round')).toBe(false)
+    expect(cat.canOutline('img:fun/frog')).toBe(true)
+    expect(cat.canTone('img:fun/frog')).toBe(true)
+  })
+
+  it('finds a stamp from an ink pack by searching for its pack', () => {
+    expect(cat.searchStickers('postal').map((s) => s.id)).toEqual([
+      'img:marks/round',
+      'img:marks/airmail',
+    ])
   })
 })
 

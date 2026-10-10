@@ -1,7 +1,24 @@
 .decor-layer {
   position: absolute;
   inset: 0;
-  z-index: 2;
+  /*
+   * No z-index here, and no opacity, filter or transform either. Any of those would make this layer
+   * a stacking context of its own, and an ink stamp inside it could then only multiply into the
+   * empty layer instead of the paper underneath. Each sticker sets its own z-index (inline) instead.
+   */
+}
+
+/*
+ * Two kinds of sticker live here.
+ *  - stuck on: pictures, doodles, tape. They sit on the paper with a die-cut look: a thin white edge,
+ *    a tight shadow where the edge meets the paper, and a soft shadow for the height of the sticker.
+ *  - pressed in: stamps and postal marks (data-ink). Ink has no thickness, so no edge and no shadow;
+ *    its colors multiply into the paper so the card's grain and ruled lines show through.
+ */
+@property --lift {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 0;
 }
 .decor {
   position: absolute;
@@ -9,7 +26,31 @@
   cursor: grab;
   user-select: none;
   -webkit-user-select: none;
-  filter: drop-shadow(0 2px 2px rgba(42, 38, 32, 0.25));
+  /* --rot is this sticker's turn in degrees (set inline); --lift is 1 while a finger holds it */
+  --rot: 0deg;
+  --lift: 0;
+  /* the two shadows. Light comes from straight above, so each falls straight down on the card. */
+  --contact: drop-shadow(0 1px 0.6px rgba(42, 38, 32, 0.38));
+  --ambient: drop-shadow(
+    0 calc(5px + 7px * var(--lift)) calc(7px + 8px * var(--lift)) rgba(42, 38, 32, 0.2)
+  );
+}
+/* A turned sticker casts its shadow in its own frame, so the offset is turned back to keep it
+   falling straight down. Browsers without sin() and cos() keep the plain shadows above. */
+@supports (width: calc(sin(1deg) * 1px)) {
+  .decor {
+    --contact: drop-shadow(
+      calc(sin(var(--rot)) * 1px) calc(cos(var(--rot)) * 1px) 0.6px rgba(42, 38, 32, 0.38)
+    );
+    --ambient: drop-shadow(
+      calc(sin(var(--rot)) * (5px + 7px * var(--lift)))
+        calc(cos(var(--rot)) * (5px + 7px * var(--lift))) calc(7px + 8px * var(--lift))
+        rgba(42, 38, 32, 0.2)
+    );
+  }
+}
+.decor--lift {
+  --lift: 1;
 }
 .decor:active {
   cursor: grabbing;
@@ -29,7 +70,7 @@
   pointer-events: none;
 }
 
-/* ---- picture stickers: a tone wash and a white die-cut edge, each switchable per sticker ---- */
+/* ---- picture stickers (PNG, WebP or SVG): a tone wash and a white die-cut edge, each switchable ---- */
 .sticker-img {
   display: block;
   pointer-events: none;
@@ -59,7 +100,28 @@
 .decor[data-kind='img'][data-outline='1'] {
   --edge: url(#sticker-outline);
 }
-/* tone first, then the white edge (so the edge stays white), then a soft shadow under it all */
-.decor[data-kind='img'] img {
-  filter: var(--tone) var(--edge) drop-shadow(0 2px 3px rgba(42, 38, 32, 0.28));
+/* tone first, then the white edge (so the edge stays white), then the two shadows under it all */
+.decor[data-kind='img']:not([data-ink]) img {
+  filter: var(--tone) var(--edge) var(--contact) var(--ambient);
+}
+
+/* ---- doodles and wax seals: the white edge, a sheen, then the same two shadows ---- */
+.decor[data-kind='doodle'] svg,
+.decor[data-kind='seal'] svg {
+  /* four hard offsets draw the white die-cut edge */
+  filter: drop-shadow(1.5px 0 0 #fff) drop-shadow(-1.5px 0 0 #fff) drop-shadow(0 1.5px 0 #fff)
+    drop-shadow(0 -1.5px 0 #fff) url(#sticker-gloss) var(--contact) var(--ambient);
+}
+/* edge switched off: keep the gloss, drop the white border */
+.decor[data-kind='doodle'][data-outline='0'] svg {
+  filter: url(#sticker-gloss) var(--contact) var(--ambient);
+}
+/* washi tape is thin and flat: only a hint of shadow */
+.decor[data-kind='tape'] svg {
+  filter: drop-shadow(0 1px 1.5px rgba(42, 38, 32, 0.22));
+}
+
+/* ---- ink: stamps and postal marks, pressed into the paper ---- */
+.decor[data-ink='1'] {
+  mix-blend-mode: multiply;
 }

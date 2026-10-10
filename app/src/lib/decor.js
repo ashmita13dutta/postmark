@@ -31,9 +31,12 @@ export function clampPlacement(p) {
   return out
 }
 
-/** The small random tilt a sticker gets when dropped (spec 8.4). Same key, same tilt. */
-export function dropTilt(key, maxDeg = 8) {
-  return (seededRng(`drop:${key}`)() * 2 - 1) * maxDeg
+/** Every sticker lands tilted by somewhere in this range, a touch more to the right than the left. */
+export const DROP_TILT = { min: -3, max: 4 }
+
+/** The small random tilt a sticker gets when dropped, like one pressed on by hand. Same key, same tilt. */
+export function dropTilt(key, { min, max } = DROP_TILT) {
+  return min + seededRng(`drop:${key}`)() * (max - min)
 }
 
 /**

@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { PostcardFullError, SealedError, makeQueries } from '../src/db/queries'
 import { PostmarkDB } from '../src/db/schema'
 import { setNow } from '../src/lib/clock'
-import { MAX_DECORATIONS, clampPlacement, dropSpot, dropTilt } from '../src/lib/decor'
+import { DROP_TILT, MAX_DECORATIONS, clampPlacement, dropSpot, dropTilt } from '../src/lib/decor'
 
 let db
 let q
@@ -49,9 +49,25 @@ describe('clampPlacement', () => {
 })
 
 describe('dropTilt and dropSpot', () => {
-  it('is stable for a key and stays within the limit', () => {
+  it('is stable for a key', () => {
     expect(dropTilt('a')).toBe(dropTilt('a'))
-    for (const k of ['a', 'b', 'c', 'd', 'e']) expect(Math.abs(dropTilt(k))).toBeLessThanOrEqual(8)
+  })
+  it('tilts a little to the left or a little more to the right, never outside -3 to 4 degrees', () => {
+    const tilts = Array.from({ length: 400 }, (_, i) => dropTilt(`k${i}`))
+    for (const t of tilts) {
+      expect(t).toBeGreaterThanOrEqual(DROP_TILT.min)
+      expect(t).toBeLessThan(DROP_TILT.max)
+    }
+    expect(DROP_TILT).toEqual({ min: -3, max: 4 })
+    // spread over the whole range, and on both sides of upright
+    expect(Math.min(...tilts)).toBeLessThan(-2.5)
+    expect(Math.max(...tilts)).toBeGreaterThan(3.5)
+    expect(tilts.filter((t) => t < 0).length).toBeGreaterThan(100)
+    expect(tilts.filter((t) => t > 0).length).toBeGreaterThan(100)
+  })
+  it('takes its own range when asked', () => {
+    expect(dropTilt('a', { min: 10, max: 11 })).toBeGreaterThanOrEqual(10)
+    expect(dropTilt('a', { min: 10, max: 11 })).toBeLessThan(11)
   })
   it('lands near the middle', () => {
     for (let i = 0; i < 8; i++) {

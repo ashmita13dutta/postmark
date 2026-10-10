@@ -101,35 +101,14 @@ h3,
 .stamp__no {
   mix-blend-mode: multiply;
 }
-.decor[data-kind='stamp'] {
-  mix-blend-mode: multiply;
-}
 
-/* ---- stickers: die-cut white border and a glossy sheen ---- */
+/* ---- stickers: the die-cut look and the ink look are in components/postcard/decor.css ---- */
 .decor {
-  filter: none;
+  transition:
+    scale 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
+    --lift 0.28s ease-out;
 }
-.decor[data-kind='doodle'] svg,
-.decor[data-kind='seal'] svg {
-  /* four hard offsets draw the white die-cut edge, then the sheen, then a soft contact shadow */
-  filter: drop-shadow(1.5px 0 0 #fff) drop-shadow(-1.5px 0 0 #fff) drop-shadow(0 1.5px 0 #fff)
-    drop-shadow(0 -1.5px 0 #fff) url(#sticker-gloss) drop-shadow(0 2px 3px rgba(42, 38, 32, 0.28));
-}
-/* edge switched off: keep the gloss, drop the white border */
-.decor[data-kind='doodle'][data-outline='0'] svg {
-  filter: url(#sticker-gloss) drop-shadow(0 2px 3px rgba(42, 38, 32, 0.28));
-}
-.decor[data-kind='tape'] svg {
-  filter: drop-shadow(0 1px 1.5px rgba(42, 38, 32, 0.22));
-}
-/* a rubber stamp is ink: no edge, no shadow */
-.decor[data-kind='stamp'] svg {
-  filter: none;
-}
-.decor {
-  transition: scale 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-/* picked up: a little bigger, as if lifted off the card */
+/* picked up: a little bigger and a deeper shadow, as if lifted off the card */
 .decor--lift {
   scale: 1.08;
   transition-duration: 0.14s;
