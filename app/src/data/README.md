@@ -337,3 +337,35 @@ first. `id`s are lowercase letters, digits and dashes.
 
 ---
 
+## words.json: the caption stickers
+
+The **Words** tab in the sticker tray holds short captions to stick on a postcard: "miss you",
+"chai time", "pujo vibes", "ki khobor?". They are drawn in the handwriting fonts the app already has,
+so there are no picture files. Each one looks like:
+
+`{ "id": "chai-time", "text": "chai time", "look": "label", "color": "#8A5A34", "keywords": ["tea", "adda"] }`
+
+- `text` is what it says. Keep it under 19 characters, or it shrinks too small to read.
+- `look` is `"script"` (handwriting in that color) or `"label"` (a rounded tag in that color with small
+  capitals). On a label the color must be dark enough for cream letters; the tests check this.
+- `keywords` are what the search box matches. The words themselves always match too.
+- `id` is what a postcard remembers, so avoid renaming one you have already stuck on a card. If you
+  delete a word, a card that used it shows a dashed "?" you can tap and remove.
+
+A caption gets the same white edge, shadow and tilt as any sticker, and you can turn the edge off.
+
+---
+
+## feelingHead.json (generated: do not edit)
+
+The note reader (the on-device language model, see the main README) turns a note into 384 numbers.
+`feelingHead.json` holds the last layer that turns those numbers into a probability for each of the
+16 feelings. It is **generated** from the labelled notes in `tests/corpus/`, so it is not edited by
+hand like the other files here. To change what the reader thinks:
+
+1. add or fix labelled notes in `tests/corpus/` (one note per line: `["text", ["feeling", ...], ["topic", ...]]`),
+2. run `npm run train:head` (add `-- --cv` to see a cross-validated score first),
+3. run `npm test`, which checks the file still matches the model in `scripts/model/manifest.json`.
+
+The built-in keyword method (`feelings.json` and the rest of this page) is unaffected. It still
+supplies the topic, color words, anything you taught, and the whole reading when the reader is off.

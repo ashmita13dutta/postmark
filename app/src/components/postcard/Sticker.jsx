@@ -1,5 +1,6 @@
 import { useId } from 'react'
 import { IMAGE_BOX, findSticker } from '../../data/stickers'
+import { findWord, wordLayout } from '../../data/words'
 
 const RED = '#B14126'
 const PURPLE = '#534AB7'
@@ -30,6 +31,12 @@ function imageSize(id) {
 export function stickerSize(id) {
   const [kind, name] = id.split(':')
   if (kind === 'img') return imageSize(id)
+  if (kind === 'word') {
+    const word = findWord(name)
+    if (!word) return SIZES.doodle
+    const { width, height } = wordLayout(word)
+    return { width, height }
+  }
   if (kind === 'stamp') return STAMP_TEXT[name]?.lines.length > 1 ? SIZES.handle : SIZES.stamp
   return SIZES[kind] ?? SIZES.doodle
 }
@@ -196,6 +203,35 @@ const DOODLES = {
   ),
 }
 
+/**
+ * A caption (words.json). The browser stretches the letters to exactly `textWidth` (textLength), so
+ * the box never has to be measured: a script word is colored handwriting, a label is a rounded tag
+ * with cream capitals.
+ */
+function WordSticker({ word }) {
+  const { text, look, color, fontSize, family, baseline, padX, textWidth, width, height } =
+    wordLayout(word)
+  const label = look === 'label'
+  return (
+    <svg viewBox={`0 0 ${width} ${height}`} width={width} height={height}>
+      {label && <rect width={width} height={height} rx={height / 2} fill={color} />}
+      <text
+        x={padX}
+        y={baseline}
+        fontSize={fontSize}
+        fontWeight={label ? 700 : 400}
+        letterSpacing={label ? 1.2 : 0}
+        fill={label ? '#FDF8EC' : color}
+        textLength={textWidth}
+        lengthAdjust="spacingAndGlyphs"
+        style={{ fontFamily: `var(${family})` }}
+      >
+        {text}
+      </text>
+    </svg>
+  )
+}
+
 /** Stands in for a picture sticker whose pack has since been removed, so it can still be removed. */
 function MissingSticker() {
   return (
@@ -240,6 +276,11 @@ export default function Sticker({ id, palette = [] }) {
         decoding="async"
       />
     )
+  }
+  if (kind === 'word') {
+    const word = findWord(name)
+    // a word you took out of words.json still shows as a dashed "?" so it can be removed
+    return word ? <WordSticker word={word} /> : <MissingSticker />
   }
   if (kind === 'stamp' && STAMP_TEXT[name]) return <RubberStamp name={name} />
   if (kind === 'tape') return <Tape color={palette[Number(name)]?.hex ?? '#D5A737'} />

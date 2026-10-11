@@ -28,7 +28,7 @@ describe('the sticker catalog', () => {
 
   it('gives every sticker a unique id and a known kind', () => {
     expect(new Set(all.map((s) => s.id)).size).toBe(all.length)
-    for (const s of all) expect(['img', 'stamp', 'tape', 'doodle']).toContain(kindOf(s.id))
+    for (const s of all) expect(['img', 'stamp', 'tape', 'doodle', 'word']).toContain(kindOf(s.id))
   })
 
   it('keeps the older tab and sticker lists in step with the packs', () => {

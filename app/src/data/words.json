@@ -1,0 +1,29 @@
+{
+  "about": "The caption stickers in the tray's Words tab. Yours to edit: change the words, add your own, or delete any. text is what the sticker says (keep it under 19 characters so it stays readable). look is script (handwriting in color) or label (a rounded colored tag with small capitals). color is a hex color; on a label it is the tag, so keep it dark enough for cream letters. keywords are what the search box matches (the text itself always matches). id is lowercase letters, digits and dashes, and a postcard remembers it, so avoid renaming one you have already used. The order here is the order in the tray.",
+  "words": [
+    { "id": "hello", "text": "hello", "look": "script", "color": "#B14126", "keywords": ["hi", "greeting", "welcome"] },
+    { "id": "miss-you", "text": "miss you", "look": "script", "color": "#534AB7", "keywords": ["missing", "far", "friend", "love"] },
+    { "id": "love-you", "text": "love you", "look": "script", "color": "#C2487A", "keywords": ["heart", "affection", "mom", "maa"] },
+    { "id": "xoxo", "text": "xoxo", "look": "script", "color": "#C2487A", "keywords": ["hugs", "kisses", "love"] },
+    { "id": "good-night", "text": "good night", "look": "script", "color": "#3A5771", "keywords": ["sleep", "dream", "late", "bed"] },
+    { "id": "chai-time", "text": "chai time", "look": "label", "color": "#8A5A34", "keywords": ["tea", "cup", "drink", "break", "adda"] },
+    { "id": "pujo-vibes", "text": "pujo vibes", "look": "label", "color": "#86620F", "keywords": ["durga", "puja", "festival", "festive", "shopping"] },
+    { "id": "kolkata", "text": "kolkata", "look": "label", "color": "#3A5771", "keywords": ["city", "home", "calcutta", "tram"] },
+    { "id": "home", "text": "home", "look": "script", "color": "#3F6B4A", "keywords": ["family", "house", "comfort"] },
+    { "id": "rain", "text": "rain", "look": "script", "color": "#3A5771", "keywords": ["monsoon", "weather", "wet", "umbrella"] },
+    { "id": "monsoon", "text": "monsoon", "look": "script", "color": "#3A5771", "keywords": ["rain", "weather", "season", "wet"] },
+    { "id": "grateful", "text": "grateful", "look": "script", "color": "#3F6B4A", "keywords": ["thankful", "thanks", "blessed", "happy"] },
+    { "id": "yay", "text": "yay!", "look": "script", "color": "#E0663A", "keywords": ["happy", "celebrate", "joy", "excited", "result"] },
+    { "id": "so-done", "text": "so done", "look": "label", "color": "#6B3F6B", "keywords": ["tired", "annoyed", "exhausted", "fed up", "meeting"] },
+    { "id": "tired", "text": "tired", "look": "script", "color": "#6B3F6B", "keywords": ["sleepy", "exhausted", "low", "rest"] },
+    { "id": "just-because", "text": "just because", "look": "script", "color": "#2A2620", "keywords": ["random", "note", "gift"] },
+    { "id": "dear-future-me", "text": "dear future me", "look": "script", "color": "#534AB7", "keywords": ["letter", "remember", "future", "note to self"] },
+    { "id": "remember-this", "text": "remember this", "look": "label", "color": "#534AB7", "keywords": ["memory", "moment", "keep", "future"] },
+    { "id": "ki-khobor", "text": "ki khobor?", "look": "script", "color": "#B14126", "keywords": ["bengali", "bangla", "how are you", "what's up", "hello"] },
+    { "id": "bhalo-theko", "text": "bhalo theko", "look": "script", "color": "#3F6B4A", "keywords": ["bengali", "bangla", "take care", "stay well", "goodbye"] },
+    { "id": "adda", "text": "adda", "look": "label", "color": "#B14126", "keywords": ["bengali", "bangla", "chat", "friends", "hangout", "gossip"] },
+    { "id": "sunday", "text": "sunday", "look": "label", "color": "#3A5771", "keywords": ["weekend", "lazy", "rest", "day off"] },
+    { "id": "sweet", "text": "sweet", "look": "script", "color": "#C2487A", "keywords": ["mishti", "dessert", "cute", "kind"] },
+    { "id": "fragile-feelings", "text": "fragile feelings", "look": "label", "color": "#6B3F6B", "keywords": ["sad", "gentle", "sensitive", "careful", "handle with care"] }
+  ]
+}

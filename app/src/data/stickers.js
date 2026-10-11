@@ -2,11 +2,13 @@
  * What the decorate tray offers. Ids are stored on a decoration as `stickerId`.
  *
  * There are two kinds of sticker:
- *  - drawn ones (stamps, tape, doodles), made of shapes in components/postcard/Sticker.jsx
+ *  - drawn ones (stamps, tape, doodles, and the caption words from words.json), made of shapes and
+ *    text in components/postcard/Sticker.jsx
  *  - picture stickers (`img:<pack>/<file>`), listed in sticker-packs.json. Those are yours to edit:
  *    see the "about" line at the top of that file.
  */
 import packData from './sticker-packs.json'
+import { WORDS } from './words'
 
 /** A picture sticker is shown no bigger than this many px (its longest side) at scale 1. */
 export const IMAGE_BOX = 96
@@ -63,6 +65,16 @@ const DRAWN_PACKS = [
     ['doodle:squiggle', 'Squiggle', ['line', 'wave', 'scribble']],
     ['doodle:arrow', 'Arrow', ['point', 'direction']],
   ]),
+  // caption stickers, from words.json (yours to edit)
+  drawn(
+    'words',
+    'Words',
+    WORDS.map((w) => [
+      `word:${w.id}`,
+      w.text,
+      ['words', 'text', 'caption', 'letters', ...(w.keywords ?? [])],
+    ]),
+  ),
 ]
 
 /** The picture formats a sticker file can be in. PNG is the default; WebP and SVG are listed as `ext`. */
@@ -102,7 +114,7 @@ const BY_ID = new Map(PACKS.flatMap((pack) => pack.items).map((item) => [item.id
 /** The sticker with this id, or undefined (a pack may have been removed since it was used). */
 export const findSticker = (id) => BY_ID.get(id)
 
-/** 'img', 'stamp', 'tape' or 'doodle': the part of the id before the colon. */
+/** 'img', 'stamp', 'tape', 'doodle' or 'word': the part of the id before the colon. */
 export const kindOf = (id) => id.split(':')[0]
 
 /**
@@ -113,7 +125,7 @@ export const kindOf = (id) => id.split(':')[0]
 export const isInk = (id) => kindOf(id) === 'stamp' || Boolean(findSticker(id)?.ink)
 
 /** Which looks make sense for a sticker: ink and tape keep their own look. */
-export const canOutline = (id) => ['img', 'doodle'].includes(kindOf(id)) && !isInk(id)
+export const canOutline = (id) => ['img', 'doodle', 'word'].includes(kindOf(id)) && !isInk(id)
 export const canTone = (id) => kindOf(id) === 'img' && !isInk(id)
 
 /**

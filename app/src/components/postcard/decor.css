@@ -105,15 +105,17 @@
   filter: var(--tone) var(--edge) var(--contact) var(--ambient);
 }
 
-/* ---- doodles and wax seals: the white edge, a sheen, then the same two shadows ---- */
+/* ---- doodles, caption words and wax seals: the white edge, a sheen, then the same two shadows ---- */
 .decor[data-kind='doodle'] svg,
+.decor[data-kind='word'] svg,
 .decor[data-kind='seal'] svg {
   /* four hard offsets draw the white die-cut edge */
   filter: drop-shadow(1.5px 0 0 #fff) drop-shadow(-1.5px 0 0 #fff) drop-shadow(0 1.5px 0 #fff)
     drop-shadow(0 -1.5px 0 #fff) url(#sticker-gloss) var(--contact) var(--ambient);
 }
 /* edge switched off: keep the gloss, drop the white border */
-.decor[data-kind='doodle'][data-outline='0'] svg {
+.decor[data-kind='doodle'][data-outline='0'] svg,
+.decor[data-kind='word'][data-outline='0'] svg {
   filter: url(#sticker-gloss) var(--contact) var(--ambient);
 }
 /* washi tape is thin and flat: only a hint of shadow */
