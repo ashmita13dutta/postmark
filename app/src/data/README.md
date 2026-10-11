@@ -307,3 +307,33 @@ hand like the other files here. To change what the reader thinks:
 
 The built-in keyword method (`feelings.json` and the rest of this page) is unaffected. It still
 supplies the topic, color words, anything you taught, and the whole reading when the reader is off.
+## papers.json: the paper and the frame on the back of a postcard
+
+On the decorate tray, the **Paper** and **Frames** tabs change what the back of a postcard is made of.
+Each tile is a tiny postcard showing the choice. A postcard remembers its paper and frame, and they
+show again in the Mailbox. A sealed postcard keeps whatever it had when it was sealed.
+
+**A paper** is a CSS background, so there are no picture files and nothing to get permission for:
+
+`{ "id": "kraft", "label": "Kraft", "keywords": ["brown", "parcel"], "background": "#d9bd94", "grain": 0.6 }`
+
+- `background` is any CSS background: a color, gradients, repeating stripes, dots. Keep it light enough
+  for dark handwriting to stay easy to read.
+- `{c0}` to `{c4}` inside a background stand for **that day's five palette colors**, so a paper can
+  follow the mood. Two letters after it make it see-through: `{c1}40` is that color at about 25
+  percent. The "Today's colors" paper is made this way.
+- `grain` (0 to 1) is how rough the paper feels. `"lines": false` hides the ruled lines, for dotted
+  and graph paper.
+
+**A frame** is drawn round the edge, under the stickers. It is either a **band**
+(`"band"` is a CSS background, `"width"` is how thick in pixels, `"inset"` how far in from the edge)
+or a **line** (`"border"` is a CSS border like `"1.5px solid #b8902b"`, `"inset"` how far in,
+`"radius"` how round the corners). Keep a frame within about 15 pixels of the edge so it never touches
+the handwriting; the tests check this.
+
+The first paper and the first frame are what a new postcard starts with, and the order here is the
+order in the tray. If you rename or remove one, any postcard that used it quietly goes back to the
+first. `id`s are lowercase letters, digits and dashes.
+
+---
+

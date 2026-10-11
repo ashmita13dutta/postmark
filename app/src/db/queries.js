@@ -3,6 +3,7 @@ import { MAX_DECORATIONS, clampPlacement } from '../lib/decor'
 import { clampDeliveryDay, dayKey, sealedUntilFor } from '../lib/dates'
 import { eligibleForDelay, pickDelayed } from '../lib/mailbox'
 import { MAX_MOODS, buildMoods, cleanMood, isMyMood } from '../engine/moods'
+import { clampLook } from '../data/papers'
 import { applyFields, newMoment } from './moments'
 import { db as defaultDb } from './schema'
 
@@ -260,6 +261,19 @@ export function makeQueries(db) {
     })
   }
 
+  /**
+   * Choose the paper and/or the frame on the back of a postcard (ids from papers.json). Only the
+   * fields you give change, an unknown id becomes the default, and a sealed postcard is locked.
+   */
+  async function setLook(momentId, look) {
+    return db.transaction('rw', db.moments, async () => {
+      const moment = await editableMoment(momentId)
+      const next = { ...moment, ...clampLook(look) }
+      await db.moments.put(next)
+      return next
+    })
+  }
+
   // ---- media (photos) ----
 
   const saveMedia = async (media) => {
@@ -400,6 +414,7 @@ export function makeQueries(db) {
     addDecoration,
     updateDecoration,
     removeDecoration,
+    setLook,
     saveMedia,
     mediaForMoment,
     deleteMediaForMoment,

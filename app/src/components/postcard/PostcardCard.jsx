@@ -1,5 +1,7 @@
 import { motion, useReducedMotion } from 'framer-motion'
+import { findFrame, findPaper } from '../../data/papers'
 import { parseDay } from '../../lib/dates'
+import { FrameLayer, PaperLayer } from './PaperLayer'
 import Postmark from '../postmark/Postmark'
 import Stamp from '../stamp/Stamp'
 import './letter.css'
@@ -53,9 +55,21 @@ export function PostcardBack({ moment, children }) {
  *  - flipped:      show the back
  *  - onFrontClick: optional; makes the front a button (e.g. tap to flip)
  *  - instant:      skip the turn
+ *  - look:         { paper, frame } ids from papers.json, as saved on the moment (both optional)
+ *  - palette:      the day's five colors, for papers that use them
  */
-export default function PostcardCard({ flipped, front, back, onFrontClick, instant }) {
+export default function PostcardCard({
+  flipped,
+  front,
+  back,
+  onFrontClick,
+  instant,
+  look,
+  palette,
+}) {
   const reduced = useReducedMotion()
+  const paper = findPaper(look?.paper)
+  const frame = findFrame(look?.frame)
   return (
     <div className="pcard__stage">
       <motion.div
@@ -75,7 +89,13 @@ export default function PostcardCard({ flipped, front, back, onFrontClick, insta
         >
           {front}
         </div>
-        <div className="pcard__face pcard__back" aria-hidden={!flipped}>
+        <div
+          className="pcard__face pcard__back"
+          aria-hidden={!flipped}
+          data-lines={paper.lines === false ? 'off' : undefined}
+        >
+          <PaperLayer paper={paper} palette={palette} />
+          <FrameLayer frame={frame} />
           {back}
         </div>
       </motion.div>

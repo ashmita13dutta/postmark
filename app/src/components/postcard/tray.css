@@ -177,3 +177,59 @@
   filter: none;
   mix-blend-mode: multiply;
 }
+
+/* ---- the Paper and Frames tabs: each tile is a tiny postcard ---- */
+.tray__look {
+  flex-direction: column;
+  gap: 4px;
+  position: relative;
+}
+.tray__look.on {
+  border-color: var(--postmark);
+  box-shadow: 0 0 0 2px var(--postmark);
+}
+.tray__item .tray__swatch {
+  position: relative;
+  width: 51px;
+  height: 64px;
+  overflow: hidden;
+  border-radius: 3px;
+  box-shadow:
+    0 0 0 1px var(--ink-12),
+    0 1px 3px rgba(42, 38, 32, 0.2);
+}
+/* the whole 300 x 375 card, drawn small by the scale set in LookTiles */
+.tray__mini {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 375px;
+  transform-origin: 0 0;
+  isolation: isolate;
+  background: var(--card-warm);
+}
+/* three bars standing in for the handwriting, so the paper reads as a place to write */
+.tray__mini::before {
+  content: '';
+  position: absolute;
+  top: 78px;
+  left: 30px;
+  width: 190px;
+  height: 120px;
+  border-radius: 4px;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(42, 38, 32, 0.4) 0 7px,
+    transparent 7px 36px
+  );
+}
+.tray__item .tray__cap {
+  display: block;
+  max-width: 76px;
+  overflow: hidden;
+  color: var(--ink-60);
+  font: 500 10px/1.1 var(--font-ui);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

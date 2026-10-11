@@ -115,6 +115,12 @@ function Board({ moment, intent }) {
   const change = (id, patch, opts) =>
     queries.updateDecoration(id, { ...patch, front: opts?.front }).catch(fail)
 
+  // choosing paper or a frame shows the back, so you can see what it did
+  const chooseLook = (patch) => {
+    setFlipped(true)
+    queries.setLook(moment.id, patch).catch(fail)
+  }
+
   async function remove() {
     const id = selectedId
     setSelectedId(null)
@@ -166,6 +172,8 @@ function Board({ moment, intent }) {
       <div onClick={() => setSelectedId(null)}>
         <PostcardCard
           flipped={showBack}
+          look={moment}
+          palette={palette}
           onFrontClick={sealed ? undefined : () => setFlipped(true)}
           front={
             <PostcardFront moment={moment}>
@@ -270,6 +278,12 @@ function Board({ moment, intent }) {
           palette={palette}
           onPick={pick}
           prefs={prefs}
+          looks={{
+            paper: moment.paper,
+            frame: moment.frame,
+            onPaper: (id) => chooseLook({ paper: id }),
+            onFrame: (id) => chooseLook({ frame: id }),
+          }}
           open={trayOpen}
           onOpenChange={setTrayOpen}
         />

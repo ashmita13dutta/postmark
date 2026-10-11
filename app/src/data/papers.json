@@ -1,0 +1,159 @@
+{
+  "about": "The paper and the frame on the back of a postcard. Yours to edit. A paper is a CSS background (colors, gradients, patterns), so no picture files are needed. Write {c0} to {c4} anywhere in a background to use that day's five palette colors; add two letters after it for see-through, so {c1}40 is that color at 25 percent. grain is how rough the paper feels, 0 to 1. lines: false hides the ruled lines (for dotted or graph paper). Keep papers light enough for dark handwriting. A frame is either a band (width px of a CSS background, drawn around the edge, inset px in from it) or a line (a CSS border, inset px in, radius px for rounded corners). The first paper and the first frame are what a new postcard starts with. The order here is the order in the tray.",
+  "papers": [
+    {
+      "id": "cream",
+      "label": "Cream",
+      "keywords": ["plain", "classic", "default", "ivory"],
+      "background": "#fdf8ec",
+      "grain": 0.1
+    },
+    {
+      "id": "today",
+      "label": "Today's colors",
+      "keywords": ["palette", "mood", "watercolor", "wash", "today", "colors"],
+      "background": "radial-gradient(circle at 16% 10%, {c0}99, transparent 46%), radial-gradient(circle at 90% 26%, {c2}80, transparent 46%), radial-gradient(circle at 36% 100%, {c4}80, transparent 52%), #fdf8ec",
+      "grain": 0.14
+    },
+    {
+      "id": "tint",
+      "label": "Soft tint",
+      "keywords": ["palette", "mood", "pastel", "today", "colors"],
+      "background": "radial-gradient(circle at 50% 0%, #ffffff66, transparent 60%), linear-gradient({c1}3d, {c1}3d), #fdf8ec",
+      "grain": 0.12
+    },
+    {
+      "id": "kraft",
+      "label": "Kraft",
+      "keywords": ["brown", "parcel", "paper bag", "rustic", "package"],
+      "background": "radial-gradient(ellipse at 22% 14%, rgba(255, 255, 255, 0.24), transparent 55%), radial-gradient(ellipse at 86% 92%, rgba(120, 80, 40, 0.2), transparent 60%), #d9bd94",
+      "grain": 0.6
+    },
+    {
+      "id": "aged",
+      "label": "Aged",
+      "keywords": ["old", "vintage", "yellow", "antique", "letter", "parchment"],
+      "background": "radial-gradient(ellipse at center, rgba(255, 255, 255, 0) 52%, rgba(150, 100, 40, 0.3) 100%), #f3e6c5",
+      "grain": 0.4
+    },
+    {
+      "id": "gingham-pink",
+      "label": "Pink gingham",
+      "keywords": ["check", "checkered", "picnic", "pink", "plaid"],
+      "background": "repeating-linear-gradient(0deg, rgba(226, 110, 140, 0.22) 0 13px, transparent 13px 26px), repeating-linear-gradient(90deg, rgba(226, 110, 140, 0.22) 0 13px, transparent 13px 26px), #fff8f8",
+      "grain": 0.12
+    },
+    {
+      "id": "gingham-blue",
+      "label": "Blue gingham",
+      "keywords": ["check", "checkered", "picnic", "blue", "plaid"],
+      "background": "repeating-linear-gradient(0deg, rgba(80, 130, 200, 0.2) 0 13px, transparent 13px 26px), repeating-linear-gradient(90deg, rgba(80, 130, 200, 0.2) 0 13px, transparent 13px 26px), #f9fbff",
+      "grain": 0.12
+    },
+    {
+      "id": "gingham-sage",
+      "label": "Sage gingham",
+      "keywords": ["check", "checkered", "picnic", "green", "plaid"],
+      "background": "repeating-linear-gradient(0deg, rgba(100, 150, 110, 0.22) 0 13px, transparent 13px 26px), repeating-linear-gradient(90deg, rgba(100, 150, 110, 0.22) 0 13px, transparent 13px 26px), #fafdf8",
+      "grain": 0.12
+    },
+    {
+      "id": "polka",
+      "label": "Polka dots",
+      "keywords": ["dots", "spots", "playful", "indigo"],
+      "background": "radial-gradient(circle, rgba(83, 74, 183, 0.22) 1.6px, transparent 2.2px) 0 0 / 17px 17px, #fdf8ec",
+      "grain": 0.1,
+      "lines": false
+    },
+    {
+      "id": "graph",
+      "label": "Graph paper",
+      "keywords": ["grid", "squares", "notebook", "maths", "math", "study"],
+      "background": "linear-gradient(rgba(83, 74, 183, 0.15) 1px, transparent 1px) 0 0 / 18px 18px, linear-gradient(90deg, rgba(83, 74, 183, 0.15) 1px, transparent 1px) 0 0 / 18px 18px, #fdf8ec",
+      "grain": 0.1,
+      "lines": false
+    },
+    {
+      "id": "ticking",
+      "label": "Ticking stripes",
+      "keywords": ["stripes", "striped", "mattress", "red", "vintage"],
+      "background": "repeating-linear-gradient(90deg, rgba(177, 65, 38, 0.14) 0 9px, transparent 9px 20px), #fdf8ec",
+      "grain": 0.12
+    },
+    {
+      "id": "blush",
+      "label": "Blush",
+      "keywords": ["pink", "pastel", "rose", "soft"],
+      "background": "radial-gradient(circle at 30% 8%, #ffffff80, transparent 55%), #f9e1e5",
+      "grain": 0.12
+    },
+    {
+      "id": "mint",
+      "label": "Mint",
+      "keywords": ["green", "pastel", "fresh", "soft"],
+      "background": "radial-gradient(circle at 30% 8%, #ffffff80, transparent 55%), #e1f0e4",
+      "grain": 0.12
+    },
+    {
+      "id": "sky",
+      "label": "Sky",
+      "keywords": ["blue", "pastel", "calm", "soft"],
+      "background": "radial-gradient(circle at 30% 8%, #ffffff80, transparent 55%), #e0ecf6",
+      "grain": 0.12
+    },
+    {
+      "id": "butter",
+      "label": "Butter",
+      "keywords": ["yellow", "pastel", "sunny", "soft"],
+      "background": "radial-gradient(circle at 30% 8%, #ffffff80, transparent 55%), #faf0c4",
+      "grain": 0.12
+    }
+  ],
+  "frames": [
+    {
+      "id": "none",
+      "label": "No frame",
+      "keywords": ["plain", "none", "clean"]
+    },
+    {
+      "id": "airmail",
+      "label": "Airmail",
+      "keywords": ["par avion", "stripes", "red", "blue", "post", "mail"],
+      "band": "repeating-linear-gradient(135deg, #c8372d 0 12px, #fdf8ec 12px 18px, #2b4a8b 18px 30px, #fdf8ec 30px 36px)",
+      "width": 9,
+      "inset": 0
+    },
+    {
+      "id": "stamp-edge",
+      "label": "Stamp edge",
+      "keywords": ["perforated", "postage", "scallop", "holes"],
+      "band": "radial-gradient(circle at 5px 5px, transparent 2.6px, #e6d3a6 3px) 0 0 / 10px 10px",
+      "width": 10,
+      "inset": 0
+    },
+    {
+      "id": "stitch",
+      "label": "Stitched",
+      "keywords": ["dashed", "thread", "sewing", "red", "cross stitch"],
+      "border": "1.6px dashed #b14126",
+      "inset": 9,
+      "radius": 6
+    },
+    {
+      "id": "double",
+      "label": "Double line",
+      "keywords": ["border", "classic", "indigo", "formal"],
+      "border": "3px double rgba(83, 74, 183, 0.7)",
+      "inset": 8,
+      "radius": 3
+    },
+    {
+      "id": "gold",
+      "label": "Gold line",
+      "keywords": ["border", "golden", "zari", "festive", "pujo"],
+      "border": "1.5px solid #b8902b",
+      "inset": 8,
+      "radius": 4
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+/*
+ * The paper and frame behind a postcard's note. Both are positioned with z-index -1, which puts them
+ * above the card's own background but below the note and the stickers (the face is its own stacking
+ * context, so -1 stays inside it).
+ */
+.paper {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+/* paper fibres: fine noise drawn by the browser, as dark as papers.json's `grain` says */
+.paper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: var(--grain, 0);
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .36  0 0 0 0 .28  0 0 0 0 .18  0 0 0 1.1 -.1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+.frame {
+  position: absolute;
+  z-index: -1;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+/* a band is a ring: the background fills the box, and a mask cuts out everything inside the padding */
+.frame--band {
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+/* dotted and graph papers have their own lines, so the ruled ones step aside */
+.pcard__back[data-lines='off'] .pcard__note {
+  background-image: none;
+}

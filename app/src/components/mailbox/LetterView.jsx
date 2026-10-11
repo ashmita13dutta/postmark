@@ -82,6 +82,8 @@ export default function LetterView({ moment, mode = 'read', thisYear, onClose })
 
         <PostcardCard
           flipped={flipped}
+          look={moment}
+          palette={moment.palette}
           onFrontClick={() => setFlipped(true)}
           front={<PostcardFront moment={moment} />}
           back={

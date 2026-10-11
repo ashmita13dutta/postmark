@@ -1,6 +1,7 @@
 import { motion, useDragControls, useReducedMotion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import { PACKS, findSticker, isInk, searchStickers } from '../../data/stickers'
+import LookTiles from './LookTiles'
 import Sticker, { stickerSize } from './Sticker'
 import './tray.css'
 
@@ -41,8 +42,11 @@ function SearchIcon() {
  * `prefs` is useStickerPrefs(): { recent, favorites, toggleSaved }. The screen can own the open /
  * closed state (`open`, `onOpenChange`) so it can fold the tray away when a sticker is selected and
  * its toolbar needs the room; without them the tray looks after itself.
+ *
+ * `looks` adds two tabs after Saved, Paper and Frames: { paper, frame, onPaper, onFrame } with the
+ * ids the postcard has now and what to do when another is tapped. Without it there are no such tabs.
  */
-export default function Tray({ palette, onPick, prefs, open: openProp, onOpenChange }) {
+export default function Tray({ palette, onPick, prefs, looks, open: openProp, onOpenChange }) {
   const { recent, favorites, toggleSaved } = prefs
   const [tab, setTab] = useState(PACKS[0]?.id ?? 'recent')
   const [ownOpen, setOwnOpen] = useState(true)
@@ -61,9 +65,17 @@ export default function Tray({ palette, onPick, prefs, open: openProp, onOpenCha
   const tabs = [
     ...(recentItems.length ? [{ id: 'recent', label: 'Recent' }] : []),
     ...(savedItems.length ? [{ id: 'saved', label: 'Saved' }] : []),
+    // a colon cannot appear in a pack id, so these can never clash with a pack
+    ...(looks
+      ? [
+          { id: 'look:paper', label: 'Paper' },
+          { id: 'look:frames', label: 'Frames' },
+        ]
+      : []),
     ...PACKS.map(({ id, label }) => ({ id, label })),
   ]
   const activeTab = tabs.some((t) => t.id === tab) ? tab : tabs[0]?.id
+  const showLooks = !query.trim() && activeTab.startsWith('look:')
 
   // with a dozen or more packs the row scrolls sideways, so keep the chosen one in view
   const tabListRef = useRef(null)
@@ -162,7 +174,16 @@ export default function Tray({ palette, onPick, prefs, open: openProp, onOpenCha
         </div>
       )}
 
-      {items.length ? (
+      {showLooks ? (
+        <LookTiles
+          kind={activeTab === 'look:paper' ? 'paper' : 'frames'}
+          paperId={looks.paper}
+          frameId={looks.frame}
+          palette={palette}
+          onPaper={looks.onPaper}
+          onFrame={looks.onFrame}
+        />
+      ) : items.length ? (
         <ul className="tray__items">
           {items.map((s) => {
             const { width, height } = stickerSize(s.id)
