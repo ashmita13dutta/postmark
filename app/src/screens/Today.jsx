@@ -18,6 +18,7 @@ import { setSwatch } from '../engine/palette'
 import { classify } from '../engine/reader/client'
 import { useReader } from '../engine/reader/useReader'
 import { readNote } from '../engine/readNote'
+import { explainReading } from '../engine/why'
 import { now } from '../lib/clock'
 import { dayOfYear, parseDay, todayKey } from '../lib/dates'
 import { yearAgoLetter } from '../lib/mailbox'
@@ -172,6 +173,12 @@ export function Editor({ day, existing, demo }) {
     existing.feeling === r.feeling &&
     existing.topic === r.topic &&
     existing.palette.map((c) => c.hex).join() === palette.map((c) => c.hex).join()
+
+  // which words pushed the mood, in plain sentences
+  const why = useMemo(
+    () => (hasNote ? explainReading({ r, text, moods }) : null),
+    [hasNote, r, text, moods],
+  )
 
   // the reader's next two guesses, one tap away (the right feeling is among its top three about
   // 95% of the time)
@@ -369,10 +376,17 @@ export function Editor({ day, existing, demo }) {
               ))}
             </div>
           )}
-          {(r.corrected.feeling || r.corrected.topic) && !fixing && (
-            <p className="today__fixed">
-              You set this. The app read “{moodLabel(r.guess.feeling, moods)}”.
-            </p>
+          {!fixing && why && (
+            <details className="today__why">
+              <summary>
+                <span className="lbl">Why</span> {why.headline}
+              </summary>
+              <ul>
+                {why.lines.map((line) => (
+                  <li key={line}>{line}</li>
+                ))}
+              </ul>
+            </details>
           )}
 
           {fixing && (

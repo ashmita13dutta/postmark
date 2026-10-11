@@ -14,7 +14,8 @@ export const TAUGHT_BOOST = 3
  *   vector         the note's embedding, for matching against your corrections
  *   corrections    [{ vector, feeling }] from earlier days
  *   taughtFeelings feelings whose taught words appear in this note
- * Returns { probs, ranked } with ranked = [{ id, p }] best first.
+ * Returns { probs, ranked, personal } with ranked = [{ id, p }] best first, and `personal` the extra
+ * score your corrections gave each feeling (in the order of `ids`), so a screen can say why.
  */
 export function mixSignals({
   probs,
@@ -33,5 +34,5 @@ export function mixSignals({
     if (at !== -1) logits[at] += TAUGHT_BOOST
   }
   const mixed = softmax(logits)
-  return { probs: mixed, ranked: rankFeelings(mixed, ids) }
+  return { probs: mixed, ranked: rankFeelings(mixed, ids), personal }
 }

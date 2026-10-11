@@ -227,6 +227,26 @@ Moods live in the `moods` table of the phone's database (words taught to them st
 the mood's `my:` id), not in these files, and the review page's "My words" lists them by name. See
 `src/engine/moods.js`.
 
+## Why did it read this?
+
+Under **Felt / About** on Today (and on a demo postcard) one line says where the mood came from, for
+example "Joyful: from “happy”." Tap it for the rest: the topic words, any color word that asked for a
+color, "bright colors" when the note sounds strong, and the words you taught that counted. It reads
+like one of these:
+
+- **Joyful: from “happy”.** The keyword method found feeling words.
+- **Peaceful: no feeling words, so the usual mood for rain.** Only the topic suggested a mood.
+- **Peaceful: read from the whole note, 82% sure.** The on-device reader decided. The percentage is
+  the reader's own confidence, not the score after your words were added. If a correction you made to
+  a near-identical note, or a word you taught, backed it, the line says so.
+- **Sad: the reader leaned to Peaceful (50%), but a word you taught tipped it.** What you taught
+  outweighed the reader. This is the line to look at when a taught word seems to take over.
+- **Wandering: your word “ghurni” brings it on.** One of your own moods.
+- **You chose Sad. The app read Joyful: from “happy”.** You picked a different mood by hand.
+
+The wording lives in `src/engine/why.js`, which only reads what `readNote` returns, so it can never
+disagree with the reading itself.
+
 ---
 
 ## sticker-packs.json: the postcard stickers

@@ -15,6 +15,10 @@ export const PERSONAL = {
   weight: 4,
 }
 
+// a correction's extra score has to reach this before the app says "it matches a note you corrected"
+// (about a 0.95 similarity or better; below that it is a faint nudge, not the reason)
+export const MEMORY_NOTICE = 0.5
+
 /** Cosine similarity of two unit-length vectors. */
 export function similarity(a, b) {
   let s = 0

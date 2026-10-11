@@ -3,7 +3,9 @@ import { topics } from '../data/topics.json'
 import { VIVID_FEELINGS, detectMood } from './mood'
 import { moodBuilt } from './moods'
 import { buildPalette } from './palette'
+import { FEELING_IDS } from './reader/head'
 import { mixSignals } from './reader/mix'
+import { MEMORY_NOTICE } from './reader/personal'
 
 /**
  * Everything the Today screen needs from a note: what the app read, what you corrected, and the
@@ -29,8 +31,11 @@ import { mixSignals } from './reader/mix'
  *
  * `mood` is always the keyword engine's own untouched reading (it also supplies the topic, color
  * words and taught words). `guess` is the app's feeling before your correction:
- *   { feeling, source: 'reader' | 'words', ranked: [{ id, p }] }  (ranked is best first; p is a
- *   probability for the reader and null for the keyword method)
+ *   { feeling, source: 'reader' | 'words' | 'mine', ranked: [{ id, p }] }  (ranked is best first; p is
+ *   a probability for the reader and null otherwise). For the reader it also gives its own favorite
+ *   (`reader: { id, p }`, before anything of yours was added) and whether an earlier correction
+ *   (`memory`) or a word you taught (`taught`) backed the answer. engine/why.js turns all of this
+ *   into the "why" line on Today.
  */
 export function readNote({
   text,
@@ -63,7 +68,19 @@ export function readNote({
       corrections,
       taughtFeelings: mood.taughtFeelings,
     })
-    guess = { feeling: mixed.ranked[0].id, source: 'reader', ranked: mixed.ranked }
+    const winner = mixed.ranked[0].id
+    // the reader's own favorite, before your taught words and corrections were added to the scores
+    const own = reader.probs.reduce((best, p, i) => (p > reader.probs[best] ? i : best), 0)
+    guess = {
+      feeling: winner,
+      source: 'reader',
+      ranked: mixed.ranked,
+      // what besides the note itself backed this answer: a correction you made to a near-identical
+      // note, and a word you taught (see engine/why.js)
+      memory: (mixed.personal[FEELING_IDS.indexOf(winner)] ?? 0) >= MEMORY_NOTICE,
+      taught: mood.taughtFeelings.includes(winner),
+      reader: { id: FEELING_IDS[own], p: reader.probs[own] },
+    }
   }
 
   // your own word for a mood of yours beats the built-in reading (and the reader, which cannot know it)

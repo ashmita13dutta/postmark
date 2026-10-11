@@ -135,10 +135,36 @@
   background: var(--postmark);
   color: var(--card-warm);
 }
-.today__fixed {
-  margin: 8px 0 0;
-  font: 400 12px var(--font-ui);
+.today__why {
+  margin: 10px 0 0;
+  font: 400 12px/1.5 var(--font-ui);
   color: var(--ink-60);
+}
+.today__why summary {
+  display: block;
+  padding: 6px 0;
+  cursor: pointer;
+  list-style: none;
+}
+.today__why summary::-webkit-details-marker {
+  display: none;
+}
+.today__why summary::after {
+  content: ' ▾';
+  color: var(--ink-45);
+}
+.today__why[open] summary::after {
+  content: ' ▴';
+}
+.today__why .lbl {
+  margin-right: 4px;
+}
+.today__why ul {
+  margin: 2px 0 4px;
+  padding: 0 0 0 14px;
+}
+.today__why li {
+  padding: 1px 0;
 }
 .today__fix h2 {
   margin: 16px 0 0;
