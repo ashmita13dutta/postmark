@@ -2,12 +2,14 @@
  * What the decorate tray offers. Ids are stored on a decoration as `stickerId`.
  *
  * There are two kinds of sticker:
- *  - drawn ones (stamps, tape, doodles, and the caption words from words.json), made of shapes and
- *    text in components/postcard/Sticker.jsx
+ *  - drawn ones: the rubber stamps (shapes in components/postcard/Sticker.jsx), and the washi tapes,
+ *    doodles and caption words, which are listed in tapes.json, doodles.json and words.json
  *  - picture stickers (`img:<pack>/<file>`), listed in sticker-packs.json. Those are yours to edit:
  *    see the "about" line at the top of that file.
  */
+import { DOODLES } from './doodles'
 import packData from './sticker-packs.json'
+import { TAPES } from './tapes'
 import { WORDS } from './words'
 
 /** A picture sticker is shown no bigger than this many px (its longest side) at scale 1. */
@@ -44,27 +46,18 @@ const DRAWN_PACKS = [
     ['stamp:handle', 'Handle with care', ['stamp', 'ink', 'careful', 'gentle']],
     ['stamp:return', 'Return to sender', ['stamp', 'ink', 'mail', 'post']],
   ]),
-  {
-    id: 'tape',
-    label: 'Tape',
-    kind: 'drawn',
-    // tape takes its color from the day's palette: tape:0 is the first swatch, and so on
-    items: [0, 1, 2, 3, 4].map((i) => ({
-      id: `tape:${i}`,
-      label: `Tape ${i + 1}`,
-      keywords: ['tape', 'washi', 'strip'],
-    })),
-  },
-  drawn('doodles', 'Doodles', [
-    ['doodle:heart', 'Heart', ['love', 'red', 'valentine']],
-    ['doodle:star', 'Star', ['sparkle', 'night', 'gold']],
-    ['doodle:sun', 'Sun', ['sunny', 'summer', 'warm', 'day']],
-    ['doodle:moon', 'Moon', ['night', 'sleep', 'dream']],
-    ['doodle:flower', 'Flower', ['pink', 'garden', 'spring', 'petal']],
-    ['doodle:cloud', 'Cloud', ['sky', 'rain', 'weather']],
-    ['doodle:squiggle', 'Squiggle', ['line', 'wave', 'scribble']],
-    ['doodle:arrow', 'Arrow', ['point', 'direction']],
-  ]),
+  // washi tapes, from tapes.json. tape:0 to tape:4 are the five in the day's colors from the first version.
+  drawn(
+    'tape',
+    'Tape',
+    TAPES.map((t) => [`tape:${t.id}`, t.label, ['tape', 'washi', 'strip', ...(t.keywords ?? [])]]),
+  ),
+  // doodles, from doodles.json
+  drawn(
+    'doodles',
+    'Doodles',
+    DOODLES.map((d) => [`doodle:${d.id}`, d.label, ['doodle', ...(d.keywords ?? [])]]),
+  ),
   // caption stickers, from words.json (yours to edit)
   drawn(
     'words',

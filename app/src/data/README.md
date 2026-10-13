@@ -384,6 +384,50 @@ The note reader (the on-device language model, see the main README) turns a note
 hand like the other files here. To change what the reader thinks:
 
 1. add or fix labelled notes in `tests/corpus/` (one note per line: `["text", ["feeling", ...], ["topic", ...]]`),
+## tapes.json: the washi tapes
+
+The **Tape** tab holds 37 washi tapes: gingham, candy stripes, tiny hearts, daisies, kraft with stitching,
+gold foil, film reel, air mail, ombré, confetti, bunting and more. They are drawn by the app, so there
+are no picture files and nothing to get permission for. Each one is a base color with layers of pattern
+on top, then a paper finish (fine fibres and a soft sheen) and a cut end:
+
+`{ "id": "gingham-blush", "label": "Blush gingham", "size": "regular", "edge": "zigzag", "base": "#FFF3F5", "layers": [{ "type": "gingham", "ink": ["#E8809A"], "scale": 7 }] }`
+
+- `size` is `slim`, `regular` or `wide`. `edge` is how the ends are cut: `cut`, `zigzag`, `wavy`,
+  `scallop` or `torn`.
+- `base` is a hex color. `opacity` (0 to 1) is how see-through the tape is; the "sheer" tapes use 0.78.
+- A tape has any number of `layers`, drawn in order. A layer's `type` is one of `stripes`, `dots`,
+  `gingham`, `checks`, `grid`, `hearts`, `sparkles`, `stars`, `daisies`, `leaves`, `stitch`, `waves`,
+  `bunting`, `confetti`, `gradient`, `foil`, `film`, `rim` or `text`. `ink` is its list of colors,
+  `scale` how big one repeat is, and some types take `size`, `angle`, `count`, `rows`, `inset` or `text`.
+  Make a new tape by changing the colors or mixing layers: a `rim` with a `text` makes a packing tape.
+- Write `{c0}` to `{c4}` in any color to use that day's five palette colors. The five "Today's color"
+  tapes are made this way, and keep the ids `0` to `4` from the first version, so old postcards still show them.
+- The tests draw every tape and fail if one is broken, so a typo shows up straight away.
+
+---
+
+## doodles.json: the doodles
+
+The **Doodles** tab has 41 little hand-inked drawings in the pastel, offset-fill style: sparkles,
+a bow, pearls, a mushroom, a butterfly, boba, a paper plane, a rainbow and more. Each is a tiny SVG:
+
+`{ "id": "star", "label": "Star", "keywords": ["sparkle", "night"], "line": true, "svg": "<path d='M30 7L36.5 22.1…Z'/>" }`
+
+- `svg` is the inside of an `<svg>`: shapes and paths, with **single quotes** for attributes. It draws in
+  a 60 by 60 box unless the doodle has `w` and `h`. No scripts, pictures or links; the tests refuse them.
+- `"line": true` draws everything in the standard dark-brown, round-ended line, so a drawing only has to
+  give its shapes and fills. For the hand-colored look, draw each fill again a couple of pixels
+  to the right and down (`transform='translate(2 2.4)'`) with no outline, under the outlined shape.
+- `{c0}` to `{c4}` use the day's palette colors (see "Heart, today's color" and "Bloom, today's colors").
+- If two doodles use a gradient, give each its own `id`. The tests check that no id is used twice.
+- You can paste a drawing from any SVG editor: open the file as text and copy what is inside `<svg>…</svg>`.
+  Only use drawings you have the right to use.
+- The eight doodles from the first version (heart, star, sun, moon, flower, cloud, squiggle, arrow) keep
+  their ids, so a postcard that used one now shows the new drawing.
+
+---
+
 2. run `npm run train:head` (add `-- --cv` to see a cross-validated score first),
 3. run `npm test`, which checks the file still matches the model in `scripts/model/manifest.json`.
 

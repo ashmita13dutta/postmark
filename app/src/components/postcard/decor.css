@@ -34,6 +34,10 @@
   --ambient: drop-shadow(
     0 calc(5px + 7px * var(--lift)) calc(7px + 8px * var(--lift)) rgba(42, 38, 32, 0.2)
   );
+  /* paper tape lies almost flat: a shorter, softer shadow than a sticker's */
+  --flat: drop-shadow(
+    0 calc(1.6px + 4px * var(--lift)) calc(2.6px + 5px * var(--lift)) rgba(42, 38, 32, 0.22)
+  );
 }
 /* A turned sticker casts its shadow in its own frame, so the offset is turned back to keep it
    falling straight down. Browsers without sin() and cos() keep the plain shadows above. */
@@ -46,6 +50,11 @@
       calc(sin(var(--rot)) * (5px + 7px * var(--lift)))
         calc(cos(var(--rot)) * (5px + 7px * var(--lift))) calc(7px + 8px * var(--lift))
         rgba(42, 38, 32, 0.2)
+    );
+    --flat: drop-shadow(
+      calc(sin(var(--rot)) * (1.6px + 4px * var(--lift)))
+        calc(cos(var(--rot)) * (1.6px + 4px * var(--lift))) calc(2.6px + 5px * var(--lift))
+        rgba(42, 38, 32, 0.22)
     );
   }
 }
@@ -120,7 +129,7 @@
 }
 /* washi tape is thin and flat: only a hint of shadow */
 .decor[data-kind='tape'] svg {
-  filter: drop-shadow(0 1px 1.5px rgba(42, 38, 32, 0.22));
+  filter: var(--flat);
 }
 
 /* ---- ink: stamps and postal marks, pressed into the paper ---- */

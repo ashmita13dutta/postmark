@@ -1,0 +1,575 @@
+{
+  "about": "The doodles in the tray's Doodles tab. Yours to edit: redraw one, paste in your own, or delete any. Each is a little SVG drawing: svg is the inside of an <svg> (shapes and paths; no scripts, pictures or links). w and h are its size (default 60 by 60), so svg should draw inside a box that big. line: true wraps the drawing in the standard hand-inked line (dark brown, round ends), so inside it you only write shapes and fills; leave line out to style everything yourself. A fill can be offset a couple of pixels from its outline for the hand-colored look. Write {c0} to {c4} in any color to use that day's five palette colors. Use single quotes inside svg. If two doodles use gradients, give each gradient its own id. id is lowercase letters, digits and dashes, and a postcard remembers it, so avoid renaming one you have already used. The order here is the order in the tray.",
+  "doodles": [
+    {
+      "id": "heart",
+      "label": "Heart",
+      "keywords": [
+        "love",
+        "red",
+        "valentine",
+        "glossy"
+      ],
+      "svg": "<defs><radialGradient id='dd-heart' cx='.34' cy='.28' r='.85'><stop offset='0' stop-color='#F58A74'/><stop offset='.5' stop-color='#D9473A'/><stop offset='1' stop-color='#A32E27'/></radialGradient></defs><path d='M30 53C9 38 5 20 17 12.5C24 8.5 29.5 13 30 18.5C30.5 13 36 8.5 43 12.5C55 20 51 38 30 53Z' fill='url(#dd-heart)' stroke='#8E2A22' stroke-width='1.4' stroke-linejoin='round'/><path d='M15.5 21c1.2-3.8 4.2-6.2 7.6-6.4' fill='none' stroke='#fff' stroke-opacity='.8' stroke-width='2.6' stroke-linecap='round'/><circle cx='14' cy='26.5' r='1.3' fill='#fff' fill-opacity='.8'/>"
+    },
+    {
+      "id": "heart-outline",
+      "label": "Heart outline",
+      "keywords": [
+        "love",
+        "pink",
+        "line",
+        "hand drawn",
+        "valentine"
+      ],
+      "line": true,
+      "svg": "<path transform='translate(2.4 2.8)' d='M30 52C10 38 6 21 17 13.5C24 9 29.5 13.5 30 19C30.5 13.5 36 9 43 13.5C54 21 50 38 30 52Z' fill='#F7B6C6' stroke='none'/><path d='M30 52C10 38 6 21 17 13.5C24 9 29.5 13.5 30 19C30.5 13.5 36 9 43 13.5C54 21 50 38 30 52Z'/><path d='M14.5 22c.7-2.8 2.7-4.8 5.2-5.4'/>"
+    },
+    {
+      "id": "heart-today",
+      "label": "Heart, today's color",
+      "keywords": [
+        "love",
+        "palette",
+        "mood",
+        "today",
+        "colors"
+      ],
+      "line": true,
+      "svg": "<path transform='translate(2.4 2.8)' d='M30 52C10 38 6 21 17 13.5C24 9 29.5 13.5 30 19C30.5 13.5 36 9 43 13.5C54 21 50 38 30 52Z' fill='{c0}' fill-opacity='.7' stroke='none'/><path d='M30 52C10 38 6 21 17 13.5C24 9 29.5 13.5 30 19C30.5 13.5 36 9 43 13.5C54 21 50 38 30 52Z'/><path d='M14.5 22c.7-2.8 2.7-4.8 5.2-5.4'/>"
+    },
+    {
+      "id": "star",
+      "label": "Star",
+      "keywords": [
+        "sparkle",
+        "night",
+        "gold",
+        "cute",
+        "smile"
+      ],
+      "line": true,
+      "svg": "<path transform='translate(2 2.4)' d='M30 7L36.5 22.1L52.8 23.6L40.5 34.4L44.1 50.4L30 42L15.9 50.4L19.5 34.4L7.2 23.6L23.5 22.1Z' fill='#F7D26B' stroke='none'/><path d='M30 7L36.5 22.1L52.8 23.6L40.5 34.4L44.1 50.4L30 42L15.9 50.4L19.5 34.4L7.2 23.6L23.5 22.1Z'/><circle cx='26.4' cy='30.5' r='1.1' fill='#3B2F2B' stroke='none'/><circle cx='33.6' cy='30.5' r='1.1' fill='#3B2F2B' stroke='none'/><path d='M27.6 34.6q2.4 2.4 4.8 0'/>"
+    },
+    {
+      "id": "sparkle",
+      "label": "Sparkle",
+      "keywords": [
+        "shine",
+        "glitter",
+        "twinkle",
+        "gold",
+        "magic",
+        "star"
+      ],
+      "line": true,
+      "svg": "<path transform='translate(2 2.2)' d='M30 6Q33.3 26.7 54 30Q33.3 33.3 30 54Q26.7 33.3 6 30Q26.7 26.7 30 6Z' fill='#F7D26B' stroke='none'/><path d='M30 6Q33.3 26.7 54 30Q33.3 33.3 30 54Q26.7 33.3 6 30Q26.7 26.7 30 6Z'/><path d='M49 4Q49.6 8.4 54 9Q49.6 9.6 49 14Q48.4 9.6 44 9Q48.4 8.4 49 4Z' fill='#fff' stroke-width='1.4'/><path d='M11 45Q11.5 48.5 15 49Q11.5 49.5 11 53Q10.5 49.5 7 49Q10.5 48.5 11 45Z' fill='#fff' stroke-width='1.4'/>"
+    },
+    {
+      "id": "sparkles",
+      "label": "Sparkles",
+      "keywords": [
+        "shine",
+        "glitter",
+        "stars",
+        "magic",
+        "twinkle"
+      ],
+      "line": true,
+      "svg": "<path d='M22 18Q23.5 34.5 40 36Q23.5 37.5 22 54Q20.5 37.5 4 36Q20.5 34.5 22 18Z' fill='#F4A6B8'/><path d='M46 5Q46.9 15.1 57 16Q46.9 16.9 46 27Q45.1 16.9 35 16Q45.1 15.1 46 5Z' fill='#F7D26B'/><path d='M47 39Q47.6 46.4 55 47Q47.6 47.6 47 55Q46.4 47.6 39 47Q46.4 46.4 47 39Z' fill='#8FC1E8'/>"
+    },
+    {
+      "id": "sun",
+      "label": "Sun",
+      "keywords": [
+        "sunny",
+        "summer",
+        "warm",
+        "day",
+        "happy",
+        "smile"
+      ],
+      "line": true,
+      "svg": "<circle cx='32.2' cy='33.4' r='11' fill='#F7C948' stroke='none'/><circle cx='30' cy='31' r='11'/><path d='M30 6v8'/><path d='M30 48v8' /><path d='M5 31h8'/><path d='M47 31h8'/><path d='M12.6 13.6l4 4'/><path d='M43.4 44.4l4 4'/><path d='M47.4 13.6l-4 4'/><path d='M16.6 44.4l-4 4'/><circle cx='26.2' cy='29.5' r='1.2' fill='#3B2F2B' stroke='none'/><circle cx='33.8' cy='29.5' r='1.2' fill='#3B2F2B' stroke='none'/><path d='M26.5 34q3.5 3.5 7 0'/><circle cx='23.2' cy='33.4' r='2.1' fill='#F4A6B8' stroke='none' opacity='.75'/><circle cx='36.8' cy='33.4' r='2.1' fill='#F4A6B8' stroke='none' opacity='.75'/>"
+    },
+    {
+      "id": "moon",
+      "label": "Moon",
+      "keywords": [
+        "night",
+        "sleep",
+        "dream",
+        "crescent",
+        "sleepy",
+        "stars"
+      ],
+      "line": true,
+      "svg": "<path transform='translate(2 2.4)' d='M40 8A22 22 0 1 0 52 40A17 17 0 0 1 40 8Z' fill='#F6E3A1' stroke='none'/><path d='M40 8A22 22 0 1 0 52 40A17 17 0 0 1 40 8Z'/><path d='M14.5 29q3.2 3 6.4 0'/><circle cx='14.6' cy='34.2' r='2' fill='#F4A6B8' stroke='none' opacity='.8'/><path d='M17.5 36.8q1.7 1.7 3.4 0'/><path d='M47 16Q47.5 20.5 52 21Q47.5 21.5 47 26Q46.5 21.5 42 21Q46.5 20.5 47 16Z' fill='#F7D26B' stroke-width='1.3'/><circle cx='53.5' cy='45' r='1.4' fill='#3B2F2B' stroke='none'/>"
+    },
+    {
+      "id": "cloud",
+      "label": "Cloud",
+      "keywords": [
+        "sky",
+        "rain",
+        "weather",
+        "cute",
+        "soft"
+      ],
+      "line": true,
+      "svg": "<path transform='translate(2 2.4)' d='M16 44C7 44 5 32 14 30C13 21 25 16 30 23C34 15 47 18 46 29C55 29 56 44 46 44Z' fill='#CFE3F5' stroke='none'/><path d='M16 44C7 44 5 32 14 30C13 21 25 16 30 23C34 15 47 18 46 29C55 29 56 44 46 44Z' fill='#fff'/><circle cx='24' cy='34' r='1.1' fill='#3B2F2B' stroke='none'/><circle cx='36' cy='34' r='1.1' fill='#3B2F2B' stroke='none'/><path d='M27 37.4q3 2.8 6 0'/><circle cx='20.5' cy='37.4' r='2' fill='#F4A6B8' stroke='none' opacity='.75'/><circle cx='39.5' cy='37.4' r='2' fill='#F4A6B8' stroke='none' opacity='.75'/>"
+    },
+    {
+      "id": "rainbow",
+      "label": "Rainbow",
+      "keywords": [
+        "sky",
+        "colors",
+        "happy",
+        "pride",
+        "weather",
+        "pastel"
+      ],
+      "w": 72,
+      "h": 48,
+      "line": true,
+      "svg": "<path d='M6 42A30 30 0 0 1 66 42H60.5A24.5 24.5 0 0 0 11.5 42Z' fill='#F4A6B8' stroke-width='1.5'/><path d='M11.5 42A24.5 24.5 0 0 1 60.5 42H55A19 19 0 0 0 17 42Z' fill='#F7D26B' stroke-width='1.5'/><path d='M17 42A19 19 0 0 1 55 42H49.5A13.5 13.5 0 0 0 22.5 42Z' fill='#BFE3C6' stroke-width='1.5'/><path d='M22.5 42A13.5 13.5 0 0 1 49.5 42H44A8 8 0 0 0 28 42Z' fill='#8FC1E8' stroke-width='1.5'/><path d='M3 47C-1 47-1 41 4 41C4 36 12 36 13.5 41C18.5 41 18.5 47 13.5 47Z' fill='#fff' stroke-width='1.5'/><g transform='translate(72 0) scale(-1 1)'><path d='M3 47C-1 47-1 41 4 41C4 36 12 36 13.5 41C18.5 41 18.5 47 13.5 47Z' fill='#fff' stroke-width='1.5'/></g>"
+    },
+    {
+      "id": "flower",
+      "label": "Flower",
+      "keywords": [
+        "pink",
+        "garden",
+        "spring",
+        "petal",
+        "bloom"
+      ],
+      "line": true,
+      "svg": "<g fill='#F4A6B8' stroke-width='1.6'><ellipse cx='30' cy='17' rx='8' ry='10.5'/><ellipse cx='30' cy='17' rx='8' ry='10.5' transform='rotate(72 30 30)'/><ellipse cx='30' cy='17' rx='8' ry='10.5' transform='rotate(144 30 30)'/><ellipse cx='30' cy='17' rx='8' ry='10.5' transform='rotate(216 30 30)'/><ellipse cx='30' cy='17' rx='8' ry='10.5' transform='rotate(288 30 30)'/></g><circle cx='30' cy='30' r='6.8' fill='#F7D26B'/><circle cx='28' cy='28.4' r='1' fill='#3B2F2B' stroke='none'/><circle cx='32.2' cy='31.2' r='1' fill='#3B2F2B' stroke='none'/>"
+    },
+    {
+      "id": "daisy",
+      "label": "Daisy",
+      "keywords": [
+        "white",
+        "flower",
+        "spring",
+        "cottagecore",
+        "petals"
+      ],
+      "line": true,
+      "svg": "<g fill='#fff' stroke-width='1.4'><ellipse cx='30' cy='15.5' rx='4.4' ry='11.5'/><ellipse cx='30' cy='15.5' rx='4.4' ry='11.5' transform='rotate(36 30 30)'/><ellipse cx='30' cy='15.5' rx='4.4' ry='11.5' transform='rotate(72 30 30)'/><ellipse cx='30' cy='15.5' rx='4.4' ry='11.5' transform='rotate(108 30 30)'/><ellipse cx='30' cy='15.5' rx='4.4' ry='11.5' transform='rotate(144 30 30)'/><ellipse cx='30' cy='15.5' rx='4.4' ry='11.5' transform='rotate(180 30 30)'/><ellipse cx='30' cy='15.5' rx='4.4' ry='11.5' transform='rotate(216 30 30)'/><ellipse cx='30' cy='15.5' rx='4.4' ry='11.5' transform='rotate(252 30 30)'/><ellipse cx='30' cy='15.5' rx='4.4' ry='11.5' transform='rotate(288 30 30)'/><ellipse cx='30' cy='15.5' rx='4.4' ry='11.5' transform='rotate(324 30 30)'/></g><circle cx='30' cy='30' r='7.4' fill='#F7C948'/><circle cx='28' cy='28' r='.9' fill='#3B2F2B' stroke='none'/><circle cx='32' cy='29' r='.9' fill='#3B2F2B' stroke='none'/><circle cx='29.5' cy='32.2' r='.9' fill='#3B2F2B' stroke='none'/>"
+    },
+    {
+      "id": "tulip",
+      "label": "Tulip",
+      "keywords": [
+        "flower",
+        "spring",
+        "red",
+        "garden",
+        "bloom"
+      ],
+      "line": true,
+      "svg": "<path d='M30 34C30 42 29 49 30 57' stroke-width='2'/><path d='M30 51C21 49 17 43 17 36C25 38 30 44 30 51Z' fill='#8DC49A'/><path d='M30 46C39 44 43 38 43 31C35 33 30 39 30 46Z' fill='#8DC49A'/><path transform='translate(1.8 1.8)' d='M18 26C17 18 19 11 21 8L26.5 15L30 7L33.5 15L39 8C41 11 43 18 42 26C41 35 19 35 18 26Z' fill='#F08AA0' stroke='none'/><path d='M18 26C17 18 19 11 21 8L26.5 15L30 7L33.5 15L39 8C41 11 43 18 42 26C41 35 19 35 18 26Z' fill='#E8647A'/><path d='M24 18c-.8 4-.5 8 1 11' stroke='#fff' stroke-opacity='.6' stroke-width='1.6'/>"
+    },
+    {
+      "id": "bloom-today",
+      "label": "Bloom, today's colors",
+      "keywords": [
+        "flower",
+        "palette",
+        "mood",
+        "today",
+        "colors",
+        "petals"
+      ],
+      "line": true,
+      "svg": "<g stroke-width='1.6'><ellipse cx='30' cy='17' rx='8' ry='10.5' fill='{c0}'/><ellipse cx='30' cy='17' rx='8' ry='10.5' fill='{c1}' transform='rotate(72 30 30)'/><ellipse cx='30' cy='17' rx='8' ry='10.5' fill='{c2}' transform='rotate(144 30 30)'/><ellipse cx='30' cy='17' rx='8' ry='10.5' fill='{c3}' transform='rotate(216 30 30)'/><ellipse cx='30' cy='17' rx='8' ry='10.5' fill='{c4}' transform='rotate(288 30 30)'/></g><circle cx='30' cy='30' r='6.2' fill='#FFF6E5'/>"
+    },
+    {
+      "id": "wildflowers",
+      "label": "Wildflowers",
+      "keywords": [
+        "lavender",
+        "meadow",
+        "field",
+        "spring",
+        "purple",
+        "bouquet"
+      ],
+      "line": true,
+      "svg": "<path d='M30 57C29 45 26 34 22 19'/><path d='M32 57C33 45 38 33 44 21'/><path d='M31 57C31 47 30 36 31 13'/><path d='M30.5 57C25 56 20 53 17 48C23 48 28 51 30.5 57Z' fill='#8DC49A' stroke-width='1.5'/><path d='M31.5 57C37 56 42 53 45 48C39 48 34 51 31.5 57Z' fill='#8DC49A' stroke-width='1.5'/><g stroke-width='1.3'><circle cx='22' cy='19' r='3.4' fill='#B7A3DC'/><circle cx='23.3' cy='25' r='2.9' fill='#D5C6EE'/><circle cx='24.8' cy='30.5' r='2.9' fill='#B7A3DC'/><circle cx='44' cy='21' r='3.4' fill='#F4A6B8'/><circle cx='41.4' cy='27' r='2.9' fill='#FAD0DA'/><circle cx='39' cy='32.5' r='2.9' fill='#F4A6B8'/><circle cx='31' cy='12.5' r='3.6' fill='#F7D26B'/><circle cx='31.3' cy='19' r='3' fill='#FBE9A8'/><circle cx='31' cy='25.5' r='3' fill='#F7D26B'/></g>"
+    },
+    {
+      "id": "olive-branch",
+      "label": "Olive branch",
+      "keywords": [
+        "leaf",
+        "green",
+        "peace",
+        "botanical",
+        "sprig",
+        "plant"
+      ],
+      "line": true,
+      "svg": "<path d='M6 53C20 47 36 35 53 11' stroke-width='1.8'/><g fill='#A9D6B0' stroke-width='1.5'><ellipse cx='11' cy='44.8' rx='6.4' ry='2.7' transform='rotate(-62 11 44.8)'/><ellipse cx='16.5' cy='51' rx='6.4' ry='2.7' transform='rotate(-8 16.5 51)'/><ellipse cx='20' cy='38.8' rx='6.4' ry='2.7' transform='rotate(-62 20 38.8)'/><ellipse cx='26.5' cy='45' rx='6.4' ry='2.7' transform='rotate(-6 26.5 45)'/><ellipse cx='29.5' cy='32.6' rx='6.4' ry='2.7' transform='rotate(-58 29.5 32.6)'/><ellipse cx='36' cy='37.4' rx='6.4' ry='2.7' transform='rotate(-2 36 37.4)'/><ellipse cx='38.5' cy='25.4' rx='6.4' ry='2.7' transform='rotate(-55 38.5 25.4)'/><ellipse cx='45.5' cy='28.6' rx='6.4' ry='2.7' transform='rotate(4 45.5 28.6)'/><ellipse cx='46' cy='17' rx='6' ry='2.6' transform='rotate(-50 46 17)'/><ellipse cx='54' cy='11.4' rx='7' ry='3' transform='rotate(-52 54 11.4)'/></g>"
+    },
+    {
+      "id": "leaf",
+      "label": "Leaf",
+      "keywords": [
+        "green",
+        "plant",
+        "nature",
+        "botanical",
+        "foliage"
+      ],
+      "line": true,
+      "svg": "<path transform='translate(2 2.2)' d='M10 52C6 30 22 10 52 8C54 36 34 54 10 52Z' fill='#CBE8CF' stroke='none'/><path d='M10 52C6 30 22 10 52 8C54 36 34 54 10 52Z' fill='#A9D6B0'/><path d='M10 52C24 40 38 26 50 10' stroke-width='1.5'/><path d='M22 41l-3.5-7M30 33l-3-8M38 25l-2-7M26 38l7 3M34 30l7 2M42 21l5 2' stroke-width='1.3'/>"
+    },
+    {
+      "id": "butterfly",
+      "label": "Butterfly",
+      "keywords": [
+        "insect",
+        "spring",
+        "wings",
+        "pastel",
+        "garden",
+        "fly"
+      ],
+      "line": true,
+      "svg": "<g><path d='M29 27C24 8 6 8 6 20C6 29 17 33 29 30Z' fill='#D5C6EE'/><path d='M29 32C19 33 12 40 16 48C20 53 29 47 29 38Z' fill='#F7B6C6'/><circle cx='17' cy='20.5' r='2.4' fill='#fff' stroke-width='1.2'/></g><g transform='translate(60 0) scale(-1 1)'><path d='M29 27C24 8 6 8 6 20C6 29 17 33 29 30Z' fill='#D5C6EE'/><path d='M29 32C19 33 12 40 16 48C20 53 29 47 29 38Z' fill='#F7B6C6'/><circle cx='17' cy='20.5' r='2.4' fill='#fff' stroke-width='1.2'/></g><ellipse cx='30' cy='32' rx='2' ry='10.5' fill='#3B2F2B'/><path d='M29 21Q27 13 22 10M31 21Q33 13 38 10' stroke-width='1.4'/>"
+    },
+    {
+      "id": "cherries",
+      "label": "Cherries",
+      "keywords": [
+        "fruit",
+        "red",
+        "cherry",
+        "sweet",
+        "coquette",
+        "summer"
+      ],
+      "line": true,
+      "svg": "<path d='M23 38Q26 16 40 6'/><path d='M40 41Q43 22 40 6'/><path d='M40 6Q49 3 55 9Q46 14 40 6Z' fill='#8DC49A' stroke-width='1.5'/><circle cx='25.5' cy='42' r='10.5' fill='#D9473A'/><circle cx='42' cy='45' r='9.5' fill='#E0584B'/><path d='M20 38c.7-2.8 2.7-4.6 5-5' stroke='#fff' stroke-opacity='.8' stroke-width='2' fill='none'/><path d='M37.5 42c.6-2.4 2.3-4 4.4-4.4' stroke='#fff' stroke-opacity='.8' stroke-width='1.8' fill='none'/>"
+    },
+    {
+      "id": "lemon",
+      "label": "Lemon slice",
+      "keywords": [
+        "fruit",
+        "citrus",
+        "yellow",
+        "summer",
+        "fresh",
+        "drink"
+      ],
+      "line": true,
+      "svg": "<circle cx='30' cy='30' r='22' fill='#F7E27A'/><circle cx='30' cy='30' r='18' fill='#FFF3B0' stroke-width='1.2'/><path d='M30 30V13M30 30l12-12M30 30h17M30 30l12 12M30 30v17M30 30L18 42M30 30H13M30 30L18 18' stroke-width='1.3'/><circle cx='30' cy='30' r='2.2' fill='#F7E27A' stroke-width='1.2'/>"
+    },
+    {
+      "id": "mushroom",
+      "label": "Mushroom",
+      "keywords": [
+        "cottagecore",
+        "forest",
+        "toadstool",
+        "red",
+        "fairy",
+        "cute"
+      ],
+      "line": true,
+      "svg": "<path d='M22 36C22 45 20 50 17 53H43C40 50 38 45 38 36Z' fill='#FFF3DC'/><path d='M7 33C7 17 19 8 30 8C41 8 53 17 53 33C53 35 51 36 49 36H11C9 36 7 35 7 33Z' fill='#E8647A'/><circle cx='19' cy='22' r='4' fill='#fff' stroke-width='1.3'/><circle cx='32' cy='16' r='3.1' fill='#fff' stroke-width='1.3'/><circle cx='43' cy='26' r='4.2' fill='#fff' stroke-width='1.3'/><circle cx='29' cy='28' r='2.2' fill='#fff' stroke-width='1.3'/><circle cx='27' cy='43' r='1' fill='#3B2F2B' stroke='none'/><circle cx='33' cy='43' r='1' fill='#3B2F2B' stroke='none'/><path d='M28.6 45.6q1.4 1.4 2.8 0'/><path d='M9 53q2-6 4 0M47 53q2-6 4 0M5 53H55' stroke-width='1.5'/>"
+    },
+    {
+      "id": "cat",
+      "label": "Cat",
+      "keywords": [
+        "pet",
+        "kitty",
+        "animal",
+        "cute",
+        "meow",
+        "kitten"
+      ],
+      "line": true,
+      "svg": "<path d='M11 23L13 8L24 16Q30 14.4 36 16L47 8L49 23C53 31 49 47 30 49C11 47 7 31 11 23Z' fill='#FAD7BE'/><path d='M15 12.5l.8 6.5 5-3.2Z M45 12.5l-.8 6.5-5-3.2Z' fill='#F4A6B8' stroke='none'/><circle cx='22' cy='31' r='1.5' fill='#3B2F2B' stroke='none'/><circle cx='38' cy='31' r='1.5' fill='#3B2F2B' stroke='none'/><path d='M27.8 35.5h4.4l-2.2 2.6Z' fill='#E8809A' stroke-width='1.2'/><path d='M30 38.1v1.8M30 39.9q-2.8 2.6-5.6 0M30 39.9q2.8 2.6 5.6 0' stroke-width='1.4'/><path d='M14 36l-8-1.5M14 40l-7 3M46 36l8-1.5M46 40l7 3' stroke-width='1.2'/><circle cx='18' cy='37.5' r='2.4' fill='#F4A6B8' stroke='none' opacity='.7'/><circle cx='42' cy='37.5' r='2.4' fill='#F4A6B8' stroke='none' opacity='.7'/>"
+    },
+    {
+      "id": "coffee",
+      "label": "Coffee cup",
+      "keywords": [
+        "tea",
+        "chai",
+        "drink",
+        "warm",
+        "cafe",
+        "cozy",
+        "morning"
+      ],
+      "line": true,
+      "svg": "<path d='M44 31H48C54 31 54 43 47 43H43' fill='none'/><path transform='translate(2 2.2)' d='M11 28H44V40C44 48 38 53 27.5 53C17 53 11 48 11 40Z' fill='#F7B6C6' stroke='none'/><path d='M11 28H44V40C44 48 38 53 27.5 53C17 53 11 48 11 40Z' fill='#FFF6E5'/><ellipse cx='27.5' cy='28' rx='16.5' ry='3.8' fill='#8A5A34'/><path d='M7 55H48' stroke-width='1.6'/><path d='M20 21q-3-3.5 0-7t0-7M28 21q-3-3.5 0-7t0-7M36 21q-3-3.5 0-7t0-7' stroke-width='1.4'/><path d='M22 38c0-2.4 3.2-2.6 5.5.2c2.3-2.8 5.5-2.6 5.5-.2c0 3-5.5 6-5.5 6S22 41 22 38Z' fill='#E8647A' stroke-width='1.2'/>"
+    },
+    {
+      "id": "boba",
+      "label": "Boba tea",
+      "keywords": [
+        "bubble tea",
+        "drink",
+        "pearls",
+        "milk tea",
+        "cute",
+        "cafe"
+      ],
+      "line": true,
+      "svg": "<path d='M33 12L38 2' stroke-width='2.4'/><path d='M17.5 28L20.4 53H39.6L42.5 28Z' fill='#F0C9A0' stroke='none'/><path d='M16 18L20 53H40L44 18'/><path d='M15 18H45'/><path d='M16 18C16 9 44 9 44 18' fill='#fff' fill-opacity='.7'/><g fill='#4A3428' stroke='none'><circle cx='25' cy='48.6' r='3'/><circle cx='31.4' cy='49' r='3'/><circle cx='36.6' cy='48.4' r='2.8'/><circle cx='28' cy='43' r='3'/><circle cx='34' cy='43.6' r='2.8'/></g><path d='M18.6 26h22.8' stroke-width='1.2' stroke-dasharray='0.1 4'/>"
+    },
+    {
+      "id": "paper-plane",
+      "label": "Paper plane",
+      "keywords": [
+        "travel",
+        "fly",
+        "send",
+        "letter",
+        "message",
+        "trip",
+        "mail"
+      ],
+      "line": true,
+      "svg": "<path transform='translate(2 2.4)' d='M6 28L54 8L38 52L28 37Z' fill='#BFDDF3' stroke='none'/><path d='M6 28L54 8L38 52L28 37Z' fill='#fff'/><path d='M28 37L54 8M28 37L27 47L34 42' stroke-width='1.5'/><path d='M3 53C9 54 14 49 14 44' stroke-dasharray='1 4.2' stroke-width='2'/>"
+    },
+    {
+      "id": "envelope",
+      "label": "Love letter",
+      "keywords": [
+        "mail",
+        "post",
+        "letter",
+        "love",
+        "message",
+        "heart",
+        "send"
+      ],
+      "line": true,
+      "svg": "<path transform='translate(2.2 2.4)' d='M7 15H53V46H7Z' fill='#F7B6C6' stroke='none'/><path d='M7 15H53V46H7Z' fill='#FFF6E5'/><path d='M7 15L30 34L53 15' fill='none'/><path d='M30 41c-2-1.6-5-3.4-5-6c0-2.1 2.7-3 5-.4c2.3-2.6 5-1.7 5 .4c0 2.6-3 4.4-5 6Z' fill='#E8647A' stroke-width='1.2' transform='translate(0 -3)'/>"
+    },
+    {
+      "id": "music",
+      "label": "Music notes",
+      "keywords": [
+        "song",
+        "melody",
+        "tune",
+        "playlist",
+        "sound",
+        "radio"
+      ],
+      "line": true,
+      "svg": "<path d='M19 44V15L45 9V38' fill='none' stroke-width='2'/><path d='M19 15L45 9V17L19 23Z' fill='#B7A3DC' stroke-width='1.5'/><ellipse cx='14.5' cy='45' rx='6.4' ry='4.8' transform='rotate(-20 14.5 45)' fill='#3B2F2B'/><ellipse cx='40.5' cy='39' rx='6.4' ry='4.8' transform='rotate(-20 40.5 39)' fill='#3B2F2B'/>"
+    },
+    {
+      "id": "bow",
+      "label": "Bow",
+      "keywords": [
+        "ribbon",
+        "coquette",
+        "pink",
+        "girly",
+        "gift",
+        "cute"
+      ],
+      "line": true,
+      "svg": "<path d='M26 31L19 53L25.5 48.5L29 55L31 33Z' fill='#F4A6B8'/><path d='M34 31L41 53L34.5 48.5L31 55L29 33Z' fill='#F4A6B8'/><path d='M25 28C14 11 3 14 5 28C7 42 16 43 25 30Z' fill='#F7B6C6'/><path d='M35 28C46 11 57 14 55 28C53 42 44 43 35 30Z' fill='#F7B6C6'/><path d='M23 28C15 20 11 20 9 25M37 28C45 20 49 20 51 25' stroke-width='1.2' stroke-opacity='.6'/><ellipse cx='30' cy='29' rx='5.8' ry='6.6' fill='#E8809A'/>"
+    },
+    {
+      "id": "bow-today",
+      "label": "Bow, today's color",
+      "keywords": [
+        "ribbon",
+        "palette",
+        "mood",
+        "today",
+        "colors",
+        "coquette"
+      ],
+      "line": true,
+      "svg": "<path d='M26 31L19 53L25.5 48.5L29 55L31 33Z' fill='{c1}' fill-opacity='.72'/><path d='M34 31L41 53L34.5 48.5L31 55L29 33Z' fill='{c1}' fill-opacity='.72'/><path d='M25 28C14 11 3 14 5 28C7 42 16 43 25 30Z' fill='{c1}' fill-opacity='.72'/><path d='M35 28C46 11 57 14 55 28C53 42 44 43 35 30Z' fill='{c1}' fill-opacity='.72'/><path d='M23 28C15 20 11 20 9 25M37 28C45 20 49 20 51 25' stroke-width='1.2' stroke-opacity='.6'/><ellipse cx='30' cy='29' rx='5.8' ry='6.6' fill='{c0}' fill-opacity='.85'/>"
+    },
+    {
+      "id": "pearls",
+      "label": "Pearls",
+      "keywords": [
+        "necklace",
+        "coquette",
+        "jewellery",
+        "jewelry",
+        "string",
+        "elegant"
+      ],
+      "line": true,
+      "svg": "<defs><radialGradient id='dd-pearl' cx='.35' cy='.3' r='.8'><stop offset='0' stop-color='#fff'/><stop offset='.7' stop-color='#F3E9DD'/><stop offset='1' stop-color='#D9CBBB'/></radialGradient></defs><path d='M53.5 24.3Q30 66 6.5 24.3' stroke='#A99C8C' stroke-width='.9' fill='none'/><g fill='url(#dd-pearl)' stroke='#A99C8C' stroke-width='1.1'><circle cx='53.5' cy='24.3' r='4.8'/><circle cx='48.3' cy='36.6' r='4.8'/><circle cx='40.2' cy='44.9' r='4.8'/><circle cx='30' cy='48' r='4.8'/><circle cx='19.8' cy='44.9' r='4.8'/><circle cx='11.7' cy='36.6' r='4.8'/><circle cx='6.5' cy='24.3' r='4.8'/></g><g fill='#fff' stroke='none' opacity='.9'><circle cx='51.8' cy='22.6' r='1.2'/><circle cx='46.599999999999994' cy='34.9' r='1.2'/><circle cx='38.5' cy='43.199999999999996' r='1.2'/><circle cx='28.3' cy='46.3' r='1.2'/><circle cx='18.1' cy='43.199999999999996' r='1.2'/><circle cx='10' cy='34.9' r='1.2'/><circle cx='4.8' cy='22.6' r='1.2'/></g><path d='M30 52.8L27.2 57L30 60L32.8 57Z' fill='#F4A6B8' stroke-width='1.2'/>",
+      "h": 62
+    },
+    {
+      "id": "bubbles",
+      "label": "Bubbles",
+      "keywords": [
+        "soap",
+        "float",
+        "water",
+        "play",
+        "light",
+        "blue"
+      ],
+      "line": true,
+      "svg": "<g stroke='#6FA0D8' stroke-width='1.6'><circle cx='23' cy='37' r='15' fill='#CFE3F5' fill-opacity='.55'/><circle cx='44' cy='20' r='10' fill='#D5C6EE' fill-opacity='.55'/><circle cx='46' cy='47' r='6.5' fill='#CDEAD8' fill-opacity='.65'/></g><g stroke='#fff' stroke-width='2.2' fill='none'><path d='M14 33c1-4 4-6.600 8-7.200'/><path d='M39 16c1-2.400 3-3.800 5.500-4'/><path d='M43.200 44.500c.6-1.400 1.600-2.200 3-2.400'/></g>"
+    },
+    {
+      "id": "lightning",
+      "label": "Lightning",
+      "keywords": [
+        "bolt",
+        "storm",
+        "energy",
+        "power",
+        "weather",
+        "zap"
+      ],
+      "line": true,
+      "svg": "<path transform='translate(2.2 2.4)' d='M34 4L14 34H28L22 56L46 24H31Z' fill='#F7D26B' stroke='none'/><path d='M34 4L14 34H28L22 56L46 24H31Z' fill='#FBE58F'/>"
+    },
+    {
+      "id": "check",
+      "label": "Check",
+      "keywords": [
+        "done",
+        "tick",
+        "yes",
+        "complete",
+        "correct",
+        "tick mark"
+      ],
+      "line": true,
+      "svg": "<circle cx='32.2' cy='32.4' r='22' fill='#CDEAD8' stroke='none'/><circle cx='30' cy='30' r='22' fill='#fff'/><path d='M18.500 31L27 39.500L42.500 20' stroke='#3F8F5B' stroke-width='3.6'/>"
+    },
+    {
+      "id": "burst",
+      "label": "Burst",
+      "keywords": [
+        "pop",
+        "spark",
+        "celebrate",
+        "wow",
+        "party",
+        "excited"
+      ],
+      "line": true,
+      "svg": "<g stroke='#E8647A' stroke-width='2.6'><path d='M30 6v12'/><path d='M30 42v12'/><path d='M6 30h12'/><path d='M42 30h12'/></g><g stroke-width='2'><path d='M13 13l8 8'/><path d='M39 39l8 8'/><path d='M47 13l-8 8'/><path d='M21 39l-8 8'/></g><circle cx='30' cy='30' r='3.4' fill='#F7D26B'/>"
+    },
+    {
+      "id": "stitch-circle",
+      "label": "Stitched circle",
+      "keywords": [
+        "round",
+        "frame",
+        "dashed",
+        "badge",
+        "label",
+        "sewing"
+      ],
+      "line": true,
+      "svg": "<circle cx='30' cy='30' r='25' fill='#FFE9EE' stroke='none'/><circle cx='30' cy='30' r='22.500' stroke='#E8809A' stroke-width='2' stroke-dasharray='4.200 3.800'/><circle cx='30' cy='30' r='25.500' stroke-width='1.300'/>"
+    },
+    {
+      "id": "underline",
+      "label": "Swoosh underline",
+      "keywords": [
+        "swirl",
+        "emphasis",
+        "line",
+        "highlight",
+        "brush",
+        "stroke"
+      ],
+      "w": 72,
+      "h": 24,
+      "line": true,
+      "svg": "<path d='M4 16C20 6 36 20 52 10C58 6 64 8 68 12' stroke='#E8647A' stroke-width='2.8'/><path d='M14 21C28 17 44 21 58 17' stroke='#E8647A' stroke-width='1.6' stroke-opacity='.7'/>"
+    },
+    {
+      "id": "scribble-circle",
+      "label": "Scribble circle",
+      "keywords": [
+        "highlight",
+        "circle",
+        "loop",
+        "pen",
+        "marker",
+        "emphasis"
+      ],
+      "line": true,
+      "svg": "<path d='M32 6C49 4 58 18 54 32C50 48 31 56 15 48C3 41 4 21 18 12C28 6 40 8 49 14' stroke='#E8647A' stroke-width='2.4'/><path d='M30 10C44 8 53 19 50 31C47 45 31 52 18 45' stroke='#E8647A' stroke-width='1.4' stroke-opacity='.55'/>"
+    },
+    {
+      "id": "garland",
+      "label": "Star garland",
+      "keywords": [
+        "bunting",
+        "party",
+        "string",
+        "celebrate",
+        "decor",
+        "festive"
+      ],
+      "w": 80,
+      "h": 40,
+      "line": true,
+      "svg": "<defs><path id='dd-gstar' d='M0-6L1.800-1.900L6.100-1.800L2.700 1L3.800 5.200L0 2.800L-3.800 5.200L-2.700 1L-6.100-1.800L-1.800-1.900Z'/></defs><path d='M3 9Q40 34 77 9' stroke-width='1.4'/><use href='#dd-gstar' x='15' y='24' fill='#F7D26B' stroke-width='1.3'/><use href='#dd-gstar' x='29' y='31' fill='#F4A6B8' stroke-width='1.3'/><use href='#dd-gstar' x='40' y='34' fill='#8FC1E8' stroke-width='1.3'/><use href='#dd-gstar' x='51' y='31' fill='#A9D6B0' stroke-width='1.3'/><use href='#dd-gstar' x='65' y='24' fill='#D5C6EE' stroke-width='1.3'/><path d='M15 15v3M29 22v3M40 25v3M51 22v3M65 15v3' stroke-width='1.1'/>"
+    },
+    {
+      "id": "pencil",
+      "label": "Pencil",
+      "keywords": [
+        "write",
+        "study",
+        "draw",
+        "school",
+        "note",
+        "art"
+      ],
+      "line": true,
+      "svg": "<path d='M40 12L44.500 7.500C47 5 51 6 53.500 8.500C56 11 56.500 15 54 17.500L49.500 22Z' fill='#F4A6B8'/><path d='M16 36L40 12L50 22L26 46Z' fill='#F7D26B'/><path d='M16 36L26 46L7 54Z' fill='#FBE3C2'/><path d='M7 54L11.500 46L15 49.500Z' fill='#3B2F2B' stroke-width='1'/><path d='M21 41L45 17M26 46L50 22' stroke-width='1.2' stroke-opacity='.7'/>"
+    },
+    {
+      "id": "squiggle",
+      "label": "Squiggle",
+      "keywords": [
+        "line",
+        "wave",
+        "scribble",
+        "doodle",
+        "wavy"
+      ],
+      "line": true,
+      "svg": "<path d='M5 37Q12 14 19 37T33 37T47 37T56 28' stroke='#534AB7' stroke-width='3.400'/><circle cx='54' cy='15' r='2' fill='#F7D26B' stroke-width='1.2'/><circle cx='9' cy='50' r='1.600' fill='#F4A6B8' stroke-width='1.200'/>"
+    },
+    {
+      "id": "arrow",
+      "label": "Arrow",
+      "keywords": [
+        "point",
+        "direction",
+        "curve",
+        "swoosh",
+        "this way"
+      ],
+      "line": true,
+      "svg": "<path d='M8 46C8 22 30 8 50 24' stroke-width='2.400'/><path d='M50 24L39.500 22.500M50 24L46.500 34' stroke-width='2.400'/><circle cx='10' cy='52' r='1.600' fill='#3B2F2B' stroke='none'/>"
+    }
+  ]
+}

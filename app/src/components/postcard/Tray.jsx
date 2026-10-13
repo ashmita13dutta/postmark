@@ -9,6 +9,8 @@ import './tray.css'
 const COLLAPSED_Y = 200
 // A sticker is shown inside a tile no bigger than this many px.
 const TILE_ART = 72
+// Washi tape is a long strip, so the Tape tab uses wide, short tiles that show it at full size.
+const STRIP_ART = 124
 
 function HeartIcon({ filled }) {
   return (
@@ -76,6 +78,7 @@ export default function Tray({ palette, onPick, prefs, looks, open: openProp, on
   ]
   const activeTab = tabs.some((t) => t.id === tab) ? tab : tabs[0]?.id
   const showLooks = !query.trim() && activeTab.startsWith('look:')
+  const strips = !query.trim() && activeTab === 'tape'
 
   // with a dozen or more packs the row scrolls sideways, so keep the chosen one in view
   const tabListRef = useRef(null)
@@ -184,11 +187,11 @@ export default function Tray({ palette, onPick, prefs, looks, open: openProp, on
           onFrame={looks.onFrame}
         />
       ) : items.length ? (
-        <ul className="tray__items">
+        <ul className={strips ? 'tray__items tray__items--strips' : 'tray__items'}>
           {items.map((s) => {
             const { width, height } = stickerSize(s.id)
             // fit the sticker into the tile without changing its shape
-            const k = Math.min(1, TILE_ART / Math.max(width, height))
+            const k = Math.min(1, (strips ? STRIP_ART : TILE_ART) / Math.max(width, height))
             const saved = favorites.includes(s.id)
             return (
               <li key={s.id}>

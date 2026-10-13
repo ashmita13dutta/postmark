@@ -1,0 +1,326 @@
+{
+  "about": "The washi tapes in the tray's Tape tab. Yours to edit: change colors, add your own, or delete any. A tape is a base color with layers of pattern on top, then a paper finish and a cut end. size is slim, regular or wide. edge is how the ends are cut: cut, zigzag, wavy, scallop or torn. base is a hex color. opacity (0 to 1) is how see-through the tape is. Each layer has a type (stripes, dots, gingham, checks, grid, hearts, sparkles, stars, daisies, leaves, stitch, waves, bunting, confetti, gradient, foil, film, rim, text), ink (a list of hex colors), and sometimes scale (how big one repeat is), size, angle, text, count or inset. Write {c0} to {c4} in any color to use that day's five palette colors. id is lowercase letters, digits and dashes, and a postcard remembers it, so avoid renaming one you have already used. The order here is the order in the tray; the five tapes made from the day's colors come last.",
+  "tapes": [
+    {
+      "id": "gingham-blush",
+      "label": "Blush gingham",
+      "keywords": ["pink", "check", "checkered", "picnic", "plaid"],
+      "size": "regular",
+      "edge": "zigzag",
+      "base": "#FFF3F5",
+      "layers": [{ "type": "gingham", "ink": ["#E8809A"], "scale": 7 }]
+    },
+    {
+      "id": "gingham-sky",
+      "label": "Sky gingham",
+      "keywords": ["blue", "check", "checkered", "picnic", "plaid"],
+      "size": "regular",
+      "edge": "zigzag",
+      "base": "#F5FAFF",
+      "layers": [{ "type": "gingham", "ink": ["#6FA0D8"], "scale": 7 }]
+    },
+    {
+      "id": "gingham-butter",
+      "label": "Butter gingham",
+      "keywords": ["yellow", "check", "checkered", "picnic", "plaid", "sunny"],
+      "size": "regular",
+      "edge": "wavy",
+      "base": "#FFFBEA",
+      "layers": [{ "type": "gingham", "ink": ["#E8B93C"], "scale": 7 }]
+    },
+    {
+      "id": "gingham-sage",
+      "label": "Sage gingham",
+      "keywords": ["green", "check", "checkered", "picnic", "plaid"],
+      "size": "regular",
+      "edge": "scallop",
+      "base": "#F6FBF3",
+      "layers": [{ "type": "gingham", "ink": ["#7FAE86"], "scale": 7 }]
+    },
+    {
+      "id": "candy-stripes",
+      "label": "Candy stripes",
+      "keywords": ["red", "stripes", "striped", "peppermint", "sweet"],
+      "size": "regular",
+      "edge": "scallop",
+      "base": "#FFF8F2",
+      "layers": [{ "type": "stripes", "ink": ["#D9473A"], "scale": 5, "angle": 45 }]
+    },
+    {
+      "id": "peach-stripes",
+      "label": "Peach stripes",
+      "keywords": ["orange", "stripes", "striped", "warm", "soft"],
+      "size": "slim",
+      "edge": "cut",
+      "base": "#FFEFE2",
+      "layers": [{ "type": "stripes", "ink": ["#F4B08A"], "scale": 4.5, "angle": 0 }]
+    },
+    {
+      "id": "mint-stripes",
+      "label": "Mint stripes",
+      "keywords": ["green", "stripes", "striped", "fresh", "pinstripe"],
+      "size": "regular",
+      "edge": "wavy",
+      "base": "#EAF7EF",
+      "layers": [{ "type": "stripes", "ink": ["#9ACDB0"], "scale": 3.5, "angle": 90 }]
+    },
+    {
+      "id": "airmail",
+      "label": "Air mail",
+      "keywords": ["par avion", "post", "mail", "letter", "red", "blue", "travel"],
+      "size": "wide",
+      "edge": "cut",
+      "base": "#FFFDF8",
+      "layers": [
+        { "type": "rim", "ink": ["#C8372D", "#2B4A8B"], "scale": 4 },
+        { "type": "text", "ink": ["#2B4A8B"], "text": "PAR AVION · BY AIR MAIL", "size": 8 }
+      ]
+    },
+    {
+      "id": "polka-terracotta",
+      "label": "Terracotta dots",
+      "keywords": ["polka", "dots", "spots", "warm", "boho"],
+      "size": "regular",
+      "edge": "scallop",
+      "base": "#FFF1E4",
+      "layers": [{ "type": "dots", "ink": ["#C9715A"], "scale": 10, "size": 2 }]
+    },
+    {
+      "id": "polka-lilac",
+      "label": "Lilac dots",
+      "keywords": ["polka", "dots", "spots", "purple", "pastel"],
+      "size": "slim",
+      "edge": "wavy",
+      "base": "#F5EEFB",
+      "layers": [{ "type": "dots", "ink": ["#B7A3DC"], "scale": 7, "size": 1.5 }]
+    },
+    {
+      "id": "tiny-hearts",
+      "label": "Tiny hearts",
+      "keywords": ["love", "pink", "valentine", "cute", "heart"],
+      "size": "regular",
+      "edge": "zigzag",
+      "base": "#FFF0F3",
+      "layers": [{ "type": "hearts", "ink": ["#EE7C98"], "scale": 12 }]
+    },
+    {
+      "id": "red-hearts",
+      "label": "Red hearts",
+      "keywords": ["love", "red", "valentine", "romantic", "heart"],
+      "size": "wide",
+      "edge": "scallop",
+      "base": "#FFF8EE",
+      "layers": [{ "type": "hearts", "ink": ["#D9473A"], "scale": 20, "size": 4.2 }]
+    },
+    {
+      "id": "night-sparkle",
+      "label": "Night sparkle",
+      "keywords": ["stars", "navy", "night", "sky", "glitter", "midnight"],
+      "size": "regular",
+      "edge": "cut",
+      "base": "#26325C",
+      "opacity": 0.95,
+      "layers": [{ "type": "sparkles", "ink": ["#F5D98B", "#FFFFFF"], "scale": 14 }]
+    },
+    {
+      "id": "daisy-meadow",
+      "label": "Daisy meadow",
+      "keywords": ["flowers", "floral", "spring", "garden", "white", "cottagecore"],
+      "size": "wide",
+      "edge": "wavy",
+      "base": "#CDEAD8",
+      "layers": [{ "type": "daisies", "ink": ["#FFFFFF", "#F4C542"], "scale": 20 }]
+    },
+    {
+      "id": "leaf-sprig",
+      "label": "Leaf sprigs",
+      "keywords": ["green", "leaves", "plant", "nature", "botanical", "garden"],
+      "size": "regular",
+      "edge": "torn",
+      "base": "#FBF6E6",
+      "layers": [{ "type": "leaves", "ink": ["#7FAE86", "#A9C7A5"], "scale": 16 }]
+    },
+    {
+      "id": "kraft-stitch",
+      "label": "Kraft stitch",
+      "keywords": ["brown", "parcel", "rustic", "sewing", "thread", "package"],
+      "size": "regular",
+      "edge": "torn",
+      "base": "#D9B98C",
+      "layers": [{ "type": "stitch", "ink": ["#FFF4DE"], "inset": 5 }]
+    },
+    {
+      "id": "graph-paper",
+      "label": "Graph paper",
+      "keywords": ["grid", "squares", "notebook", "maths", "math", "study", "blue"],
+      "size": "regular",
+      "edge": "cut",
+      "base": "#F4F8FB",
+      "layers": [{ "type": "grid", "ink": ["#9DB7D6"], "scale": 6 }]
+    },
+    {
+      "id": "cocoa-checks",
+      "label": "Cocoa checks",
+      "keywords": ["brown", "checkerboard", "check", "cafe", "retro"],
+      "size": "regular",
+      "edge": "zigzag",
+      "base": "#FFF5E8",
+      "layers": [{ "type": "checks", "ink": ["#D9B38C"], "scale": 6 }]
+    },
+    {
+      "id": "sunset-ombre",
+      "label": "Sunset ombré",
+      "keywords": ["gradient", "ombre", "pink", "orange", "purple", "dusk", "sky"],
+      "size": "wide",
+      "edge": "wavy",
+      "base": "#FAD7BE",
+      "layers": [{ "type": "gradient", "ink": ["#FAD7BE", "#F4A6B8", "#C7A6E8"] }]
+    },
+    {
+      "id": "ocean-ombre",
+      "label": "Ocean ombré",
+      "keywords": ["gradient", "ombre", "blue", "sea", "water", "calm"],
+      "size": "slim",
+      "edge": "scallop",
+      "base": "#CFE3F5",
+      "layers": [{ "type": "gradient", "ink": ["#CFE3F5", "#9CD3E0", "#B6E3C8"] }]
+    },
+    {
+      "id": "gold-foil",
+      "label": "Gold foil",
+      "keywords": ["metallic", "shiny", "glitter", "fancy", "festive", "zari", "pujo", "luxury"],
+      "size": "slim",
+      "edge": "cut",
+      "base": "#D7B24E",
+      "opacity": 0.98,
+      "layers": [{ "type": "foil" }]
+    },
+    {
+      "id": "rose-foil",
+      "label": "Rose gold foil",
+      "keywords": ["metallic", "shiny", "glitter", "fancy", "pink", "luxury"],
+      "size": "slim",
+      "edge": "zigzag",
+      "base": "#D9948F",
+      "opacity": 0.98,
+      "layers": [{ "type": "foil", "ink": ["#B76E79", "#F4C6C0", "#D9948F", "#FBE1DC", "#A85F6A"] }]
+    },
+    {
+      "id": "confetti-party",
+      "label": "Confetti",
+      "keywords": ["party", "celebrate", "birthday", "colorful", "sprinkles", "fun"],
+      "size": "regular",
+      "edge": "scallop",
+      "base": "#FFFDF6",
+      "layers": [
+        {
+          "type": "confetti",
+          "ink": ["#F4A6B8", "#8FC1E8", "#F7D26B", "#A9D6B0", "#C7A6E8"],
+          "count": 30
+        }
+      ]
+    },
+    {
+      "id": "rainbow-pastel",
+      "label": "Pastel rainbow",
+      "keywords": ["rainbow", "colorful", "stripes", "pride", "happy"],
+      "size": "regular",
+      "edge": "wavy",
+      "base": "#FFFFFF",
+      "layers": [
+        {
+          "type": "stripes",
+          "ink": ["#F9B8C4", "#FCD9A8", "#FBEBA0", "#BFE3C6", "#B9D8F2", "#D5C6EE"],
+          "scale": 4,
+          "angle": 90
+        }
+      ]
+    },
+    {
+      "id": "ocean-waves",
+      "label": "Ocean waves",
+      "keywords": ["blue", "sea", "water", "wave", "beach", "summer"],
+      "size": "regular",
+      "edge": "wavy",
+      "base": "#EAF4FA",
+      "layers": [{ "type": "waves", "ink": ["#6FA0D8"], "scale": 10 }]
+    },
+    {
+      "id": "bunting",
+      "label": "Party bunting",
+      "keywords": ["flags", "pennant", "party", "celebrate", "birthday", "festival"],
+      "size": "wide",
+      "edge": "cut",
+      "base": "#FFFDF6",
+      "layers": [
+        {
+          "type": "bunting",
+          "ink": ["#F4A6B8", "#8FC1E8", "#F7D26B", "#A9D6B0", "#C7A6E8"],
+          "size": 11,
+          "rows": 2
+        }
+      ]
+    },
+    {
+      "id": "film-reel",
+      "label": "Film reel",
+      "keywords": ["movie", "photo", "camera", "cinema", "black", "negative"],
+      "size": "wide",
+      "edge": "cut",
+      "base": "#1D1B19",
+      "opacity": 0.97,
+      "layers": [{ "type": "film", "ink": ["#3A3733", "#F6F0E4"] }]
+    },
+    {
+      "id": "handle-with-care",
+      "label": "Handle with care",
+      "keywords": ["fragile", "parcel", "package", "shipping", "kraft", "brown", "post"],
+      "size": "regular",
+      "edge": "cut",
+      "base": "#D9B98C",
+      "layers": [
+        { "type": "rim", "ink": ["#7A4B2A"], "scale": 2.5 },
+        { "type": "text", "ink": ["#7A4B2A"], "text": "FRAGILE · HANDLE WITH CARE", "size": 7 }
+      ]
+    },
+    {
+      "id": "xoxo-tape",
+      "label": "xoxo",
+      "keywords": ["love", "hugs", "kisses", "pink", "words", "cute"],
+      "size": "slim",
+      "edge": "zigzag",
+      "base": "#FFE3EA",
+      "layers": [{ "type": "text", "ink": ["#E8809A"], "text": "xoxo · xoxo", "size": 9, "upper": false }]
+    },
+    {
+      "id": "sheer-butter",
+      "label": "Sheer butter",
+      "keywords": ["yellow", "plain", "see-through", "translucent", "pastel", "solid"],
+      "size": "regular",
+      "edge": "zigzag",
+      "base": "#F9E27C",
+      "opacity": 0.78,
+      "layers": []
+    },
+    {
+      "id": "sheer-lilac",
+      "label": "Sheer lilac",
+      "keywords": ["purple", "plain", "see-through", "translucent", "pastel", "solid"],
+      "size": "regular",
+      "edge": "wavy",
+      "base": "#CDB8EE",
+      "opacity": 0.78,
+      "layers": []
+    },
+    {
+      "id": "sheer-mint",
+      "label": "Sheer mint",
+      "keywords": ["green", "plain", "see-through", "translucent", "pastel", "solid"],
+      "size": "regular",
+      "edge": "scallop",
+      "base": "#A8DDBF",
+      "opacity": 0.78,
+      "layers": []
+    }
+  ]
+}

@@ -233,3 +233,24 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+/* ---- the Tape tab: wide, short tiles, three rows, so a washi strip shows at full size ---- */
+.tray__items--strips {
+  grid-template-rows: repeat(3, 52px);
+  grid-auto-columns: 162px;
+  gap: 8px 10px;
+}
+.tray__items--strips .tray__item {
+  width: 162px;
+  height: 52px;
+  justify-content: flex-start;
+  padding-left: 9px;
+  border-radius: 12px;
+}
+/* the heart sits in the free corner to the right of the strip */
+.tray__items--strips .tray__heart {
+  top: 14px;
+  right: 4px;
+  width: 24px;
+  height: 24px;
+}

@@ -4,8 +4,11 @@
  * A postcard stores just two ids, `paper` and `frame`. Anything it names that no longer exists (you
  * renamed one, or removed it) quietly falls back to the first paper and the first frame.
  */
-import { BLANK_PALETTE } from '../db/moments'
+import { fillColors } from '../lib/slots'
 import data from './papers.json'
+
+// papers.json uses the day's colors ({c0} to {c4}); the substitution is shared with tapes and doodles
+export { fillColors }
 
 export const PAPERS = data.papers
 export const FRAMES = data.frames
@@ -16,15 +19,6 @@ export const DEFAULT_FRAME = FRAMES[0].id
 
 export const findPaper = (id) => PAPERS.find((p) => p.id === id) ?? PAPERS[0]
 export const findFrame = (id) => FRAMES.find((f) => f.id === id) ?? FRAMES[0]
-
-/**
- * Put the day's five colors into a background: {c0} is the first palette color, {c4} the last. A
- * palette that is missing a color uses the plain paper colors, so a postcard always has five.
- */
-export function fillColors(text, palette) {
-  const colors = palette?.length === 5 ? palette : BLANK_PALETTE
-  return text.replace(/\{c([0-4])\}/g, (_, i) => colors[Number(i)].hex)
-}
 
 /** Inline style for a paper layer: its background, with the day's colors filled in, and its grain. */
 export function paperStyle(paper, palette) {
