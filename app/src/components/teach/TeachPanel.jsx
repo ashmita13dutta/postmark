@@ -3,7 +3,12 @@ import { feelings } from '../../data/feelings.json'
 import { topics } from '../../data/topics.json'
 import tintData from '../../data/tints.json'
 import { moodLabel } from '../../engine/moods'
-import { entriesFromSelection, suggestSelection, teachableTokens } from '../../engine/teach'
+import {
+  comboFromSelection,
+  entriesFromSelection,
+  suggestSelection,
+  teachableTokens,
+} from '../../engine/teach'
 import MoodEditor from '../moods/MoodEditor'
 import MoodStrip from '../moods/MoodStrip'
 import './teach.css'
@@ -37,6 +42,8 @@ const GROUPS = Object.entries(topics).reduce((acc, [id, t]) => {
  *               feelings
  *  - onCreateMood: optional async ({ label, colors }) => the new mood; when given, "+ New mood" lets
  *               you make one right here and teach it the words you tapped
+ *  - onSaveCombo: optional async (combo) => saved combo; when given, tapping two or more separate
+ *               words offers "only when all of these are in the note" (see comboFromSelection)
  */
 export default function TeachPanel({
   text,
@@ -47,6 +54,7 @@ export default function TeachPanel({
   label,
   moods: savedMoods = NO_MOODS,
   onCreateMood,
+  onSaveCombo,
 }) {
   const [open, setOpen] = useState(false)
   const [creating, setCreating] = useState(false)
@@ -75,7 +83,18 @@ export default function TeachPanel({
       return [] // the chosen mood was deleted meanwhile: nothing to teach until another is picked
     }
   }, [tokens, selected, kind, target, moods])
-  const canSave = !!target && entries.length > 0 && !busy
+  // two or more separate taps can be taught as one combo: they count only when all are in a note
+  const [together, setTogether] = useState(false)
+  const combo = useMemo(() => {
+    if (!target || !onSaveCombo) return null
+    try {
+      return comboFromSelection(tokens, selected, kind, target, moods)
+    } catch {
+      return null
+    }
+  }, [tokens, selected, kind, target, moods, onSaveCombo])
+  const asCombo = together && !!combo
+  const canSave = !!target && (asCombo || entries.length > 0) && !busy
 
   function targetLabel() {
     if (kind === 'feeling') return moodLabel(target, moods)
@@ -90,6 +109,7 @@ export default function TeachPanel({
     setKind(preset?.kind ?? 'feeling')
     setTarget(preset?.target ?? null)
     setSelected(new Set())
+    setTogether(false)
   }
 
   function toggle(i) {
@@ -104,11 +124,13 @@ export default function TeachPanel({
   async function save() {
     setBusy(true)
     try {
-      const saved = await onSave(entries)
+      const saved = asCombo ? [await onSaveCombo(combo)] : await onSave(entries)
       const label = targetLabel()
       setMessage({
         ok: true,
-        text: `Learned ${saved.map((e) => `“${e.example}”`).join(', ')} → ${label}. Your note was read again.`,
+        text: asCombo
+          ? `Learned “${saved[0].example}” together → ${label}. Your note was read again.`
+          : `Learned ${saved.map((e) => `“${e.example}”`).join(', ')} → ${label}. Your note was read again.`,
       })
       setOpen(false)
     } catch (err) {
@@ -294,11 +316,34 @@ export default function TeachPanel({
         </button>
       </div>
 
-      {entries.length > 0 && (
+      {combo && (
+        <label className="teach__together">
+          <input
+            type="checkbox"
+            checked={together}
+            onChange={(e) => setTogether(e.target.checked)}
+          />
+          <span>
+            Only when all of these are in the note
+            <small>
+              Together they count for more than each word alone. Use it when the words mean
+              something only as a pair, like “rain” and “chai”.
+            </small>
+          </span>
+        </label>
+      )}
+      {asCombo ? (
         <p className="teach__preview">
-          Will learn: {entries.map((e) => `“${e.example}”`).join(', ')}
+          Will learn: {combo.parts.length} words together, “{combo.example}”
           {target && ` → ${targetLabel()}`}
         </p>
+      ) : (
+        entries.length > 0 && (
+          <p className="teach__preview">
+            Will learn: {entries.map((e) => `“${e.example}”`).join(', ')}
+            {target && ` → ${targetLabel()}`}
+          </p>
+        )
       )}
       {message && !message.ok && <p className="teach__msg teach__msg--err">{message.text}</p>}
 

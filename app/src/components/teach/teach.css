@@ -130,6 +130,25 @@
 .teach__save:disabled {
   opacity: 0.35;
 }
+.teach__together {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 4px 10px;
+  margin: 12px 0 0;
+  font: 500 13px var(--font-ui);
+}
+.teach__together input {
+  width: 22px;
+  height: 22px;
+  margin: 0;
+}
+.teach__together small {
+  display: block;
+  margin-top: 2px;
+  font: 400 12px/1.4 var(--font-ui);
+  color: var(--ink-60);
+}
 .teach__cancel {
   min-height: var(--tap);
   padding: 0 18px;

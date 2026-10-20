@@ -114,6 +114,7 @@ export function Editor({ day, existing, demo }) {
   // the moods you made up, and the words you taught them (read together, so a word is only known
   // while its mood exists)
   const moodRows = useLiveQuery(() => queries.getMoods(), [], NO_ROWS)
+  const comboRows = useLiveQuery(() => queries.getCombos(), [], NO_ROWS)
   // notes you corrected on other days (today's own does not count towards itself)
   const corrections = useLiveQuery(
     async () => (await queries.getCorrections()).filter((c) => c.id !== day),
@@ -121,7 +122,10 @@ export function Editor({ day, existing, demo }) {
     [],
   )
   const moods = useMemo(() => buildMoods(moodRows), [moodRows])
-  const lexicon = useMemo(() => buildLexicon(lexiconRows, moods), [lexiconRows, moods])
+  const lexicon = useMemo(
+    () => buildLexicon(lexiconRows, moods, comboRows),
+    [lexiconRows, moods, comboRows],
+  )
 
   const hasNote = text.trim().length > 0
   const r = useMemo(
@@ -225,6 +229,16 @@ export function Editor({ day, existing, demo }) {
       /* the stamp matters more than the memory */
     } finally {
       setIntent(null)
+    }
+  }
+
+  // if you had picked a feeling by hand, you now mean the mood of yours you just taught; if not,
+  // the note is simply read again with what it now knows
+  function taughtMood(id) {
+    if (isMyMood(id) && override.feeling) {
+      setOverride((o) => ({ ...o, feeling: id }))
+      setIntent('set')
+      setCustom(null)
     }
   }
 
@@ -453,14 +467,12 @@ export function Editor({ day, existing, demo }) {
                 onCreateMood={(input) => queries.saveMood(input)}
                 onSave={async (entries) => {
                   const saved = await queries.teachWords(entries)
-                  // if you had picked a feeling by hand, you now mean the mood you just taught; if
-                  // not, the note is simply read again with its new word
-                  const mine = saved.find((e) => e.kind === 'feeling' && isMyMood(e.id))
-                  if (mine && override.feeling) {
-                    setOverride((o) => ({ ...o, feeling: mine.id }))
-                    setIntent('set')
-                    setCustom(null)
-                  }
+                  taughtMood(saved.find((e) => e.kind === 'feeling')?.id)
+                  return saved
+                }}
+                onSaveCombo={async (combo) => {
+                  const saved = await queries.saveCombo(combo)
+                  taughtMood(saved.kind === 'feeling' ? saved.target : null)
                   return saved
                 }}
                 preset={

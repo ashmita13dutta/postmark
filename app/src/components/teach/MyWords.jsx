@@ -12,11 +12,19 @@ const labelOf = (e, moods) =>
 
 /**
  * The words you have taught, with a way to take each one back. Everything stays on this phone.
- * `moods` (buildMoods) lets words taught to a mood you made up show its name.
+ * `moods` (buildMoods) lets words taught to a mood you made up show its name. `combos` are the sets of
+ * words that count only when all are in a note, each with its own × (`onForgetCombo`).
  */
-export default function MyWords({ lexicon, onForget, onForgetAll, moods }) {
+export default function MyWords({
+  lexicon,
+  onForget,
+  onForgetAll,
+  moods,
+  combos = [],
+  onForgetCombo,
+}) {
   const [confirm, setConfirm] = useState(false)
-  if (!lexicon.length) {
+  if (!lexicon.length && !combos.length) {
     return (
       <p className="teach__hint">
         Nothing taught yet. If a note reads wrong, tap “This felt different” and teach it.
@@ -25,8 +33,21 @@ export default function MyWords({ lexicon, onForget, onForgetAll, moods }) {
   }
   return (
     <details className="mywords">
-      <summary>My words · {lexicon.length}</summary>
+      <summary>My words · {lexicon.length + combos.length}</summary>
       <ul>
+        {combos.map((c) => (
+          <li key={c.id}>
+            <span className="mywords__word">{c.example}</span>
+            <span className="mywords__arrow">→</span>
+            <span className="mywords__target">
+              {labelOf({ kind: c.kind, id: c.target }, moods)}
+              <small> · together{c.kind === 'topic' ? ' · topic' : ''}</small>
+            </span>
+            <button onClick={() => onForgetCombo(c.id)} aria-label={`Forget ${c.example}`}>
+              ×
+            </button>
+          </li>
+        ))}
         {lexicon.map((e) => (
           <li key={e.key}>
             <span className="mywords__word">{e.example ?? e.word}</span>

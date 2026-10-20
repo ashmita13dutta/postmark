@@ -4,15 +4,22 @@
 //   npm run train:head -- --cv               first print 5-fold cross-validation for a few lambdas
 //   npm run train:head -- --lambda 0.3       choose the regularisation yourself
 //   npm run train:head -- --sets dev,dev2    train on only these sets (files in tests/corpus/)
+//   npm run train:head -- --real tests/corpus/real.json      also learn from your own corrected notes
+//   npm run train:head -- --real ... --real-weight 3         ...and count each of them 3 times
+//   npm run train:head -- --out some/where.json              write the head somewhere else (a trial)
+//
+// --real takes the file "Copy them" gives you on the You screen (or the tests/corpus format). Run
+// `npm run check:personal -- <file>` first: it says whether adding your notes actually helps.
 //
 // Needs the model (`npm run model`). Everything here is deterministic: the same notes and the same
 // model always give the same head.
 import { readFileSync, writeFileSync } from 'node:fs'
-import { dirname, join } from 'node:path'
+import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { createNodeEmbedder } from './embedder.mjs'
 import { crossValidatedProbs, train } from './lr.mjs'
-import { acceptedFeelings, describe, rankIds, scoreRanked } from './metrics.mjs'
+import { describe, rankIds, scoreRanked } from './metrics.mjs'
+import { parseNotes, readNotesFile, softRows } from './real.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..', '..')
 const arg = (name, fallback) => {
@@ -33,25 +40,37 @@ const feelingIds = Object.keys(
 const notes = []
 for (const set of sets) {
   const file = JSON.parse(readFileSync(join(root, 'tests/corpus', `${set}.json`), 'utf8'))
-  for (const row of file.notes) notes.push(row)
+  for (const row of parseNotes(file, feelingIds).notes) notes.push(row)
 }
 console.log(`${notes.length} notes from ${sets.join(', ')}`)
 
+// your own corrected notes, if you gave a file (they stay on this computer: see .gitignore)
+const realFiles = arg('real', '')
+  .split(',')
+  .filter(Boolean)
+  .map((f) => resolve(process.cwd(), f))
+const realNotes = []
+for (const file of realFiles) {
+  const { notes: got, skipped } = readNotesFile(file, feelingIds)
+  realNotes.push(...got)
+  console.log(
+    `${got.length} of your notes from ${file}${skipped ? ` (${skipped} rows skipped)` : ''}`,
+  )
+}
+const realWeight = Math.max(1, Math.round(Number(arg('real-weight', 1))))
+
 const embedder = await createNodeEmbedder()
 const vectors = await embedder.embedAll(notes.map((n) => n[0]))
+const realVectors = realNotes.length ? await embedder.embedAll(realNotes.map((n) => n[0])) : []
 
 // soft targets: a note that accepts several feelings is trained towards all of them equally
-const rows = []
-const rowNotes = []
-notes.forEach((note, i) => {
-  const accepted = acceptedFeelings(note[1])
-  if (accepted === null) return
-  const y = new Array(feelingIds.length).fill(0)
-  for (const f of accepted) y[feelingIds.indexOf(f)] += 1 / accepted.length
-  rows.push({ x: vectors[i], y })
-  rowNotes.push(note)
-})
-console.log(`${rows.length} usable notes (notes that accept any feeling are skipped)`)
+const base = softRows(notes, vectors, feelingIds)
+const mine = softRows(realNotes, realVectors, feelingIds, realWeight)
+const rows = [...base.rows, ...mine.rows]
+const rowNotes = [...base.used, ...mine.used]
+console.log(`${rowNotes.length} usable notes (notes that accept any feeling are skipped)`)
+if (mine.used.length)
+  console.log(`  ${mine.used.length} of them yours, counted ${realWeight} time(s) each`)
 
 if (process.argv.includes('--cv')) {
   console.log('\n5-fold cross-validation (each note predicted by a model that never saw it):')
@@ -79,7 +98,12 @@ const head = {
   },
   feelings: feelingIds,
   lambda,
-  trainedOn: { notes: rows.length, sets },
+  // only a count, never the notes: your own notes are not part of this repository
+  trainedOn: {
+    notes: rowNotes.length,
+    sets,
+    ...(mine.used.length ? { yours: mine.used.length } : {}),
+  },
   dim: model.mean.length,
   mean: model.mean.map(round),
   sd: model.sd.map(round),
@@ -104,7 +128,8 @@ function compact(value, indent = '') {
   return JSON.stringify(value)
 }
 const body = compact(head)
-writeFileSync(join(root, 'src/data/feelingHead.json'), `${body}\n`)
+const out = resolve(process.cwd(), arg('out', join(root, 'src/data/feelingHead.json')))
+writeFileSync(out, `${body}\n`)
 console.log(
-  `\nwrote src/data/feelingHead.json (lambda ${lambda}, ${head.dim} dimensions, ${(body.length / 1024).toFixed(0)} KB)`,
+  `\nwrote ${out} (lambda ${lambda}, ${head.dim} dimensions, ${(body.length / 1024).toFixed(0)} KB)`,
 )

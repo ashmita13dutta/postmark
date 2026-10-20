@@ -4,6 +4,8 @@ dev-dist
 *.local
 .DS_Store
 tests/corpus/.last-run.txt
+# your own corrected notes ("Copy them" on You) are private diary text: never commit them
+tests/corpus/real*.json
 # the note reader's model is downloaded by `npm run model`; the training cache is generated
 public/models/
 .cache/

@@ -75,6 +75,8 @@ export default function ReaderSetting() {
           <p style={{ marginTop: 14 }}>
             {corrections.length} {corrections.length === 1 ? 'note' : 'notes'} you corrected. They
             are kept on this phone, and a near-identical note will follow your choice.
+            {corrections.length >= 20 &&
+              ' You have enough to find out whether the reader would read you better after learning from them: copy them and ask Claude to check.'}
           </p>
           <div className="reader-setting__actions">
             <button onClick={copyNotes}>{copied ? 'Copied' : 'Copy them'}</button>

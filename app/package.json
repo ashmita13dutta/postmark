@@ -17,6 +17,7 @@
     "model": "node scripts/model/fetch-model.mjs",
     "train:head": "node scripts/model/train-head.mjs",
     "evaluate:model": "node scripts/model/evaluate-model.mjs",
+    "check:personal": "node scripts/model/personal-check.mjs",
     "format": "prettier --write .",
     "evaluate": "vitest run tests/corpus.test.js && node -e \"process.stdout.write(require('fs').readFileSync('tests/corpus/.last-run.txt','utf8'))\""
   },

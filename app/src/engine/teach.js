@@ -8,6 +8,8 @@ import { topics } from '../data/topics.json'
 import { isKnownWord, unstretch } from './mood'
 
 const MAX_PHRASE = 5
+/** A combo is two to four words (or phrases) that have to be in the note together. */
+export const MAX_COMBO_PARTS = 4
 
 // Filler words: never worth teaching on their own ("the" or "was" tells you nothing about a mood).
 const STOP = new Set(
@@ -95,6 +97,76 @@ export function entriesFromSelection(tokens, selected, kind, id, moods) {
     })
   }
   return entries
+}
+
+/**
+ * Your taps as ONE combo instead of separate words: "rain" and "chai", tapped apart, count only when
+ * both are in a note. It uses the same runs as entriesFromSelection (neighbouring taps are one
+ * phrase), so it needs at least two separate runs, and at most MAX_COMBO_PARTS.
+ * @returns {{ kind: string, target: string, parts: {word: string, parts: number}[], example: string } | null}
+ */
+export function comboFromSelection(tokens, selected, kind, id, moods) {
+  if (kind === 'tint') return null
+  const entries = entriesFromSelection(tokens, selected, kind, id, moods)
+  const words = new Set(entries.map((e) => e.word))
+  if (entries.length < 2 || entries.length > MAX_COMBO_PARTS || words.size !== entries.length)
+    return null
+  return {
+    kind,
+    target: id,
+    parts: entries.map(({ word, parts }) => ({ word, parts })),
+    example: entries.map((e) => e.example).join(' + '),
+  }
+}
+
+/**
+ * Words typed straight into a mood instead of tapped in a note. Separate them with commas;
+ * "bhalo lagche" is one phrase; "rain + chai" is a combo (both must be in the note).
+ *   "ghurni, bhalo lagche, rain + chai" -> two words and one combo
+ * Anything that is only filler ("the"), empty, or longer than five words is left out and returned in
+ * `skipped`, so the screen can say so.
+ * @returns {{ entries: object[], combos: object[], skipped: string[] }}
+ */
+export function parseTyped(text, kind, id, moods) {
+  const entries = []
+  const combos = []
+  const skipped = []
+  const one = (piece) => {
+    const tokens = teachableTokens(piece.replace(/[.!?;\n]+/g, ' '), undefined)
+    if (!tokens.length || tokens.length > MAX_PHRASE) return null
+    return (
+      entriesFromSelection(
+        tokens,
+        tokens.map((t) => t.index),
+        kind,
+        id,
+        moods,
+      )[0] ?? null
+    )
+  }
+  for (const segment of String(text ?? '').split(/[,;\n]+/)) {
+    const clean = segment.trim()
+    if (!clean) continue
+    if (clean.includes('+')) {
+      const parts = clean.split('+').map(one)
+      const words = new Set(parts.map((p) => p?.word))
+      if (parts.some((p) => !p) || parts.length > MAX_COMBO_PARTS || words.size !== parts.length) {
+        skipped.push(clean)
+      } else {
+        combos.push({
+          kind,
+          target: id,
+          parts: parts.map(({ word, parts: n }) => ({ word, parts: n })),
+          example: parts.map((p) => p.example).join(' + '),
+        })
+      }
+      continue
+    }
+    const entry = one(clean)
+    if (entry) entries.push(entry)
+    else skipped.push(clean)
+  }
+  return { entries, combos, skipped }
 }
 
 /** A readable form of a stored word for lists: "passedaway" is stored joined, shown as typed. */

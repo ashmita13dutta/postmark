@@ -26,6 +26,8 @@
  *  moods            { id ('my:' + 8 characters), label, colors: [{hex, name} x5], createdAt }
  *                   a feeling you made up. Words taught to it are lexicon rows with kind 'feeling'
  *                   and this id; a postcard keeps the id as its `feeling` and its own five colors.
+ *  combos           { id ('feeling:chai+rain'), kind: 'feeling'|'topic', target, parts: [{word, parts}],
+ *                   example, createdAt }   words you taught to count only when ALL are in a note
  *  lexicon          { word, kind: 'feeling'|'topic', id, parts, example, createdAt }   words you taught
  *                   `word` is the word or phrase written joined ("bekaar", "passedaway"); one row
  *                   per word, so teaching a word again replaces what it meant before.
@@ -34,7 +36,7 @@
  */
 import Dexie from 'dexie'
 
-export const SCHEMA_VERSION = 4
+export const SCHEMA_VERSION = 5
 
 export class PostmarkDB extends Dexie {
   constructor(name = 'postmark') {
@@ -66,6 +68,10 @@ export class PostmarkDB extends Dexie {
     // v4: the moods you make up. Only the new table is listed.
     this.version(4).stores({
       moods: 'id, createdAt',
+    })
+    // v5: combos of words that count together. Only the new table is listed.
+    this.version(5).stores({
+      combos: 'id, createdAt',
     })
   }
 }

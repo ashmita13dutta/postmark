@@ -227,6 +227,27 @@ Moods live in the `moods` table of the phone's database (words taught to them st
 the mood's `my:` id), not in these files, and the review page's "My words" lists them by name. See
 `src/engine/moods.js`.
 
+## Combos, and typing words straight in
+
+A **combo** is two to four words that count only when **all of them are in the note**, wherever they
+are. "rain" and "chai" together can mean a cosy day when neither does alone.
+
+- **From a note:** in **Teach it**, tap two or more separate words and tick **Only when all of these
+  are in the note**. (Words you tap next to each other are still one phrase, like "passed away".)
+- **Typed:** each mood under **You > My moods** has **Add words**. Separate words with commas;
+  `bhalo lagche` is one phrase; `rain + chai` is a combo. Filler words and phrases over five words are
+  left out, and it tells you which.
+- A combo counts for more than any one word you taught, but less than two of them added up, so it can
+  beat words taught separately without swamping a note full of strong feelings.
+- A word with a "no" in front of it ("no rain") does not count towards a combo, and a single word also
+  matches its usual forms ("rained").
+- A combo can point at a built-in feeling, a topic, or one of your moods. It is listed with your
+  words (under the mood on You, and in **My words** on the review page), each with a **×**. **Forget
+  all my words** forgets them too, and deleting a mood deletes its combos.
+
+Combos live in the `combos` table of the phone's database; the matching is in `src/engine/mood.js`
+and the typing in `src/engine/teach.js`.
+
 ## Why did it read this?
 
 Under **Felt / About** on Today (and on a demo postcard) one line says where the mood came from, for
@@ -433,3 +454,23 @@ a bow, pearls, a mushroom, a butterfly, boba, a paper plane, a rainbow and more.
 
 The built-in keyword method (`feelings.json` and the rest of this page) is unaffected. It still
 supplies the topic, color words, anything you taught, and the whole reading when the reader is off.
+
+### Learning from your own corrected notes
+
+Each time you fix a feeling on Today, the note is kept on your phone (**You**: "N notes you
+corrected"). **Copy them** gives you those notes as a list. They are private diary text, so keep the
+file as `tests/corpus/real.json`: any `real*.json` there is ignored by git and never committed.
+
+1. `npm run evaluate:model -- tests/corpus/real.json` scores the reader and the keyword method on them.
+2. `npm run check:personal -- tests/corpus/real.json` says whether training on them would help. It
+   reads each of your notes with a head that never saw it (5-fold), with and without your other notes
+   added (each counted once, and three times), and says plainly when a difference is no bigger than
+   luck. It needs at least 20 notes, and 40 or more is better. It takes a few minutes and writes
+   nothing.
+3. Only if it says they help: `npm run train:head -- --real tests/corpus/real.json --real-weight N`,
+   then `npm test`. The head file holds only numbers; it records how many notes were yours, never
+   the notes.
+
+Expect modest gains at best. In a trial with 103 labelled notes the reader had never seen, adding
+them to the training made no real difference, and counting each three times was slightly worse. That
+is why step 2 exists: nothing should ship because it feels like learning.

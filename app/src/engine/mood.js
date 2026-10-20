@@ -53,6 +53,9 @@ const NEGATORS = new Set([
 ])
 // The longest phrase we try to match, in words ("on top of the world" is 5)
 const MAX_PHRASE = 5
+// What a combo you taught counts for: a taught word is about 1.5 to 2.1, so a combo outweighs any
+// one of them but not two together
+const COMBO_WEIGHT = 2.25
 // "no plans", "without sugar": these only reach the very next word
 const DETERMINER_NEGATORS = new Set(['no', 'without', 'neither', 'nor'])
 // "can't stop smiling", "couldn't help laughing": a double negative, so it is positive
@@ -334,10 +337,12 @@ export function unstretch(word) {
  * parts }: `word` is the word or phrase written joined ("bekaar", "passedaway") and `parts` how
  * many words it is. Single words also match their usual forms (taught "cook" also matches
  * "cooked"), but never over a word you taught exactly. `moods` (buildMoods) are the moods you made
- * up: words taught to one of them are only used while that mood exists.
+ * up: words taught to one of them are only used while that mood exists. `combos` are sets of words
+ * you taught to count only when ALL of them are in the note (see findCombos); they ride along on the
+ * map as `.combos`.
  * @returns {Map<string, object>}
  */
-export function buildLexicon(entries = [], moods) {
+export function buildLexicon(entries = [], moods, combos = []) {
   const map = new Map()
   const tints = new Map() // words you tied to a color
   const valid = (e) =>
@@ -358,7 +363,36 @@ export function buildLexicon(entries = [], moods) {
     for (const form of inflections(e.word)) if (!target(e).has(form)) target(e).set(form, info(e))
   }
   Object.defineProperty(map, 'tints', { value: tints })
+  Object.defineProperty(map, 'combos', { value: usableCombos(combos, moods) })
   return map
+}
+
+/**
+ * The combos that can be used: at least two parts, and a target that still exists (a built-in
+ * feeling or topic, or one of your moods). A part is { word, parts } like a taught word: `word` is
+ * the word or phrase written joined and `parts` how many words it is.
+ */
+function usableCombos(combos, moods) {
+  const out = []
+  for (const c of combos) {
+    const target =
+      c?.kind === 'feeling'
+        ? feelings[c.target] || moods?.has(c.target)
+        : c?.kind === 'topic'
+          ? topics[c.target]
+          : false
+    if (!target || !Array.isArray(c.parts) || c.parts.length < 2) continue
+    if (!c.parts.every((p) => p?.word && p.parts >= 1)) continue
+    out.push({
+      kind: c.kind,
+      target: c.target,
+      parts: c.parts,
+      label: c.example ?? c.parts.map((p) => p.word).join(' + '),
+      // a single word also matches its usual forms (taught "cook" also matches "cooked")
+      forms: c.parts.map((p) => (p.parts === 1 ? new Set([p.word, ...inflections(p.word)]) : null)),
+    })
+  }
+  return out
 }
 
 /**
@@ -534,6 +568,40 @@ function findHits(text, lexicon) {
       hits.push({ kind: 'feeling', id: owner.hint, word, weight: 0.6, at: i })
     }
     i += span - 1
+  }
+
+  // a combo you taught: every one of its words is in the note, wherever they are
+  for (const combo of lexicon?.combos ?? []) {
+    const found = []
+    for (const [k, part] of combo.parts.entries()) {
+      let at = null
+      for (let i = 0; i < n && !at; i++) {
+        const match =
+          part.parts === 1
+            ? combo.forms[k].has(tokens[i].word)
+            : i + part.parts <= n &&
+              tokens.slice(i, i + part.parts).every((_, j) => sameSentence(i, i + j)) &&
+              tokens
+                .slice(i, i + part.parts)
+                .map((t) => t.word)
+                .join('') === part.word
+        // a word that is negated ("no rain") is not there, so it does not count towards a combo
+        if (match && !negatedAt(i, part.parts, combo.kind)) at = i
+      }
+      if (at === null) break
+      found.push(at)
+    }
+    if (found.length === combo.parts.length) {
+      // deliberate and specific: more than any one taught word, less than all of them added up
+      hits.push({
+        kind: combo.kind,
+        id: combo.target,
+        word: combo.label,
+        weight: COMBO_WEIGHT,
+        at: Math.max(...found),
+        taught: true,
+      })
+    }
   }
 
   // emoji count like words

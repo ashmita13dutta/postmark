@@ -1,3 +1,5 @@
+import { feelings } from '../data/feelings.json'
+import { topics } from '../data/topics.json'
 import { now } from '../lib/clock'
 import { MAX_DECORATIONS, clampPlacement } from '../lib/decor'
 import { clampDeliveryDay, dayKey, sealedUntilFor } from '../lib/dates'
@@ -337,7 +339,62 @@ export function makeQueries(db) {
 
   /** Forget one taught word. Pass its `key` from getLexicon (a plain word works for feelings and topics). */
   const forgetWord = (key) => db.lexicon.delete(key)
-  const forgetAllWords = () => db.lexicon.clear()
+  // "forget all my words" takes the combos too: they are words you taught
+  const forgetAllWords = () =>
+    db.transaction('rw', db.lexicon, db.combos, async () => {
+      await db.lexicon.clear()
+      await db.combos.clear()
+    })
+
+  // ---- combos: words that only count together ("rain" + "chai") ----
+
+  const MAX_COMBOS = 200
+
+  /** Every combo, newest first. Feed it to buildLexicon(rows, moods, combos). */
+  async function getCombos() {
+    return (await db.combos.toArray()).sort((a, b) => b.createdAt - a.createdAt)
+  }
+
+  /**
+   * Teach a combo (see comboFromSelection / parseTyped in engine/teach.js): two to four words or
+   * phrases that count only when ALL of them are in a note, towards a feeling or topic. Teaching the
+   * same set of words again replaces what it meant, so a correction always wins. Returns the row.
+   */
+  async function saveCombo({ kind, target, parts, example }) {
+    if (kind !== 'feeling' && kind !== 'topic')
+      throw new Error('A combo is for a feeling or a topic.')
+    if (!Array.isArray(parts) || parts.length < 2 || parts.length > 4)
+      throw new Error('A combo needs two to four words.')
+    const clean = parts.map((p) => ({ word: p?.word, parts: p?.parts ?? 1 }))
+    if (!clean.every((p) => /^\p{L}{2,}$/u.test(p.word) && p.parts >= 1 && p.parts <= 5))
+      throw new Error('Those words cannot be taught.')
+    if (new Set(clean.map((p) => p.word)).size !== clean.length)
+      throw new Error('A combo needs different words.')
+    if (kind === 'topic' ? !topics[target] : !feelings[target] && !isMyMood(target))
+      throw new Error('That is not a mood or topic.')
+    return db.transaction('rw', db.combos, db.moods, async () => {
+      if (isMyMood(target) && !(await db.moods.get(target)))
+        throw new Error('That mood no longer exists.')
+      const id = `${kind}:${clean
+        .map((p) => p.word)
+        .sort()
+        .join('+')}`
+      if (!(await db.combos.get(id)) && (await db.combos.count()) >= MAX_COMBOS)
+        throw new Error('Your combo list is full. Remove some first.')
+      const row = {
+        id,
+        kind,
+        target,
+        parts: clean,
+        example: example ?? clean.map((p) => p.word).join(' + '),
+        createdAt: now(),
+      }
+      await db.combos.put(row)
+      return row
+    })
+  }
+
+  const deleteCombo = (id) => db.combos.delete(id)
 
   // ---- moods: feelings you made up (see engine/moods.js) ----
 
@@ -369,15 +426,19 @@ export function makeQueries(db) {
    * stop knowing its name. Returns how many taught words went with it.
    */
   async function deleteMood(id) {
-    return db.transaction('rw', db.moods, db.lexicon, async () => {
+    return db.transaction('rw', db.moods, db.lexicon, db.combos, async () => {
       const words = await db.lexicon
         .where('id')
         .equals(id)
         .filter((w) => w.kind === 'feeling')
         .primaryKeys()
       await db.lexicon.bulkDelete(words)
+      const combos = (await db.combos.toArray()).filter(
+        (c) => c.kind === 'feeling' && c.target === id,
+      )
+      await db.combos.bulkDelete(combos.map((c) => c.id))
       await db.moods.delete(id)
-      return words.length
+      return words.length + combos.length
     })
   }
 
@@ -386,6 +447,9 @@ export function makeQueries(db) {
     teachWords,
     forgetWord,
     forgetAllWords,
+    getCombos,
+    saveCombo,
+    deleteCombo,
     getMoods,
     saveMood,
     deleteMood,

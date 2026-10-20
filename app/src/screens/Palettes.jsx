@@ -124,7 +124,11 @@ function NoteView() {
 
   // the words you taught live in this phone's database; the page re-reads when they change
   const lexiconRows = useLiveQuery(() => queries.getLexicon(), [], [])
-  const lexicon = useMemo(() => buildLexicon(lexiconRows), [lexiconRows])
+  const comboRows = useLiveQuery(() => queries.getCombos(), [], [])
+  const lexicon = useMemo(
+    () => buildLexicon(lexiconRows, undefined, comboRows),
+    [lexiconRows, comboRows],
+  )
   // only so that words taught to one of your moods show its name here; this page reads notes with the
   // built-in moods alone
   const moodRows = useLiveQuery(() => queries.getMoods(), [], [])
@@ -252,6 +256,7 @@ function NoteView() {
         mood={mood}
         lexicon={lexicon}
         onSave={(entries) => queries.teachWords(entries)}
+        onSaveCombo={(combo) => queries.saveCombo(combo)}
       />
 
       <div className="controls">
@@ -297,6 +302,8 @@ function NoteView() {
       <MyWords
         lexicon={lexiconRows}
         moods={moods}
+        combos={comboRows}
+        onForgetCombo={(id) => queries.deleteCombo(id)}
         onForget={(word) => queries.forgetWord(word)}
         onForgetAll={() => queries.forgetAllWords()}
       />
