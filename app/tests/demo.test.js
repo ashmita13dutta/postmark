@@ -273,3 +273,47 @@ describe('a demo postcard you write yourself', () => {
     expect((await demo.list()).map((r) => r.day)).toEqual(['2026-09-02'])
   })
 })
+
+// a few hundred rows: quick on its own, slow enough to need room when the whole suite runs at once
+describe('a seeded year for the Album', { timeout: 30_000 }, () => {
+  // 10 Oct 2026: January 1st up to the 9th is 282 days
+  it('fills the year so far with delivered demo stamps, leaving some days blank', async () => {
+    const { added } = await demo.addYear(NOW)
+    expect(added).toBeGreaterThan(282 * 0.7)
+    expect(added).toBeLessThan(282)
+    const all = await db.moments.toArray()
+    expect(all).toHaveLength(added)
+    expect(all.every((m) => m.demo === true && m.seeded === true && m.stampNo === 0)).toBe(true)
+    expect(all.every((m) => m.palette.length === 5 && m.sealedUntil <= NOW)).toBe(true)
+    expect(all.every((m) => m.day >= '2026-01-01' && m.day < '2026-10-10')).toBe(true)
+    // varied, so the quilt and the stats have something to say
+    expect(new Set(all.map((m) => m.feeling)).size).toBeGreaterThanOrEqual(5)
+    expect(new Set(all.map((m) => m.topic)).size).toBeGreaterThanOrEqual(5)
+    expect(new Set(all.map((m) => m.palette[0].hex)).size).toBeGreaterThan(30)
+    expect(all.some((m) => m.openedAt != null) && all.some((m) => m.openedAt == null)).toBe(true)
+  })
+
+  it('never touches a day you already have, nor today', async () => {
+    const mine = await q.saveMoment('2026-03-14', { note: 'my own real note' })
+    await q.saveMoment('2026-10-10', { note: 'today' })
+    await demo.addYear(NOW)
+    expect((await q.getMoment(mine.id)).note).toBe('my own real note')
+    expect((await q.getMoment(mine.id)).demo).toBeUndefined()
+    expect((await q.getMomentByDay('2026-10-10')).note).toBe('today')
+  })
+
+  it('is the same every time, so running it again adds nothing', async () => {
+    const first = await demo.addYear(NOW)
+    const again = await demo.addYear(NOW)
+    expect(again.added).toBe(0)
+    expect(await db.moments.count()).toBe(first.added)
+  })
+
+  it('survives "Reset the sample postcards", and goes with "Remove"', async () => {
+    const { added } = await demo.addYear(NOW)
+    await demo.addPostcards(NOW)
+    expect(await db.moments.filter((m) => m.seeded === true).count()).toBe(added)
+    await demo.removeDemo()
+    expect(await db.moments.count()).toBe(0)
+  })
+})

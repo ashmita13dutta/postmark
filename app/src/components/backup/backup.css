@@ -1,0 +1,74 @@
+/* You > Back up your stamps. Uses the frosted-glass variables when the visual layer defines them. */
+.backup {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border: var(--glass-border, 1px solid var(--ink-12));
+  border-radius: 14px;
+  background: var(--glass-bg, var(--card-warm));
+  -webkit-backdrop-filter: var(--glass-blur, none);
+  backdrop-filter: var(--glass-blur, none);
+  box-shadow: var(--glass-shadow, none);
+}
+.backup h2 {
+  margin: 0 0 4px;
+  font: 500 15px var(--font-ui);
+}
+.backup p {
+  margin: 0;
+  font: 400 13px/1.45 var(--font-ui);
+  color: var(--ink-60);
+}
+.backup .backup__status {
+  margin-top: 10px;
+  font: 500 11px var(--font-mono);
+  letter-spacing: 0.04em;
+}
+.backup .backup__status--due {
+  color: var(--postmark);
+}
+.backup__actions {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+.backup__actions button {
+  min-height: var(--tap);
+  padding: 0 16px;
+  border: 1px solid var(--ink-15);
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--ink);
+  font: 500 14px var(--font-ui);
+}
+.backup__actions button:disabled {
+  opacity: 0.4;
+}
+.backup__actions .backup__primary {
+  border: 0;
+  background: var(--postmark);
+  color: var(--card-warm);
+}
+.backup__actions .backup__danger {
+  border-color: var(--c-red-deep);
+  color: var(--c-red-deep);
+}
+.backup__found {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 12px;
+  border: 1px dashed var(--ink-15);
+  border-radius: 12px;
+}
+.backup__found b {
+  color: var(--ink);
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+.backup .backup__msg {
+  margin-top: 12px;
+  color: var(--ink);
+}
+.backup .backup__msg--err {
+  color: var(--c-red-deep);
+}

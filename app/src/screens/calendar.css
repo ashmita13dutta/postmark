@@ -206,6 +206,16 @@
   color: var(--ink);
 }
 .cal__link {
+  border: 0;
   background: var(--postmark);
   color: var(--card-warm);
+}
+.cal__link:disabled {
+  opacity: 0.5;
+}
+.cal__sharenote {
+  margin: 10px 0 0;
+  font: 400 12px/1.4 var(--font-ui);
+  color: var(--ink-60);
+  text-align: center;
 }

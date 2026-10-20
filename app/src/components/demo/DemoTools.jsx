@@ -7,6 +7,8 @@ import './demo.css'
 
 const NO_STATUS = { demo: 0, own: 0, early: 0 }
 const NO_LIST = []
+// a seeded year has hundreds; the newest few are enough to change one by hand
+const SHOWN = 12
 
 // "12 Sep 2026", from a 'YYYY-MM-DD' day
 const shortDay = (day) => {
@@ -43,6 +45,8 @@ export default function DemoTools() {
 
   const addText = ({ added }) =>
     `Added ${added} sample postcards: a month of unopened ones, a letter from a year ago, and an old opened one. The ones you made yourself were kept.`
+  const yearText = ({ added }) =>
+    `Added ${added} demo stamps for this year, with a few blank days. Look at the Album.`
   const todayText = (result) =>
     ({
       delivered: 'Today’s postcard has been delivered. Open it in the Mailbox.',
@@ -66,6 +70,9 @@ export default function DemoTools() {
         <button disabled={busy} onClick={() => run(() => demo.addPostcards(), addText)}>
           {status.demo > 0 ? 'Reset the sample postcards' : 'Add sample postcards'}
         </button>
+        <button disabled={busy} onClick={() => run(() => demo.addYear(), yearText)}>
+          Fill this year with demo stamps
+        </button>
         <button disabled={busy} onClick={() => run(() => demo.deliverToday(), todayText)}>
           Open today’s postcard now
         </button>
@@ -86,7 +93,7 @@ export default function DemoTools() {
         <details className="demo__postcards" open={status.own > 0}>
           <summary>See and change them</summary>
           <ul className="demo__list" aria-label="Demo postcards">
-            {postcards.map((p) => (
+            {postcards.slice(0, SHOWN).map((p) => (
               <li key={p.id}>
                 <time dateTime={p.day}>{shortDay(p.day)}</time>
                 <span>
@@ -122,6 +129,9 @@ export default function DemoTools() {
               </li>
             ))}
           </ul>
+          {postcards.length > SHOWN && (
+            <p className="demo__status">…and {postcards.length - SHOWN} older ones</p>
+          )}
         </details>
       )}
       {message && (

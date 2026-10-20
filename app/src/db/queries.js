@@ -22,6 +22,7 @@ export const SETTING_DEFAULTS = {
   onboarded: false,
   stripFrames: 3, // photo-booth strip: 3 or 4 frames
   smartReading: null, // the on-device note reader: null = not asked yet, 'on', or 'off'
+  lastBackupAt: null, // when you last saved a backup (epoch ms), so the app can remind you
 }
 
 export class SealedError extends Error {

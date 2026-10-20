@@ -48,6 +48,34 @@ export const SAMPLE_NOTES = [
 const DEMO_DAYS = [3, 8, 12, 17, 21, 26]
 const OLD_AGE_DAYS = 100
 
+/** Short notes of every kind, for filling a year (addYear): rain, exams, food, family, work... */
+const YEAR_NOTES = [
+  'Rain all afternoon, so I stayed in with chai and a book.',
+  'Exam tomorrow and I have not slept. Heart racing since morning.',
+  'Phuchka with the gang after class, laughed until my stomach hurt.',
+  'Called Maa. She sounded tired and I felt far away.',
+  'Got the internship offer! I screamed in the corridor.',
+  'Nothing happened today. Scrolled, slept, scrolled again.',
+  'Long walk by the river at sunset, the whole sky went pink.',
+  'Fought with my sister about something silly and then felt awful.',
+  'Biryani for lunch, nap in the afternoon. A good lazy Sunday.',
+  'Presentation went badly. I kept losing my words.',
+  'Rehearsal for the fest ran late but the music sounded so good.',
+  'Train was delayed an hour, read half a novel on the platform.',
+  'Dadu told the old stories again and I finally listened properly.',
+  'Too much work, too little time. Everything is a deadline.',
+  'First cool breeze of the season. I wore a sweater and felt cosy.',
+  'Missed the bus, got soaked, and somehow still smiled.',
+  'Group project fell apart and nobody replied for three days.',
+  'Pujo pandal hopping with friends, dhak drums everywhere.',
+  'Quiet evening, lit a candle and wrote letters I will not send.',
+  'Birthday surprise from the hostel girls, I cried a little.',
+  'Cooked khichdi for the first time and it actually worked.',
+  'Could not stop thinking about home. Everything felt grey.',
+  'Cycled around the lake at dawn. Peaceful, just birds and mist.',
+  'Won the quiz! My team carried me and I am so proud.',
+]
+
 const pad = (n) => String(n).padStart(2, '0')
 
 export function makeDemo(db) {
@@ -75,8 +103,11 @@ export function makeDemo(db) {
     })
   }
 
-  /** One delivered demo postcard with its wax seal. `fields` are the editable moment fields. */
-  async function addDemoMoment({
+  /**
+   * A delivered demo postcard and its wax seal, built but not saved. `fields` are the editable
+   * moment fields.
+   */
+  function buildDemoMoment({
     day,
     fields,
     nowMs,
@@ -84,26 +115,35 @@ export function makeDemo(db) {
     sealedAtMs,
     openedAtMs,
     custom,
+    seeded,
   }) {
     const base = newMoment({ day, stampNo: 0, nowMs, deliveryDay, fields })
     const moment = {
       ...base,
       demo: true,
       ...(custom ? { custom: true } : {}),
+      ...(seeded ? { seeded: true } : {}),
       // always already delivered, even if this month's delivery day has not come yet
       sealedUntil: Math.min(base.sealedUntil, nowMs - 60_000),
       sealedAt: sealedAtMs,
       openedAt: openedAtMs ?? null,
     }
-    await db.moments.add(moment)
     const rnd = seededRng(`demo-seal:${day}`)
     const emblem = WAX_EMBLEMS[Math.floor(rnd() * WAX_EMBLEMS.length)].id
-    await db.seals.put({
+    const seal = {
       momentId: moment.id,
       color: WAX_COLORS[Math.floor(rnd() * WAX_COLORS.length)].hex,
       emblem,
       ...(emblem === 'initial' ? { initial: 'A' } : {}),
-    })
+    }
+    return { moment, seal }
+  }
+
+  /** One delivered demo postcard with its wax seal, saved. */
+  async function addDemoMoment(args) {
+    const { moment, seal } = buildDemoMoment(args)
+    await db.moments.add(moment)
+    await db.seals.put(seal)
     return moment
   }
 
@@ -150,7 +190,10 @@ export function makeDemo(db) {
    */
   async function removeDemoInTransaction({ keepOwn = false } = {}) {
     const all = await db.moments.toArray()
-    const demos = all.filter((m) => m.demo === true && !(keepOwn && m.custom === true))
+    // the ones you made yourself, and a seeded year, are only removed by "Remove"
+    const demos = all.filter(
+      (m) => m.demo === true && !(keepOwn && (m.custom === true || m.seeded === true)),
+    )
     await deleteDemoMoments(demos)
     let restored = 0
     for (const m of all.filter((x) => !x.demo && x.earlySealedUntil != null)) {
@@ -216,6 +259,50 @@ export function makeDemo(db) {
         return { added: made.filter(Boolean).length }
       },
     )
+  }
+
+  /**
+   * Fill this year, January up to yesterday, with demo stamps, so the Album has something to show.
+   * About one day in seven is left blank, and days that already have a postcard are skipped. They
+   * are demo postcards (never in a backup) that "Reset the sample postcards" leaves alone.
+   */
+  async function addYear(nowMs = now()) {
+    return db.transaction('rw', [db.moments, db.seals, db.settings], async () => {
+      const deliveryDay = (await db.settings.get('deliveryDay'))?.value ?? 1
+      const today = dayKey(nowMs)
+      const taken = new Set((await db.moments.toArray()).map((m) => m.day))
+      const built = []
+      for (let day = `${today.slice(0, 4)}-01-01`; day < today; day = addDays(day, 1)) {
+        const rnd = seededRng(`year:${day}`)
+        const skip = taken.has(day) || rnd() < 0.15
+        const text = YEAR_NOTES[Math.floor(rnd() * YEAR_NOTES.length)]
+        const opened = rnd() < 0.6
+        if (skip) continue
+        const { y, m, d } = parseDay(day)
+        const read = readNote({ text, day, hour: 9 + Math.floor(rnd() * 12), month: m })
+        built.push(
+          buildDemoMoment({
+            day,
+            nowMs,
+            deliveryDay,
+            sealedAtMs: new Date(y, m - 1, d, 21).getTime(),
+            openedAtMs: opened ? nowMs - 86_400_000 : null,
+            seeded: true,
+            fields: {
+              note: text,
+              feeling: read.feeling,
+              topic: read.topic,
+              palette: read.built.colors,
+              paletteSource: 'moment',
+            },
+          }),
+        )
+      }
+      // saved together: a few hundred rows one at a time is slow
+      await db.moments.bulkAdd(built.map((b) => b.moment))
+      await db.seals.bulkPut(built.map((b) => b.seal))
+      return { added: built.length }
+    })
   }
 
   /** Deliver today's sealed postcard now. Returns 'delivered', 'already', 'unsealed' or 'none'. */
@@ -319,7 +406,17 @@ export function makeDemo(db) {
     }
   }
 
-  return { addPostcards, savePostcard, deliverToday, removeDemo, removeOne, freeDay, list, status }
+  return {
+    addPostcards,
+    addYear,
+    savePostcard,
+    deliverToday,
+    removeDemo,
+    removeOne,
+    freeDay,
+    list,
+    status,
+  }
 }
 
 export const demo = makeDemo(defaultDb)

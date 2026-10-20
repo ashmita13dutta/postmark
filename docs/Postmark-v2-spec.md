@@ -407,8 +407,18 @@ Record the license and source of every asset in `ASSETS.md`. Do not ship an asse
 
 ## 18. Status (update as you go)
 
-**Done (foundation):** Vite + React + TS project; PWA config and icons; design tokens from the mockup; self-hosted fonts; `clock.ts` with `?now=` and a dev panel; all date logic with 48 passing tests (also in New York and Auckland time zones); Dexie schema v1 and queries; demo seed; `Stamp`, `StampArt` (4 variants), `Postmark`; tab shell with light versions of Today, Calendar, Mailbox, Album, You.
+*Last updated 2026-10-15.* The app is plain JavaScript (the owner's choice), not TypeScript, so read `.ts` in this spec as `.js`.
 
-**Next:** `engine/mood.ts`, `engine/palette.ts`, `engine/colorExtract.ts`, `engine/songs.ts`, `engine/city.ts` with their JSON data; then the real Today screen; then the Stamp reveal animation (Framer Motion). Follow section 14.
+**Done:**
+- Foundation: Vite + React, PWA with an update prompt and install prompt, design tokens, fonts, `clock`, date logic with tests, Dexie schema, `Stamp`, `StampArt`, `Postmark`, tab shell.
+- Engines: mood (feeling + topic), palette, color names, and the on-device note reader. Teaching (words, **My moods**, combos), the "why did it read this" line, and tooling to retrain the reader on your own notes (`npm run check:personal`).
+- Core loop: Today (note, stamp, swatches, "Not quite?" fixes), Reveal.
+- Postcard: flip, stickers (many packs, handwritten words, doodles, tapes), papers and frames, wax seal, seal and send.
+- Time features: Calendar, sealing and delivery, Mailbox with the opening ritual, year-ago letter, delayed in transit.
+- **Album:** bookshelf of volumes (one per year), "year so far" card, color quilt (tap a square to lift the stamp), swipeable month sheets that open the Calendar, "this day across years", and share images (quilt poster, favourite stamp: colors and counts only, never a note).
+- **Backup:** You > "Back up your stamps" saves one `.zip` (`data.json` plus any photos) and brings it back, merging by day and asking before replacing. Demo postcards are never included.
+- Testing tools on You: demo postcards, a postcard of your own, a seeded year for the Album.
 
-**Known gaps to remember:** Bengali script needs a font that supports it (Caveat and Kalam cover Latin only here); `lib/platform.ts` and `lib/ics.ts` are not written yet; no sticker packs yet; the `/dev` route is reachable by URL in production (harmless, but hide it before launch if you like).
+**Not built yet** (in the spec's order): photos with filters and the film strip (Today has no photo yet), the songs engine and the city engine (so no top song or city counts in "year so far", no "Year in postmarks" medley and no "Postmarks story card"), `.ics` reminders (`lib/ics`), onboarding, the You profile (postmaster card, counts, sticker collection, preferences for delivery day, sound, reminders; app lock), rewards (golden stamp, complete-month badge, month sticker packs), the 31 December closing ceremony and decorated album covers, calling `navigator.storage.persist()`, Playwright tests, an offline audit, and friend testing on other phones.
+
+**Known gaps to remember:** Bengali script needs a font that supports it (Caveat and Kalam cover Latin only here); backups restore a postcard's stamp number as it was, so merging two phones' stamps can leave two with the same number; the `/dev` route is reachable by URL in production (harmless).

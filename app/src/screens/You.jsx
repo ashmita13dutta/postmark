@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import Screen from '../app/Screen'
+import BackupCard from '../components/backup/BackupCard'
 import DemoTools from '../components/demo/DemoTools'
 import MyMoods from '../components/moods/MyMoods'
 import ReaderSetting from '../components/reader/ReaderSetting'
@@ -8,6 +9,7 @@ import { versionLabel } from '../lib/version'
 export default function You() {
   return (
     <Screen caption="Postmaster" title="You">
+      <BackupCard />
       <ReaderSetting />
       <MyMoods />
       <DemoTools />

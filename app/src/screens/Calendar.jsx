@@ -1,7 +1,7 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useEffect, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import Screen from '../app/Screen'
 import Postmark from '../components/postmark/Postmark'
 import Stamp from '../components/stamp/Stamp'
@@ -29,8 +29,14 @@ const monthTitle = (key) => {
 }
 const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`
 
-/** Tap a stamp: it lifts into a preview. A sealed postcard shows its stamp but not its note. */
-function Preview({ moment, today, onClose }) {
+/**
+ * Tap a stamp: it lifts into a preview. A sealed postcard shows its stamp but not its note. The
+ * Album lifts its stamps the same way, and gives `onShare` (async, returns what to tell you) so the
+ * stamp can be shared as a picture.
+ */
+export function Preview({ moment, today, onClose, onShare }) {
+  const [sharing, setSharing] = useState(false)
+  const [shareNote, setShareNote] = useState(null)
   const reduced = useReducedMotion()
   const sealed = now() < moment.sealedUntil
   const fade = reduced ? { duration: 0 } : SPRING
@@ -93,10 +99,28 @@ function Preview({ moment, today, onClose }) {
               Open on Today
             </Link>
           )}
+          {onShare && (
+            <button
+              className="cal__link"
+              disabled={sharing}
+              onClick={async () => {
+                setSharing(true)
+                setShareNote(await onShare(moment))
+                setSharing(false)
+              }}
+            >
+              Share this stamp
+            </button>
+          )}
           <button className="cal__close" onClick={onClose}>
             Close
           </button>
         </div>
+        {shareNote && (
+          <p className="cal__sharenote" role="status">
+            {shareNote}
+          </p>
+        )}
       </motion.div>
     </motion.div>
   )
@@ -105,7 +129,11 @@ function Preview({ moment, today, onClose }) {
 export default function Calendar() {
   const today = todayKey()
   const thisMonth = monthKey(today)
-  const [month, setMonth] = useState(thisMonth)
+  // the Album's month sheets open this screen at their month: /calendar?month=2026-09
+  const wanted = useSearchParams()[0].get('month')
+  const [month, setMonth] = useState(
+    wanted && /^\d{4}-(0[1-9]|1[0-2])$/.test(wanted) && wanted <= thisMonth ? wanted : thisMonth,
+  )
   const [open, setOpen] = useState(null) // the moment whose preview is showing
 
   const moments = useLiveQuery(() => queries.momentsInMonth(month), [month], [])
