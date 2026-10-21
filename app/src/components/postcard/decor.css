@@ -1,3 +1,12 @@
+/*
+ * The face of the card that is turned away must not catch taps. Browsers keep hit-testing a hidden
+ * face's stamp and note in front of the stickers on the visible back, which made a placed sticker
+ * impossible to tap. (PostcardCard sets aria-hidden on whichever face is turned away.)
+ */
+.pcard__face[aria-hidden='true'] {
+  pointer-events: none;
+}
+
 .decor-layer {
   position: absolute;
   inset: 0;

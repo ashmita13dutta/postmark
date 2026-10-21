@@ -78,8 +78,10 @@ function Board({ moment, intent }) {
 
   const selected = decorations.find((d) => d.id === selectedId)
 
-  // selecting a sticker folds the tray down so the toolbar under the card is not hidden by it
+  // selecting a sticker folds the tray down so the toolbar under the card is not hidden by it, and
+  // letting go of it (a tap on the card) brings the stickers back
   const select = (id) => {
+    if (!id && selectedId) setTrayOpen(true)
     setSelectedId(id)
     if (id) setTrayOpen(false)
   }
@@ -169,7 +171,7 @@ function Board({ moment, intent }) {
         )
       }
     >
-      <div onClick={() => setSelectedId(null)}>
+      <div onClick={() => select(null)}>
         <PostcardCard
           flipped={showBack}
           look={moment}
