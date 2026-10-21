@@ -10,6 +10,7 @@ import { applyFields, newMoment } from './moments'
 import { db as defaultDb } from './schema'
 
 export const SETTING_DEFAULTS = {
+  name: '', // what the postmaster card calls you
   homeCity: null,
   paletteDefault: 'moment', // 'moment' | 'photo'
   songModeDefault: 'suggested', // 'own' | 'suggested'
@@ -65,6 +66,14 @@ export function makeQueries(db) {
       throw new Error('stripFrames is 3 or 4')
     if (key === 'smartReading' && value !== null && value !== 'on' && value !== 'off')
       throw new Error("smartReading is null, 'on' or 'off'")
+    if (key === 'name' && (typeof value !== 'string' || value.length > 30))
+      throw new Error('A name can be up to 30 letters')
+    if (key === 'homeCity' && value !== null && (typeof value !== 'string' || value.length > 40))
+      throw new Error('A city name can be up to 40 letters')
+    if (key === 'reminderTime' && value !== null && !/^([01]\d|2[0-3]):[0-5]\d$/.test(value))
+      throw new Error('reminderTime is HH:MM or null')
+    if ((key === 'revealAnimation' || key === 'onboarded') && typeof value !== 'boolean')
+      throw new Error(`${key} is true or false`)
     await db.settings.put({ key, value })
   }
 

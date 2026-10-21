@@ -1,0 +1,126 @@
+/* The welcome: full screen, above the tab bar. */
+.welcome {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: max(20px, var(--safe-top, 0px)) 24px max(20px, var(--safe-bottom, 0px));
+  background: var(--paper);
+  overflow-y: auto;
+}
+.welcome__skip {
+  align-self: flex-end;
+  min-height: var(--tap);
+  padding: 0 8px;
+  border: 0;
+  background: none;
+  color: var(--ink-60);
+  font: 500 14px var(--font-ui);
+}
+.welcome__frame {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+}
+.welcome__art {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 250px;
+  margin-bottom: 14px;
+}
+.welcome__art--stamp {
+  padding-bottom: 10px;
+}
+.welcome__mark {
+  position: absolute;
+  right: -34px;
+  bottom: 14px;
+  width: 120px;
+  transform-origin: center;
+}
+.welcome h1 {
+  margin: 0;
+  font: 400 32px/1.1 var(--font-display);
+}
+.welcome__text {
+  max-width: 320px;
+  margin: 4px 0 0;
+  font: 400 15px/1.5 var(--font-ui);
+  color: var(--ink-60);
+}
+.welcome__after {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 22px;
+}
+.welcome__form {
+  display: grid;
+  gap: 14px;
+  width: 100%;
+  max-width: 340px;
+  margin-bottom: 14px;
+  text-align: left;
+}
+.welcome__form label {
+  display: grid;
+  gap: 4px;
+}
+.welcome__form input {
+  min-height: 48px;
+  padding: 0 14px;
+  border: 1px solid var(--ink-12);
+  border-radius: 14px;
+  background: var(--card-warm);
+  color: var(--ink);
+  font: 400 22px var(--font-hand);
+}
+.welcome__form input:focus {
+  outline: 2px solid var(--postmark);
+  outline-offset: 1px;
+}
+.welcome__form p {
+  margin: 0;
+  font: 400 12px/1.45 var(--font-ui);
+  color: var(--ink-60);
+}
+.welcome__foot {
+  display: grid;
+  gap: 16px;
+  justify-items: center;
+  padding-top: 12px;
+}
+.welcome__dots {
+  display: flex;
+  gap: 8px;
+}
+.welcome__dots i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ink-15);
+  transition: background 0.2s ease;
+}
+.welcome__dots i.on {
+  background: var(--postmark);
+}
+.welcome__next {
+  width: 100%;
+  min-height: 52px;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: var(--postmark);
+  color: var(--card-warm);
+  font: 500 16px var(--font-ui);
+}
+.welcome button:disabled {
+  opacity: 0.5;
+}

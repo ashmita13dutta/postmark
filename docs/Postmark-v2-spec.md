@@ -407,7 +407,7 @@ Record the license and source of every asset in `ASSETS.md`. Do not ship an asse
 
 ## 18. Status (update as you go)
 
-*Last updated 2026-10-15.* The app is plain JavaScript (the owner's choice), not TypeScript, so read `.ts` in this spec as `.js`.
+*Last updated 2026-10-21.* The app is plain JavaScript (the owner's choice), not TypeScript, so read `.ts` in this spec as `.js`.
 
 **Done:**
 - Foundation: Vite + React, PWA with an update prompt and install prompt, design tokens, fonts, `clock`, date logic with tests, Dexie schema, `Stamp`, `StampArt`, `Postmark`, tab shell.
@@ -417,8 +417,9 @@ Record the license and source of every asset in `ASSETS.md`. Do not ship an asse
 - Time features: Calendar, sealing and delivery, Mailbox with the opening ritual, year-ago letter, delayed in transit.
 - **Album:** bookshelf of volumes (one per year), "year so far" card, color quilt (tap a square to lift the stamp), swipeable month sheets that open the Calendar, "this day across years", and share images (quilt poster, favourite stamp: colors and counts only, never a note).
 - **Backup:** You > "Back up your stamps" saves one `.zip` (`data.json` plus any photos) and brings it back, merging by day and asking before replacing. Demo postcards are never included.
+- **You profile and welcome:** a postal-ID postmaster card (name, home city, member since, stamps and streaks), preferences that really do something (delivery day, reveal animation), reminders as `.ics` calendar files (monthly delivery day, daily at a time), a storage card that asks the browser to keep your data and says honestly when it has not, and a 3-frame welcome shown only on a brand-new install (replayable from You).
 - Testing tools on You: demo postcards, a postcard of your own, a seeded year for the Album.
 
-**Not built yet** (in the spec's order): photos with filters and the film strip (Today has no photo yet), the songs engine and the city engine (so no top song or city counts in "year so far", no "Year in postmarks" medley and no "Postmarks story card"), `.ics` reminders (`lib/ics`), onboarding, the You profile (postmaster card, counts, sticker collection, preferences for delivery day, sound, reminders; app lock), rewards (golden stamp, complete-month badge, month sticker packs), the 31 December closing ceremony and decorated album covers, calling `navigator.storage.persist()`, Playwright tests, an offline audit, and friend testing on other phones.
+**Not built yet** (in the spec's order): photos with filters and the film strip (Today has no photo yet), the songs engine and the city engine (so no top song or city counts in "year so far", no "Year in postmarks" medley and no "Postmarks story card"), the rest of the You screen (sticker collection, connections, sound and haptics switches once there is sound or haptics, app lock: the spec's open question about a plain screen lock versus real encryption is still unanswered), rewards (golden stamp, complete-month badge, month sticker packs), the 31 December closing ceremony and decorated album covers, calling `navigator.storage.persist()`, Playwright tests, an offline audit, and friend testing on other phones.
 
 **Known gaps to remember:** Bengali script needs a font that supports it (Caveat and Kalam cover Latin only here); backups restore a postcard's stamp number as it was, so merging two phones' stamps can leave two with the same number; the `/dev` route is reachable by URL in production (harmless).

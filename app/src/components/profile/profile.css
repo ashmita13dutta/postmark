@@ -1,0 +1,208 @@
+/* You: the postmaster card, preferences, reminders and storage. */
+
+.postmaster {
+  margin-top: 16px;
+  padding: 0 0 12px;
+  border: 1.5px solid var(--ink-30, rgba(42, 38, 32, 0.3));
+  border-radius: 16px;
+  background:
+    repeating-linear-gradient(135deg, transparent 0 9px, rgba(83, 74, 183, 0.035) 9px 10px),
+    var(--card-warm);
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(42, 38, 32, 0.1);
+}
+.postmaster__head {
+  display: flex;
+  justify-content: space-between;
+  padding: 9px 16px;
+  background: var(--postmark);
+  color: var(--card-warm);
+  font: 500 11px var(--font-mono);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.postmaster__body {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 16px 16px 6px;
+}
+.postmaster__body .stamp {
+  flex: none;
+  margin-top: 4px;
+}
+.postmaster__fields {
+  display: grid;
+  flex: 1;
+  gap: 8px;
+  min-width: 0;
+}
+.postmaster__fields label {
+  display: grid;
+  gap: 2px;
+}
+.postmaster__fields .lbl {
+  display: block;
+}
+.postmaster__fields input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 36px;
+  padding: 0 2px;
+  border: 0;
+  border-bottom: 1px solid var(--ink-15);
+  border-radius: 0;
+  background: transparent;
+  color: var(--ink);
+  font: 400 21px var(--font-hand);
+}
+.postmaster__fields input::placeholder {
+  color: var(--ink-45);
+}
+.postmaster__fields input:focus {
+  outline: none;
+  border-bottom-color: var(--postmark);
+}
+.postmaster__since {
+  display: grid;
+  gap: 2px;
+  margin: 2px 0 0;
+  font: 400 16px var(--font-display);
+}
+.postmaster__counts {
+  display: flex;
+  margin: 8px 16px 0;
+  padding: 12px 0 0;
+  border-top: 1px dashed var(--ink-15);
+  list-style: none;
+}
+.postmaster__counts li {
+  display: grid;
+  flex: 1;
+  justify-items: center;
+  gap: 2px;
+}
+.postmaster__counts b {
+  font: 400 26px var(--font-display);
+}
+.postmaster__counts span {
+  font: 500 10px var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-50);
+}
+
+/* settings cards */
+.prefs {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border: var(--glass-border, 1px solid var(--ink-12));
+  border-radius: 14px;
+  background: var(--glass-bg, var(--card-warm));
+  -webkit-backdrop-filter: var(--glass-blur, none);
+  backdrop-filter: var(--glass-blur, none);
+  box-shadow: var(--glass-shadow, none);
+}
+.prefs h2 {
+  margin: 0 0 4px;
+  font: 500 15px var(--font-ui);
+}
+.prefs .prefs__intro {
+  margin: 0;
+  font: 400 13px/1.45 var(--font-ui);
+  color: var(--ink-60);
+}
+.prefs__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: var(--tap);
+  padding: 10px 0;
+  border-top: 1px solid var(--ink-08);
+  font: 500 14px var(--font-ui);
+}
+.prefs h2 + .prefs__row {
+  margin-top: 6px;
+}
+.prefs__row > span {
+  min-width: 0;
+}
+.prefs__row small {
+  display: block;
+  margin-top: 2px;
+  font: 400 12px/1.4 var(--font-ui);
+  color: var(--ink-60);
+}
+.prefs__row select,
+.prefs__row input[type='time'] {
+  flex: none;
+  min-height: 40px;
+  padding: 0 10px;
+  border: 1px solid var(--ink-15);
+  border-radius: 10px;
+  background: var(--card);
+  color: var(--ink);
+  font: 400 15px var(--font-ui);
+}
+.prefs__row button,
+.prefs__action {
+  flex: none;
+  min-height: 40px;
+  padding: 0 16px;
+  border: 1px solid var(--postmark);
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--postmark);
+  font: 500 14px var(--font-ui);
+}
+.prefs__action {
+  margin-top: 10px;
+}
+.prefs__row--stack {
+  flex-wrap: wrap;
+}
+.prefs__row--stack > span {
+  flex: 1 1 140px;
+}
+.prefs .prefs__note,
+.prefs .prefs__error {
+  margin: 10px 0 0;
+  font: 400 12px/1.45 var(--font-ui);
+  color: var(--ink);
+}
+.prefs .prefs__error {
+  color: var(--c-red-deep);
+}
+
+/* an on/off switch */
+.prefs input[role='switch'] {
+  appearance: none;
+  -webkit-appearance: none;
+  position: relative;
+  flex: none;
+  width: 51px;
+  height: 31px;
+  margin: 0;
+  border-radius: 31px;
+  background: var(--ink-15);
+  transition: background 0.2s ease;
+}
+.prefs input[role='switch']::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease;
+}
+.prefs input[role='switch']:checked {
+  background: var(--postmark);
+}
+.prefs input[role='switch']:checked::after {
+  transform: translateX(20px);
+}

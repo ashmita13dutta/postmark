@@ -250,3 +250,40 @@ describe('mood fields', () => {
     expect([m.feeling, m.topic]).toEqual([null, null])
   })
 })
+
+describe('profile settings', () => {
+  it('starts with no name and no city', async () => {
+    expect(await q.getSetting('name')).toBe('')
+    expect(await q.getSetting('homeCity')).toBeNull()
+    expect(await q.getSetting('onboarded')).toBe(false)
+  })
+
+  it('keeps a name, a city and a reminder time', async () => {
+    await q.setSetting('name', 'Ashmita')
+    await q.setSetting('homeCity', 'Kolkata')
+    await q.setSetting('reminderTime', '21:30')
+    expect(await q.getSetting('name')).toBe('Ashmita')
+    expect(await q.getSetting('homeCity')).toBe('Kolkata')
+    expect(await q.getSetting('reminderTime')).toBe('21:30')
+    await q.setSetting('homeCity', null)
+    expect(await q.getSetting('homeCity')).toBeNull()
+  })
+
+  it('refuses values that make no sense', async () => {
+    await expect(q.setSetting('name', 'x'.repeat(31))).rejects.toThrow(/30 letters/)
+    await expect(q.setSetting('name', 42)).rejects.toThrow(/30 letters/)
+    await expect(q.setSetting('homeCity', 'y'.repeat(41))).rejects.toThrow(/40 letters/)
+    await expect(q.setSetting('reminderTime', '25:00')).rejects.toThrow(/HH:MM/)
+    await expect(q.setSetting('reminderTime', 'late')).rejects.toThrow(/HH:MM/)
+    await expect(q.setSetting('revealAnimation', 'yes')).rejects.toThrow(/true or false/)
+    await expect(q.setSetting('onboarded', 1)).rejects.toThrow(/true or false/)
+    expect(await q.getSetting('name')).toBe('')
+  })
+
+  it('turns the reveal animation off and on', async () => {
+    await q.setSetting('revealAnimation', false)
+    expect(await q.getSetting('revealAnimation')).toBe(false)
+    await q.setSetting('revealAnimation', true)
+    expect(await q.getSetting('revealAnimation')).toBe(true)
+  })
+})
