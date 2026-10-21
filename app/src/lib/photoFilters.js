@@ -88,6 +88,14 @@ const clamp255 = (v) => (v < 0 ? 0 : v > 255 ? 255 : v)
 const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v)
 const luma = (r, g, b) => 0.2126 * r + 0.7152 * g + 0.0722 * b
 
+const TONE_FROM = -0.25
+const TONE_SCALE = 1023
+const TONE_STEPS = 1536 // 1.5 * 1023, covers -0.25 to 1.25
+const toneIndex = (v) => {
+  const j = ((v - TONE_FROM) * TONE_SCALE + 0.5) | 0
+  return j < 0 ? 0 : j >= TONE_STEPS ? TONE_STEPS - 1 : j
+}
+
 /** A smooth S-curve: `k` above 0 adds contrast around the middle, below 0 takes it away. */
 function curve(v, k) {
   const s = v * v * (3 - 2 * v)
@@ -124,8 +132,27 @@ export function applyFilter(data, width, height, { filter, intensity = 1, seed =
   const cx = (width - 1) / 2
   const cy = (height - 1) / 2
   const maxD2 = cx * cx + cy * cy || 1
+  // how much the corners darken, looked up by distance from the middle (0 to 1 in 256 steps)
+  const shadeAt = new Float32Array(256)
+  for (let i = 0; i < 256; i++) {
+    const d2 = i / 255
+    shadeAt[i] = 1 - vignette * d2 * d2 ** 0.35
+  }
+
+  // the tone curve of each channel as a table: colors can stray a little outside 0 to 1 after the
+  // color step, so the table reaches a quarter past each end
+  const toneTable = (c) => {
+    const lut = new Float32Array(TONE_STEPS)
+    for (let i = 0; i < TONE_STEPS; i++) {
+      const v = TONE_FROM + i / TONE_SCALE
+      lut[i] = black[c] + curve(clamp01(v * gain[c] + brightness), contrast) * (white[c] - black[c])
+    }
+    return lut
+  }
+  const [toneR, toneG, toneB] = [0, 1, 2].map(toneTable)
 
   for (let y = 0; y < height; y++) {
+    const row = Math.floor(y / cell) * gw
     for (let x = 0; x < width; x++) {
       const i = (y * width + x) * 4
       let r = data[i] / 255
@@ -148,15 +175,15 @@ export function applyFilter(data, width, height, { filter, intensity = 1, seed =
         b = y0 + (b - y0) * sat
       }
 
-      // cast, contrast, then where black and white end up
-      r = black[0] + curve(clamp01(r * gain[0] + brightness), contrast) * (white[0] - black[0])
-      g = black[1] + curve(clamp01(g * gain[1] + brightness), contrast) * (white[1] - black[1])
-      b = black[2] + curve(clamp01(b * gain[2] + brightness), contrast) * (white[2] - black[2])
+      // cast, contrast, then where black and white end up (looked up, not worked out per pixel)
+      r = toneR[toneIndex(r)]
+      g = toneG[toneIndex(g)]
+      b = toneB[toneIndex(b)]
 
       if (grain > 0) {
         // the same amount in every channel (texture, not color), strongest in the midtones
         y0 = luma(r, g, b)
-        const n = noise[Math.floor(y / cell) * gw + Math.floor(x / cell)]
+        const n = noise[row + Math.floor(x / cell)]
         const weight = 0.4 + 0.6 * (1 - Math.abs(2 * y0 - 1))
         const grainAmount = n * grain * weight
         r += grainAmount
@@ -165,7 +192,7 @@ export function applyFilter(data, width, height, { filter, intensity = 1, seed =
       }
       if (vignette > 0) {
         const d2 = ((x - cx) * (x - cx) + (y - cy) * (y - cy)) / maxD2
-        const shade = 1 - vignette * d2 * d2 ** 0.35
+        const shade = shadeAt[(d2 * 255 + 0.5) | 0]
         r *= shade
         g *= shade
         b *= shade

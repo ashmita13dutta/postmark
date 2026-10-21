@@ -97,12 +97,26 @@ async function decodeHeic(file) {
   return bitmapOf(jpeg)
 }
 
+/** TIFF: decoded to pixels by a small reader fetched on demand. */
+async function decodeTiffFile(file) {
+  const { decodeTiff } = await import('./photoTiff')
+  const { width, height, data } = decodeTiff(await file.arrayBuffer())
+  return createImageBitmap(new ImageData(data, width, height))
+}
+
 async function decode(file) {
   try {
     return await bitmapOf(file)
   } catch (first) {
     const head = new Uint8Array(await file.slice(0, 32).arrayBuffer())
     const format = sniffFormat(head)
+    if (format === 'tiff') {
+      try {
+        return await decodeTiffFile(file)
+      } catch {
+        throw Object.assign(new Error('tiff'), { format })
+      }
+    }
     if (format !== 'heic') throw Object.assign(first, { format })
     try {
       return await decodeHeic(file)
@@ -129,10 +143,26 @@ const toBlob = (canvas, quality = JPEG_QUALITY) =>
     ),
   )
 
+/**
+ * A phone photo can be 48 megapixels (nearly 200 MB as pixels), and nothing here keeps more than
+ * MAX_EDGE, so shrink it as soon as it is open and let the big one go.
+ */
+async function limited(bitmap) {
+  const size = fitWithin(bitmap.width, bitmap.height, MAX_EDGE)
+  if (size.width === bitmap.width && size.height === bitmap.height) return bitmap
+  const small = await createImageBitmap(bitmap, {
+    resizeWidth: size.width,
+    resizeHeight: size.height,
+    resizeQuality: 'high',
+  })
+  bitmap.close()
+  return small
+}
+
 /** Decode picked files into bitmaps. Throws a plain message if one is not a picture. */
 export async function openPhotos(files) {
   try {
-    return await Promise.all([...files].map(decode))
+    return await Promise.all([...files].map(async (file) => limited(await decode(file))))
   } catch (err) {
     throw new Error(unreadableMessage(err.format ?? null, err))
   }
@@ -206,14 +236,24 @@ export function renderPhoto(
 }
 
 /**
- * A small square sample of the first photo with a filter on it, as a data URL, for the filter row
- * (so each filter shows what it does to this photo before it is chosen).
+ * The first photo cut to a small square, once, so the filter row does not have to read the whole
+ * picture again for every filter and every move of the strength slider.
  */
-export function filterThumbnail(bitmap, { filter, intensity, seed }, edge = 96) {
+export function thumbBase(bitmap, edge = 96) {
   const canvas = canvasOf(edge, edge)
+  drawCover(canvas.getContext('2d'), bitmap, 0, 0, edge, edge)
+  return canvas
+}
+
+/**
+ * A small square sample of the photo with a filter on it, as a data URL, for the filter row (so each
+ * filter shows what it does to this photo before it is chosen). `base` comes from thumbBase.
+ */
+export function filterThumbnail(base, { filter, intensity, seed }) {
+  const canvas = canvasOf(base.width, base.height)
   const ctx = canvas.getContext('2d', { willReadFrequently: true })
-  drawCover(ctx, bitmap, 0, 0, edge, edge)
-  filterRegion(ctx, 0, 0, edge, edge, { filter, intensity, seed })
+  ctx.drawImage(base, 0, 0)
+  filterRegion(ctx, 0, 0, canvas.width, canvas.height, { filter, intensity, seed })
   return canvas.toDataURL('image/jpeg', 0.8)
 }
 

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { paletteFromPixels } from '../../engine/colorExtract'
 import { queries } from '../../db/queries'
 import {
@@ -7,6 +7,7 @@ import {
   openPhotos,
   pixelsForPalette,
   renderPhoto,
+  thumbBase,
 } from '../../lib/photo'
 import { FILTERS } from '../../lib/photoFilters'
 
@@ -28,6 +29,8 @@ export function usePhoto({ frames, seed }) {
   const [intensity, setIntensity] = useState(0.7)
   const [preview, setPreview] = useState(null)
   const [thumbs, setThumbs] = useState({}) // a small sample of the photo for each filter
+  // the first photo cut small once, so the filter row stays quick even for a huge photo
+  const base = useMemo(() => (bitmaps.length ? thumbBase(bitmaps[0]) : null), [bitmaps])
   const [palette, setPalette] = useState(null)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState(null)
@@ -43,7 +46,7 @@ export function usePhoto({ frames, seed }) {
     timer.current = setTimeout(() => {
       setThumbs(
         Object.fromEntries(
-          FILTERS.map((f) => [f.id, filterThumbnail(bitmaps[0], { filter: f.id, intensity, seed })]),
+          FILTERS.map((f) => [f.id, filterThumbnail(base, { filter: f.id, intensity, seed })]),
         ),
       )
       const canvas = renderPhoto(bitmaps, { kind: mode, filter, intensity, seed }, PREVIEW_EDGE)
@@ -58,7 +61,7 @@ export function usePhoto({ frames, seed }) {
       clearTimeout(timer.current)
       if (url) URL.revokeObjectURL(url)
     }
-  }, [bitmaps, mode, filter, intensity, seed])
+  }, [bitmaps, base, mode, filter, intensity, seed])
 
   const setMode = useCallback((next) => {
     setModeState(next)
