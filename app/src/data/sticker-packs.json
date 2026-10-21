@@ -91,28 +91,27 @@
       "id": "cherry",
       "label": "Cherry red",
       "stickers": [
-        { "file": "cherries", "label": "Cherries", "keywords": ["cherries", "fruit", "pair", "cherry", "red", "burgundy"], "w": 128, "h": 153 },
+        { "file": "cherries", "label": "Cherries", "keywords": ["cherries", "fruit", "pair", "cherry", "red", "burgundy"], "w": 128, "h": 151 },
         { "file": "cherry-bow", "label": "Cherry bow", "keywords": ["cherry", "bow", "cherries", "ribbon", "red", "burgundy"], "w": 162, "h": 177 },
         { "file": "cherry-kiss-can", "label": "Cherry kiss can", "keywords": ["cherry", "kiss", "can", "soda", "drink", "cola", "red", "burgundy"], "w": 119, "h": 192 },
-        { "file": "dice", "label": "Dice", "keywords": ["dice", "game", "luck", "cherry", "red", "burgundy"], "w": 117, "h": 122 },
+        { "file": "dice", "label": "Dice", "keywords": ["dice", "game", "luck", "cherry", "red", "burgundy"], "w": 117, "h": 119 },
         { "file": "disco-ball", "label": "Disco ball", "keywords": ["disco", "ball", "party", "mirror", "dance", "cherry", "red", "burgundy"], "w": 175, "h": 175 },
-        { "file": "eight-ball", "label": "Eight ball", "keywords": ["eight", "ball", "pool", "billiards", "black", "8", "cherry", "red", "burgundy"], "w": 112, "h": 115 },
+        { "file": "eight-ball", "label": "Eight ball", "keywords": ["eight", "ball", "pool", "billiards", "black", "8", "cherry", "red", "burgundy"], "w": 108, "h": 115 },
         { "file": "four-of-hearts", "label": "Four of hearts", "keywords": ["four", "of", "hearts", "playing", "card", "cards", "game", "cherry", "red", "burgundy"], "w": 101, "h": 146 },
         { "file": "glitter-star", "label": "Glitter star", "keywords": ["glitter", "star", "sparkle", "cherry", "red", "burgundy"], "w": 115, "h": 121 },
         { "file": "glossy-lips", "label": "Glossy lips", "keywords": ["glossy", "lips", "lipgloss", "smile", "cherry", "red", "burgundy"], "w": 187, "h": 157 },
-        { "file": "kiss-lips", "label": "Kiss lips", "keywords": ["kiss", "lips", "lipstick", "cherry", "red", "burgundy"], "w": 156, "h": 149 },
+        { "file": "kiss-lips", "label": "Kiss lips", "keywords": ["kiss", "lips", "lipstick", "cherry", "red", "burgundy"], "w": 154, "h": 149 },
         { "file": "love-patch", "label": "Love patch", "keywords": ["love", "patch", "heart", "embroidered", "quote", "cherry", "red", "burgundy"], "w": 177, "h": 170 },
-        { "file": "love-song-cd", "label": "Love song cd", "keywords": ["love", "song", "cd", "disc", "music", "songs", "mixtape", "cherry", "red", "burgundy"], "w": 171, "h": 169 },
-        { "file": "music-note", "label": "Music note", "keywords": ["music", "note", "song", "melody", "cherry", "red", "burgundy"], "w": 75, "h": 86 },
+        { "file": "love-song-cd", "label": "Love song cd", "keywords": ["love", "song", "cd", "disc", "music", "songs", "mixtape", "cherry", "red", "burgundy"], "w": 170, "h": 169 },
         { "file": "red-books", "label": "Red books", "keywords": ["red", "books", "stack", "read", "library", "cherry", "burgundy"], "w": 122, "h": 143 },
         { "file": "red-bow", "label": "Red bow", "keywords": ["red", "bow", "ribbon", "satin", "cherry", "burgundy"], "w": 122, "h": 153 },
         { "file": "red-camera", "label": "Red camera", "keywords": ["red", "camera", "photo", "retro", "film", "cherry", "burgundy"], "w": 141, "h": 143 },
         { "file": "red-rose-bouquet", "label": "Red rose bouquet", "keywords": ["red", "rose", "bouquet", "roses", "flowers", "love", "cherry", "burgundy"], "w": 189, "h": 256 },
         { "file": "red-tumbler", "label": "Red tumbler", "keywords": ["red", "tumbler", "cup", "drink", "thermos", "cherry", "burgundy"], "w": 120, "h": 213 },
-        { "file": "seven-ball", "label": "Seven ball", "keywords": ["seven", "ball", "pool", "billiards", "snooker", "lucky", "7", "cherry", "red", "burgundy"], "w": 122, "h": 118 },
+        { "file": "seven-ball", "label": "Seven ball", "keywords": ["seven", "ball", "pool", "billiards", "snooker", "lucky", "7", "cherry", "red", "burgundy"], "w": 121, "h": 118 },
         { "file": "stardust-heart", "label": "Stardust heart", "keywords": ["stardust", "heart", "quote", "wishes", "note", "cherry", "red", "burgundy"], "w": 200, "h": 200 },
         { "file": "target-heart", "label": "Target heart", "keywords": ["target", "heart", "love", "retro", "stripes", "cherry", "red", "burgundy"], "w": 142, "h": 137 },
-        { "file": "vinyl-record", "label": "Vinyl record", "keywords": ["vinyl", "record", "music", "lp", "cherry", "red", "burgundy"], "w": 183, "h": 184 }
+        { "file": "vinyl-record", "label": "Vinyl record", "keywords": ["vinyl", "record", "music", "lp", "cherry", "red", "burgundy"], "w": 183, "h": 182 }
       ]
     },
     {
@@ -189,7 +188,6 @@
         { "file": "blue-flower", "label": "Blue flower", "keywords": ["blue", "flower", "bloom", "watercolor", "navy"], "w": 256, "h": 253 },
         { "file": "blue-gingham-bow", "label": "Blue gingham bow", "keywords": ["blue", "gingham", "bow", "ribbon", "check", "navy"], "w": 185, "h": 192 },
         { "file": "blue-heart-large", "label": "Blue heart large", "keywords": ["blue", "heart", "large", "love", "watercolor", "navy"], "w": 139, "h": 133 },
-        { "file": "blue-heart-small", "label": "Blue heart small", "keywords": ["blue", "heart", "small", "love", "watercolor", "navy"], "w": 62, "h": 60 },
         { "file": "blue-heart", "label": "Blue heart", "keywords": ["blue", "heart", "love", "watercolor", "navy"], "w": 93, "h": 93 },
         { "file": "blue-star-patch-2", "label": "Blue star patch 2", "keywords": ["blue", "star", "patch", "2", "embroidered", "navy"], "w": 186, "h": 183 },
         { "file": "blue-star-patch", "label": "Blue star patch", "keywords": ["blue", "star", "patch", "embroidered", "navy"], "w": 183, "h": 184 },
@@ -205,7 +203,6 @@
       "stickers": [
         { "file": "big-yellow-bow", "label": "Big yellow bow", "keywords": ["big", "yellow", "bow", "ribbon", "satin", "sunshine", "sunny"], "w": 222, "h": 256 },
         { "file": "gold-star-patch", "label": "Gold star patch", "keywords": ["gold", "star", "patch", "embroidered", "yellow", "sunshine", "sunny"], "w": 203, "h": 206 },
-        { "file": "lemon-cake", "label": "Lemon cake", "keywords": ["lemon", "cake", "dessert", "slice", "yellow", "sunshine", "sunny"], "w": 143, "h": 140 },
         { "file": "plumeria", "label": "Plumeria", "keywords": ["plumeria", "frangipani", "flower", "tropical", "yellow", "sunshine", "sunny"], "w": 168, "h": 167 },
         { "file": "star-button", "label": "Star button", "keywords": ["star", "button", "sewing", "yellow", "sunshine", "sunny"], "w": 203, "h": 199 },
         { "file": "sunflower", "label": "Sunflower", "keywords": ["sunflower", "flower", "summer", "yellow", "sunshine", "sunny"], "w": 165, "h": 169 },
@@ -230,8 +227,7 @@
         { "file": "heart-frame", "label": "Heart frame", "keywords": ["heart", "frame", "picture", "vintage", "gold", "antique"], "w": 244, "h": 256 },
         { "file": "heart-locket", "label": "Heart locket", "keywords": ["heart", "locket", "necklace", "444", "angel", "number", "vintage", "gold", "antique"], "w": 191, "h": 228 },
         { "file": "lace-butterfly", "label": "Lace butterfly", "keywords": ["lace", "butterfly", "embroidered", "vintage", "gold", "antique"], "w": 189, "h": 162 },
-        { "file": "lace-ribbon", "label": "Lace ribbon", "keywords": ["lace", "ribbon", "bow", "cream", "vintage", "gold", "antique"], "w": 145, "h": 256 },
-        { "file": "swan", "label": "Swan", "keywords": ["swan", "bird", "ornament", "vintage", "gold", "antique"], "w": 197, "h": 162 }
+        { "file": "lace-ribbon", "label": "Lace ribbon", "keywords": ["lace", "ribbon", "bow", "cream", "vintage", "gold", "antique"], "w": 145, "h": 256 }
       ]
     },
     {
@@ -243,7 +239,6 @@
         { "file": "chrome-star", "label": "Chrome star", "keywords": ["chrome", "star", "silver", "y2k", "shiny", "metal"], "w": 194, "h": 194 },
         { "file": "diamond-sparkle", "label": "Diamond sparkle", "keywords": ["diamond", "sparkle", "star", "outline", "chrome", "silver", "y2k", "shiny", "metal"], "w": 173, "h": 174 },
         { "file": "double-ring", "label": "Double ring", "keywords": ["double", "ring", "rings", "orbit", "sparkle", "chrome", "silver", "y2k", "shiny", "metal"], "w": 248, "h": 233 },
-        { "file": "mini-sparkle", "label": "Mini sparkle", "keywords": ["mini", "sparkle", "star", "twinkle", "chrome", "silver", "y2k", "shiny", "metal"], "w": 68, "h": 74 },
         { "file": "orbit-sparkles", "label": "Orbit sparkles", "keywords": ["orbit", "sparkles", "stars", "chrome", "silver", "y2k", "shiny", "metal"], "w": 167, "h": 179 },
         { "file": "puffy-star-big", "label": "Puffy star big", "keywords": ["puffy", "star", "big", "chrome", "silver", "y2k", "shiny", "metal"], "w": 192, "h": 174 },
         { "file": "puffy-star", "label": "Puffy star", "keywords": ["puffy", "star", "chrome", "silver", "y2k", "shiny", "metal"], "w": 136, "h": 141 },
@@ -267,6 +262,140 @@
         { "file": "paperclip", "label": "Paperclip", "keywords": ["paperclip", "clip", "journal", "scrapbook", "stationery", "metal"], "w": 167, "h": 183 },
         { "file": "push-pin", "label": "Push pin", "keywords": ["push", "pin", "thumbtack", "board", "wood", "journal", "scrapbook", "stationery", "metal"], "w": 145, "h": 196 },
         { "file": "safety-pin", "label": "Safety pin", "keywords": ["safety", "pin", "journal", "scrapbook", "stationery", "metal"], "w": 188, "h": 178 }
+      ]
+    },
+    {
+      "id": "buttons",
+      "label": "Buttons",
+      "stickers": [
+        { "file": "blush-button", "label": "Blush button", "keywords": ["blush", "button", "sewing", "craft"], "w": 140, "h": 136 },
+        { "file": "brown-stitched-button", "label": "Brown stitched button", "keywords": ["brown", "stitched", "button", "sewing", "craft"], "w": 159, "h": 158 },
+        { "file": "brown-striped-button", "label": "Brown striped button", "keywords": ["brown", "striped", "button", "sewing", "craft"], "w": 144, "h": 144 },
+        { "file": "bunny-button", "label": "Bunny button", "keywords": ["bunny", "button", "sewing", "craft"], "w": 152, "h": 210 },
+        { "file": "cocoa-button", "label": "Cocoa button", "keywords": ["cocoa", "button", "sewing", "craft"], "w": 145, "h": 144 },
+        { "file": "cocoa-dotted-button", "label": "Cocoa dotted button", "keywords": ["cocoa", "dotted", "button", "sewing", "craft"], "w": 136, "h": 135 },
+        { "file": "cream-star-button", "label": "Cream star button", "keywords": ["cream", "star", "button", "sewing", "craft"], "w": 154, "h": 153 },
+        { "file": "flower-frame-button", "label": "Flower frame button", "keywords": ["flower", "frame", "button", "sewing", "craft"], "w": 147, "h": 149 },
+        { "file": "gingham-cross-button", "label": "Gingham cross button", "keywords": ["gingham", "cross", "button", "sewing", "craft"], "w": 153, "h": 151 },
+        { "file": "honey-button", "label": "Honey button", "keywords": ["honey", "button", "sewing", "craft"], "w": 146, "h": 146 },
+        { "file": "hot-pink-dotted-button", "label": "Hot pink dotted button", "keywords": ["hot", "pink", "dotted", "button", "sewing", "craft"], "w": 144, "h": 144 },
+        { "file": "ivory-button", "label": "Ivory button", "keywords": ["ivory", "button", "sewing", "craft"], "w": 150, "h": 150 },
+        { "file": "mocha-button", "label": "Mocha button", "keywords": ["mocha", "button", "sewing", "craft"], "w": 143, "h": 144 },
+        { "file": "pale-pink-button", "label": "Pale pink button", "keywords": ["pale", "pink", "button", "sewing", "craft"], "w": 145, "h": 146 },
+        { "file": "peach-heart-button", "label": "Peach heart button", "keywords": ["peach", "heart", "button", "sewing", "craft"], "w": 150, "h": 145 },
+        { "file": "pink-blossom-button", "label": "Pink blossom button", "keywords": ["pink", "blossom", "button", "sewing", "craft"], "w": 161, "h": 157 },
+        { "file": "pink-flower-button", "label": "Pink flower button", "keywords": ["pink", "flower", "button", "sewing", "craft"], "w": 150, "h": 147 },
+        { "file": "pink-heart-button", "label": "Pink heart button", "keywords": ["pink", "heart", "button", "sewing", "craft"], "w": 151, "h": 146 },
+        { "file": "pink-marble-button", "label": "Pink marble button", "keywords": ["pink", "marble", "button", "sewing", "craft"], "w": 134, "h": 134 },
+        { "file": "pink-plaid-button", "label": "Pink plaid button", "keywords": ["pink", "plaid", "button", "sewing", "craft"], "w": 141, "h": 141 },
+        { "file": "pink-star-button", "label": "Pink star button", "keywords": ["pink", "star", "button", "sewing", "craft"], "w": 144, "h": 139 },
+        { "file": "pink-stitched-button", "label": "Pink stitched button", "keywords": ["pink", "stitched", "button", "sewing", "craft"], "w": 144, "h": 143 },
+        { "file": "polka-dot-button", "label": "Polka dot button", "keywords": ["polka", "dot", "button", "sewing", "craft"], "w": 149, "h": 148 },
+        { "file": "rose-button", "label": "Rose button", "keywords": ["rose", "button", "sewing", "craft"], "w": 142, "h": 140 },
+        { "file": "tan-button", "label": "Tan button", "keywords": ["tan", "button", "sewing", "craft"], "w": 132, "h": 136 },
+        { "file": "yellow-star-button", "label": "Yellow star button", "keywords": ["yellow", "star", "button", "sewing", "craft"], "w": 140, "h": 143 }
+      ]
+    },
+    {
+      "id": "cute-stickers",
+      "label": "Cute stickers",
+      "stickers": [
+        { "file": "bunny-tulips", "label": "Bunny tulips", "keywords": ["bunny", "tulips", "sticker", "cute"], "w": 230, "h": 256 },
+        { "file": "cat-headphones", "label": "Cat headphones", "keywords": ["cat", "headphones", "sticker", "cute"], "w": 221, "h": 256 },
+        { "file": "cherry-bow", "label": "Cherry bow", "keywords": ["cherry", "bow", "sticker", "cute"], "w": 199, "h": 232 },
+        { "file": "evil-eye", "label": "Evil eye", "keywords": ["evil", "eye", "sticker", "cute"], "w": 246, "h": 250 },
+        { "file": "headphones-bows", "label": "Headphones bows", "keywords": ["headphones", "bows", "sticker", "cute"], "w": 256, "h": 236 },
+        { "file": "pink-coquette-bow", "label": "Pink coquette bow", "keywords": ["pink", "coquette", "bow", "sticker", "cute"], "w": 182, "h": 167 },
+        { "file": "pink-flower", "label": "Pink flower", "keywords": ["pink", "flower", "sticker", "cute"], "w": 256, "h": 254 },
+        { "file": "red-lips", "label": "Red lips", "keywords": ["red", "lips", "sticker", "cute"], "w": 228, "h": 152 }
+      ]
+    },
+    {
+      "id": "lace",
+      "label": "Lace & trim",
+      "stickers": [
+        { "file": "black-rose-lace", "label": "Black rose lace", "keywords": ["black", "rose", "lace", "trim", "ribbon", "tape", "doily"], "w": 270, "h": 103, "ext": "webp" },
+        { "file": "burgundy-lace", "label": "Burgundy lace", "keywords": ["burgundy", "lace", "trim", "ribbon", "tape", "doily"], "w": 260, "h": 90, "ext": "webp" },
+        { "file": "navy-scallop-lace", "label": "Navy scallop lace", "keywords": ["navy", "scallop", "lace", "trim", "ribbon", "tape", "doily"], "w": 250, "h": 80, "ext": "webp" }
+      ]
+    },
+    {
+      "id": "paper-scraps",
+      "label": "Paper scraps",
+      "stickers": [
+        { "file": "floral-paper-cloud", "label": "Floral paper cloud", "keywords": ["floral", "paper", "cloud", "scrap", "collage", "torn", "journal"], "w": 167, "h": 256 },
+        { "file": "gingham-top-scrap", "label": "Gingham top scrap", "keywords": ["gingham", "top", "scrap", "paper", "collage", "torn", "journal"], "w": 146, "h": 256 },
+        { "file": "kiss-print-paper", "label": "Kiss print paper", "keywords": ["kiss", "print", "paper", "scrap", "collage", "torn", "journal"], "w": 146, "h": 256 },
+        { "file": "lipstick-kiss-paper", "label": "Lipstick kiss paper", "keywords": ["lipstick", "kiss", "paper", "scrap", "collage", "torn", "journal"], "w": 188, "h": 256 },
+        { "file": "love-letter-script", "label": "Love letter script", "keywords": ["love", "letter", "script", "paper", "scrap", "collage", "torn", "journal"], "w": 161, "h": 256 },
+        { "file": "newsprint-strip", "label": "Newsprint strip", "keywords": ["newsprint", "strip", "paper", "scrap", "collage", "torn", "journal"], "w": 104, "h": 256 },
+        { "file": "red-gingham-scrap", "label": "Red gingham scrap", "keywords": ["red", "gingham", "scrap", "paper", "collage", "torn", "journal"], "w": 141, "h": 256 },
+        { "file": "ruled-heart-paper", "label": "Ruled heart paper", "keywords": ["ruled", "heart", "paper", "scrap", "collage", "torn", "journal"], "w": 256, "h": 163 },
+        { "file": "tiny-hearts-paper", "label": "Tiny hearts paper", "keywords": ["tiny", "hearts", "paper", "scrap", "collage", "torn", "journal"], "w": 256, "h": 193 },
+        { "file": "tulip-checker-paper", "label": "Tulip checker paper", "keywords": ["tulip", "checker", "paper", "scrap", "collage", "torn", "journal"], "w": 148, "h": 256 }
+      ]
+    },
+    {
+      "id": "postage-blue",
+      "label": "Postage blue",
+      "stickers": [
+        { "file": "argentina-horseman", "label": "Argentina horseman", "keywords": ["argentina", "horseman", "stamp", "postage", "post", "mail", "blue"], "w": 167, "h": 210 },
+        { "file": "argentina-swallow", "label": "Argentina swallow", "keywords": ["argentina", "swallow", "stamp", "postage", "post", "mail", "blue"], "w": 168, "h": 234 },
+        { "file": "aster-flower", "label": "Aster flower", "keywords": ["aster", "flower", "stamp", "postage", "post", "mail", "blue"], "w": 168, "h": 218 },
+        { "file": "azulejo-tiles", "label": "Azulejo tiles", "keywords": ["azulejo", "tiles", "stamp", "postage", "post", "mail", "blue"], "w": 156, "h": 194 },
+        { "file": "blue-clematis", "label": "Blue clematis", "keywords": ["blue", "clematis", "stamp", "postage", "post", "mail"], "w": 172, "h": 188 },
+        { "file": "blue-parrot", "label": "Blue parrot", "keywords": ["blue", "parrot", "stamp", "postage", "post", "mail"], "w": 163, "h": 255 },
+        { "file": "blueberry-stamp", "label": "Blueberry stamp", "keywords": ["blueberry", "stamp", "postage", "post", "mail", "blue"], "w": 167, "h": 227 },
+        { "file": "egret-37", "label": "Egret 37", "keywords": ["egret", "stamp", "postage", "post", "mail", "blue"], "w": 162, "h": 201 },
+        { "file": "ermine-stamp", "label": "Ermine stamp", "keywords": ["ermine", "stamp", "postage", "post", "mail", "blue"], "w": 184, "h": 161 },
+        { "file": "great-wave", "label": "Great wave", "keywords": ["great", "wave", "stamp", "postage", "post", "mail", "blue"], "w": 256, "h": 189 },
+        { "file": "nippon-daisy", "label": "Nippon daisy", "keywords": ["nippon", "daisy", "stamp", "postage", "post", "mail", "blue"], "w": 147, "h": 172 },
+        { "file": "nippon-hydrangea", "label": "Nippon hydrangea", "keywords": ["nippon", "hydrangea", "stamp", "postage", "post", "mail", "blue"], "w": 171, "h": 191 },
+        { "file": "norge-forget-me-not", "label": "Norge forget me not", "keywords": ["norge", "forget", "me", "not", "stamp", "postage", "post", "mail", "blue"], "w": 160, "h": 200 },
+        { "file": "trout-stamp", "label": "Trout stamp", "keywords": ["trout", "stamp", "postage", "post", "mail", "blue"], "w": 165, "h": 208 },
+        { "file": "viet-nam-mushrooms", "label": "Viet nam mushrooms", "keywords": ["viet", "nam", "mushrooms", "stamp", "postage", "post", "mail", "blue"], "w": 151, "h": 202 }
+      ]
+    },
+    {
+      "id": "postage-rose",
+      "label": "Postage rose",
+      "stickers": [
+        { "file": "botanical-24-cents", "label": "Botanical 24 cents", "keywords": ["botanical", "cents", "stamp", "postage", "post", "mail", "pink"], "w": 241, "h": 156 },
+        { "file": "cambodia-butterfly", "label": "Cambodia butterfly", "keywords": ["cambodia", "butterfly", "stamp", "postage", "post", "mail", "pink"], "w": 239, "h": 178 },
+        { "file": "danmark-white-cat", "label": "Danmark white cat", "keywords": ["danmark", "white", "cat", "stamp", "postage", "post", "mail", "pink"], "w": 256, "h": 214 },
+        { "file": "ethiopia-rose", "label": "Ethiopia rose", "keywords": ["ethiopia", "rose", "stamp", "postage", "post", "mail", "pink"], "w": 180, "h": 251 },
+        { "file": "french-sower", "label": "French sower", "keywords": ["french", "sower", "stamp", "postage", "post", "mail", "pink"], "w": 189, "h": 229 },
+        { "file": "kintai-bridge-blossoms", "label": "Kintai bridge blossoms", "keywords": ["kintai", "bridge", "blossoms", "stamp", "postage", "post", "mail", "pink"], "w": 157, "h": 239 },
+        { "file": "lily-50-cents", "label": "Lily 50 cents", "keywords": ["lily", "cents", "stamp", "postage", "post", "mail", "pink"], "w": 237, "h": 164 },
+        { "file": "love-heart", "label": "Love heart", "keywords": ["love", "heart", "stamp", "postage", "post", "mail", "pink"], "w": 191, "h": 198 },
+        { "file": "new-zealand-airmail", "label": "New zealand airmail", "keywords": ["new", "zealand", "airmail", "stamp", "postage", "post", "mail", "pink"], "w": 251, "h": 142 },
+        { "file": "nippon-cherry-blossom", "label": "Nippon cherry blossom", "keywords": ["nippon", "cherry", "blossom", "stamp", "postage", "post", "mail", "pink"], "w": 191, "h": 223 },
+        { "file": "orchid-pink", "label": "Orchid pink", "keywords": ["orchid", "pink", "stamp", "postage", "post", "mail"], "w": 199, "h": 242 },
+        { "file": "plum-branch-stamp", "label": "Plum branch stamp", "keywords": ["plum", "branch", "stamp", "postage", "post", "mail", "pink"], "w": 183, "h": 254 },
+        { "file": "romanian-swan", "label": "Romanian swan", "keywords": ["romanian", "swan", "stamp", "postage", "post", "mail", "pink"], "w": 256, "h": 194 },
+        { "file": "siesta-cat", "label": "Siesta cat", "keywords": ["siesta", "cat", "stamp", "postage", "post", "mail", "pink"], "w": 180, "h": 216 },
+        { "file": "twenty-five-shillings", "label": "Twenty five shillings", "keywords": ["twenty", "five", "shillings", "stamp", "postage", "post", "mail", "pink"], "w": 181, "h": 230 }
+      ]
+    },
+    {
+      "id": "wax-seals",
+      "label": "Wax seals",
+      "stickers": [
+        { "file": "blush-heart-seal", "label": "Blush heart seal", "keywords": ["blush", "heart", "seal", "wax", "letter", "envelope"], "w": 224, "h": 230 },
+        { "file": "burgundy-heart-seal", "label": "Burgundy heart seal", "keywords": ["burgundy", "heart", "seal", "wax", "letter", "envelope"], "w": 251, "h": 231 },
+        { "file": "butterfly-seal", "label": "Butterfly seal", "keywords": ["butterfly", "seal", "wax", "letter", "envelope"], "w": 229, "h": 224 },
+        { "file": "gold-flowers-seal", "label": "Gold flowers seal", "keywords": ["gold", "flowers", "seal", "wax", "letter", "envelope"], "w": 223, "h": 224 },
+        { "file": "gold-heart-seal", "label": "Gold heart seal", "keywords": ["gold", "heart", "seal", "wax", "letter", "envelope"], "w": 220, "h": 234 },
+        { "file": "gold-shell-seal", "label": "Gold shell seal", "keywords": ["gold", "shell", "seal", "wax", "letter", "envelope"], "w": 212, "h": 225 },
+        { "file": "gold-sparkle-seal", "label": "Gold sparkle seal", "keywords": ["gold", "sparkle", "seal", "wax", "letter", "envelope"], "w": 227, "h": 219 },
+        { "file": "gold-sprig-seal", "label": "Gold sprig seal", "keywords": ["gold", "sprig", "seal", "wax", "letter", "envelope"], "w": 227, "h": 225 },
+        { "file": "lilac-sprig-seal", "label": "Lilac sprig seal", "keywords": ["lilac", "sprig", "seal", "wax", "letter", "envelope"], "w": 224, "h": 218 },
+        { "file": "pink-bow-seal", "label": "Pink bow seal", "keywords": ["pink", "bow", "seal", "wax", "letter", "envelope"], "w": 228, "h": 234 },
+        { "file": "pink-filigree-heart-seal", "label": "Pink filigree heart seal", "keywords": ["pink", "filigree", "heart", "seal", "wax", "letter", "envelope"], "w": 221, "h": 225 },
+        { "file": "pink-heart-outline-seal", "label": "Pink heart outline seal", "keywords": ["pink", "heart", "outline", "seal", "wax", "letter", "envelope"], "w": 227, "h": 224 },
+        { "file": "pink-tulip-seal", "label": "Pink tulip seal", "keywords": ["pink", "tulip", "seal", "wax", "letter", "envelope"], "w": 220, "h": 223 },
+        { "file": "rose-seal", "label": "Rose seal", "keywords": ["rose", "seal", "wax", "letter", "envelope"], "w": 223, "h": 228 },
+        { "file": "tulip-seal", "label": "Tulip seal", "keywords": ["tulip", "seal", "wax", "letter", "envelope"], "w": 231, "h": 234 }
       ]
     }
   ]

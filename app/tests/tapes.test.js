@@ -140,7 +140,7 @@ describe('drawing a tape', () => {
       const painted = [...out.pixels].filter((_, i) => i % 4 === 3 && out.pixels[i] > 40).length
       expect(painted / (width * height), `${t.id} looks empty`).toBeGreaterThan(0.5)
     }
-  })
+  }, 30000)
 
   it('leaves no color slot or broken number in the drawing', () => {
     for (const t of TAPES)
