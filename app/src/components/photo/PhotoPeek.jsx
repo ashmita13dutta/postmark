@@ -4,8 +4,8 @@ import { useMomentPhoto } from './useMomentPhoto'
 import './photo.css'
 
 /**
- * A postcard's photo tucked behind its stamp, turned a little and showing about a third of itself
- * beside the stamp (spec section 10). Put it as the FIRST child of a box that is exactly as wide as
+ * A postcard's photo tucked behind its stamp, fanned out so its outer end leans away from the stamp,
+ * showing about a third of itself beside the stamp (spec section 10). Put it as the FIRST child of a box that is exactly as wide as
  * the stamp (`position: relative`) and the stamp paints over it. Renders nothing without a photo.
  *  - momentId, seed: which postcard, and what steadies its tilt (the day)
  *  - slide:          { delay } to slide out from behind the stamp (Reveal); omit to just sit there
@@ -19,8 +19,10 @@ export default function PhotoPeek({ momentId, seed, back = false, slide }) {
   const x = peekX(g, width)
   const style = {
     left: `${x * 100}%`,
-    top: `${(0.06 + g.y) * 100}%`,
+    top: `${(0.1 + g.y) * 100}%`,
     width: `${width * 100}%`,
+    // it fans out from the edge hidden behind the stamp, so the part that shows leans outward
+    transformOrigin: `${g.originX * 100}% 60%`,
   }
   const turned = { rotate: g.rotate }
   return (

@@ -16,13 +16,23 @@ describe('applyFilter', () => {
   const H = 7
   const sky = flat(W, H, [90, 130, 200])
 
-  it('has an original, vintage and vibrant filter', () => {
-    expect(FILTERS.map((f) => f.id)).toEqual(['none', 'vintage', 'vibrant'])
+  const LOOKS = FILTERS.map((f) => f.id).filter((id) => id !== 'none')
+
+  it('has an original and five looks', () => {
+    expect(FILTERS.map((f) => f.id)).toEqual([
+      'none',
+      'vintage',
+      'vibrant',
+      'soft',
+      'golden',
+      'mono',
+    ])
+    for (const f of FILTERS) expect(f.label.length).toBeGreaterThan(3)
   })
 
   it('returns the original pixels for "none", and for any filter at intensity 0', () => {
     expect([...applyFilter(sky, W, H, { filter: 'none' })]).toEqual([...sky])
-    for (const filter of ['vintage', 'vibrant'])
+    for (const filter of LOOKS)
       expect([...applyFilter(sky, W, H, { filter, intensity: 0 })]).toEqual([...sky])
   })
 
@@ -36,7 +46,7 @@ describe('applyFilter', () => {
 
   it('leaves transparency alone', () => {
     const see = flat(W, H, [90, 130, 200], 77)
-    for (const filter of ['vintage', 'vibrant']) {
+    for (const filter of LOOKS) {
       const out = applyFilter(see, W, H, { filter, intensity: 1 })
       for (let i = 3; i < out.length; i += 4) expect(out[i]).toBe(77)
     }
@@ -121,6 +131,55 @@ describe('applyFilter', () => {
     })
   })
 
+  describe('the other looks', () => {
+    const mid = (filter, color, size = 21) =>
+      px(applyFilter(flat(size, size, color), size, size, { filter, intensity: 1 }), size, 10, 10)
+
+    it('soft film lifts the blacks and flattens the contrast', () => {
+      expect(mid('soft', [0, 0, 0])[0]).toBeGreaterThan(15)
+      const dark = mid('soft', [60, 60, 60])[1]
+      const light = mid('soft', [200, 200, 200])[1]
+      expect(light - dark).toBeLessThan(200 - 60)
+    })
+
+    it('golden hour warms: more red than blue, and the sky loses blue', () => {
+      const [r, , b] = mid('golden', [150, 150, 150])
+      expect(r).toBeGreaterThan(b + 20)
+      expect(mid('golden', [90, 130, 200])[2]).toBeLessThan(200)
+    })
+
+    it('black and white leaves no color', () => {
+      for (const color of [
+        [250, 40, 40],
+        [90, 130, 200],
+        [30, 200, 90],
+      ])
+        expect(spread(mid('mono', color))).toBeLessThanOrEqual(6)
+    })
+
+    it('black and white keeps light and dark apart', () => {
+      expect(mid('mono', [230, 230, 230])[0]).toBeGreaterThan(mid('mono', [40, 40, 40])[0] + 120)
+    })
+
+    it('shows the same size of grain in a small picture and a big one', () => {
+      // a 1400 px wide picture has grain cells two pixels wide: neighbours in a cell match
+      const wide = applyFilter(flat(1400, 4, [140, 140, 140]), 1400, 4, {
+        filter: 'soft',
+        seed: 'g',
+      })
+      expect(px(wide, 1400, 600, 1)).toEqual(px(wide, 1400, 601, 1))
+      // a small one has one cell per pixel, so neighbours differ
+      const small = applyFilter(flat(300, 4, [140, 140, 140]), 300, 4, {
+        filter: 'soft',
+        seed: 'g',
+      })
+      let differ = 0
+      for (let x = 0; x < 100; x += 2)
+        if (px(small, 300, x, 1)[0] !== px(small, 300, x + 1, 1)[0]) differ++
+      expect(differ).toBeGreaterThan(20)
+    })
+  })
+
   it('blends with the original by the intensity', () => {
     const color = [90, 130, 200]
     const at = (intensity) =>
@@ -197,11 +256,16 @@ describe('peekGeometry', () => {
     expect(peekGeometry('2026-10-09')).not.toEqual(peekGeometry('2026-10-10'))
   })
 
-  it('turns the photo between about -6 and 8 degrees', () => {
+  it('fans the photo out: always turned 8 to 14 degrees with its outer end up, pivoting on the hidden edge', () => {
     for (let d = 1; d <= 28; d++) {
-      const { rotate } = peekGeometry(`2026-10-${String(d).padStart(2, '0')}`)
-      expect(rotate).toBeGreaterThanOrEqual(-6)
-      expect(rotate).toBeLessThanOrEqual(8)
+      const front = peekGeometry(`2026-10-${String(d).padStart(2, '0')}`)
+      expect(front.rotate).toBeLessThanOrEqual(-8 + 1e-9)
+      expect(front.rotate).toBeGreaterThanOrEqual(-14 - 1e-9)
+      expect(front.originX).toBe(0) // the left edge is under the stamp
+      const back = peekGeometry(`2026-10-${String(d).padStart(2, '0')}`, true)
+      expect(back.rotate).toBeGreaterThanOrEqual(8 - 1e-9)
+      expect(back.rotate).toBeLessThanOrEqual(14 + 1e-9)
+      expect(back.originX).toBe(1)
     }
   })
 

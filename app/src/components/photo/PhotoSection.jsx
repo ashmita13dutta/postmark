@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { FILTERS } from '../../lib/photoFilters'
+import { photoAccept } from '../../lib/photoFormat'
 import { useObjectUrl } from './useMomentPhoto'
 import './photo.css'
 
@@ -13,6 +14,8 @@ export default function PhotoSection({ photo, saved, onRemoveSaved }) {
   const input = useRef(null)
   const savedUrl = useObjectUrl(saved?.thumb ?? null)
   const frames = photo.frames
+  // the picker also lists HEIC and AVIF where the device does not convert them itself
+  const accept = photoAccept()
 
   return (
     <section className="photo" aria-label="Photo">
@@ -73,7 +76,7 @@ export default function PhotoSection({ photo, saved, onRemoveSaved }) {
           {photo.preview && (
             <img className="photo__preview" src={photo.preview} alt="Your photo with the filter" />
           )}
-          <div className="photo__row" role="group" aria-label="Filter">
+          <div className="photo__filters" role="group" aria-label="Filter">
             {FILTERS.map((f) => (
               <button
                 key={f.id}
@@ -81,7 +84,12 @@ export default function PhotoSection({ photo, saved, onRemoveSaved }) {
                 aria-pressed={photo.filter === f.id}
                 onClick={() => photo.setFilter(f.id)}
               >
-                {f.label}
+                {photo.thumbs?.[f.id] ? (
+                  <img src={photo.thumbs[f.id]} alt="" draggable={false} />
+                ) : (
+                  <i aria-hidden="true" />
+                )}
+                <span>{f.label}</span>
               </button>
             ))}
           </div>
@@ -116,7 +124,7 @@ export default function PhotoSection({ photo, saved, onRemoveSaved }) {
       <input
         ref={input}
         type="file"
-        accept="image/*"
+        accept={accept}
         multiple={photo.mode === 'strip'}
         hidden
         aria-label="Choose a photo"

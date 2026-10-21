@@ -1,7 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { paletteFromPixels } from '../../engine/colorExtract'
 import { queries } from '../../db/queries'
-import { finishPhoto, openPhotos, pixelsForPalette, renderPhoto } from '../../lib/photo'
+import {
+  filterThumbnail,
+  finishPhoto,
+  openPhotos,
+  pixelsForPalette,
+  renderPhoto,
+} from '../../lib/photo'
+import { FILTERS } from '../../lib/photoFilters'
 
 const PREVIEW_EDGE = 560
 
@@ -10,7 +17,7 @@ const PREVIEW_EDGE = 560
  * filters, and see the result live. Nothing is saved until `save(momentId)`, and nothing leaves the
  * phone. `seed` (the day) steadies the grain and the way the photo sits behind the stamp.
  *
- * Returns { has, mode, setMode, frames, filter, setFilter, intensity, setIntensity, preview, palette,
+ * Returns { has, mode, setMode, frames, filter, setFilter, intensity, setIntensity, preview, thumbs, palette,
  *           busy, error, pick, clear, save }. `palette` is five colors read from the original photo
  *           ({ colors, paletteSource: 'photo' }), or null.
  */
@@ -20,6 +27,7 @@ export function usePhoto({ frames, seed }) {
   const [filter, setFilter] = useState('vintage')
   const [intensity, setIntensity] = useState(0.7)
   const [preview, setPreview] = useState(null)
+  const [thumbs, setThumbs] = useState({}) // a small sample of the photo for each filter
   const [palette, setPalette] = useState(null)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState(null)
@@ -33,6 +41,11 @@ export function usePhoto({ frames, seed }) {
     let live = true
     let url = null
     timer.current = setTimeout(() => {
+      setThumbs(
+        Object.fromEntries(
+          FILTERS.map((f) => [f.id, filterThumbnail(bitmaps[0], { filter: f.id, intensity, seed })]),
+        ),
+      )
       const canvas = renderPhoto(bitmaps, { kind: mode, filter, intensity, seed }, PREVIEW_EDGE)
       canvas.toBlob((blob) => {
         if (!live || !blob) return
@@ -52,6 +65,7 @@ export function usePhoto({ frames, seed }) {
     // a different mode needs different photos
     setBitmaps([])
     setPreview(null)
+    setThumbs({})
     setPalette(null)
     setError(null)
   }, [])
@@ -80,6 +94,7 @@ export function usePhoto({ frames, seed }) {
   function clear() {
     setBitmaps([])
     setPreview(null)
+    setThumbs({})
     setPalette(null)
     setError(null)
   }
@@ -109,6 +124,7 @@ export function usePhoto({ frames, seed }) {
     intensity,
     setIntensity,
     preview,
+    thumbs,
     palette,
     busy,
     error,

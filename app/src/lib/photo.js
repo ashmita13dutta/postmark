@@ -5,6 +5,7 @@
  * photo-booth printout.
  */
 import { applyFilter } from './photoFilters'
+import { sniffFormat, unreadableMessage } from './photoFormat'
 import { seededRng } from './rng'
 
 export const MAX_EDGE = 1600
@@ -50,24 +51,29 @@ export function stripLayout(frames, { frameW = 560, border = 34, gap = 26, foote
 }
 
 /**
- * Where a photo sits behind its stamp (spec section 10): turned by about -6 to 8 degrees (steady for a
- * given seed) and slid out so a bit under a third of it shows beside the stamp. Back is the
- * postcard's other side, where it is mirrored. Numbers are fractions of the stamp's width, so it
- * looks the same at any size.
+ * Where a photo sits behind its stamp (spec section 10): fanned out from behind the stamp, its outer
+ * end swung up and away by about 8 to 14 degrees (steady for a given seed), and slid out so a bit
+ * under a third of it shows beside the stamp. It turns about the edge that is hidden behind the
+ * stamp (`originX`, 0 for the left edge, 1 for the right), so the part that shows leans outward.
+ * Back is the postcard's other side, where it is mirrored. Numbers are fractions of the stamp's
+ * width, so it looks the same at any size.
  * `visible` is the fraction of the photo that shows; `x` is for a photo of the standard `width` (a
  * narrower one, like a film strip, can use `peekX`).
- * @returns {{ rotate: number, x: number, y: number, width: number, side: 1 | -1, visible: number }}
+ * @returns {{ rotate: number, x: number, y: number, width: number, side: 1 | -1, visible: number, originX: 0 | 1 }}
  */
+export const PEEK_TILT = { min: 8, max: 14 }
+
 export function peekGeometry(seed, back = false) {
   const rnd = seededRng(`peek:${seed}`)
-  const rotate = -6 + rnd() * 14
+  // counter-clockwise on the right of the stamp lifts the outer end; the back is the mirror image
+  const rotate = -(PEEK_TILT.min + rnd() * (PEEK_TILT.max - PEEK_TILT.min))
   const width = 0.9
   const visible = 0.27 + rnd() * 0.06 // 27% to 33% of the photo shows
   const side = back ? -1 : 1
   // the photo's left edge, as a fraction of the stamp's width: tucked in so only `visible` sticks out
   const x = side === 1 ? 1 - width * (1 - visible) : -width * visible
-  const y = (rnd() - 0.5) * 0.16
-  return { rotate: back ? -rotate : rotate, x, y, width, side, visible }
+  const y = (rnd() - 0.5) * 0.12
+  return { rotate: back ? -rotate : rotate, x, y, width, side, visible, originX: back ? 1 : 0 }
 }
 
 /** Where the left edge goes for a photo of any `width` (a fraction of the stamp's), so the same share shows. */
@@ -77,9 +83,34 @@ export function peekX({ side, visible }, width) {
 
 // ---- browser only from here ----
 
+// 'from-image' applies the camera's rotation, so a portrait photo is not sideways
+const bitmapOf = (blob) => createImageBitmap(blob, { imageOrientation: 'from-image' })
+
+/**
+ * HEIC (an iPhone's own format) is opened by Safari but by few other browsers, so when the browser
+ * cannot, a decoder is fetched the first time it is needed (about 3 MB, then kept for offline) and
+ * the photo is turned into a JPEG first.
+ */
+async function decodeHeic(file) {
+  const { heicTo } = await import('heic-to')
+  const jpeg = await heicTo({ blob: file, type: 'image/jpeg', quality: 0.92 })
+  return bitmapOf(jpeg)
+}
+
 async function decode(file) {
-  // 'from-image' applies the camera's rotation, so a portrait photo is not sideways
-  return createImageBitmap(file, { imageOrientation: 'from-image' })
+  try {
+    return await bitmapOf(file)
+  } catch (first) {
+    const head = new Uint8Array(await file.slice(0, 32).arrayBuffer())
+    const format = sniffFormat(head)
+    if (format !== 'heic') throw Object.assign(first, { format })
+    try {
+      return await decodeHeic(file)
+    } catch {
+      const offline = typeof navigator !== 'undefined' && navigator.onLine === false
+      throw Object.assign(new Error('heic'), { format, heicTried: true, offline })
+    }
+  }
 }
 
 function canvasOf(width, height) {
@@ -102,8 +133,8 @@ const toBlob = (canvas, quality = JPEG_QUALITY) =>
 export async function openPhotos(files) {
   try {
     return await Promise.all([...files].map(decode))
-  } catch {
-    throw new Error('That does not look like a photo this phone can open.')
+  } catch (err) {
+    throw new Error(unreadableMessage(err.format ?? null, err))
   }
 }
 
@@ -145,14 +176,15 @@ export function renderPhoto(
     layout.frames.forEach((r, i) => drawCover(ctx, bitmaps[i], r.x, r.y, r.w, r.h))
     // the filter goes over the frames only, never the white border
     ctx.setTransform(1, 0, 0, 1, 0, 0)
-    layout.frames.forEach((r) =>
+    // each frame gets its own grain, so the strip does not repeat one pattern
+    layout.frames.forEach((r, i) =>
       filterRegion(
         ctx,
         Math.round(r.x * scale),
         Math.round(r.y * scale),
         Math.round(r.w * scale),
         Math.round(r.h * scale),
-        options,
+        { ...options, seed: `${options.seed}:${i}` },
       ),
     )
     if (caption) {
@@ -171,6 +203,18 @@ export function renderPhoto(
   ctx.drawImage(b, 0, 0, size.width, size.height)
   filterRegion(ctx, 0, 0, size.width, size.height, options)
   return canvas
+}
+
+/**
+ * A small square sample of the first photo with a filter on it, as a data URL, for the filter row
+ * (so each filter shows what it does to this photo before it is chosen).
+ */
+export function filterThumbnail(bitmap, { filter, intensity, seed }, edge = 96) {
+  const canvas = canvasOf(edge, edge)
+  const ctx = canvas.getContext('2d', { willReadFrequently: true })
+  drawCover(ctx, bitmap, 0, 0, edge, edge)
+  filterRegion(ctx, 0, 0, edge, edge, { filter, intensity, seed })
+  return canvas.toDataURL('image/jpeg', 0.8)
 }
 
 /** The kept version: the full picture and its thumbnail, as JPEG blobs. */

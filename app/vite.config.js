@@ -82,9 +82,16 @@ export default defineConfig({
           // the reader's model (about 34 MB) is only fetched when you turn smart reading on, and the
           // reader caches it itself, so it must not be part of the install
           'models/**',
+          // the HEIC decoder (about 3 MB) is fetched the first time a HEIC photo needs it, then kept
+          '**/heic-to-*',
         ],
         // emoji font chunks are big (up to ~1 MB each), so cache each one the first time it is shown
         runtimeCaching: [
+          {
+            urlPattern: /heic-to-.*\.js$/,
+            handler: 'CacheFirst',
+            options: { cacheName: 'heic-decoder', expiration: { maxEntries: 2 } },
+          },
           {
             urlPattern: /noto-color-emoji-.*\.woff2$/,
             handler: 'CacheFirst',

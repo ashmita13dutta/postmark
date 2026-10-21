@@ -127,3 +127,49 @@
 .palettemode button:disabled {
   opacity: 0.45;
 }
+
+/* the filter row: a sample of the photo for each look */
+.photo__filters {
+  display: flex;
+  gap: 10px;
+  margin: 12px -4px 0;
+  padding: 2px 4px 6px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+}
+.photo__filters button {
+  flex: 0 0 auto;
+  display: grid;
+  justify-items: center;
+  gap: 5px;
+  width: 72px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink-60);
+  font: 500 11px/1.2 var(--font-ui);
+  scroll-snap-align: start;
+}
+.photo__filters img,
+.photo__filters i {
+  display: block;
+  width: 64px;
+  height: 64px;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  background: var(--ink-08);
+  object-fit: cover;
+  box-shadow: 0 1px 3px rgba(42, 38, 32, 0.2);
+}
+.photo__filters button.on {
+  color: var(--ink);
+}
+.photo__filters button.on img,
+.photo__filters button.on i {
+  border-color: var(--postmark);
+}
+.photo__filters span {
+  max-width: 72px;
+  text-align: center;
+}
