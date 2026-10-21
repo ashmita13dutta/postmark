@@ -287,3 +287,70 @@ describe('profile settings', () => {
     expect(await q.getSetting('revealAnimation')).toBe(true)
   })
 })
+
+describe('a postcard’s photo', () => {
+  const blob = (n) => new Blob([new Uint8Array(n)], { type: 'image/jpeg' })
+  const photo = (extra = {}) => ({
+    kind: 'single',
+    blob: blob(8),
+    thumb: blob(2),
+    filter: 'vintage',
+    intensity: 0.7,
+    layoutSeed: 'seed',
+    ...extra,
+  })
+
+  it('keeps one photo for a postcard, replacing the old one', async () => {
+    const m = await q.saveMoment('2026-09-24', { note: 'with a photo' })
+    await q.setMedia(m.id, photo())
+    await q.setMedia(m.id, photo({ kind: 'strip', filter: 'vibrant' }))
+    const rows = await q.mediaForMoment(m.id)
+    expect(rows).toHaveLength(1)
+    expect(rows[0]).toMatchObject({ momentId: m.id, kind: 'strip', filter: 'vibrant' })
+    expect(rows[0].blob.size).toBe(8)
+  })
+
+  it('takes the photo away', async () => {
+    const m = await q.saveMoment('2026-09-24', { note: 'x' })
+    await q.setMedia(m.id, photo())
+    await q.removeMedia(m.id)
+    expect(await q.mediaForMoment(m.id)).toEqual([])
+  })
+
+  it('refuses a photo that is not a single or a strip', async () => {
+    const m = await q.saveMoment('2026-09-24', { note: 'x' })
+    await expect(q.setMedia(m.id, photo({ kind: 'gif' }))).rejects.toThrow(/single|strip/)
+    expect(await q.mediaForMoment(m.id)).toEqual([])
+  })
+
+  it('locks the photo once the postcard is sealed', async () => {
+    const m = await q.saveMoment('2026-09-24', { note: 'x' })
+    await q.setMedia(m.id, photo())
+    await q.sealMoment(m.id, { color: '#B14126', emblem: 'heart' })
+    await expect(q.setMedia(m.id, photo({ kind: 'strip' }))).rejects.toThrow(/sealed/)
+    await expect(q.removeMedia(m.id)).rejects.toThrow(/sealed/)
+    expect((await q.mediaForMoment(m.id))[0].kind).toBe('single')
+  })
+
+  it('has no photo for a postcard that never had one, or one that does not exist', async () => {
+    const m = await q.saveMoment('2026-09-24', { note: 'x' })
+    expect(await q.mediaForMoment(m.id)).toEqual([])
+    await expect(q.setMedia('nope', photo())).rejects.toThrow(/No such moment/)
+  })
+})
+
+describe('photo settings', () => {
+  it('keeps the strip length and the default source of colors', async () => {
+    expect(await q.getSetting('stripFrames')).toBe(3)
+    expect(await q.getSetting('paletteDefault')).toBe('moment')
+    await q.setSetting('stripFrames', 4)
+    await q.setSetting('paletteDefault', 'photo')
+    expect(await q.getSetting('stripFrames')).toBe(4)
+    expect(await q.getSetting('paletteDefault')).toBe('photo')
+  })
+
+  it('refuses anything else', async () => {
+    await expect(q.setSetting('stripFrames', 5)).rejects.toThrow(/3 or 4/)
+    await expect(q.setSetting('paletteDefault', 'both')).rejects.toThrow(/moment|photo/)
+  })
+})

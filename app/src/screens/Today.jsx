@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import Screen from '../app/Screen'
 import WaxSeal from '../components/postcard/WaxSeal'
 import MoodStrip from '../components/moods/MoodStrip'
+import PhotoSection from '../components/photo/PhotoSection'
+import { usePhoto } from '../components/photo/usePhoto'
 import ReaderCard from '../components/reader/ReaderCard'
 import Stamp from '../components/stamp/Stamp'
 import TeachPanel from '../components/teach/TeachPanel'
@@ -104,6 +106,23 @@ export function Editor({ day, existing, demo }) {
 
   const days = useLiveQuery(async () => (await queries.allMoments()).map((m) => m.day), [], [])
   const nextNo = useLiveQuery(() => queries.nextStampNo(), [existing], 1)
+
+  // the photo: picked here, saved with the postcard when you stamp it
+  const stripFrames = useLiveQuery(() => queries.getSetting('stripFrames'), [], 3)
+  const paletteDefault = useLiveQuery(() => queries.getSetting('paletteDefault'), [], 'moment')
+  const photo = usePhoto({ frames: stripFrames, seed: day })
+  const savedPhoto = useLiveQuery(
+    async () => (existing ? ((await queries.mediaForMoment(existing.id))[0] ?? null) : null),
+    [existing?.id],
+    null,
+  )
+  // five colors from the photo, or from the words: you choose (the photo's wait until there is one)
+  const [paletteMode, setPaletteMode] = useState(null) // null = your default
+  // a stamp already made from a photo keeps its colors until you change them
+  const keptPhotoColors =
+    existing?.paletteSource === 'photo' && !photo.has ? existing.palette : null
+  const photoColors = photo.palette?.colors ?? keptPhotoColors
+  const fromPhoto = !!photoColors && (paletteMode ?? paletteDefault) === 'photo'
   // a postcard from exactly a year ago, once it has been delivered (spec 6.4)
   const yearAgo = useLiveQuery(
     async () => yearAgoLetter(await queries.deliveredMoments(now()), day) ?? null,
@@ -165,7 +184,11 @@ export function Editor({ day, existing, demo }) {
     }
   }, [text, reader.status, sealed])
   // once sealed, show the colors that were saved, not a fresh reading of the note
-  const palette = sealed ? existing.palette : !hasNote ? BLANK_PALETTE : (custom ?? r.built.colors)
+  const palette = sealed
+    ? existing.palette
+    : !hasNote
+      ? BLANK_PALETTE
+      : (custom ?? (fromPhoto ? photoColors : r.built.colors))
   const seal = useLiveQuery(
     () => (sealed ? queries.getSeal(existing.id) : undefined),
     [sealed, existing?.id],
@@ -251,7 +274,7 @@ export function Editor({ day, existing, demo }) {
         feeling: r.feeling,
         topic: r.topic,
         palette,
-        paletteSource: custom ? 'manual' : 'moment',
+        paletteSource: custom ? 'manual' : fromPhoto ? 'photo' : 'moment',
       }
       if (demo) {
         await demo.onSave(fields)
@@ -259,6 +282,15 @@ export function Editor({ day, existing, demo }) {
       }
       const m = await queries.saveMoment(day, fields)
       await rememberCorrection()
+      if (photo.has) {
+        try {
+          await photo.save(m.id)
+        } catch (err) {
+          // the stamp is saved; say what went wrong with the photo and stay, so it can be tried again
+          setStatus({ ok: false, text: `Stamped, but the photo was not saved: ${err.message}` })
+          return
+        }
+      }
       setStatus({ ok: true, text: `Stamped as No. ${m.stampNo}. You can still change it today.` })
       navigate('/reveal')
     } catch (err) {
@@ -328,6 +360,14 @@ export function Editor({ day, existing, demo }) {
         </button>
       )}
 
+      {!demo && !sealed && (
+        <PhotoSection
+          photo={photo}
+          saved={savedPhoto}
+          onRemoveSaved={() => queries.removeMedia(existing.id)}
+        />
+      )}
+
       <div className="today__stage">
         <Stamp
           colors={palette.map((c) => c.hex)}
@@ -338,6 +378,31 @@ export function Editor({ day, existing, demo }) {
         />
       </div>
 
+      {!demo && !sealed && (
+        <div className="palettemode" role="group" aria-label="Where the colors come from">
+          <button
+            className={fromPhoto ? '' : 'on'}
+            aria-pressed={!fromPhoto}
+            onClick={() => {
+              setPaletteMode('moment')
+              setCustom(null)
+            }}
+          >
+            ✦ From my moment
+          </button>
+          <button
+            className={fromPhoto ? 'on' : ''}
+            aria-pressed={fromPhoto}
+            disabled={!photoColors}
+            onClick={() => {
+              setPaletteMode('photo')
+              setCustom(null)
+            }}
+          >
+            From my photo
+          </button>
+        </div>
+      )}
       <ul className="today__swatches" aria-label="Today's five colors. Tap one to change it.">
         {palette.map((c, i) => (
           <li key={i}>

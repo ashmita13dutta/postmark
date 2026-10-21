@@ -3,6 +3,7 @@ import { useLiveQuery } from 'dexie-react-hooks'
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import Screen from '../app/Screen'
+import PhotoPeek from '../components/photo/PhotoPeek'
 import Postmark from '../components/postmark/Postmark'
 import Stamp from '../components/stamp/Stamp'
 import { queries } from '../db/queries'
@@ -68,6 +69,7 @@ export function Preview({ moment, today, onClose, onShare }) {
         transition={fade}
       >
         <div className="cal__big">
+          <PhotoPeek momentId={moment.id} seed={moment.day} />
           <Stamp
             colors={moment.palette.map((c) => c.hex)}
             no={moment.stampNo}

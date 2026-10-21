@@ -2,6 +2,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { findFrame, findPaper } from '../../data/papers'
 import { parseDay } from '../../lib/dates'
 import { FrameLayer, PaperLayer } from './PaperLayer'
+import PhotoPeek from '../photo/PhotoPeek'
 import Postmark from '../postmark/Postmark'
 import Stamp from '../stamp/Stamp'
 import './letter.css'
@@ -20,6 +21,7 @@ export function PostcardFront({ moment, children }) {
   return (
     <>
       <div className="pcard__stamp">
+        <PhotoPeek momentId={moment.id} seed={moment.day} />
         <Stamp
           colors={moment.palette.map((c) => c.hex)}
           no={moment.stampNo}

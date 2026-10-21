@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import Screen from '../app/Screen'
 import Postmark from '../components/postmark/Postmark'
+import PhotoPeek from '../components/photo/PhotoPeek'
 import Stamp from '../components/stamp/Stamp'
 import Stamper from '../components/stamper/Stamper'
 import { queries } from '../db/queries'
@@ -23,6 +24,7 @@ const AT = {
   bands: 0.6,
   stamper: 0.4,
   postmark: 1.15,
+  photo: 1.3, // the photo slides out from behind the stamp
   ambient: 1.6,
   five: 2.1,
   buttons: 2.6,
@@ -130,6 +132,11 @@ export default function Reveal() {
           animate={{ y: 0, opacity: 1, rotate: 0 }}
           transition={{ ...SPRING, stiffness: 180, damping: 11, delay: t(AT.stamp) }}
         >
+          <PhotoPeek
+            momentId={moment.id}
+            seed={moment.day}
+            slide={instant ? undefined : { delay: AT.photo }}
+          />
           <Stamp
             colors={colors}
             no={moment.stampNo}

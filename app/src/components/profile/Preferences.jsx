@@ -56,6 +56,34 @@ export default function Preferences() {
           onChange={(e) => change('revealAnimation', e.target.checked)}
         />
       </label>
+      <label className="prefs__row">
+        <span>
+          Film strip
+          <small>How many photos in a photo-booth strip.</small>
+        </span>
+        <select
+          value={settings.stripFrames}
+          onChange={(e) => change('stripFrames', Number(e.target.value))}
+          aria-label="Frames in a film strip"
+        >
+          <option value={3}>3 frames</option>
+          <option value={4}>4 frames</option>
+        </select>
+      </label>
+      <label className="prefs__row">
+        <span>
+          Stamp colors, when there is a photo
+          <small>Where a stamp’s five colors come from unless you choose on the day.</small>
+        </span>
+        <select
+          value={settings.paletteDefault}
+          onChange={(e) => change('paletteDefault', e.target.value)}
+          aria-label="Default source of a stamp's colors"
+        >
+          <option value="moment">My words</option>
+          <option value="photo">My photo</option>
+        </select>
+      </label>
       {error && (
         <p className="prefs__error" role="alert">
           {error}

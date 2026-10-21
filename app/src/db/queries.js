@@ -66,6 +66,8 @@ export function makeQueries(db) {
       throw new Error('stripFrames is 3 or 4')
     if (key === 'smartReading' && value !== null && value !== 'on' && value !== 'off')
       throw new Error("smartReading is null, 'on' or 'off'")
+    if (key === 'paletteDefault' && value !== 'moment' && value !== 'photo')
+      throw new Error("paletteDefault is 'moment' or 'photo'")
     if (key === 'name' && (typeof value !== 'string' || value.length > 30))
       throw new Error('A name can be up to 30 letters')
     if (key === 'homeCity' && value !== null && (typeof value !== 'string' || value.length > 40))
@@ -292,6 +294,31 @@ export function makeQueries(db) {
     await db.media.put(media)
     return media
   }
+  /**
+   * A postcard's photo: one picture (a single photo or a film strip), replacing any it had. `media` is
+   * { kind: 'single' | 'strip', blob, thumb, filter, intensity, layoutSeed }. A sealed postcard's photo
+   * is locked, like its note.
+   */
+  async function setMedia(momentId, media) {
+    if (media.kind !== 'single' && media.kind !== 'strip')
+      throw new Error("A photo is 'single' or 'strip'")
+    return db.transaction('rw', db.moments, db.media, async () => {
+      await editableMoment(momentId)
+      await db.media.where('momentId').equals(momentId).delete()
+      const row = { id: newId(), momentId, ...media }
+      await db.media.put(row)
+      return row
+    })
+  }
+
+  /** Take a postcard's photo away (not once it is sealed). */
+  async function removeMedia(momentId) {
+    return db.transaction('rw', db.moments, db.media, async () => {
+      await editableMoment(momentId)
+      await db.media.where('momentId').equals(momentId).delete()
+    })
+  }
+
   const mediaForMoment = (momentId) => db.media.where('momentId').equals(momentId).toArray()
   const deleteMediaForMoment = (momentId) => db.media.where('momentId').equals(momentId).delete()
 
@@ -490,6 +517,8 @@ export function makeQueries(db) {
     removeDecoration,
     setLook,
     saveMedia,
+    setMedia,
+    removeMedia,
     mediaForMoment,
     deleteMediaForMoment,
   }
