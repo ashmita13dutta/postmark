@@ -2,6 +2,7 @@ import { useLiveQuery } from 'dexie-react-hooks'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { demo } from '../../db/demo'
+import { addSamplePhotos } from '../../lib/demoPhoto'
 import { parseDay } from '../../lib/dates'
 import './demo.css'
 
@@ -54,6 +55,10 @@ export default function DemoTools() {
       unsealed: 'Seal today’s postcard first (Stamp it, then Seal & send), then come back.',
       none: 'There is no stamp for today yet. Stamp and seal one, then come back.',
     })[result]
+  const photosText = ({ added }) =>
+    added
+      ? `Gave ${added} demo postcards a sample photo or film strip. Look at their stamps, in the Calendar and on the postcard.`
+      : 'Every demo postcard already has a photo, or there are none yet.'
   const removeText = ({ removed, restored }) =>
     `Removed ${removed} demo postcards${restored ? ` and put ${restored} postcard back to its real delivery date` : ''}.`
 
@@ -72,6 +77,9 @@ export default function DemoTools() {
         </button>
         <button disabled={busy} onClick={() => run(() => demo.addYear(), yearText)}>
           Fill this year with demo stamps
+        </button>
+        <button disabled={busy} onClick={() => run(() => addSamplePhotos(), photosText)}>
+          Add sample photos to the demo postcards
         </button>
         <button disabled={busy} onClick={() => run(() => demo.deliverToday(), todayText)}>
           Open today’s postcard now

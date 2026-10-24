@@ -18,13 +18,18 @@ const PREVIEW_EDGE = 560
  * filters, and see the result live. Nothing is saved until `save(momentId)`, and nothing leaves the
  * phone. `seed` (the day) steadies the grain and the way the photo sits behind the stamp.
  *
- * Returns { has, mode, setMode, frames, filter, setFilter, intensity, setIntensity, preview, thumbs, palette,
- *           busy, error, pick, clear, save }. `palette` is five colors read from the original photo
+ * Photos can come from the camera (one at a time: a film strip collects them until it has enough) or
+ * from the photo library (a strip takes all its frames at once, or a few at a time).
+ *
+ * Returns { has, mode, setMode, frames, waiting, filter, setFilter, intensity, setIntensity, preview,
+ *           thumbs, palette, busy, error, pick, loadSaved, clear, save }. `waiting` is how many frames of a
+ *           strip are chosen so far. `palette` is five colors read from the original photo
  *           ({ colors, paletteSource: 'photo' }), or null.
  */
 export function usePhoto({ frames, seed }) {
   const [mode, setModeState] = useState('single') // 'single' | 'strip'
   const [bitmaps, setBitmaps] = useState([])
+  const [pending, setPending] = useState([]) // frames of a strip chosen so far
   const [filter, setFilter] = useState('vintage')
   const [intensity, setIntensity] = useState(0.7)
   const [preview, setPreview] = useState(null)
@@ -67,6 +72,7 @@ export function usePhoto({ frames, seed }) {
     setModeState(next)
     // a different mode needs different photos
     setBitmaps([])
+    setPending([])
     setPreview(null)
     setThumbs({})
     setPalette(null)
@@ -74,17 +80,40 @@ export function usePhoto({ frames, seed }) {
   }, [])
 
   async function pick(fileList) {
-    const files = [...fileList].slice(0, wanted)
-    if (!files.length) return
+    const added = [...fileList]
+    if (!added.length) return
+    // a strip keeps collecting frames until it has enough; one photo replaces whatever there was
+    const all = mode === 'strip' ? [...pending, ...added] : added.slice(0, 1)
+    setError(null)
+    if (all.length < wanted) {
+      setPending(all)
+      return
+    }
+    setBusy(true)
+    try {
+      const opened = await openPhotos(all.slice(0, wanted))
+      setPending([])
+      setBitmaps(opened)
+      setPalette(paletteFromPixels(pixelsForPalette(opened)))
+    } catch (err) {
+      setPending([])
+      setError(err.message)
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  /** Open a saved photo's unfiltered originals again, to change its look (not once sealed). */
+  async function loadSaved(media) {
+    if (!media?.sources?.length) return
     setBusy(true)
     setError(null)
     try {
-      if (files.length < wanted) {
-        throw new Error(
-          `A film strip needs ${wanted} photos. Pick ${wanted} at once, in the order you want them.`,
-        )
-      }
-      const opened = await openPhotos(files)
+      const opened = await openPhotos(media.sources)
+      setModeState(media.kind)
+      setPending([])
+      setFilter(media.filter)
+      setIntensity(media.intensity)
       setBitmaps(opened)
       setPalette(paletteFromPixels(pixelsForPalette(opened)))
     } catch (err) {
@@ -95,6 +124,7 @@ export function usePhoto({ frames, seed }) {
   }
 
   function clear() {
+    setPending([])
     setBitmaps([])
     setPreview(null)
     setThumbs({})
@@ -106,11 +136,12 @@ export function usePhoto({ frames, seed }) {
   async function save(momentId) {
     if (!bitmaps.length) return null
     const settings = { kind: mode, filter, intensity, seed }
-    const { blob, thumb } = await finishPhoto(bitmaps, settings)
+    const { blob, thumb, sources } = await finishPhoto(bitmaps, settings)
     return queries.setMedia(momentId, {
       kind: mode,
       blob,
       thumb,
+      sources,
       filter,
       intensity,
       layoutSeed: seed,
@@ -121,7 +152,8 @@ export function usePhoto({ frames, seed }) {
     has: bitmaps.length > 0,
     mode,
     setMode,
-    frames: wanted,
+    frames, // how many photos a film strip has (the setting)
+    waiting: pending.length,
     filter,
     setFilter,
     intensity,
@@ -132,6 +164,7 @@ export function usePhoto({ frames, seed }) {
     busy,
     error,
     pick,
+    loadSaved,
     clear,
     save,
   }

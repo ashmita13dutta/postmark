@@ -162,6 +162,42 @@ describe('importing onto an empty phone', () => {
   })
 })
 
+describe('a list of pictures (the originals kept for re-filtering)', () => {
+  it('goes into the backup as numbered files and comes back in order', async () => {
+    const m = await stamp(A, '2026-09-03', 'a strip')
+    const jpeg = (...bytes) => new Blob([new Uint8Array(bytes)], { type: 'image/jpeg' })
+    await A.db.media.put({
+      id: 'strip1',
+      momentId: m.id,
+      kind: 'strip',
+      blob: jpeg(1, 2, 3),
+      thumb: jpeg(9),
+      sources: [jpeg(10), jpeg(20, 21), jpeg(30, 31, 32)],
+    })
+    const out = await A.b.exportBackup()
+    const { files, data } = parseBackup(out.bytes)
+    expect(Object.keys(files).sort()).toEqual(
+      [
+        'data.json',
+        'media/strip1/blob',
+        'media/strip1/sources/0',
+        'media/strip1/sources/1',
+        'media/strip1/sources/2',
+        'media/strip1/thumb',
+      ].sort(),
+    )
+    expect(data.tables.media[0].sources).toHaveLength(3)
+    await B.b.importBackup(parseBackup(out.bytes))
+    const back = await B.db.media.get('strip1')
+    expect(back.sources).toHaveLength(3)
+    const sizes = await Promise.all(
+      back.sources.map(async (b) => (await b.arrayBuffer()).byteLength),
+    )
+    expect(sizes).toEqual([1, 2, 3])
+    expect(back.sources.every((b) => b.type === 'image/jpeg')).toBe(true)
+  })
+})
+
 describe('importing onto a phone that already has stamps', () => {
   it('keeps your day when the same day is in the backup, and adds the rest', async () => {
     await stamp(A, '2026-09-03', 'backup version')

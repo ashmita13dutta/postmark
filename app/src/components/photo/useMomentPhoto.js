@@ -14,6 +14,36 @@ export function useObjectUrl(blob) {
   return url
 }
 
+const NO_ROWS = []
+
+/**
+ * The photos of many postcards at once, as a Map from postcard id to { url, kind, filter } (small
+ * thumbnails). One database read for all of them, and every picture URL is let go of when it changes.
+ */
+export function useMomentPhotos(ids) {
+  const key = ids.join(',')
+  const rows = useLiveQuery(() => queries.mediaForMoments(ids), [key], NO_ROWS)
+  const map = useMemo(
+    () =>
+      new Map(
+        rows
+          .filter((r) => r.thumb)
+          .map((r) => [
+            r.momentId,
+            { url: URL.createObjectURL(r.thumb), kind: r.kind, filter: r.filter },
+          ]),
+      ),
+    [rows],
+  )
+  useEffect(
+    () => () => {
+      for (const p of map.values()) URL.revokeObjectURL(p.url)
+    },
+    [map],
+  )
+  return map
+}
+
 /**
  * A postcard's photo: { url, kind, filter } or null (still loading, or there is none). `which` is
  * 'thumb' (small: stamps, calendar) or 'blob' (the full picture). Updates when the photo changes.

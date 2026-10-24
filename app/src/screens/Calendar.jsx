@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import Screen from '../app/Screen'
 import PhotoPeek from '../components/photo/PhotoPeek'
+import { useMomentPhotos } from '../components/photo/useMomentPhoto'
 import Postmark from '../components/postmark/Postmark'
 import Stamp from '../components/stamp/Stamp'
 import { queries } from '../db/queries'
@@ -143,6 +144,7 @@ export default function Calendar() {
   const firstMonth = allDays.length ? monthKey(allDays[0]) : thisMonth
 
   const byDay = useMemo(() => new Map(moments.map((m) => [m.day, m])), [moments])
+  const photos = useMomentPhotos(moments.map((m) => m.id))
   const { offset } = monthLayout(month)
   const days = monthDays(month)
   const nowMs = now()
@@ -204,13 +206,22 @@ export default function Calendar() {
                   onClick={() => setOpen(moment)}
                   aria-label={`${longDate(day)}, stamped${sealed ? ', sealed' : ''}`}
                 >
-                  <Stamp
-                    colors={moment.palette.map((c) => c.hex)}
-                    seed={day}
-                    width={38}
-                    small
-                    label=""
-                  />
+                  <span className="cal__stamp">
+                    <PhotoPeek
+                      momentId={moment.id}
+                      seed={day}
+                      photo={photos.get(moment.id) ?? null}
+                      scale={0.7}
+                      className="peek--cal"
+                    />
+                    <Stamp
+                      colors={moment.palette.map((c) => c.hex)}
+                      seed={day}
+                      width={38}
+                      small
+                      label=""
+                    />
+                  </span>
                   {sealed && <i className="cal__wax" aria-hidden="true" />}
                   <span className="cal__n">{n}</span>
                 </button>

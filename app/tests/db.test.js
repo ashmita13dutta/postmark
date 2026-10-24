@@ -354,3 +354,25 @@ describe('photo settings', () => {
     await expect(q.setSetting('paletteDefault', 'both')).rejects.toThrow(/moment|photo/)
   })
 })
+
+describe('a photo’s unfiltered originals', () => {
+  const jpeg = (n) => new Blob([new Uint8Array(n)], { type: 'image/jpeg' })
+
+  it('are kept while the postcard can change, and dropped when it is sealed', async () => {
+    const m = await q.saveMoment('2026-09-24', { note: 'x' })
+    await q.setMedia(m.id, {
+      kind: 'strip',
+      blob: jpeg(8),
+      thumb: jpeg(2),
+      sources: [jpeg(5), jpeg(6), jpeg(7)],
+      filter: 'vintage',
+      intensity: 0.7,
+      layoutSeed: 's',
+    })
+    expect((await q.mediaForMoment(m.id))[0].sources).toHaveLength(3)
+    await q.sealMoment(m.id, { color: '#B14126', emblem: 'heart' })
+    const [kept] = await q.mediaForMoment(m.id)
+    expect(kept.sources).toBeUndefined()
+    expect(kept.blob.size).toBe(8) // the picture itself stays
+  })
+})

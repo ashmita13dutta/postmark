@@ -17,6 +17,14 @@
 .peek--strip {
   border-width: 0;
 }
+/* a small one in the Calendar's grid */
+.peek--cal {
+  border-width: 2px;
+  box-shadow: 0 1px 3px rgba(42, 38, 32, 0.35);
+}
+.peek--cal.peek--strip {
+  border-width: 0;
+}
 
 /* the stamp paints over its photo */
 .pcard__stamp > .stamp,
@@ -126,6 +134,16 @@
 }
 .palettemode button:disabled {
   opacity: 0.45;
+}
+
+/* "Take a photo" and "Choose from your photos" */
+.photo__ways {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+}
+.photo__ways .photo__pick {
+  width: 100%;
 }
 
 /* the filter row: a sample of the photo for each look */

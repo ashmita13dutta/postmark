@@ -9,13 +9,26 @@ import './photo.css'
  * the stamp (`position: relative`) and the stamp paints over it. Renders nothing without a photo.
  *  - momentId, seed: which postcard, and what steadies its tilt (the day)
  *  - slide:          { delay } to slide out from behind the stamp (Reveal); omit to just sit there
+ *  - photo:          an already-loaded photo { url, kind }, or null for none (the Calendar loads a
+ *                    month's at once); leave it out and the postcard's own photo is read
+ *  - scale:          makes the photo narrower or wider than usual (the postcard back uses less)
+ *  - className:      extra classes, e.g. a smaller look in the Calendar
  */
-export default function PhotoPeek({ momentId, seed, back = false, slide }) {
-  const photo = useMomentPhoto(momentId)
+export default function PhotoPeek({
+  momentId,
+  seed,
+  back = false,
+  slide,
+  photo: given,
+  scale = 1,
+  className = '',
+}) {
+  const own = useMomentPhoto(given === undefined ? momentId : null)
+  const photo = given === undefined ? own : given
   if (!photo) return null
   const g = peekGeometry(seed, back)
   // a film strip is tall and narrow, so it peeks out smaller
-  const width = photo.kind === 'strip' ? g.width * 0.5 : g.width
+  const width = (photo.kind === 'strip' ? g.width * 0.5 : g.width) * scale
   const x = peekX(g, width)
   const style = {
     left: `${x * 100}%`,
@@ -27,7 +40,7 @@ export default function PhotoPeek({ momentId, seed, back = false, slide }) {
   const turned = { rotate: g.rotate }
   return (
     <motion.img
-      className={photo.kind === 'strip' ? 'peek peek--strip' : 'peek'}
+      className={`${photo.kind === 'strip' ? 'peek peek--strip' : 'peek'} ${className}`.trim()}
       src={photo.url}
       alt=""
       draggable={false}

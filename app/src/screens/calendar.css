@@ -82,6 +82,15 @@
 .cal__cell--stamp:active {
   transform: scale(0.94);
 }
+.cal__stamp {
+  position: relative;
+  display: block;
+  width: 38px;
+}
+.cal__stamp > .stamp {
+  position: relative;
+  z-index: 1;
+}
 .cal__n {
   font: 500 10px var(--font-mono);
   color: var(--ink-60);

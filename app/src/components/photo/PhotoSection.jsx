@@ -5,17 +5,38 @@ import { useObjectUrl } from './useMomentPhoto'
 import './photo.css'
 
 /**
- * Today's photo: one photo or a photo-booth film strip, a filter row and an intensity slider, with
- * the result shown live. `photo` is usePhoto(); `saved` is the postcard's stored photo row (or null),
- * shown until you pick another. A sealed postcard shows nothing here.
+ * Today's photo. Two ways in: "Take a photo" opens the camera, "Choose from your photos" opens the
+ * photo library. One photo, or a photo-booth film strip of 3 or 4 (the camera adds a frame at a
+ * time, the library can give several at once). Then a filter row and a strength slider, with the
+ * result shown live.
+ *
+ * `photo` is usePhoto(); `saved` is the postcard's stored photo row (or null), shown until you pick
+ * another, with a way to change its look while the postcard is not sealed.
  *  - onRemoveSaved: take the stored photo away
  */
 export default function PhotoSection({ photo, saved, onRemoveSaved }) {
-  const input = useRef(null)
+  const camera = useRef(null)
+  const library = useRef(null)
   const savedUrl = useObjectUrl(saved?.thumb ?? null)
   const frames = photo.frames
-  // the picker also lists HEIC and AVIF where the device does not convert them itself
+  const strip = photo.mode === 'strip'
+  // the library also lists HEIC and AVIF where the device does not convert them itself
   const accept = photoAccept()
+
+  const chooseButtons = (label) => (
+    <div className="photo__ways">
+      <button className="photo__pick" disabled={photo.busy} onClick={() => camera.current?.click()}>
+        Take a photo
+      </button>
+      <button
+        className="photo__pick"
+        disabled={photo.busy}
+        onClick={() => library.current?.click()}
+      >
+        {label}
+      </button>
+    </div>
+  )
 
   return (
     <section className="photo" aria-label="Photo">
@@ -25,11 +46,15 @@ export default function PhotoSection({ photo, saved, onRemoveSaved }) {
         <>
           <img className="photo__preview" src={savedUrl} alt="Your photo for today" />
           <p className="photo__hint">
-            Saved with a {saved.filter === 'none' ? 'plain' : saved.filter} look. Pick another to
-            replace it.
+            Saved with a {saved.filter === 'none' ? 'plain' : saved.filter} look.
           </p>
           <div className="photo__row">
-            <button onClick={() => input.current?.click()}>Replace</button>
+            {saved.sources?.length > 0 && (
+              <button disabled={photo.busy} onClick={() => photo.loadSaved(saved)}>
+                Change the look
+              </button>
+            )}
+            <button onClick={() => library.current?.click()}>Replace</button>
             <button className="photo__remove" onClick={onRemoveSaved}>
               Remove
             </button>
@@ -50,23 +75,20 @@ export default function PhotoSection({ photo, saved, onRemoveSaved }) {
               className={photo.mode === 'strip' ? 'on' : ''}
               onClick={() => photo.setMode('strip')}
             >
-              Film strip ({frames > 1 ? frames : 3})
+              Film strip ({frames})
             </button>
           </div>
-          <button
-            className="photo__pick"
-            style={{ marginTop: 10 }}
-            disabled={photo.busy}
-            onClick={() => input.current?.click()}
-          >
-            {photo.busy
-              ? 'Opening…'
-              : photo.mode === 'strip'
-                ? `Pick ${frames} photos`
-                : 'Add a photo'}
-          </button>
+          {photo.busy ? (
+            <p className="photo__hint">Opening…</p>
+          ) : (
+            chooseButtons('Choose from your photos')
+          )}
           <p className="photo__hint">
-            It stays on your phone and peeks out from behind your stamp.
+            {strip
+              ? photo.waiting > 0
+                ? `${photo.waiting} of ${frames} photos so far. Add ${frames - photo.waiting} more.`
+                : `Add ${frames} photos, one at a time or together.`
+              : 'It stays on your phone and peeks out from behind your stamp.'}
           </p>
         </>
       )}
@@ -108,7 +130,7 @@ export default function PhotoSection({ photo, saved, onRemoveSaved }) {
             </label>
           )}
           <div className="photo__row">
-            <button onClick={() => input.current?.click()}>Change</button>
+            <button onClick={() => library.current?.click()}>Change photo</button>
             <button className="photo__remove" onClick={photo.clear}>
               Remove
             </button>
@@ -121,13 +143,26 @@ export default function PhotoSection({ photo, saved, onRemoveSaved }) {
           {photo.error}
         </p>
       )}
+      {/* the camera: one picture at a time. The library: several for a strip. */}
       <input
-        ref={input}
+        ref={camera}
+        type="file"
+        accept="image/*"
+        capture="environment"
+        hidden
+        aria-label="Take a photo with the camera"
+        onChange={(e) => {
+          photo.pick(e.target.files)
+          e.target.value = ''
+        }}
+      />
+      <input
+        ref={library}
         type="file"
         accept={accept}
-        multiple={photo.mode === 'strip'}
+        multiple={strip}
         hidden
-        aria-label="Choose a photo"
+        aria-label="Choose photos from your library"
         onChange={(e) => {
           photo.pick(e.target.files)
           e.target.value = ''

@@ -65,7 +65,21 @@
   color: var(--ink-45);
 }
 
-/* back */
+/* back: the photo shows through the paper, mirrored, behind the writing */
+.pcard__show {
+  position: absolute;
+  top: 8px;
+  right: 14px;
+  width: 78px;
+  opacity: 0.45;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+.pcard__head,
+.pcard__note {
+  position: relative;
+  z-index: 1;
+}
 .pcard__head {
   display: flex;
   align-items: baseline;

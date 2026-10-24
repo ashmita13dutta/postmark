@@ -4,6 +4,7 @@ import Screen from '../app/Screen'
 import Envelope from '../components/mailbox/Envelope'
 import LetterView from '../components/mailbox/LetterView'
 import OpenRitual from '../components/mailbox/OpenRitual'
+import RewardsShelf from '../components/mailbox/RewardsShelf'
 import Stamp from '../components/stamp/Stamp'
 import { queries } from '../db/queries'
 import { now } from '../lib/clock'
@@ -196,6 +197,8 @@ export default function Mailbox() {
           ))}
         </section>
       )}
+
+      <RewardsShelf moments={all} today={today} />
 
       {open?.mode === 'ritual' && (
         <OpenRitual

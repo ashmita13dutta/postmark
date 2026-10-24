@@ -4,6 +4,7 @@ import { now } from '../lib/clock'
 import { MAX_DECORATIONS, clampPlacement } from '../lib/decor'
 import { clampDeliveryDay, dayKey, sealedUntilFor } from '../lib/dates'
 import { eligibleForDelay, pickDelayed } from '../lib/mailbox'
+import { earnedRewards } from '../lib/rewards'
 import { MAX_MOODS, buildMoods, cleanMood, isMyMood } from '../engine/moods'
 import { clampLook } from '../data/papers'
 import { applyFields, newMoment } from './moments'
@@ -161,13 +162,20 @@ export function makeQueries(db) {
 
   /** "Seal & send": records the wax seal and locks the postcard. Safe to call twice. */
   async function sealMoment(momentId, seal) {
-    return db.transaction('rw', db.moments, db.seals, async () => {
+    return db.transaction('rw', db.moments, db.seals, db.media, async () => {
       const moment = await getMoment(momentId)
       if (!moment) throw new Error(`No such moment: ${momentId}`)
       if (moment.sealedAt != null) return moment
       const sealed = { ...moment, sealedAt: now(), updatedAt: now() }
       await db.moments.put(sealed)
       if (seal) await db.seals.put({ ...seal, momentId })
+      // the unfiltered originals were only kept so the look could change; once sealed it cannot
+      await db.media
+        .where('momentId')
+        .equals(momentId)
+        .modify((row) => {
+          delete row.sources
+        })
       return sealed
     })
   }
@@ -319,7 +327,31 @@ export function makeQueries(db) {
     })
   }
 
+  // ---- rewards ----
+
+  const allRewards = () => db.rewards.toArray()
+  /**
+   * Remember any reward earned since last time (golden stamp, streak sticker, complete month, month
+   * pack), with when it was first earned. Worked out from real stamps only, never demo ones. Returns
+   * the new ones, so a screen can say "New!".
+   */
+  async function syncRewards(today, nowMs = now()) {
+    return db.transaction('rw', db.moments, db.rewards, async () => {
+      const real = (await db.moments.toArray()).filter((m) => m.demo !== true)
+      const have = new Set((await db.rewards.toArray()).map((r) => r.id))
+      const fresh = earnedRewards(real, today)
+        .filter((r) => !have.has(r.id))
+        .map((r) => ({ ...r, at: nowMs, seen: false }))
+      if (fresh.length) await db.rewards.bulkAdd(fresh)
+      return fresh
+    })
+  }
+  const markRewardsSeen = () => db.rewards.filter((r) => r.seen === false).modify({ seen: true })
+
   const mediaForMoment = (momentId) => db.media.where('momentId').equals(momentId).toArray()
+  /** The photos of several postcards at once (a month's calendar, say). */
+  const mediaForMoments = (ids) =>
+    ids.length ? db.media.where('momentId').anyOf(ids).toArray() : Promise.resolve([])
   const deleteMediaForMoment = (momentId) => db.media.where('momentId').equals(momentId).delete()
 
   // ---- lexicon: words you taught the mood engine ----
@@ -520,6 +552,10 @@ export function makeQueries(db) {
     setMedia,
     removeMedia,
     mediaForMoment,
+    mediaForMoments,
+    allRewards,
+    syncRewards,
+    markRewardsSeen,
     deleteMediaForMoment,
   }
 }

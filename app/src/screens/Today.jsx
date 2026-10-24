@@ -74,7 +74,7 @@ export default function Today() {
  * The note editor. `demo` turns it into the demo-postcard editor on You (src/screens/DemoPostcard.jsx):
  * the same reading, stamp, colors and "Not quite?" fixes, but for a past day, saved as a demo
  * postcard, and without the real streak, year-ago banner or taught corrections.
- *   demo = { controls, blocked, samples, onSave(fields) }
+ *   demo = { controls, blocked, samples, onSave(fields, savePhoto) }
  *     controls: extra content under the title (the date picker)
  *     blocked:  true while this day cannot take a demo postcard
  *     samples:  notes to offer under the box
@@ -194,8 +194,10 @@ export function Editor({ day, existing, demo }) {
     [sealed, existing?.id],
   )
 
+  // a photo picked (or reopened to change its look) is not saved yet, so there is something to save
   const saved =
     existing &&
+    !photo.has &&
     existing.note === text.trim() &&
     existing.feeling === r.feeling &&
     existing.topic === r.topic &&
@@ -277,7 +279,8 @@ export function Editor({ day, existing, demo }) {
         paletteSource: custom ? 'manual' : fromPhoto ? 'photo' : 'moment',
       }
       if (demo) {
-        await demo.onSave(fields)
+        // the photo goes with the postcard once it exists
+        await demo.onSave(fields, photo.has ? (id) => photo.save(id) : undefined)
         return
       }
       const m = await queries.saveMoment(day, fields)
@@ -360,7 +363,7 @@ export function Editor({ day, existing, demo }) {
         </button>
       )}
 
-      {!demo && !sealed && (
+      {!sealed && (
         <PhotoSection
           photo={photo}
           saved={savedPhoto}
@@ -378,7 +381,7 @@ export function Editor({ day, existing, demo }) {
         />
       </div>
 
-      {!demo && !sealed && (
+      {!sealed && (
         <div className="palettemode" role="group" aria-label="Where the colors come from">
           <button
             className={fromPhoto ? '' : 'on'}

@@ -38,10 +38,16 @@ export function PostcardFront({ moment, children }) {
   )
 }
 
-/** The back of a postcard: who it is from, the note, and whatever is stuck on top (children). */
+/**
+ * The back of a postcard: who it is from, the note, and whatever is stuck on top (children). The
+ * photo shows through the paper, turned the other way round (it is the same photo, seen from behind).
+ */
 export function PostcardBack({ moment, children }) {
   return (
     <>
+      <div className="pcard__show" aria-hidden="true">
+        <PhotoPeek momentId={moment.id} seed={moment.day} back scale={0.8} />
+      </div>
       <div className="pcard__head">
         <span className="lbl">From: {shortDate(moment.day)}</span>
         <span className="pcard__to">to future you</span>

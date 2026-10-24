@@ -82,8 +82,9 @@ function Maker({ start }) {
     controls,
     blocked: taken === undefined || clash !== null,
     samples: SAMPLE_NOTES,
-    onSave: async (fields) => {
+    onSave: async (fields, savePhoto) => {
       const moment = await demo.savePostcard({ day, opened, ...fields })
+      await savePhoto?.(moment.id)
       navigate(`/you/demo/${moment.id}/stickers`)
     },
   }

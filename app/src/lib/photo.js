@@ -257,11 +257,22 @@ export function filterThumbnail(base, { filter, intensity, seed }) {
   return canvas.toDataURL('image/jpeg', 0.8)
 }
 
-/** The kept version: the full picture and its thumbnail, as JPEG blobs. */
+/**
+ * The kept version: the full picture and its thumbnail, as JPEG blobs, plus the unfiltered originals
+ * (`sources`, also at most MAX_EDGE) so the look can be changed until the postcard is sealed.
+ */
 export async function finishPhoto(bitmaps, settings) {
   const full = renderPhoto(bitmaps, settings, MAX_EDGE)
   const small = renderPhoto(bitmaps, settings, THUMB_EDGE)
-  return { blob: await toBlob(full), thumb: await toBlob(small, 0.75) }
+  const sources = await Promise.all(
+    bitmaps.map((b) => {
+      const size = fitWithin(b.width, b.height, MAX_EDGE)
+      const canvas = canvasOf(size.width, size.height)
+      canvas.getContext('2d').drawImage(b, 0, 0, size.width, size.height)
+      return toBlob(canvas)
+    }),
+  )
+  return { blob: await toBlob(full), thumb: await toBlob(small, 0.75), sources }
 }
 
 /**

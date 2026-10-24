@@ -55,11 +55,16 @@ const isBlob = (v) => typeof Blob !== 'undefined' && v instanceof Blob
 /** Replace each Blob in a row by a pointer to a file in the zip, and collect the files. */
 async function stripBlobs(table, row, files) {
   const out = { ...row }
+  const put = async (path, blob) => {
+    files[path] = [new Uint8Array(await blob.arrayBuffer()), { level: 0 }] // photos are compressed already
+    return { $file: path, type: blob.type }
+  }
   for (const [key, value] of Object.entries(row)) {
-    if (!isBlob(value)) continue
-    const path = `${table}/${row[KEYS[table]]}/${key}`
-    files[path] = [new Uint8Array(await value.arrayBuffer()), { level: 0 }] // photos are compressed already
-    out[key] = { $file: path, type: value.type }
+    const base = `${table}/${row[KEYS[table]]}/${key}`
+    if (isBlob(value)) out[key] = await put(base, value)
+    // a list of pictures (the originals kept while a postcard can still be changed)
+    else if (Array.isArray(value) && value.length && value.every(isBlob))
+      out[key] = await Promise.all(value.map((b, i) => put(`${base}/${i}`, b)))
   }
   return out
 }
@@ -67,12 +72,15 @@ async function stripBlobs(table, row, files) {
 /** The reverse: turn pointers back into Blobs. */
 function reviveBlobs(row, files) {
   const out = { ...row }
+  const one = (ref) => {
+    const bytes = files[ref.$file]
+    if (!bytes) throw new BackupError('The backup is missing a photo it mentions.')
+    return new Blob([bytes], { type: ref.type ?? '' })
+  }
+  const isRef = (v) => v && typeof v === 'object' && typeof v.$file === 'string'
   for (const [key, value] of Object.entries(row)) {
-    if (value && typeof value === 'object' && typeof value.$file === 'string') {
-      const bytes = files[value.$file]
-      if (!bytes) throw new BackupError('The backup is missing a photo it mentions.')
-      out[key] = new Blob([bytes], { type: value.type ?? '' })
-    }
+    if (isRef(value)) out[key] = one(value)
+    else if (Array.isArray(value) && value.length && value.every(isRef)) out[key] = value.map(one)
   }
   return out
 }

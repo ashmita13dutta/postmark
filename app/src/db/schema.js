@@ -14,7 +14,8 @@
  *  seals            { momentId, color, emblem: 'heart'|'star'|'moon'|'initial', initial? }
  *  customStickers   { id, blob, createdFrom: 'manual'|'auto', createdAt }
  *  unlocks          { id, packId, unlockedBy: 'city'|'month'|'streak'|'start', at }
- *  rewards          { id, kind: 'golden-stamp'|'complete-month'|'streak-sticker', monthKey?, at }
+ *  rewards          { id, kind: 'golden-stamp'|'complete-month'|'streak-sticker'|'month-pack', monthKey?, packId?,
+ *                     name, at, seen }   worked out from the stamps (lib/rewards.js); only 'at' and 'seen' are kept
  *  calendarStickers { id, monthKey, stickerId?, label?, x, y }
  *  redeliveries     { monthKey, momentId }                  delayed-in-transit pick, fixed per month
  *  volumes          { year, coverStickers, closedAt }
