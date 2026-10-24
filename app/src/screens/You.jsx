@@ -3,6 +3,7 @@ import Screen from '../app/Screen'
 import BackupCard from '../components/backup/BackupCard'
 import Preferences from '../components/profile/Preferences'
 import PostmasterCard from '../components/profile/PostmasterCard'
+import StickerCollection from '../components/profile/StickerCollection'
 import Reminders from '../components/profile/Reminders'
 import Storage from '../components/profile/Storage'
 import DemoTools from '../components/demo/DemoTools'
@@ -14,6 +15,7 @@ export default function You() {
   return (
     <Screen caption="Postmaster" title="You">
       <PostmasterCard />
+      <StickerCollection />
       <Preferences />
       <Reminders />
       <BackupCard />

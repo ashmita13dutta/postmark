@@ -224,6 +224,8 @@ export function makeQueries(db) {
   // ---- postcard decorations ----
 
   /** A moment's stickers, back to front. */
+  /** Every sticker on every postcard (for the collection on You). */
+  const allDecorations = () => db.decorations.toArray()
   const decorationsFor = (momentId) => db.decorations.where('momentId').equals(momentId).sortBy('z')
 
   const getSeal = (momentId) => db.seals.get(momentId)
@@ -610,6 +612,7 @@ export function makeQueries(db) {
     mediaForMoment,
     mediaForMoments,
     setSong,
+    allDecorations,
     allVolumes,
     setCover,
     closeVolumes,
