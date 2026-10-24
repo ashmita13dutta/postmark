@@ -9,3 +9,5 @@ tests/corpus/real*.json
 # the note reader's model is downloaded by `npm run model`; the training cache is generated
 public/models/
 .cache/
+playwright-report
+test-results

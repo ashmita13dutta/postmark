@@ -4,7 +4,7 @@ import react from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
 
 export default [
-  { ignores: ['dist', 'dev-dist', 'node_modules'] },
+  { ignores: ['dist', 'dev-dist', 'node_modules', 'playwright-report', 'test-results'] },
   js.configs.recommended,
   {
     files: ['**/*.{js,jsx,mjs}'],
@@ -36,5 +36,5 @@ export default [
     },
   },
   { files: ['src/lib/clock.js'], rules: { 'no-restricted-syntax': 'off' } },
-  { files: ['*.config.js', 'tests/**'], rules: { 'no-restricted-syntax': 'off' } },
+  { files: ['*.config.js', 'tests/**', 'e2e/**'], rules: { 'no-restricted-syntax': 'off' } },
 ]
