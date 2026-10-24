@@ -5,6 +5,8 @@ import { Link, Navigate } from 'react-router-dom'
 import Screen from '../app/Screen'
 import Postmark from '../components/postmark/Postmark'
 import PhotoPeek from '../components/photo/PhotoPeek'
+import SongLine from '../components/song/SongLine'
+import { songKey, suggestSongs } from '../engine/songs'
 import Stamp from '../components/stamp/Stamp'
 import Stamper from '../components/stamper/Stamper'
 import { queries } from '../db/queries'
@@ -102,6 +104,7 @@ export default function Reveal() {
   const setting = useLiveQuery(() => queries.getSetting('revealAnimation'), [])
   const reducedMotion = useReducedMotion()
   const [skipped, setSkipped] = useState(false)
+  const [swaps, setSwaps] = useState(0)
 
   if (moment === undefined || setting === undefined) return <Screen caption="Postmark" title=" " />
   // nothing stamped today, so nothing to reveal
@@ -196,6 +199,32 @@ export default function Reveal() {
         </ul>
         <p className="reveal__tag">{SOURCE_TAG[moment.paletteSource] ?? ''}</p>
       </motion.section>
+
+      {moment.songTitle && (
+        <motion.div {...rise(t(AT.five))}>
+          <SongLine
+            moment={moment}
+            tagged
+            onSwap={async () => {
+              // another song for the same feeling and topic, not the one already here
+              const [next] = suggestSongs({
+                feeling: moment.feeling,
+                topic: moment.topic,
+                day: moment.day,
+                round: swaps + 1,
+                skip: [songKey(moment.songTitle, moment.songArtist)],
+              })
+              setSwaps((n) => n + 1)
+              if (next)
+                await queries.setSong(moment.id, {
+                  title: next.title,
+                  artist: next.artist,
+                  source: 'suggested',
+                })
+            }}
+          />
+        </motion.div>
+      )}
 
       <motion.div className="reveal__actions" {...rise(t(AT.buttons))}>
         <Link className="reveal__primary" to="/postcard" state={{ intent: 'flip' }}>

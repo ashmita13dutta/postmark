@@ -3,6 +3,7 @@ import { findFrame, findPaper } from '../../data/papers'
 import { parseDay } from '../../lib/dates'
 import { FrameLayer, PaperLayer } from './PaperLayer'
 import PhotoPeek from '../photo/PhotoPeek'
+import SongLine from '../song/SongLine'
 import Postmark from '../postmark/Postmark'
 import Stamp from '../stamp/Stamp'
 import './letter.css'
@@ -33,6 +34,7 @@ export function PostcardFront({ moment, children }) {
           <Postmark day={moment.day} city={moment.city} />
         </div>
       </div>
+      <SongLine moment={moment} links={false} />
       {children}
     </>
   )
@@ -53,6 +55,11 @@ export function PostcardBack({ moment, children }) {
         <span className="pcard__to">to future you</span>
       </div>
       <p className="pcard__note">{moment.note}</p>
+      {moment.songTitle && (
+        <div className="pcard__song">
+          <SongLine moment={moment} />
+        </div>
+      )}
       {children}
     </>
   )

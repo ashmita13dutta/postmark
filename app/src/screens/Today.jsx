@@ -6,6 +6,7 @@ import WaxSeal from '../components/postcard/WaxSeal'
 import MoodStrip from '../components/moods/MoodStrip'
 import PhotoSection from '../components/photo/PhotoSection'
 import CityChip from '../components/place/CityChip'
+import SongPicker from '../components/song/SongPicker'
 import { usePhoto } from '../components/photo/usePhoto'
 import ReaderCard from '../components/reader/ReaderCard'
 import Stamp from '../components/stamp/Stamp'
@@ -79,7 +80,7 @@ export default function Today() {
  *     controls: extra content under the title (the date picker)
  *     blocked:  true while this day cannot take a demo postcard
  *     samples:  notes to offer under the box
- *     onSave:   saves `fields` ({ note, feeling, topic, palette, paletteSource, city }) and moves on
+ *     onSave:   saves `fields` ({ note, feeling, topic, palette, paletteSource, city, song }) and moves on
  */
 export function Editor({ day, existing, demo }) {
   const now_ = contextAt(now())
@@ -113,6 +114,15 @@ export function Editor({ day, existing, demo }) {
   // the place on the postmark: yours already, else your home city; you can change it or take it off
   const homeCity = useLiveQuery(() => queries.getSetting('homeCity'), [], null)
   const [picked, setPicked] = useState(undefined) // undefined = not chosen this visit
+  // the song: the one already on this day's stamp until you change it
+  const songMode = useLiveQuery(() => queries.getSetting('songModeDefault'), [], 'suggested')
+  const [songPicked, setSongPicked] = useState(undefined)
+  const song =
+    songPicked !== undefined
+      ? songPicked
+      : existing?.songTitle
+        ? { title: existing.songTitle, artist: existing.songArtist, source: existing.songSource }
+        : null
   const place = picked !== undefined ? picked : existing ? existing.city : homeCity
   const paletteDefault = useLiveQuery(() => queries.getSetting('paletteDefault'), [], 'moment')
   const photo = usePhoto({ frames: stripFrames, seed: day })
@@ -283,6 +293,9 @@ export function Editor({ day, existing, demo }) {
         palette,
         paletteSource: custom ? 'manual' : fromPhoto ? 'photo' : 'moment',
         city: place ?? null,
+        songTitle: song?.title ?? null,
+        songArtist: song?.artist ?? null,
+        songSource: song?.source ?? null,
       }
       if (demo) {
         // the photo goes with the postcard once it exists
@@ -370,6 +383,18 @@ export function Editor({ day, existing, demo }) {
       )}
 
       {!sealed && <CityChip value={place} onChange={setPicked} home={homeCity} />}
+
+      {!sealed && (
+        <SongPicker
+          key={songMode}
+          value={song}
+          onChange={setSongPicked}
+          feeling={r.feeling}
+          topic={r.topic}
+          day={day}
+          startMode={songMode}
+        />
+      )}
 
       {!sealed && (
         <PhotoSection

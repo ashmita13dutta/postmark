@@ -72,6 +72,20 @@ export default function Preferences() {
       </label>
       <label className="prefs__row">
         <span>
+          Song picker
+          <small>Which way of choosing a song opens first on Today.</small>
+        </span>
+        <select
+          value={settings.songModeDefault}
+          onChange={(e) => change('songModeDefault', e.target.value)}
+          aria-label="Song picker"
+        >
+          <option value="suggested">Suggest from my moment</option>
+          <option value="own">Pick my song</option>
+        </select>
+      </label>
+      <label className="prefs__row">
+        <span>
           Stamp colors, when there is a photo
           <small>Where a stamp’s five colors come from unless you choose on the day.</small>
         </span>

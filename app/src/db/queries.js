@@ -4,6 +4,7 @@ import { now } from '../lib/clock'
 import { MAX_DECORATIONS, clampPlacement } from '../lib/decor'
 import { clampDeliveryDay, dayKey, sealedUntilFor } from '../lib/dates'
 import { eligibleForDelay, pickDelayed } from '../lib/mailbox'
+import { cleanSong } from '../engine/songs'
 import { earnedRewards } from '../lib/rewards'
 import { cleanCover, yearsToClose } from '../lib/volumes'
 import { MAX_MOODS, buildMoods, cleanMood, isMyMood } from '../engine/moods'
@@ -68,6 +69,8 @@ export function makeQueries(db) {
       throw new Error('stripFrames is 3 or 4')
     if (key === 'smartReading' && value !== null && value !== 'on' && value !== 'off')
       throw new Error("smartReading is null, 'on' or 'off'")
+    if (key === 'songModeDefault' && value !== 'suggested' && value !== 'own')
+      throw new Error("songModeDefault is 'suggested' or 'own'")
     if (key === 'paletteDefault' && value !== 'moment' && value !== 'photo')
       throw new Error("paletteDefault is 'moment' or 'photo'")
     if (key === 'name' && (typeof value !== 'string' || value.length > 30))
@@ -328,6 +331,28 @@ export function makeQueries(db) {
     })
   }
 
+  // ---- song ----
+
+  /**
+   * Set or swap a postcard's song: `{ title, artist, source: 'own' | 'suggested' }`, or null to take
+   * it off. A sealed postcard is locked.
+   */
+  async function setSong(momentId, song) {
+    return db.transaction('rw', db.moments, async () => {
+      const moment = await editableMoment(momentId)
+      const clean = song && cleanSong(song)
+      const next = {
+        ...moment,
+        songTitle: clean?.songTitle ?? null,
+        songArtist: clean?.songArtist ?? null,
+        songSource: clean ? (song.source === 'own' ? 'own' : 'suggested') : null,
+        updatedAt: now(),
+      }
+      await db.moments.put(next)
+      return next
+    })
+  }
+
   // ---- volumes ----
 
   const allVolumes = () => db.volumes.toArray()
@@ -584,6 +609,7 @@ export function makeQueries(db) {
     removeMedia,
     mediaForMoment,
     mediaForMoments,
+    setSong,
     allVolumes,
     setCover,
     closeVolumes,

@@ -6,8 +6,8 @@ import { roman, yearStats } from '../../lib/album'
 const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`
 
 /**
- * "Year so far" (spec 6.9): the numbers that say what the year was like. Songs are left out until
- * the app records them. For a finished year it reads "the year".
+ * "Year so far" (spec 6.9): the numbers that say what the year was like. For a finished year it
+ * reads "the year".
  */
 export default function YearCard({ year, moments, today, moods, book }) {
   const s = useMemo(() => yearStats(year, moments, today), [year, moments, today])
@@ -47,6 +47,18 @@ export default function YearCard({ year, moments, today, moods, book }) {
             <dd>
               {topics[s.topTopic.id]?.label ?? s.topTopic.id}
               <small> {plural(s.topTopic.count, 'day')}</small>
+            </dd>
+          </div>
+        )}
+        {s.topSong && (
+          <div>
+            <dt>Top song</dt>
+            <dd>
+              {s.topSong.title}
+              <small>
+                {s.topSong.artist ? ` ${s.topSong.artist} · ` : ' '}
+                {plural(s.topSong.count, 'stamp')}
+              </small>
             </dd>
           </div>
         )}

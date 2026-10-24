@@ -4,16 +4,20 @@ import { useMemo } from 'react'
 
 /**
  * The color quilt: a row for every month and a square for every day, each stamped day a little flag
- * of its five colors. Tap a stamped square to lift that stamp.
+ * of its five colors. Tap a stamped square to lift that stamp. `glowMonth` (1 to 12) lights one row,
+ * the month "Year in postmarks" is showing.
  */
-export default function Quilt({ year, moments, today, onOpen }) {
+export default function Quilt({ year, moments, today, onOpen, glowMonth = null }) {
   const rows = useMemo(() => quiltRows(year, moments, today), [year, moments, today])
   return (
     <section className="quilt" aria-label={`Your ${year} as a quilt, one square a day`}>
       <h2>The quilt</h2>
       <div className="quilt__rows">
         {rows.map((row) => (
-          <div className="quilt__row" key={row.key}>
+          <div
+            className={row.month === glowMonth ? 'quilt__row quilt__row--glow' : 'quilt__row'}
+            key={row.key}
+          >
             <span className="quilt__month">{MONTHS[row.month - 1].slice(0, 3)}</span>
             <div className="quilt__cells">
               {row.cells.map((c) =>

@@ -1,0 +1,157 @@
+/* The song: the picker on Today and the one-line version on a postcard. */
+.song {
+  margin-top: 18px;
+  padding: 14px;
+  border: 1px solid var(--ink-12);
+  border-radius: 14px;
+  background: var(--card);
+}
+.song h2 {
+  margin: 0 0 8px;
+  font: 400 18px var(--font-display);
+}
+.song__options {
+  display: grid;
+  gap: 6px;
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.song__options button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  min-height: 52px;
+  padding: 6px 12px;
+  border: 1px solid var(--ink-12);
+  border-radius: 12px;
+  background: transparent;
+  color: var(--ink);
+  text-align: left;
+}
+.song__options button.on {
+  border-color: var(--postmark);
+  background: var(--paper);
+}
+.song__options span {
+  display: grid;
+  min-width: 0;
+}
+.song__options b {
+  font: 500 14px var(--font-ui);
+}
+.song__options small {
+  color: var(--ink-60);
+  font: 400 12px var(--font-ui);
+}
+.song__options em {
+  flex: none;
+  color: var(--ink-45);
+  font: 500 10px var(--font-mono);
+  font-style: normal;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.song__more {
+  margin-top: 8px;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--ink-15);
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--ink);
+  font: 500 13px var(--font-ui);
+}
+.song__own {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+}
+.song__own input {
+  min-height: var(--tap);
+  padding: 0 14px;
+  border: 1px solid var(--ink-15);
+  border-radius: 12px;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 16px var(--font-ui);
+}
+.song__now {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  margin: 12px 0 0;
+  color: var(--postmark);
+  font: 500 13px var(--font-mono);
+}
+.song__now span {
+  flex-basis: 100%;
+}
+.song__now small {
+  color: var(--ink-60);
+  font: 400 12px var(--font-ui);
+}
+.song__now a,
+.song__now button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--postmark);
+  font: 500 12px var(--font-ui);
+  text-decoration: underline;
+}
+.song__soon {
+  margin: 10px 0 0;
+  color: var(--ink-45);
+  font: 400 11px/1.4 var(--font-ui);
+}
+
+/* one line of ink on a postcard or the reveal */
+.songline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 2px 10px;
+  margin: 10px 0 0;
+  color: var(--postmark-faded, var(--postmark));
+  font: 500 12px/1.4 var(--font-mono);
+  text-align: center;
+}
+.songline__name {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.songline__tag {
+  color: var(--ink-60);
+  font: 400 11px var(--font-ui);
+}
+.songline__links {
+  display: inline-flex;
+  gap: 10px;
+}
+.songline a,
+.songline button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--postmark);
+  font: 500 11px var(--font-ui);
+  text-decoration: underline;
+}
+/* on the back of a postcard it sits along the bottom edge */
+.pcard__song {
+  position: absolute;
+  right: 14px;
+  bottom: 8px;
+  left: 14px;
+  z-index: 1;
+  background: linear-gradient(to top, var(--card-warm) 60%, transparent);
+  padding-top: 8px;
+}
+.pcard__song .songline {
+  margin: 0;
+}

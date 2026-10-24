@@ -207,9 +207,23 @@ export function yearStats(year, moments, today) {
     places.set(key, { id: seen?.id ?? name, count: (seen?.count ?? 0) + 1 })
   }
 
+  // the song chosen most often, one count per title and artist however it was typed
+  const songs = new Map()
+  for (const m of mine) {
+    if (!m.songTitle) continue
+    const key = `${m.songTitle.trim().toLowerCase()}|${(m.songArtist ?? '').trim().toLowerCase()}`
+    const seen = songs.get(key)
+    songs.set(key, {
+      id: seen?.id ?? { title: m.songTitle.trim(), artist: m.songArtist?.trim() || null },
+      count: (seen?.count ?? 0) + 1,
+    })
+  }
+  const bestSong = [...songs.values()].reduce((a, b) => (!a || b.count > a.count ? b : a), null)
+
   return {
     stamps: mine.length,
     daysSoFar,
+    topSong: bestSong && { ...bestSong.id, count: bestSong.count },
     cities: places.size,
     topCity: top(new Map([...places.values()].map((p) => [p.id, p.count]))),
     blanks: Math.max(0, daysSoFar - mine.length),

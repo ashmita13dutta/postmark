@@ -1,0 +1,2238 @@
+{
+  "about": "The songs the app can suggest for a day. Each entry is { title, artist, lang, moods, topics }. lang is bn (Bengali), hi (Hindi) or en (English). moods are feeling ids from feelings.json (how the day felt); topics are topic ids from topics.json (what it was about). A day is matched to songs that share its feeling (most weight) and its topic, with a little chance so the same day does not always give the same three. Add, remove or retag songs freely; the tests only check that the ids exist and every feeling has a few songs. Only titles and artists are kept here: nothing is played inside the app, a song opens as a search on Spotify or YouTube.",
+  "songs": [
+    {
+      "title": "Ekla Cholo Re",
+      "artist": "Rabindranath Tagore",
+      "lang": "bn",
+      "moods": [
+        "inspired",
+        "proud"
+      ],
+      "topics": [
+        "travel"
+      ]
+    },
+    {
+      "title": "Amar Mukti Alo Alo",
+      "artist": "Rabindranath Tagore",
+      "lang": "bn",
+      "moods": [
+        "peaceful",
+        "grateful"
+      ],
+      "topics": [
+        "morning",
+        "nature"
+      ]
+    },
+    {
+      "title": "Megher Pore Megh Jomeche",
+      "artist": "Rabindranath Tagore",
+      "lang": "bn",
+      "moods": [
+        "dreamy",
+        "peaceful"
+      ],
+      "topics": [
+        "rain"
+      ]
+    },
+    {
+      "title": "Aaj Dhaner Khete Roudro Chhayay",
+      "artist": "Rabindranath Tagore",
+      "lang": "bn",
+      "moods": [
+        "joyful",
+        "content"
+      ],
+      "topics": [
+        "autumn",
+        "nature"
+      ]
+    },
+    {
+      "title": "Esho Hey Boishakh",
+      "artist": "Rabindranath Tagore",
+      "lang": "bn",
+      "moods": [
+        "excited",
+        "joyful"
+      ],
+      "topics": [
+        "festival",
+        "heat"
+      ]
+    },
+    {
+      "title": "Purano Sei Diner Kotha",
+      "artist": "Rabindranath Tagore",
+      "lang": "bn",
+      "moods": [
+        "nostalgic"
+      ],
+      "topics": [
+        "friends"
+      ]
+    },
+    {
+      "title": "Tumi Robe Nirobe",
+      "artist": "Rabindranath Tagore",
+      "lang": "bn",
+      "moods": [
+        "peaceful",
+        "loving"
+      ],
+      "topics": [
+        "night"
+      ]
+    },
+    {
+      "title": "Ami Chini Go Chini Tomare",
+      "artist": "Rabindranath Tagore",
+      "lang": "bn",
+      "moods": [
+        "loving",
+        "dreamy"
+      ],
+      "topics": [
+        "evening"
+      ]
+    },
+    {
+      "title": "Jibon Jokhon Shukiye Jay",
+      "artist": "Rabindranath Tagore",
+      "lang": "bn",
+      "moods": [
+        "grateful",
+        "peaceful"
+      ],
+      "topics": [
+        "spiritual"
+      ]
+    },
+    {
+      "title": "Bajlo Tomar Alor Benu",
+      "artist": "Rabindranath Tagore",
+      "lang": "bn",
+      "moods": [
+        "inspired",
+        "joyful"
+      ],
+      "topics": [
+        "morning"
+      ]
+    },
+    {
+      "title": "Aguner Poroshmoni",
+      "artist": "Rabindranath Tagore",
+      "lang": "bn",
+      "moods": [
+        "inspired",
+        "sad"
+      ],
+      "topics": [
+        "spiritual"
+      ]
+    },
+    {
+      "title": "Amake Amar Moto Thakte Dao",
+      "artist": "Anupam Roy",
+      "lang": "bn",
+      "moods": [
+        "content",
+        "tired"
+      ],
+      "topics": [
+        "city"
+      ]
+    },
+    {
+      "title": "Tomake Chai",
+      "artist": "Kabir Suman",
+      "lang": "bn",
+      "moods": [
+        "loving",
+        "sad"
+      ],
+      "topics": [
+        "dating"
+      ]
+    },
+    {
+      "title": "Mone Pore Ruby Roy",
+      "artist": "Kabir Suman",
+      "lang": "bn",
+      "moods": [
+        "nostalgic",
+        "sad"
+      ],
+      "topics": [
+        "city"
+      ]
+    },
+    {
+      "title": "Coffee House er Sei Adda",
+      "artist": "Manna Dey",
+      "lang": "bn",
+      "moods": [
+        "nostalgic",
+        "content"
+      ],
+      "topics": [
+        "friends",
+        "drinks",
+        "city"
+      ]
+    },
+    {
+      "title": "Prithibi Amare Chaay",
+      "artist": "Moheener Ghoraguli",
+      "lang": "bn",
+      "moods": [
+        "inspired",
+        "angry"
+      ],
+      "topics": [
+        "city"
+      ]
+    },
+    {
+      "title": "Mahishasuramardini",
+      "artist": "Birendra Krishna Bhadra",
+      "lang": "bn",
+      "moods": [
+        "excited",
+        "proud"
+      ],
+      "topics": [
+        "festival",
+        "spiritual",
+        "morning"
+      ]
+    },
+    {
+      "title": "Tum Hi Ho",
+      "artist": "Arijit Singh",
+      "lang": "hi",
+      "moods": [
+        "loving",
+        "sad"
+      ],
+      "topics": [
+        "dating"
+      ]
+    },
+    {
+      "title": "Channa Mereya",
+      "artist": "Arijit Singh",
+      "lang": "hi",
+      "moods": [
+        "sad",
+        "disappointed"
+      ],
+      "topics": [
+        "dating"
+      ]
+    },
+    {
+      "title": "Kabira",
+      "artist": "Tochi Raina, Rekha Bhardwaj",
+      "lang": "hi",
+      "moods": [
+        "dreamy",
+        "peaceful"
+      ],
+      "topics": [
+        "friends"
+      ]
+    },
+    {
+      "title": "Ilahi",
+      "artist": "Arijit Singh",
+      "lang": "hi",
+      "moods": [
+        "joyful",
+        "excited"
+      ],
+      "topics": [
+        "travel"
+      ]
+    },
+    {
+      "title": "Tum Se Hi",
+      "artist": "Mohit Chauhan",
+      "lang": "hi",
+      "moods": [
+        "loving",
+        "nostalgic"
+      ],
+      "topics": [
+        "dating"
+      ]
+    },
+    {
+      "title": "Agar Tum Saath Ho",
+      "artist": "Alka Yagnik, Arijit Singh",
+      "lang": "hi",
+      "moods": [
+        "sad",
+        "loving"
+      ],
+      "topics": [
+        "dating"
+      ]
+    },
+    {
+      "title": "Kun Faya Kun",
+      "artist": "A. R. Rahman, Javed Ali, Mohit Chauhan",
+      "lang": "hi",
+      "moods": [
+        "peaceful",
+        "grateful"
+      ],
+      "topics": [
+        "spiritual"
+      ]
+    },
+    {
+      "title": "Khwaja Mere Khwaja",
+      "artist": "A. R. Rahman",
+      "lang": "hi",
+      "moods": [
+        "peaceful",
+        "grateful"
+      ],
+      "topics": [
+        "spiritual"
+      ]
+    },
+    {
+      "title": "Maula Mere Maula",
+      "artist": "Roop Kumar Rathod",
+      "lang": "hi",
+      "moods": [
+        "peaceful",
+        "anxious"
+      ],
+      "topics": [
+        "spiritual"
+      ]
+    },
+    {
+      "title": "Kal Ho Naa Ho",
+      "artist": "Sonu Nigam",
+      "lang": "hi",
+      "moods": [
+        "grateful",
+        "sad"
+      ],
+      "topics": [
+        "friends"
+      ]
+    },
+    {
+      "title": "Kabhi Kabhi Aditi",
+      "artist": "Rashid Ali",
+      "lang": "hi",
+      "moods": [
+        "joyful",
+        "content"
+      ],
+      "topics": [
+        "morning",
+        "friends"
+      ]
+    },
+    {
+      "title": "Pehla Nasha",
+      "artist": "Udit Narayan, Sadhana Sargam",
+      "lang": "hi",
+      "moods": [
+        "loving",
+        "dreamy"
+      ],
+      "topics": [
+        "dating"
+      ]
+    },
+    {
+      "title": "Tujhe Dekha Toh",
+      "artist": "Kumar Sanu, Lata Mangeshkar",
+      "lang": "hi",
+      "moods": [
+        "loving",
+        "joyful"
+      ],
+      "topics": [
+        "dating"
+      ]
+    },
+    {
+      "title": "Lag Ja Gale",
+      "artist": "Lata Mangeshkar",
+      "lang": "hi",
+      "moods": [
+        "loving",
+        "nostalgic"
+      ],
+      "topics": [
+        "night"
+      ]
+    },
+    {
+      "title": "Mere Sapno Ki Rani",
+      "artist": "Kishore Kumar",
+      "lang": "hi",
+      "moods": [
+        "joyful",
+        "excited"
+      ],
+      "topics": [
+        "travel"
+      ]
+    },
+    {
+      "title": "Roop Tera Mastana",
+      "artist": "Kishore Kumar",
+      "lang": "hi",
+      "moods": [
+        "loving",
+        "excited"
+      ],
+      "topics": [
+        "dating"
+      ]
+    },
+    {
+      "title": "Pal Pal Dil Ke Paas",
+      "artist": "Kishore Kumar",
+      "lang": "hi",
+      "moods": [
+        "loving"
+      ],
+      "topics": [
+        "dating"
+      ]
+    },
+    {
+      "title": "Ek Ladki Bheegi Bhaagi Si",
+      "artist": "Kishore Kumar",
+      "lang": "hi",
+      "moods": [
+        "joyful",
+        "excited"
+      ],
+      "topics": [
+        "rain"
+      ]
+    },
+    {
+      "title": "Rimjhim Gire Sawan",
+      "artist": "Kishore Kumar, Lata Mangeshkar",
+      "lang": "hi",
+      "moods": [
+        "nostalgic",
+        "loving"
+      ],
+      "topics": [
+        "rain"
+      ]
+    },
+    {
+      "title": "Barso Re",
+      "artist": "Shreya Ghoshal",
+      "lang": "hi",
+      "moods": [
+        "excited",
+        "joyful"
+      ],
+      "topics": [
+        "rain"
+      ]
+    },
+    {
+      "title": "Tip Tip Barsa Paani",
+      "artist": "Udit Narayan, Alka Yagnik",
+      "lang": "hi",
+      "moods": [
+        "excited",
+        "joyful"
+      ],
+      "topics": [
+        "rain",
+        "party"
+      ]
+    },
+    {
+      "title": "Zindagi Kaisi Hai Paheli",
+      "artist": "Manna Dey",
+      "lang": "hi",
+      "moods": [
+        "dreamy",
+        "content"
+      ],
+      "topics": [
+        "evening"
+      ]
+    },
+    {
+      "title": "Kahin Door Jab Din Dhal Jaye",
+      "artist": "Mukesh",
+      "lang": "hi",
+      "moods": [
+        "nostalgic",
+        "sad"
+      ],
+      "topics": [
+        "evening"
+      ]
+    },
+    {
+      "title": "Mera Joota Hai Japani",
+      "artist": "Mukesh",
+      "lang": "hi",
+      "moods": [
+        "joyful",
+        "proud"
+      ],
+      "topics": [
+        "travel"
+      ]
+    },
+    {
+      "title": "Dil Dhoondta Hai",
+      "artist": "Bhupinder Singh",
+      "lang": "hi",
+      "moods": [
+        "nostalgic",
+        "dreamy"
+      ],
+      "topics": [
+        "winter",
+        "family"
+      ]
+    },
+    {
+      "title": "Tere Bina Zindagi Se",
+      "artist": "Kishore Kumar, Lata Mangeshkar",
+      "lang": "hi",
+      "moods": [
+        "sad",
+        "loving"
+      ],
+      "topics": [
+        "dating"
+      ]
+    },
+    {
+      "title": "Ae Mere Watan Ke Logon",
+      "artist": "Lata Mangeshkar",
+      "lang": "hi",
+      "moods": [
+        "proud",
+        "grateful"
+      ],
+      "topics": [
+        "news"
+      ]
+    },
+    {
+      "title": "Vande Mataram",
+      "artist": "A. R. Rahman",
+      "lang": "hi",
+      "moods": [
+        "proud",
+        "inspired"
+      ],
+      "topics": [
+        "news"
+      ]
+    },
+    {
+      "title": "Chak De India",
+      "artist": "Sukhwinder Singh",
+      "lang": "hi",
+      "moods": [
+        "inspired",
+        "proud",
+        "excited"
+      ],
+      "topics": [
+        "sports",
+        "fitness"
+      ]
+    },
+    {
+      "title": "Zinda",
+      "artist": "Siddharth Mahadevan",
+      "lang": "hi",
+      "moods": [
+        "inspired",
+        "proud"
+      ],
+      "topics": [
+        "sports",
+        "fitness"
+      ]
+    },
+    {
+      "title": "Kar Har Maidaan Fateh",
+      "artist": "Sukhwinder Singh, Shreya Ghoshal",
+      "lang": "hi",
+      "moods": [
+        "inspired",
+        "proud"
+      ],
+      "topics": [
+        "work",
+        "exams"
+      ]
+    },
+    {
+      "title": "Ghar Se Nikalte Hi",
+      "artist": "Armaan Malik",
+      "lang": "hi",
+      "moods": [
+        "nostalgic",
+        "grateful"
+      ],
+      "topics": [
+        "family",
+        "home"
+      ]
+    },
+    {
+      "title": "Papa Kehte Hain",
+      "artist": "Udit Narayan",
+      "lang": "hi",
+      "moods": [
+        "proud",
+        "nostalgic"
+      ],
+      "topics": [
+        "family"
+      ]
+    },
+    {
+      "title": "Zindagi Ek Safar Hai Suhana",
+      "artist": "Kishore Kumar",
+      "lang": "hi",
+      "moods": [
+        "joyful",
+        "content"
+      ],
+      "topics": [
+        "travel"
+      ]
+    },
+    {
+      "title": "Musafir Hoon Yaaron",
+      "artist": "Kishore Kumar",
+      "lang": "hi",
+      "moods": [
+        "content",
+        "tired"
+      ],
+      "topics": [
+        "travel",
+        "transport"
+      ]
+    },
+    {
+      "title": "Ye Dosti",
+      "artist": "Kishore Kumar, Manna Dey",
+      "lang": "hi",
+      "moods": [
+        "joyful",
+        "grateful"
+      ],
+      "topics": [
+        "friends"
+      ]
+    },
+    {
+      "title": "Tere Jaisa Yaar Kahan",
+      "artist": "Kishore Kumar",
+      "lang": "hi",
+      "moods": [
+        "grateful",
+        "content"
+      ],
+      "topics": [
+        "friends"
+      ]
+    },
+    {
+      "title": "Dil Chahta Hai",
+      "artist": "Shankar Mahadevan, Shaan, Sonu Nigam",
+      "lang": "hi",
+      "moods": [
+        "joyful",
+        "content"
+      ],
+      "topics": [
+        "friends",
+        "travel",
+        "beach"
+      ]
+    },
+    {
+      "title": "Chaiyya Chaiyya",
+      "artist": "Sukhwinder Singh, Sapna Awasthi",
+      "lang": "hi",
+      "moods": [
+        "excited",
+        "joyful"
+      ],
+      "topics": [
+        "travel",
+        "transport"
+      ]
+    },
+    {
+      "title": "Dil Se Re",
+      "artist": "A. R. Rahman",
+      "lang": "hi",
+      "moods": [
+        "excited",
+        "anxious"
+      ],
+      "topics": [
+        "night"
+      ]
+    },
+    {
+      "title": "Tum Mile",
+      "artist": "Neeraj Shridhar",
+      "lang": "hi",
+      "moods": [
+        "loving",
+        "joyful"
+      ],
+      "topics": [
+        "rain",
+        "dating"
+      ]
+    },
+    {
+      "title": "Raabta",
+      "artist": "Arijit Singh",
+      "lang": "hi",
+      "moods": [
+        "loving",
+        "dreamy"
+      ],
+      "topics": [
+        "dating"
+      ]
+    },
+    {
+      "title": "Muskurane Ki Wajah",
+      "artist": "Arijit Singh",
+      "lang": "hi",
+      "moods": [
+        "sad",
+        "grateful"
+      ],
+      "topics": [
+        "family"
+      ]
+    },
+    {
+      "title": "Phir Le Aya Dil",
+      "artist": "Arijit Singh",
+      "lang": "hi",
+      "moods": [
+        "sad",
+        "disappointed"
+      ],
+      "topics": [
+        "dating"
+      ]
+    },
+    {
+      "title": "Ae Dil Hai Mushkil",
+      "artist": "Arijit Singh",
+      "lang": "hi",
+      "moods": [
+        "sad",
+        "disappointed"
+      ],
+      "topics": [
+        "dating"
+      ]
+    },
+    {
+      "title": "Tera Ban Jaunga",
+      "artist": "Akhil Sachdeva, Tulsi Kumar",
+      "lang": "hi",
+      "moods": [
+        "loving"
+      ],
+      "topics": [
+        "dating"
+      ]
+    },
+    {
+      "title": "Kesariya",
+      "artist": "Arijit Singh",
+      "lang": "hi",
+      "moods": [
+        "loving",
+        "dreamy"
+      ],
+      "topics": [
+        "dating"
+      ]
+    },
+    {
+      "title": "Apna Bana Le",
+      "artist": "Arijit Singh",
+      "lang": "hi",
+      "moods": [
+        "loving"
+      ],
+      "topics": [
+        "dating"
+      ]
+    },
+    {
+      "title": "Khairiyat",
+      "artist": "Arijit Singh",
+      "lang": "hi",
+      "moods": [
+        "nostalgic",
+        "sad"
+      ],
+      "topics": [
+        "friends",
+        "school"
+      ]
+    },
+    {
+      "title": "Tera Yaar Hoon Main",
+      "artist": "Arijit Singh",
+      "lang": "hi",
+      "moods": [
+        "grateful",
+        "content"
+      ],
+      "topics": [
+        "friends"
+      ]
+    },
+    {
+      "title": "Kabhi Alvida Naa Kehna",
+      "artist": "Sonu Nigam, Alka Yagnik",
+      "lang": "hi",
+      "moods": [
+        "sad",
+        "nostalgic"
+      ],
+      "topics": [
+        "family"
+      ]
+    },
+    {
+      "title": "Tujh Mein Rab Dikhta Hai",
+      "artist": "Roop Kumar Rathod",
+      "lang": "hi",
+      "moods": [
+        "loving",
+        "grateful"
+      ],
+      "topics": [
+        "dating"
+      ]
+    },
+    {
+      "title": "Bol Na Halke Halke",
+      "artist": "Rahat Fateh Ali Khan, Mahalakshmi Iyer",
+      "lang": "hi",
+      "moods": [
+        "loving",
+        "dreamy"
+      ],
+      "topics": [
+        "dating"
+      ]
+    },
+    {
+      "title": "Mitwa",
+      "artist": "Shafqat Amanat Ali",
+      "lang": "hi",
+      "moods": [
+        "nostalgic",
+        "sad"
+      ],
+      "topics": [
+        "friends"
+      ]
+    },
+    {
+      "title": "Jai Ho",
+      "artist": "A. R. Rahman",
+      "lang": "hi",
+      "moods": [
+        "excited",
+        "proud"
+      ],
+      "topics": [
+        "party",
+        "festival"
+      ]
+    },
+    {
+      "title": "Badtameez Dil",
+      "artist": "Benny Dayal",
+      "lang": "hi",
+      "moods": [
+        "excited",
+        "joyful"
+      ],
+      "topics": [
+        "party",
+        "friends"
+      ]
+    },
+    {
+      "title": "Balam Pichkari",
+      "artist": "Vishal Dadlani, Shalmali Kholgade",
+      "lang": "hi",
+      "moods": [
+        "excited",
+        "joyful"
+      ],
+      "topics": [
+        "festival",
+        "party"
+      ]
+    },
+    {
+      "title": "Nagada Sang Dhol",
+      "artist": "Shreya Ghoshal, Osman Mir",
+      "lang": "hi",
+      "moods": [
+        "excited",
+        "joyful"
+      ],
+      "topics": [
+        "festival",
+        "party"
+      ]
+    },
+    {
+      "title": "Raataan Lambiyan",
+      "artist": "Jubin Nautiyal, Asees Kaur",
+      "lang": "hi",
+      "moods": [
+        "loving",
+        "dreamy"
+      ],
+      "topics": [
+        "night",
+        "dating"
+      ]
+    },
+    {
+      "title": "Humsafar",
+      "artist": "Akhil Sachdeva",
+      "lang": "hi",
+      "moods": [
+        "loving",
+        "content"
+      ],
+      "topics": [
+        "dating"
+      ]
+    },
+    {
+      "title": "Kho Gaye Hum Kahan",
+      "artist": "Jasleen Royal, Prateek Kuhad",
+      "lang": "hi",
+      "moods": [
+        "dreamy",
+        "nostalgic"
+      ],
+      "topics": [
+        "night",
+        "city"
+      ]
+    },
+    {
+      "title": "Kasoor",
+      "artist": "Prateek Kuhad",
+      "lang": "hi",
+      "moods": [
+        "loving",
+        "sad"
+      ],
+      "topics": [
+        "dating"
+      ]
+    },
+    {
+      "title": "Here Comes the Sun",
+      "artist": "The Beatles",
+      "lang": "en",
+      "moods": [
+        "joyful",
+        "content"
+      ],
+      "topics": [
+        "sunny",
+        "morning"
+      ]
+    },
+    {
+      "title": "Good Day Sunshine",
+      "artist": "The Beatles",
+      "lang": "en",
+      "moods": [
+        "joyful",
+        "excited"
+      ],
+      "topics": [
+        "sunny"
+      ]
+    },
+    {
+      "title": "Let It Be",
+      "artist": "The Beatles",
+      "lang": "en",
+      "moods": [
+        "peaceful",
+        "grateful"
+      ],
+      "topics": [
+        "spiritual"
+      ]
+    },
+    {
+      "title": "Yesterday",
+      "artist": "The Beatles",
+      "lang": "en",
+      "moods": [
+        "nostalgic",
+        "sad"
+      ],
+      "topics": [
+        "home"
+      ]
+    },
+    {
+      "title": "Hey Jude",
+      "artist": "The Beatles",
+      "lang": "en",
+      "moods": [
+        "grateful",
+        "inspired"
+      ],
+      "topics": [
+        "friends"
+      ]
+    },
+    {
+      "title": "With a Little Help from My Friends",
+      "artist": "The Beatles",
+      "lang": "en",
+      "moods": [
+        "grateful",
+        "joyful"
+      ],
+      "topics": [
+        "friends"
+      ]
+    },
+    {
+      "title": "Here Comes the Rain Again",
+      "artist": "Eurythmics",
+      "lang": "en",
+      "moods": [
+        "sad",
+        "dreamy"
+      ],
+      "topics": [
+        "rain"
+      ]
+    },
+    {
+      "title": "Riders on the Storm",
+      "artist": "The Doors",
+      "lang": "en",
+      "moods": [
+        "anxious",
+        "dreamy"
+      ],
+      "topics": [
+        "rain",
+        "night"
+      ]
+    },
+    {
+      "title": "Purple Rain",
+      "artist": "Prince",
+      "lang": "en",
+      "moods": [
+        "sad",
+        "nostalgic"
+      ],
+      "topics": [
+        "rain"
+      ]
+    },
+    {
+      "title": "Singin' in the Rain",
+      "artist": "Gene Kelly",
+      "lang": "en",
+      "moods": [
+        "joyful",
+        "excited"
+      ],
+      "topics": [
+        "rain",
+        "movies"
+      ]
+    },
+    {
+      "title": "November Rain",
+      "artist": "Guns N' Roses",
+      "lang": "en",
+      "moods": [
+        "sad",
+        "angry"
+      ],
+      "topics": [
+        "rain"
+      ]
+    },
+    {
+      "title": "Raindrops Keep Fallin' on My Head",
+      "artist": "B. J. Thomas",
+      "lang": "en",
+      "moods": [
+        "joyful",
+        "content"
+      ],
+      "topics": [
+        "rain"
+      ]
+    },
+    {
+      "title": "Have You Ever Seen the Rain?",
+      "artist": "Creedence Clearwater Revival",
+      "lang": "en",
+      "moods": [
+        "sad",
+        "bored"
+      ],
+      "topics": [
+        "rain"
+      ]
+    },
+    {
+      "title": "Walking on Sunshine",
+      "artist": "Katrina and the Waves",
+      "lang": "en",
+      "moods": [
+        "joyful",
+        "excited"
+      ],
+      "topics": [
+        "sunny"
+      ]
+    },
+    {
+      "title": "Three Little Birds",
+      "artist": "Bob Marley and The Wailers",
+      "lang": "en",
+      "moods": [
+        "peaceful",
+        "content"
+      ],
+      "topics": [
+        "sunny"
+      ]
+    },
+    {
+      "title": "Happy",
+      "artist": "Pharrell Williams",
+      "lang": "en",
+      "moods": [
+        "joyful",
+        "excited"
+      ],
+      "topics": [
+        "sunny"
+      ]
+    },
+    {
+      "title": "Don't Stop Me Now",
+      "artist": "Queen",
+      "lang": "en",
+      "moods": [
+        "excited",
+        "joyful",
+        "proud"
+      ],
+      "topics": [
+        "party"
+      ]
+    },
+    {
+      "title": "Bohemian Rhapsody",
+      "artist": "Queen",
+      "lang": "en",
+      "moods": [
+        "dreamy",
+        "nostalgic"
+      ],
+      "topics": [
+        "music"
+      ]
+    },
+    {
+      "title": "Hotel California",
+      "artist": "Eagles",
+      "lang": "en",
+      "moods": [
+        "nostalgic",
+        "dreamy"
+      ],
+      "topics": [
+        "travel",
+        "night"
+      ]
+    },
+    {
+      "title": "Wonderwall",
+      "artist": "Oasis",
+      "lang": "en",
+      "moods": [
+        "nostalgic",
+        "loving"
+      ],
+      "topics": [
+        "friends"
+      ]
+    },
+    {
+      "title": "Fix You",
+      "artist": "Coldplay",
+      "lang": "en",
+      "moods": [
+        "sad",
+        "inspired"
+      ],
+      "topics": [
+        "friends"
+      ]
+    },
+    {
+      "title": "Yellow",
+      "artist": "Coldplay",
+      "lang": "en",
+      "moods": [
+        "loving",
+        "grateful"
+      ],
+      "topics": [
+        "dating"
+      ]
+    },
+    {
+      "title": "The Scientist",
+      "artist": "Coldplay",
+      "lang": "en",
+      "moods": [
+        "sad",
+        "nostalgic"
+      ],
+      "topics": [
+        "dating"
+      ]
+    },
+    {
+      "title": "Viva La Vida",
+      "artist": "Coldplay",
+      "lang": "en",
+      "moods": [
+        "proud",
+        "inspired"
+      ],
+      "topics": [
+        "news"
+      ]
+    },
+    {
+      "title": "A Sky Full of Stars",
+      "artist": "Coldplay",
+      "lang": "en",
+      "moods": [
+        "excited",
+        "joyful"
+      ],
+      "topics": [
+        "space",
+        "night"
+      ]
+    },
+    {
+      "title": "Someone Like You",
+      "artist": "Adele",
+      "lang": "en",
+      "moods": [
+        "sad",
+        "disappointed"
+      ],
+      "topics": [
+        "dating"
+      ]
+    },
+    {
+      "title": "Hello",
+      "artist": "Adele",
+      "lang": "en",
+      "moods": [
+        "nostalgic",
+        "sad"
+      ],
+      "topics": [
+        "city"
+      ]
+    },
+    {
+      "title": "Rolling in the Deep",
+      "artist": "Adele",
+      "lang": "en",
+      "moods": [
+        "angry",
+        "proud"
+      ],
+      "topics": [
+        "dating"
+      ]
+    },
+    {
+      "title": "Shallow",
+      "artist": "Lady Gaga, Bradley Cooper",
+      "lang": "en",
+      "moods": [
+        "loving",
+        "inspired"
+      ],
+      "topics": [
+        "movies"
+      ]
+    },
+    {
+      "title": "Perfect",
+      "artist": "Ed Sheeran",
+      "lang": "en",
+      "moods": [
+        "loving",
+        "grateful"
+      ],
+      "topics": [
+        "dating",
+        "wedding"
+      ]
+    },
+    {
+      "title": "Thinking Out Loud",
+      "artist": "Ed Sheeran",
+      "lang": "en",
+      "moods": [
+        "loving",
+        "content"
+      ],
+      "topics": [
+        "dating",
+        "wedding"
+      ]
+    },
+    {
+      "title": "Photograph",
+      "artist": "Ed Sheeran",
+      "lang": "en",
+      "moods": [
+        "nostalgic",
+        "loving"
+      ],
+      "topics": [
+        "family"
+      ]
+    },
+    {
+      "title": "Shape of You",
+      "artist": "Ed Sheeran",
+      "lang": "en",
+      "moods": [
+        "excited",
+        "joyful"
+      ],
+      "topics": [
+        "party"
+      ]
+    },
+    {
+      "title": "Blinding Lights",
+      "artist": "The Weeknd",
+      "lang": "en",
+      "moods": [
+        "excited",
+        "dreamy"
+      ],
+      "topics": [
+        "night",
+        "city",
+        "transport"
+      ]
+    },
+    {
+      "title": "drivers license",
+      "artist": "Olivia Rodrigo",
+      "lang": "en",
+      "moods": [
+        "sad",
+        "disappointed"
+      ],
+      "topics": [
+        "transport"
+      ]
+    },
+    {
+      "title": "good 4 u",
+      "artist": "Olivia Rodrigo",
+      "lang": "en",
+      "moods": [
+        "angry"
+      ],
+      "topics": [
+        "dating"
+      ]
+    },
+    {
+      "title": "Someone You Loved",
+      "artist": "Lewis Capaldi",
+      "lang": "en",
+      "moods": [
+        "sad"
+      ],
+      "topics": [
+        "dating"
+      ]
+    },
+    {
+      "title": "Let Her Go",
+      "artist": "Passenger",
+      "lang": "en",
+      "moods": [
+        "sad",
+        "nostalgic"
+      ],
+      "topics": [
+        "travel"
+      ]
+    },
+    {
+      "title": "Riptide",
+      "artist": "Vance Joy",
+      "lang": "en",
+      "moods": [
+        "joyful",
+        "dreamy"
+      ],
+      "topics": [
+        "beach"
+      ]
+    },
+    {
+      "title": "Budapest",
+      "artist": "George Ezra",
+      "lang": "en",
+      "moods": [
+        "content",
+        "joyful"
+      ],
+      "topics": [
+        "travel"
+      ]
+    },
+    {
+      "title": "Home",
+      "artist": "Edward Sharpe and the Magnetic Zeros",
+      "lang": "en",
+      "moods": [
+        "joyful",
+        "loving"
+      ],
+      "topics": [
+        "home",
+        "friends"
+      ]
+    },
+    {
+      "title": "Sunday Morning",
+      "artist": "Maroon 5",
+      "lang": "en",
+      "moods": [
+        "content",
+        "loving",
+        "bored"
+      ],
+      "topics": [
+        "morning",
+        "home"
+      ]
+    },
+    {
+      "title": "Banana Pancakes",
+      "artist": "Jack Johnson",
+      "lang": "en",
+      "moods": [
+        "peaceful",
+        "content",
+        "bored"
+      ],
+      "topics": [
+        "morning",
+        "home"
+      ]
+    },
+    {
+      "title": "Better Together",
+      "artist": "Jack Johnson",
+      "lang": "en",
+      "moods": [
+        "content",
+        "loving"
+      ],
+      "topics": [
+        "home"
+      ]
+    },
+    {
+      "title": "Take Me Home, Country Roads",
+      "artist": "John Denver",
+      "lang": "en",
+      "moods": [
+        "nostalgic",
+        "content"
+      ],
+      "topics": [
+        "home",
+        "travel",
+        "nature"
+      ]
+    },
+    {
+      "title": "Imagine",
+      "artist": "John Lennon",
+      "lang": "en",
+      "moods": [
+        "peaceful",
+        "inspired"
+      ],
+      "topics": [
+        "news"
+      ]
+    },
+    {
+      "title": "What a Wonderful World",
+      "artist": "Louis Armstrong",
+      "lang": "en",
+      "moods": [
+        "grateful",
+        "content",
+        "peaceful"
+      ],
+      "topics": [
+        "nature"
+      ]
+    },
+    {
+      "title": "Fly Me to the Moon",
+      "artist": "Frank Sinatra",
+      "lang": "en",
+      "moods": [
+        "loving",
+        "dreamy"
+      ],
+      "topics": [
+        "space",
+        "dating"
+      ]
+    },
+    {
+      "title": "Moon River",
+      "artist": "Audrey Hepburn",
+      "lang": "en",
+      "moods": [
+        "dreamy",
+        "nostalgic"
+      ],
+      "topics": [
+        "night",
+        "movies"
+      ]
+    },
+    {
+      "title": "Clair de Lune",
+      "artist": "Claude Debussy",
+      "lang": "en",
+      "moods": [
+        "dreamy",
+        "peaceful"
+      ],
+      "topics": [
+        "night"
+      ]
+    },
+    {
+      "title": "Moonlight Sonata",
+      "artist": "Ludwig van Beethoven",
+      "lang": "en",
+      "moods": [
+        "sad",
+        "dreamy"
+      ],
+      "topics": [
+        "night"
+      ]
+    },
+    {
+      "title": "River Flows in You",
+      "artist": "Yiruma",
+      "lang": "en",
+      "moods": [
+        "peaceful",
+        "dreamy"
+      ],
+      "topics": [
+        "reading"
+      ]
+    },
+    {
+      "title": "Weightless",
+      "artist": "Marconi Union",
+      "lang": "en",
+      "moods": [
+        "peaceful",
+        "tired",
+        "anxious"
+      ],
+      "topics": [
+        "reading"
+      ]
+    },
+    {
+      "title": "Experience",
+      "artist": "Ludovico Einaudi",
+      "lang": "en",
+      "moods": [
+        "inspired",
+        "dreamy"
+      ],
+      "topics": [
+        "art"
+      ]
+    },
+    {
+      "title": "Time",
+      "artist": "Hans Zimmer",
+      "lang": "en",
+      "moods": [
+        "inspired",
+        "nostalgic"
+      ],
+      "topics": [
+        "movies"
+      ]
+    },
+    {
+      "title": "Mad World",
+      "artist": "Gary Jules",
+      "lang": "en",
+      "moods": [
+        "sad",
+        "bored"
+      ],
+      "topics": [
+        "city"
+      ]
+    },
+    {
+      "title": "Hallelujah",
+      "artist": "Jeff Buckley",
+      "lang": "en",
+      "moods": [
+        "sad",
+        "peaceful"
+      ],
+      "topics": [
+        "spiritual"
+      ]
+    },
+    {
+      "title": "Creep",
+      "artist": "Radiohead",
+      "lang": "en",
+      "moods": [
+        "sad",
+        "disappointed"
+      ],
+      "topics": [
+        "school"
+      ]
+    },
+    {
+      "title": "Lose Yourself",
+      "artist": "Eminem",
+      "lang": "en",
+      "moods": [
+        "inspired",
+        "angry",
+        "proud"
+      ],
+      "topics": [
+        "work",
+        "exams"
+      ]
+    },
+    {
+      "title": "Eye of the Tiger",
+      "artist": "Survivor",
+      "lang": "en",
+      "moods": [
+        "inspired",
+        "excited"
+      ],
+      "topics": [
+        "fitness",
+        "sports"
+      ]
+    },
+    {
+      "title": "Stronger",
+      "artist": "Kelly Clarkson",
+      "lang": "en",
+      "moods": [
+        "proud",
+        "inspired"
+      ],
+      "topics": [
+        "fitness"
+      ]
+    },
+    {
+      "title": "Firework",
+      "artist": "Katy Perry",
+      "lang": "en",
+      "moods": [
+        "proud",
+        "excited",
+        "inspired"
+      ],
+      "topics": [
+        "party"
+      ]
+    },
+    {
+      "title": "Shake It Off",
+      "artist": "Taylor Swift",
+      "lang": "en",
+      "moods": [
+        "joyful",
+        "excited"
+      ],
+      "topics": [
+        "party"
+      ]
+    },
+    {
+      "title": "Love Story",
+      "artist": "Taylor Swift",
+      "lang": "en",
+      "moods": [
+        "loving",
+        "dreamy"
+      ],
+      "topics": [
+        "dating"
+      ]
+    },
+    {
+      "title": "All Too Well",
+      "artist": "Taylor Swift",
+      "lang": "en",
+      "moods": [
+        "nostalgic",
+        "sad"
+      ],
+      "topics": [
+        "autumn",
+        "dating"
+      ]
+    },
+    {
+      "title": "cardigan",
+      "artist": "Taylor Swift",
+      "lang": "en",
+      "moods": [
+        "nostalgic",
+        "dreamy"
+      ],
+      "topics": [
+        "home"
+      ]
+    },
+    {
+      "title": "Dreams",
+      "artist": "Fleetwood Mac",
+      "lang": "en",
+      "moods": [
+        "dreamy",
+        "content"
+      ],
+      "topics": [
+        "morning"
+      ]
+    },
+    {
+      "title": "Landslide",
+      "artist": "Fleetwood Mac",
+      "lang": "en",
+      "moods": [
+        "nostalgic",
+        "anxious"
+      ],
+      "topics": [
+        "family"
+      ]
+    },
+    {
+      "title": "lovely",
+      "artist": "Billie Eilish, Khalid",
+      "lang": "en",
+      "moods": [
+        "sad"
+      ],
+      "topics": [
+        "night"
+      ]
+    },
+    {
+      "title": "Dancing Queen",
+      "artist": "ABBA",
+      "lang": "en",
+      "moods": [
+        "joyful",
+        "excited"
+      ],
+      "topics": [
+        "party"
+      ]
+    },
+    {
+      "title": "September",
+      "artist": "Earth, Wind and Fire",
+      "lang": "en",
+      "moods": [
+        "joyful",
+        "excited"
+      ],
+      "topics": [
+        "autumn",
+        "party"
+      ]
+    },
+    {
+      "title": "Uptown Funk",
+      "artist": "Mark Ronson, Bruno Mars",
+      "lang": "en",
+      "moods": [
+        "excited",
+        "joyful"
+      ],
+      "topics": [
+        "party",
+        "city"
+      ]
+    },
+    {
+      "title": "Just the Way You Are",
+      "artist": "Bruno Mars",
+      "lang": "en",
+      "moods": [
+        "loving",
+        "grateful"
+      ],
+      "topics": [
+        "dating"
+      ]
+    },
+    {
+      "title": "Count on Me",
+      "artist": "Bruno Mars",
+      "lang": "en",
+      "moods": [
+        "grateful",
+        "content"
+      ],
+      "topics": [
+        "friends"
+      ]
+    },
+    {
+      "title": "Lean on Me",
+      "artist": "Bill Withers",
+      "lang": "en",
+      "moods": [
+        "grateful",
+        "content"
+      ],
+      "topics": [
+        "friends"
+      ]
+    },
+    {
+      "title": "Lovely Day",
+      "artist": "Bill Withers",
+      "lang": "en",
+      "moods": [
+        "joyful",
+        "content"
+      ],
+      "topics": [
+        "morning",
+        "sunny"
+      ]
+    },
+    {
+      "title": "Stand by Me",
+      "artist": "Ben E. King",
+      "lang": "en",
+      "moods": [
+        "loving",
+        "grateful"
+      ],
+      "topics": [
+        "friends"
+      ]
+    },
+    {
+      "title": "Africa",
+      "artist": "Toto",
+      "lang": "en",
+      "moods": [
+        "nostalgic",
+        "dreamy"
+      ],
+      "topics": [
+        "travel",
+        "nature"
+      ]
+    },
+    {
+      "title": "Fast Car",
+      "artist": "Tracy Chapman",
+      "lang": "en",
+      "moods": [
+        "sad",
+        "inspired"
+      ],
+      "topics": [
+        "transport"
+      ]
+    },
+    {
+      "title": "Fields of Gold",
+      "artist": "Sting",
+      "lang": "en",
+      "moods": [
+        "peaceful",
+        "nostalgic"
+      ],
+      "topics": [
+        "evening",
+        "nature"
+      ]
+    },
+    {
+      "title": "Tears in Heaven",
+      "artist": "Eric Clapton",
+      "lang": "en",
+      "moods": [
+        "sad"
+      ],
+      "topics": [
+        "family"
+      ]
+    },
+    {
+      "title": "Wish You Were Here",
+      "artist": "Pink Floyd",
+      "lang": "en",
+      "moods": [
+        "nostalgic",
+        "sad"
+      ],
+      "topics": [
+        "friends"
+      ]
+    },
+    {
+      "title": "Comfortably Numb",
+      "artist": "Pink Floyd",
+      "lang": "en",
+      "moods": [
+        "bored",
+        "tired"
+      ],
+      "topics": [
+        "night"
+      ]
+    },
+    {
+      "title": "Mr. Brightside",
+      "artist": "The Killers",
+      "lang": "en",
+      "moods": [
+        "anxious",
+        "excited"
+      ],
+      "topics": [
+        "night",
+        "party"
+      ]
+    },
+    {
+      "title": "Sweater Weather",
+      "artist": "The Neighbourhood",
+      "lang": "en",
+      "moods": [
+        "dreamy",
+        "content"
+      ],
+      "topics": [
+        "winter",
+        "evening"
+      ]
+    },
+    {
+      "title": "Let It Snow! Let It Snow! Let It Snow!",
+      "artist": "Dean Martin",
+      "lang": "en",
+      "moods": [
+        "joyful",
+        "content"
+      ],
+      "topics": [
+        "snow",
+        "winter"
+      ]
+    },
+    {
+      "title": "Autumn Leaves",
+      "artist": "Nat King Cole",
+      "lang": "en",
+      "moods": [
+        "nostalgic",
+        "dreamy"
+      ],
+      "topics": [
+        "autumn"
+      ]
+    },
+    {
+      "title": "Summertime",
+      "artist": "Ella Fitzgerald, Louis Armstrong",
+      "lang": "en",
+      "moods": [
+        "content",
+        "peaceful"
+      ],
+      "topics": [
+        "heat"
+      ]
+    },
+    {
+      "title": "Kokomo",
+      "artist": "The Beach Boys",
+      "lang": "en",
+      "moods": [
+        "joyful",
+        "content"
+      ],
+      "topics": [
+        "beach",
+        "travel"
+      ]
+    },
+    {
+      "title": "Celebration",
+      "artist": "Kool and the Gang",
+      "lang": "en",
+      "moods": [
+        "excited",
+        "joyful"
+      ],
+      "topics": [
+        "birthday",
+        "party"
+      ]
+    },
+    {
+      "title": "At Last",
+      "artist": "Etta James",
+      "lang": "en",
+      "moods": [
+        "loving",
+        "grateful"
+      ],
+      "topics": [
+        "wedding"
+      ]
+    },
+    {
+      "title": "Marry You",
+      "artist": "Bruno Mars",
+      "lang": "en",
+      "moods": [
+        "joyful",
+        "excited"
+      ],
+      "topics": [
+        "wedding"
+      ]
+    },
+    {
+      "title": "Pomp and Circumstance",
+      "artist": "Edward Elgar",
+      "lang": "en",
+      "moods": [
+        "proud",
+        "grateful"
+      ],
+      "topics": [
+        "graduation"
+      ]
+    },
+    {
+      "title": "Good Riddance (Time of Your Life)",
+      "artist": "Green Day",
+      "lang": "en",
+      "moods": [
+        "nostalgic",
+        "content"
+      ],
+      "topics": [
+        "graduation",
+        "friends"
+      ]
+    },
+    {
+      "title": "Space Oddity",
+      "artist": "David Bowie",
+      "lang": "en",
+      "moods": [
+        "dreamy",
+        "anxious"
+      ],
+      "topics": [
+        "space"
+      ]
+    },
+    {
+      "title": "Rocket Man",
+      "artist": "Elton John",
+      "lang": "en",
+      "moods": [
+        "tired",
+        "nostalgic"
+      ],
+      "topics": [
+        "space",
+        "travel"
+      ]
+    },
+    {
+      "title": "The Night We Met",
+      "artist": "Lord Huron",
+      "lang": "en",
+      "moods": [
+        "sad",
+        "nostalgic"
+      ],
+      "topics": [
+        "night"
+      ]
+    },
+    {
+      "title": "Heat Waves",
+      "artist": "Glass Animals",
+      "lang": "en",
+      "moods": [
+        "nostalgic",
+        "dreamy"
+      ],
+      "topics": [
+        "heat",
+        "night"
+      ]
+    },
+    {
+      "title": "Sunflower",
+      "artist": "Post Malone, Swae Lee",
+      "lang": "en",
+      "moods": [
+        "joyful",
+        "content"
+      ],
+      "topics": [
+        "sunny",
+        "movies"
+      ]
+    },
+    {
+      "title": "Fireflies",
+      "artist": "Owl City",
+      "lang": "en",
+      "moods": [
+        "dreamy",
+        "joyful"
+      ],
+      "topics": [
+        "night",
+        "nature"
+      ]
+    },
+    {
+      "title": "Bad Day",
+      "artist": "Daniel Powter",
+      "lang": "en",
+      "moods": [
+        "disappointed",
+        "tired",
+        "bored"
+      ],
+      "topics": [
+        "work"
+      ]
+    },
+    {
+      "title": "Don't Worry Be Happy",
+      "artist": "Bobby McFerrin",
+      "lang": "en",
+      "moods": [
+        "joyful",
+        "peaceful"
+      ],
+      "topics": [
+        "sunny"
+      ]
+    }
+  ]
+}

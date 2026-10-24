@@ -7,6 +7,7 @@ import Shelf from '../components/album/Shelf'
 import Quilt from '../components/album/Quilt'
 import MonthSheets from '../components/album/MonthSheets'
 import YearCard from '../components/album/YearCard'
+import YearInPostmarks from '../components/album/YearInPostmarks'
 import ShareYear, { shareNote } from '../components/album/ShareYear'
 import AcrossYears from '../components/album/AcrossYears'
 import Ceremony from '../components/album/Ceremony'
@@ -40,6 +41,7 @@ export default function Album() {
   const replay = Number(useSearchParams()[0].get('ceremony')) || null
   const [picked, setPicked] = useState(null)
   const [deciding, setDeciding] = useState(false) // the cover editor is open
+  const [glow, setGlow] = useState(null) // the month "Year in postmarks" is showing
   const [done, setDone] = useState(false)
   const [open, setOpen] = useState(null) // the stamp being looked at
 
@@ -129,7 +131,14 @@ export default function Album() {
         <YearCard year={year} moments={moments} today={today} moods={moods} book={book} />
       )}
 
-      <Quilt year={year} moments={thisYearMoments} today={today} onOpen={setOpen} />
+      <YearInPostmarks key={year} year={year} moments={thisYearMoments} onGlow={setGlow} />
+      <Quilt
+        year={year}
+        moments={thisYearMoments}
+        today={today}
+        onOpen={setOpen}
+        glowMonth={glow}
+      />
       <MonthSheets year={year} moments={thisYearMoments} today={today} />
       {across.length >= 2 && <AcrossYears items={across} today={today} onOpen={setOpen} />}
       <ShareYear
