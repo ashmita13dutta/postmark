@@ -330,3 +330,232 @@
   color: var(--ink-60);
   font: 500 11px var(--font-mono);
 }
+
+/* volumes: the cover, its editor and the year-end ceremony */
+.spine {
+  position: relative;
+}
+.spine--closed::after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c-red);
+  box-shadow: 0 1px 2px rgba(42, 38, 32, 0.4);
+}
+.cover {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 18px;
+}
+.cover h2 {
+  margin: 0;
+  font: 400 20px var(--font-display);
+}
+.cover p {
+  margin: 4px 0 10px;
+  font: 400 13px/1.45 var(--font-ui);
+  color: var(--ink-60);
+}
+.cover__edit,
+.cover__actions button,
+.cover__clear {
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--ink-15);
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--ink);
+  font: 500 13px var(--font-ui);
+}
+.cover__edit {
+  border-color: var(--postmark);
+  color: var(--postmark);
+}
+.cover__book {
+  position: relative;
+  flex: none;
+  aspect-ratio: 4 / 5;
+  border-radius: 4px 10px 10px 4px;
+  background: var(--card-warm);
+  box-shadow:
+    0 1px 2px rgba(42, 38, 32, 0.25),
+    0 8px 18px rgba(42, 38, 32, 0.2);
+  overflow: hidden;
+}
+.cover__spine {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 11%;
+  box-shadow: 1px 0 2px rgba(42, 38, 32, 0.25);
+}
+.cover__label {
+  position: absolute;
+  top: 9%;
+  left: 18%;
+  right: 8%;
+  display: grid;
+  justify-items: center;
+  gap: 0;
+  padding: 6px 4px;
+  border: 1px solid var(--ink-15);
+  background: var(--paper);
+  text-align: center;
+  color: var(--ink);
+}
+.cover__label small {
+  font: 500 calc(var(--cover-w) * 0.045) var(--font-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-60);
+}
+.cover__label strong {
+  font: 400 calc(var(--cover-w) * 0.13) var(--font-display);
+  line-height: 1.1;
+}
+.cover__label span {
+  font: 500 calc(var(--cover-w) * 0.06) var(--font-mono);
+  color: var(--ink-60);
+}
+.cover__sticker {
+  position: absolute;
+  object-fit: contain;
+  filter: drop-shadow(0 1px 2px rgba(42, 38, 32, 0.3));
+  pointer-events: none;
+}
+.cover__seal {
+  position: absolute;
+  bottom: 6%;
+  left: 55%;
+  transform: translateX(-50%);
+}
+.cover__scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background: rgba(42, 38, 32, 0.45);
+}
+.cover__sheet {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 480px;
+  max-height: 92vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 22px max(18px, var(--safe-right)) calc(18px + var(--safe-bottom))
+    max(18px, var(--safe-left));
+  border-radius: 22px 22px 0 0;
+  background: var(--paper);
+}
+.cover__slots {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+.cover__slot {
+  width: 40px;
+  height: 40px;
+  border: 1px dashed var(--ink-15);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ink-60);
+  font: 500 13px var(--font-mono);
+}
+.cover__slot.on {
+  border: 2px solid var(--postmark);
+  color: var(--postmark);
+}
+.cover__tray {
+  width: 100%;
+}
+.cover__pack {
+  margin: 12px 0 6px;
+  font: 500 12px var(--font-ui);
+  letter-spacing: 0.04em;
+  color: var(--ink-60);
+}
+.cover__tray ul {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.cover__tray li button {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 1;
+  border: 0;
+  border-radius: 10px;
+  background: var(--card);
+}
+.cover__tray img {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+}
+.cover__actions {
+  display: flex;
+  gap: 8px;
+}
+.cover__done {
+  min-height: var(--tap);
+  padding: 0 22px;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: var(--postmark);
+  color: var(--card-warm);
+  font: 500 14px var(--font-ui);
+}
+.cover__actions .cover__done {
+  min-height: 40px;
+  border: 0;
+  color: var(--card-warm);
+}
+.ceremony {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  padding: 24px;
+  background: var(--paper);
+  text-align: center;
+}
+.ceremony__words {
+  margin: 0;
+  font: 400 24px var(--font-display);
+}
+.ceremony__stage {
+  display: grid;
+  place-items: center;
+  min-height: 290px;
+}
+.ceremony__end p {
+  max-width: 300px;
+  margin: 0 auto 14px;
+  font: 400 14px/1.5 var(--font-ui);
+  color: var(--ink-60);
+}
+.ceremony__skip {
+  min-height: 40px;
+  padding: 0 16px;
+  border: 0;
+  background: none;
+  color: var(--ink-60);
+  font: 500 13px var(--font-ui);
+}

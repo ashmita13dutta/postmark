@@ -2,8 +2,9 @@ import { useLiveQuery } from 'dexie-react-hooks'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { demo } from '../../db/demo'
+import { queries } from '../../db/queries'
 import { addSamplePhotos } from '../../lib/demoPhoto'
-import { parseDay } from '../../lib/dates'
+import { parseDay, todayKey } from '../../lib/dates'
 import './demo.css'
 
 const NO_STATUS = { demo: 0, own: 0, early: 0 }
@@ -30,6 +31,18 @@ const shortDay = (day) => {
 export default function DemoTools() {
   const status = useLiveQuery(() => demo.status(), [], NO_STATUS)
   const postcards = useLiveQuery(() => demo.list(), [], NO_LIST)
+  // the latest finished year with any stamps, to replay the year-end ceremony on
+  const lastYear = useLiveQuery(
+    async () => {
+      const thisYear = Number(todayKey().slice(0, 4))
+      const years = (await queries.allMoments())
+        .map((m) => Number(m.day.slice(0, 4)))
+        .filter((y) => y < thisYear)
+      return years.length ? Math.max(...years) : null
+    },
+    [],
+    null,
+  )
   const [message, setMessage] = useState(null)
   const [busy, setBusy] = useState(false)
 
@@ -72,6 +85,9 @@ export default function DemoTools() {
       </p>
       <div className="demo__actions">
         <Link to="/you/demo">Make your own demo postcard</Link>
+        {lastYear && (
+          <Link to={`/album?ceremony=${lastYear}`}>Replay the {lastYear} year-end ceremony</Link>
+        )}
         <button disabled={busy} onClick={() => run(() => demo.addPostcards(), addText)}>
           {status.demo > 0 ? 'Reset the sample postcards' : 'Add sample postcards'}
         </button>

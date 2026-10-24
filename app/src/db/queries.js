@@ -5,6 +5,7 @@ import { MAX_DECORATIONS, clampPlacement } from '../lib/decor'
 import { clampDeliveryDay, dayKey, sealedUntilFor } from '../lib/dates'
 import { eligibleForDelay, pickDelayed } from '../lib/mailbox'
 import { earnedRewards } from '../lib/rewards'
+import { cleanCover, yearsToClose } from '../lib/volumes'
 import { MAX_MOODS, buildMoods, cleanMood, isMyMood } from '../engine/moods'
 import { clampLook } from '../data/papers'
 import { applyFields, newMoment } from './moments'
@@ -327,6 +328,36 @@ export function makeQueries(db) {
     })
   }
 
+  // ---- volumes ----
+
+  const allVolumes = () => db.volumes.toArray()
+  /** A volume's cover stickers, one picture sticker per slot. Works for any year, open or closed. */
+  async function setCover(year, coverStickers) {
+    return db.transaction('rw', db.volumes, async () => {
+      const row = (await db.volumes.get(year)) ?? { year, coverStickers: [], closedAt: null }
+      const next = { ...row, coverStickers: cleanCover(coverStickers) }
+      await db.volumes.put(next)
+      return next
+    })
+  }
+  /**
+   * Close the volumes of every finished year that has real stamps and has not been closed (the
+   * closing ceremony, spec 6.10), once each. Returns the years closed. Demo stamps never close one.
+   */
+  async function closeVolumes(today, nowMs = now()) {
+    return db.transaction('rw', db.moments, db.volumes, async () => {
+      const real = (await db.moments.toArray()).filter((m) => m.demo !== true)
+      const rows = await db.volumes.toArray()
+      const closed = rows.filter((v) => v.closedAt != null).map((v) => v.year)
+      const due = yearsToClose(real, today, closed)
+      for (const year of due) {
+        const row = rows.find((v) => v.year === year) ?? { year, coverStickers: [] }
+        await db.volumes.put({ ...row, closedAt: nowMs })
+      }
+      return due
+    })
+  }
+
   // ---- rewards ----
 
   const allRewards = () => db.rewards.toArray()
@@ -553,6 +584,9 @@ export function makeQueries(db) {
     removeMedia,
     mediaForMoment,
     mediaForMoments,
+    allVolumes,
+    setCover,
+    closeVolumes,
     allRewards,
     syncRewards,
     markRewardsSeen,

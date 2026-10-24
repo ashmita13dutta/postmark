@@ -18,7 +18,7 @@
  *                     name, at, seen }   worked out from the stamps (lib/rewards.js); only 'at' and 'seen' are kept
  *  calendarStickers { id, monthKey, stickerId?, label?, x, y }
  *  redeliveries     { monthKey, momentId }                  delayed-in-transit pick, fixed per month
- *  volumes          { year, coverStickers, closedAt }
+ *  volumes          { year, coverStickers: [{ slot, stickerId }], closedAt }   closedAt is null until the year-end ceremony
  *  settings         { key, value }
  *  corrections      { id (the day), text, vector: number[384], guess, feeling, createdAt }
  *                   a note you told the app it had read wrong: the note, its embedding from the
