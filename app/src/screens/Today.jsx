@@ -5,6 +5,7 @@ import Screen from '../app/Screen'
 import WaxSeal from '../components/postcard/WaxSeal'
 import MoodStrip from '../components/moods/MoodStrip'
 import PhotoSection from '../components/photo/PhotoSection'
+import CityChip from '../components/place/CityChip'
 import { usePhoto } from '../components/photo/usePhoto'
 import ReaderCard from '../components/reader/ReaderCard'
 import Stamp from '../components/stamp/Stamp'
@@ -78,7 +79,7 @@ export default function Today() {
  *     controls: extra content under the title (the date picker)
  *     blocked:  true while this day cannot take a demo postcard
  *     samples:  notes to offer under the box
- *     onSave:   saves `fields` ({ note, feeling, topic, palette, paletteSource }) and moves on
+ *     onSave:   saves `fields` ({ note, feeling, topic, palette, paletteSource, city }) and moves on
  */
 export function Editor({ day, existing, demo }) {
   const now_ = contextAt(now())
@@ -109,6 +110,10 @@ export function Editor({ day, existing, demo }) {
 
   // the photo: picked here, saved with the postcard when you stamp it
   const stripFrames = useLiveQuery(() => queries.getSetting('stripFrames'), [], 3)
+  // the place on the postmark: yours already, else your home city; you can change it or take it off
+  const homeCity = useLiveQuery(() => queries.getSetting('homeCity'), [], null)
+  const [picked, setPicked] = useState(undefined) // undefined = not chosen this visit
+  const place = picked !== undefined ? picked : existing ? existing.city : homeCity
   const paletteDefault = useLiveQuery(() => queries.getSetting('paletteDefault'), [], 'moment')
   const photo = usePhoto({ frames: stripFrames, seed: day })
   const savedPhoto = useLiveQuery(
@@ -277,6 +282,7 @@ export function Editor({ day, existing, demo }) {
         topic: r.topic,
         palette,
         paletteSource: custom ? 'manual' : fromPhoto ? 'photo' : 'moment',
+        city: place ?? null,
       }
       if (demo) {
         // the photo goes with the postcard once it exists
@@ -362,6 +368,8 @@ export function Editor({ day, existing, demo }) {
           Fill in a sample note
         </button>
       )}
+
+      {!sealed && <CityChip value={place} onChange={setPicked} home={homeCity} />}
 
       {!sealed && (
         <PhotoSection

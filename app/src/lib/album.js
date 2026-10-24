@@ -197,9 +197,21 @@ export function yearStats(year, moments, today) {
     if (monthDays(`${year}-${pad(month)}`).every((d) => have.has(d))) completeMonths++
   }
 
+  // where the stamps were made: one count per place, however it was typed
+  const places = new Map()
+  for (const m of mine) {
+    const name = m.city?.trim()
+    if (!name) continue
+    const key = name.toLowerCase()
+    const seen = places.get(key)
+    places.set(key, { id: seen?.id ?? name, count: (seen?.count ?? 0) + 1 })
+  }
+
   return {
     stamps: mine.length,
     daysSoFar,
+    cities: places.size,
+    topCity: top(new Map([...places.values()].map((p) => [p.id, p.count]))),
     blanks: Math.max(0, daysSoFar - mine.length),
     rainyDays: mine.filter((m) => m.topic === 'rain').length,
     topColor: bestFamily && {

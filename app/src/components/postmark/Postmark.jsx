@@ -12,6 +12,9 @@ export default function Postmark({ day, city }) {
   // two copies on one screen must not share path ids
   const uid = useId().replace(/[^a-zA-Z0-9]/g, '')
   const { y, m, d } = parseDay(day)
+  // a long name shrinks to stay on the arc
+  const cityName = city ? city.toUpperCase() : null
+  const cityFont = cityName ? Math.max(5.5, Math.min(8.5, (8.5 * 12) / cityName.length)) : 8.5
   const dayMonth = new Date(y, m - 1, d)
     .toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
     .toUpperCase()
@@ -37,9 +40,9 @@ export default function Postmark({ day, city }) {
             POSTMARK
           </textPath>
         </text>
-        <text textAnchor="middle">
+        <text textAnchor="middle" fontSize={cityFont}>
           <textPath href={`#${uid}-bottom`} startOffset="50%">
-            {city ? city.toUpperCase() : '✦ ✦ ✦'}
+            {cityName ?? '✦ ✦ ✦'}
           </textPath>
         </text>
       </g>

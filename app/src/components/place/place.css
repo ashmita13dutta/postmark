@@ -1,0 +1,103 @@
+/* "Posted from": the place chip and its panel on Today. */
+.place {
+  margin-top: 12px;
+}
+.place__chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: var(--tap);
+  padding: 0 14px;
+  border: 1px solid var(--ink-12);
+  border-radius: var(--r-pill);
+  background: var(--card);
+  color: var(--ink);
+  font: 400 14px var(--font-ui);
+  text-align: left;
+}
+.place__label {
+  color: var(--ink-60);
+  font: 500 11px var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.place__chip b {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 500;
+}
+.place__edit {
+  color: var(--postmark);
+  font: 500 12px var(--font-ui);
+}
+.place__panel {
+  display: grid;
+  gap: 10px;
+  margin-top: 8px;
+  padding: 12px;
+  border: 1px solid var(--ink-12);
+  border-radius: 14px;
+  background: var(--card);
+}
+.place__locate,
+.place__quick button {
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--ink-15);
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--ink);
+  font: 500 13px var(--font-ui);
+}
+.place__locate {
+  border: 1px dashed var(--postmark);
+  color: var(--postmark);
+}
+.place__search {
+  min-height: var(--tap);
+  padding: 0 14px;
+  border: 1px solid var(--ink-15);
+  border-radius: 12px;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 16px var(--font-ui);
+}
+.place__results {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.place__results button {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 6px;
+  border: 0;
+  border-bottom: 1px solid var(--ink-08);
+  background: none;
+  color: var(--ink);
+  font: 400 15px var(--font-ui);
+  text-align: left;
+}
+.place__results small {
+  color: var(--ink-60);
+  font: 400 12px var(--font-ui);
+}
+.place__quick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.place__note {
+  margin: 0;
+  font: 400 13px/1.4 var(--font-ui);
+  color: var(--ink-60);
+}

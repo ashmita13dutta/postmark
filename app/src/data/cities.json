@@ -1,0 +1,1299 @@
+{
+  "about": "The places you can stamp from. Each entry is { name, country, lat, lon, packId, aliases }. Your phone's position is matched to the nearest city within 60 km (the coordinates are only used for that and are never saved: only the city's name goes on the postcard); if none is near you pick one from the list, or type a place that is not here. aliases are other names people search by (Calcutta, Bombay, Bangalore). packId is the city sticker pack to show in the tray for this city. It is null for every city today because no city packs have been drawn yet: set it to a pack id from sticker-packs.json once one exists (a Kolkata pack of taxis, trams and Howrah Bridge is the first planned). Keep the list to about 150; the tests check names are unique and positions are real.",
+  "maxKm": 60,
+  "cities": [
+    {
+      "name": "Kolkata",
+      "country": "India",
+      "lat": 22.57,
+      "lon": 88.36,
+      "packId": null,
+      "aliases": [
+        "Calcutta",
+        "Howrah",
+        "Salt Lake"
+      ]
+    },
+    {
+      "name": "Siliguri",
+      "country": "India",
+      "lat": 26.72,
+      "lon": 88.43,
+      "packId": null
+    },
+    {
+      "name": "Darjeeling",
+      "country": "India",
+      "lat": 27.04,
+      "lon": 88.26,
+      "packId": null
+    },
+    {
+      "name": "Durgapur",
+      "country": "India",
+      "lat": 23.55,
+      "lon": 87.32,
+      "packId": null
+    },
+    {
+      "name": "Asansol",
+      "country": "India",
+      "lat": 23.68,
+      "lon": 86.98,
+      "packId": null
+    },
+    {
+      "name": "Kharagpur",
+      "country": "India",
+      "lat": 22.35,
+      "lon": 87.32,
+      "packId": null
+    },
+    {
+      "name": "Digha",
+      "country": "India",
+      "lat": 21.63,
+      "lon": 87.55,
+      "packId": null
+    },
+    {
+      "name": "Santiniketan",
+      "country": "India",
+      "lat": 23.68,
+      "lon": 87.69,
+      "packId": null,
+      "aliases": [
+        "Shantiniketan",
+        "Bolpur"
+      ]
+    },
+    {
+      "name": "Bardhaman",
+      "country": "India",
+      "lat": 23.23,
+      "lon": 87.86,
+      "packId": null,
+      "aliases": [
+        "Burdwan"
+      ]
+    },
+    {
+      "name": "Delhi",
+      "country": "India",
+      "lat": 28.61,
+      "lon": 77.21,
+      "packId": null,
+      "aliases": [
+        "New Delhi",
+        "Dilli"
+      ]
+    },
+    {
+      "name": "Mumbai",
+      "country": "India",
+      "lat": 19.08,
+      "lon": 72.88,
+      "packId": null,
+      "aliases": [
+        "Bombay"
+      ]
+    },
+    {
+      "name": "Bengaluru",
+      "country": "India",
+      "lat": 12.97,
+      "lon": 77.59,
+      "packId": null,
+      "aliases": [
+        "Bangalore"
+      ]
+    },
+    {
+      "name": "Chennai",
+      "country": "India",
+      "lat": 13.08,
+      "lon": 80.27,
+      "packId": null,
+      "aliases": [
+        "Madras"
+      ]
+    },
+    {
+      "name": "Hyderabad",
+      "country": "India",
+      "lat": 17.39,
+      "lon": 78.49,
+      "packId": null
+    },
+    {
+      "name": "Pune",
+      "country": "India",
+      "lat": 18.52,
+      "lon": 73.86,
+      "packId": null,
+      "aliases": [
+        "Poona"
+      ]
+    },
+    {
+      "name": "Ahmedabad",
+      "country": "India",
+      "lat": 23.03,
+      "lon": 72.58,
+      "packId": null
+    },
+    {
+      "name": "Jaipur",
+      "country": "India",
+      "lat": 26.91,
+      "lon": 75.79,
+      "packId": null
+    },
+    {
+      "name": "Lucknow",
+      "country": "India",
+      "lat": 26.85,
+      "lon": 80.95,
+      "packId": null
+    },
+    {
+      "name": "Kanpur",
+      "country": "India",
+      "lat": 26.45,
+      "lon": 80.35,
+      "packId": null
+    },
+    {
+      "name": "Varanasi",
+      "country": "India",
+      "lat": 25.32,
+      "lon": 83.01,
+      "packId": null,
+      "aliases": [
+        "Banaras",
+        "Benares",
+        "Kashi"
+      ]
+    },
+    {
+      "name": "Patna",
+      "country": "India",
+      "lat": 25.59,
+      "lon": 85.14,
+      "packId": null
+    },
+    {
+      "name": "Ranchi",
+      "country": "India",
+      "lat": 23.34,
+      "lon": 85.31,
+      "packId": null
+    },
+    {
+      "name": "Bhubaneswar",
+      "country": "India",
+      "lat": 20.3,
+      "lon": 85.82,
+      "packId": null
+    },
+    {
+      "name": "Puri",
+      "country": "India",
+      "lat": 19.81,
+      "lon": 85.83,
+      "packId": null
+    },
+    {
+      "name": "Guwahati",
+      "country": "India",
+      "lat": 26.14,
+      "lon": 91.74,
+      "packId": null,
+      "aliases": [
+        "Gauhati"
+      ]
+    },
+    {
+      "name": "Shillong",
+      "country": "India",
+      "lat": 25.57,
+      "lon": 91.88,
+      "packId": null
+    },
+    {
+      "name": "Gangtok",
+      "country": "India",
+      "lat": 27.33,
+      "lon": 88.61,
+      "packId": null
+    },
+    {
+      "name": "Agartala",
+      "country": "India",
+      "lat": 23.83,
+      "lon": 91.28,
+      "packId": null
+    },
+    {
+      "name": "Imphal",
+      "country": "India",
+      "lat": 24.82,
+      "lon": 93.94,
+      "packId": null
+    },
+    {
+      "name": "Kochi",
+      "country": "India",
+      "lat": 9.93,
+      "lon": 76.27,
+      "packId": null,
+      "aliases": [
+        "Cochin"
+      ]
+    },
+    {
+      "name": "Thiruvananthapuram",
+      "country": "India",
+      "lat": 8.52,
+      "lon": 76.94,
+      "packId": null,
+      "aliases": [
+        "Trivandrum"
+      ]
+    },
+    {
+      "name": "Kozhikode",
+      "country": "India",
+      "lat": 11.26,
+      "lon": 75.78,
+      "packId": null,
+      "aliases": [
+        "Calicut"
+      ]
+    },
+    {
+      "name": "Coimbatore",
+      "country": "India",
+      "lat": 11.02,
+      "lon": 76.96,
+      "packId": null
+    },
+    {
+      "name": "Madurai",
+      "country": "India",
+      "lat": 9.92,
+      "lon": 78.12,
+      "packId": null
+    },
+    {
+      "name": "Mysuru",
+      "country": "India",
+      "lat": 12.3,
+      "lon": 76.64,
+      "packId": null,
+      "aliases": [
+        "Mysore"
+      ]
+    },
+    {
+      "name": "Mangaluru",
+      "country": "India",
+      "lat": 12.91,
+      "lon": 74.86,
+      "packId": null,
+      "aliases": [
+        "Mangalore"
+      ]
+    },
+    {
+      "name": "Goa",
+      "country": "India",
+      "lat": 15.5,
+      "lon": 73.83,
+      "packId": null,
+      "aliases": [
+        "Panaji",
+        "Panjim"
+      ]
+    },
+    {
+      "name": "Nagpur",
+      "country": "India",
+      "lat": 21.15,
+      "lon": 79.09,
+      "packId": null
+    },
+    {
+      "name": "Indore",
+      "country": "India",
+      "lat": 22.72,
+      "lon": 75.86,
+      "packId": null
+    },
+    {
+      "name": "Bhopal",
+      "country": "India",
+      "lat": 23.26,
+      "lon": 77.41,
+      "packId": null
+    },
+    {
+      "name": "Surat",
+      "country": "India",
+      "lat": 21.17,
+      "lon": 72.83,
+      "packId": null
+    },
+    {
+      "name": "Vadodara",
+      "country": "India",
+      "lat": 22.31,
+      "lon": 73.18,
+      "packId": null,
+      "aliases": [
+        "Baroda"
+      ]
+    },
+    {
+      "name": "Chandigarh",
+      "country": "India",
+      "lat": 30.73,
+      "lon": 76.78,
+      "packId": null
+    },
+    {
+      "name": "Amritsar",
+      "country": "India",
+      "lat": 31.63,
+      "lon": 74.87,
+      "packId": null
+    },
+    {
+      "name": "Dehradun",
+      "country": "India",
+      "lat": 30.32,
+      "lon": 78.03,
+      "packId": null
+    },
+    {
+      "name": "Shimla",
+      "country": "India",
+      "lat": 31.1,
+      "lon": 77.17,
+      "packId": null,
+      "aliases": [
+        "Simla"
+      ]
+    },
+    {
+      "name": "Srinagar",
+      "country": "India",
+      "lat": 34.08,
+      "lon": 74.8,
+      "packId": null
+    },
+    {
+      "name": "Leh",
+      "country": "India",
+      "lat": 34.16,
+      "lon": 77.58,
+      "packId": null,
+      "aliases": [
+        "Ladakh"
+      ]
+    },
+    {
+      "name": "Udaipur",
+      "country": "India",
+      "lat": 24.58,
+      "lon": 73.71,
+      "packId": null
+    },
+    {
+      "name": "Jodhpur",
+      "country": "India",
+      "lat": 26.24,
+      "lon": 73.02,
+      "packId": null
+    },
+    {
+      "name": "Visakhapatnam",
+      "country": "India",
+      "lat": 17.69,
+      "lon": 83.22,
+      "packId": null,
+      "aliases": [
+        "Vizag"
+      ]
+    },
+    {
+      "name": "Vijayawada",
+      "country": "India",
+      "lat": 16.51,
+      "lon": 80.65,
+      "packId": null
+    },
+    {
+      "name": "Rishikesh",
+      "country": "India",
+      "lat": 30.09,
+      "lon": 78.27,
+      "packId": null
+    },
+    {
+      "name": "Haridwar",
+      "country": "India",
+      "lat": 29.95,
+      "lon": 78.16,
+      "packId": null
+    },
+    {
+      "name": "Puducherry",
+      "country": "India",
+      "lat": 11.93,
+      "lon": 79.83,
+      "packId": null,
+      "aliases": [
+        "Pondicherry",
+        "Pondy"
+      ]
+    },
+    {
+      "name": "Ooty",
+      "country": "India",
+      "lat": 11.41,
+      "lon": 76.7,
+      "packId": null,
+      "aliases": [
+        "Udhagamandalam"
+      ]
+    },
+    {
+      "name": "Munnar",
+      "country": "India",
+      "lat": 10.09,
+      "lon": 77.06,
+      "packId": null
+    },
+    {
+      "name": "Agra",
+      "country": "India",
+      "lat": 27.18,
+      "lon": 78.01,
+      "packId": null
+    },
+    {
+      "name": "Prayagraj",
+      "country": "India",
+      "lat": 25.44,
+      "lon": 81.85,
+      "packId": null,
+      "aliases": [
+        "Allahabad"
+      ]
+    },
+    {
+      "name": "Dhaka",
+      "country": "Bangladesh",
+      "lat": 23.81,
+      "lon": 90.41,
+      "packId": null,
+      "aliases": [
+        "Dacca"
+      ]
+    },
+    {
+      "name": "Chattogram",
+      "country": "Bangladesh",
+      "lat": 22.36,
+      "lon": 91.78,
+      "packId": null,
+      "aliases": [
+        "Chittagong"
+      ]
+    },
+    {
+      "name": "Kathmandu",
+      "country": "Nepal",
+      "lat": 27.72,
+      "lon": 85.32,
+      "packId": null
+    },
+    {
+      "name": "Colombo",
+      "country": "Sri Lanka",
+      "lat": 6.93,
+      "lon": 79.86,
+      "packId": null
+    },
+    {
+      "name": "Thimphu",
+      "country": "Bhutan",
+      "lat": 27.47,
+      "lon": 89.64,
+      "packId": null
+    },
+    {
+      "name": "Karachi",
+      "country": "Pakistan",
+      "lat": 24.86,
+      "lon": 67.01,
+      "packId": null
+    },
+    {
+      "name": "Lahore",
+      "country": "Pakistan",
+      "lat": 31.55,
+      "lon": 74.34,
+      "packId": null
+    },
+    {
+      "name": "Islamabad",
+      "country": "Pakistan",
+      "lat": 33.68,
+      "lon": 73.05,
+      "packId": null
+    },
+    {
+      "name": "Kabul",
+      "country": "Afghanistan",
+      "lat": 34.56,
+      "lon": 69.21,
+      "packId": null
+    },
+    {
+      "name": "Male",
+      "country": "Maldives",
+      "lat": 4.18,
+      "lon": 73.51,
+      "packId": null
+    },
+    {
+      "name": "Singapore",
+      "country": "Singapore",
+      "lat": 1.35,
+      "lon": 103.82,
+      "packId": null
+    },
+    {
+      "name": "Kuala Lumpur",
+      "country": "Malaysia",
+      "lat": 3.14,
+      "lon": 101.69,
+      "packId": null,
+      "aliases": [
+        "KL"
+      ]
+    },
+    {
+      "name": "Bangkok",
+      "country": "Thailand",
+      "lat": 13.76,
+      "lon": 100.5,
+      "packId": null
+    },
+    {
+      "name": "Hanoi",
+      "country": "Vietnam",
+      "lat": 21.03,
+      "lon": 105.85,
+      "packId": null
+    },
+    {
+      "name": "Ho Chi Minh City",
+      "country": "Vietnam",
+      "lat": 10.82,
+      "lon": 106.63,
+      "packId": null,
+      "aliases": [
+        "Saigon"
+      ]
+    },
+    {
+      "name": "Jakarta",
+      "country": "Indonesia",
+      "lat": -6.21,
+      "lon": 106.85,
+      "packId": null
+    },
+    {
+      "name": "Bali",
+      "country": "Indonesia",
+      "lat": -8.65,
+      "lon": 115.22,
+      "packId": null,
+      "aliases": [
+        "Denpasar"
+      ]
+    },
+    {
+      "name": "Manila",
+      "country": "Philippines",
+      "lat": 14.6,
+      "lon": 120.98,
+      "packId": null
+    },
+    {
+      "name": "Hong Kong",
+      "country": "China",
+      "lat": 22.32,
+      "lon": 114.17,
+      "packId": null
+    },
+    {
+      "name": "Shanghai",
+      "country": "China",
+      "lat": 31.23,
+      "lon": 121.47,
+      "packId": null
+    },
+    {
+      "name": "Beijing",
+      "country": "China",
+      "lat": 39.9,
+      "lon": 116.41,
+      "packId": null,
+      "aliases": [
+        "Peking"
+      ]
+    },
+    {
+      "name": "Shenzhen",
+      "country": "China",
+      "lat": 22.54,
+      "lon": 114.06,
+      "packId": null
+    },
+    {
+      "name": "Taipei",
+      "country": "Taiwan",
+      "lat": 25.03,
+      "lon": 121.57,
+      "packId": null
+    },
+    {
+      "name": "Seoul",
+      "country": "South Korea",
+      "lat": 37.57,
+      "lon": 126.98,
+      "packId": null
+    },
+    {
+      "name": "Tokyo",
+      "country": "Japan",
+      "lat": 35.68,
+      "lon": 139.65,
+      "packId": null
+    },
+    {
+      "name": "Osaka",
+      "country": "Japan",
+      "lat": 34.69,
+      "lon": 135.5,
+      "packId": null
+    },
+    {
+      "name": "Kyoto",
+      "country": "Japan",
+      "lat": 35.01,
+      "lon": 135.77,
+      "packId": null
+    },
+    {
+      "name": "Dubai",
+      "country": "United Arab Emirates",
+      "lat": 25.2,
+      "lon": 55.27,
+      "packId": null
+    },
+    {
+      "name": "Abu Dhabi",
+      "country": "United Arab Emirates",
+      "lat": 24.45,
+      "lon": 54.38,
+      "packId": null
+    },
+    {
+      "name": "Doha",
+      "country": "Qatar",
+      "lat": 25.29,
+      "lon": 51.53,
+      "packId": null
+    },
+    {
+      "name": "Riyadh",
+      "country": "Saudi Arabia",
+      "lat": 24.71,
+      "lon": 46.68,
+      "packId": null
+    },
+    {
+      "name": "Istanbul",
+      "country": "Turkey",
+      "lat": 41.01,
+      "lon": 28.98,
+      "packId": null
+    },
+    {
+      "name": "Tel Aviv",
+      "country": "Israel",
+      "lat": 32.09,
+      "lon": 34.78,
+      "packId": null
+    },
+    {
+      "name": "Cairo",
+      "country": "Egypt",
+      "lat": 30.04,
+      "lon": 31.24,
+      "packId": null
+    },
+    {
+      "name": "Nairobi",
+      "country": "Kenya",
+      "lat": -1.29,
+      "lon": 36.82,
+      "packId": null
+    },
+    {
+      "name": "Lagos",
+      "country": "Nigeria",
+      "lat": 6.52,
+      "lon": 3.38,
+      "packId": null
+    },
+    {
+      "name": "Accra",
+      "country": "Ghana",
+      "lat": 5.6,
+      "lon": -0.19,
+      "packId": null
+    },
+    {
+      "name": "Johannesburg",
+      "country": "South Africa",
+      "lat": -26.2,
+      "lon": 28.05,
+      "packId": null,
+      "aliases": [
+        "Joburg"
+      ]
+    },
+    {
+      "name": "Cape Town",
+      "country": "South Africa",
+      "lat": -33.92,
+      "lon": 18.42,
+      "packId": null
+    },
+    {
+      "name": "Casablanca",
+      "country": "Morocco",
+      "lat": 33.57,
+      "lon": -7.59,
+      "packId": null
+    },
+    {
+      "name": "Addis Ababa",
+      "country": "Ethiopia",
+      "lat": 9.03,
+      "lon": 38.74,
+      "packId": null
+    },
+    {
+      "name": "London",
+      "country": "United Kingdom",
+      "lat": 51.51,
+      "lon": -0.13,
+      "packId": null
+    },
+    {
+      "name": "Manchester",
+      "country": "United Kingdom",
+      "lat": 53.48,
+      "lon": -2.24,
+      "packId": null
+    },
+    {
+      "name": "Edinburgh",
+      "country": "United Kingdom",
+      "lat": 55.95,
+      "lon": -3.19,
+      "packId": null
+    },
+    {
+      "name": "Dublin",
+      "country": "Ireland",
+      "lat": 53.35,
+      "lon": -6.26,
+      "packId": null
+    },
+    {
+      "name": "Paris",
+      "country": "France",
+      "lat": 48.86,
+      "lon": 2.35,
+      "packId": null
+    },
+    {
+      "name": "Lyon",
+      "country": "France",
+      "lat": 45.76,
+      "lon": 4.84,
+      "packId": null
+    },
+    {
+      "name": "Amsterdam",
+      "country": "Netherlands",
+      "lat": 52.37,
+      "lon": 4.9,
+      "packId": null
+    },
+    {
+      "name": "Brussels",
+      "country": "Belgium",
+      "lat": 50.85,
+      "lon": 4.35,
+      "packId": null
+    },
+    {
+      "name": "Berlin",
+      "country": "Germany",
+      "lat": 52.52,
+      "lon": 13.4,
+      "packId": null
+    },
+    {
+      "name": "Munich",
+      "country": "Germany",
+      "lat": 48.14,
+      "lon": 11.58,
+      "packId": null,
+      "aliases": [
+        "Muenchen"
+      ]
+    },
+    {
+      "name": "Hamburg",
+      "country": "Germany",
+      "lat": 53.55,
+      "lon": 9.99,
+      "packId": null
+    },
+    {
+      "name": "Frankfurt",
+      "country": "Germany",
+      "lat": 50.11,
+      "lon": 8.68,
+      "packId": null
+    },
+    {
+      "name": "Zurich",
+      "country": "Switzerland",
+      "lat": 47.38,
+      "lon": 8.54,
+      "packId": null
+    },
+    {
+      "name": "Geneva",
+      "country": "Switzerland",
+      "lat": 46.2,
+      "lon": 6.14,
+      "packId": null
+    },
+    {
+      "name": "Vienna",
+      "country": "Austria",
+      "lat": 48.21,
+      "lon": 16.37,
+      "packId": null,
+      "aliases": [
+        "Wien"
+      ]
+    },
+    {
+      "name": "Prague",
+      "country": "Czechia",
+      "lat": 50.08,
+      "lon": 14.44,
+      "packId": null
+    },
+    {
+      "name": "Budapest",
+      "country": "Hungary",
+      "lat": 47.5,
+      "lon": 19.04,
+      "packId": null
+    },
+    {
+      "name": "Warsaw",
+      "country": "Poland",
+      "lat": 52.23,
+      "lon": 21.01,
+      "packId": null
+    },
+    {
+      "name": "Rome",
+      "country": "Italy",
+      "lat": 41.9,
+      "lon": 12.5,
+      "packId": null,
+      "aliases": [
+        "Roma"
+      ]
+    },
+    {
+      "name": "Milan",
+      "country": "Italy",
+      "lat": 45.46,
+      "lon": 9.19,
+      "packId": null,
+      "aliases": [
+        "Milano"
+      ]
+    },
+    {
+      "name": "Venice",
+      "country": "Italy",
+      "lat": 45.44,
+      "lon": 12.32,
+      "packId": null,
+      "aliases": [
+        "Venezia"
+      ]
+    },
+    {
+      "name": "Florence",
+      "country": "Italy",
+      "lat": 43.77,
+      "lon": 11.26,
+      "packId": null,
+      "aliases": [
+        "Firenze"
+      ]
+    },
+    {
+      "name": "Barcelona",
+      "country": "Spain",
+      "lat": 41.39,
+      "lon": 2.17,
+      "packId": null
+    },
+    {
+      "name": "Madrid",
+      "country": "Spain",
+      "lat": 40.42,
+      "lon": -3.7,
+      "packId": null
+    },
+    {
+      "name": "Lisbon",
+      "country": "Portugal",
+      "lat": 38.72,
+      "lon": -9.14,
+      "packId": null,
+      "aliases": [
+        "Lisboa"
+      ]
+    },
+    {
+      "name": "Athens",
+      "country": "Greece",
+      "lat": 37.98,
+      "lon": 23.73,
+      "packId": null
+    },
+    {
+      "name": "Stockholm",
+      "country": "Sweden",
+      "lat": 59.33,
+      "lon": 18.07,
+      "packId": null
+    },
+    {
+      "name": "Copenhagen",
+      "country": "Denmark",
+      "lat": 55.68,
+      "lon": 12.57,
+      "packId": null
+    },
+    {
+      "name": "Oslo",
+      "country": "Norway",
+      "lat": 59.91,
+      "lon": 10.75,
+      "packId": null
+    },
+    {
+      "name": "Helsinki",
+      "country": "Finland",
+      "lat": 60.17,
+      "lon": 24.94,
+      "packId": null
+    },
+    {
+      "name": "Reykjavik",
+      "country": "Iceland",
+      "lat": 64.15,
+      "lon": -21.94,
+      "packId": null
+    },
+    {
+      "name": "Moscow",
+      "country": "Russia",
+      "lat": 55.76,
+      "lon": 37.62,
+      "packId": null
+    },
+    {
+      "name": "Kyiv",
+      "country": "Ukraine",
+      "lat": 50.45,
+      "lon": 30.52,
+      "packId": null,
+      "aliases": [
+        "Kiev"
+      ]
+    },
+    {
+      "name": "New York",
+      "country": "United States",
+      "lat": 40.71,
+      "lon": -74.01,
+      "packId": null,
+      "aliases": [
+        "NYC"
+      ]
+    },
+    {
+      "name": "Boston",
+      "country": "United States",
+      "lat": 42.36,
+      "lon": -71.06,
+      "packId": null
+    },
+    {
+      "name": "Washington",
+      "country": "United States",
+      "lat": 38.91,
+      "lon": -77.04,
+      "packId": null,
+      "aliases": [
+        "DC",
+        "Washington DC"
+      ]
+    },
+    {
+      "name": "Philadelphia",
+      "country": "United States",
+      "lat": 39.95,
+      "lon": -75.17,
+      "packId": null
+    },
+    {
+      "name": "Chicago",
+      "country": "United States",
+      "lat": 41.88,
+      "lon": -87.63,
+      "packId": null
+    },
+    {
+      "name": "Atlanta",
+      "country": "United States",
+      "lat": 33.75,
+      "lon": -84.39,
+      "packId": null
+    },
+    {
+      "name": "Miami",
+      "country": "United States",
+      "lat": 25.76,
+      "lon": -80.19,
+      "packId": null
+    },
+    {
+      "name": "Houston",
+      "country": "United States",
+      "lat": 29.76,
+      "lon": -95.37,
+      "packId": null
+    },
+    {
+      "name": "Dallas",
+      "country": "United States",
+      "lat": 32.78,
+      "lon": -96.8,
+      "packId": null
+    },
+    {
+      "name": "Austin",
+      "country": "United States",
+      "lat": 30.27,
+      "lon": -97.74,
+      "packId": null
+    },
+    {
+      "name": "Denver",
+      "country": "United States",
+      "lat": 39.74,
+      "lon": -104.99,
+      "packId": null
+    },
+    {
+      "name": "Seattle",
+      "country": "United States",
+      "lat": 47.61,
+      "lon": -122.33,
+      "packId": null
+    },
+    {
+      "name": "San Francisco",
+      "country": "United States",
+      "lat": 37.77,
+      "lon": -122.42,
+      "packId": null,
+      "aliases": [
+        "SF"
+      ]
+    },
+    {
+      "name": "San Jose",
+      "country": "United States",
+      "lat": 37.34,
+      "lon": -121.89,
+      "packId": null
+    },
+    {
+      "name": "Los Angeles",
+      "country": "United States",
+      "lat": 34.05,
+      "lon": -118.24,
+      "packId": null,
+      "aliases": [
+        "LA"
+      ]
+    },
+    {
+      "name": "San Diego",
+      "country": "United States",
+      "lat": 32.72,
+      "lon": -117.16,
+      "packId": null
+    },
+    {
+      "name": "Las Vegas",
+      "country": "United States",
+      "lat": 36.17,
+      "lon": -115.14,
+      "packId": null
+    },
+    {
+      "name": "Toronto",
+      "country": "Canada",
+      "lat": 43.65,
+      "lon": -79.38,
+      "packId": null
+    },
+    {
+      "name": "Montreal",
+      "country": "Canada",
+      "lat": 45.5,
+      "lon": -73.57,
+      "packId": null
+    },
+    {
+      "name": "Vancouver",
+      "country": "Canada",
+      "lat": 49.28,
+      "lon": -123.12,
+      "packId": null
+    },
+    {
+      "name": "Mexico City",
+      "country": "Mexico",
+      "lat": 19.43,
+      "lon": -99.13,
+      "packId": null
+    },
+    {
+      "name": "Sao Paulo",
+      "country": "Brazil",
+      "lat": -23.55,
+      "lon": -46.63,
+      "packId": null
+    },
+    {
+      "name": "Rio de Janeiro",
+      "country": "Brazil",
+      "lat": -22.91,
+      "lon": -43.17,
+      "packId": null,
+      "aliases": [
+        "Rio"
+      ]
+    },
+    {
+      "name": "Buenos Aires",
+      "country": "Argentina",
+      "lat": -34.6,
+      "lon": -58.38,
+      "packId": null
+    },
+    {
+      "name": "Santiago",
+      "country": "Chile",
+      "lat": -33.45,
+      "lon": -70.67,
+      "packId": null
+    },
+    {
+      "name": "Bogota",
+      "country": "Colombia",
+      "lat": 4.71,
+      "lon": -74.07,
+      "packId": null
+    },
+    {
+      "name": "Lima",
+      "country": "Peru",
+      "lat": -12.05,
+      "lon": -77.04,
+      "packId": null
+    },
+    {
+      "name": "Sydney",
+      "country": "Australia",
+      "lat": -33.87,
+      "lon": 151.21,
+      "packId": null
+    },
+    {
+      "name": "Melbourne",
+      "country": "Australia",
+      "lat": -37.81,
+      "lon": 144.96,
+      "packId": null
+    },
+    {
+      "name": "Brisbane",
+      "country": "Australia",
+      "lat": -27.47,
+      "lon": 153.03,
+      "packId": null
+    },
+    {
+      "name": "Perth",
+      "country": "Australia",
+      "lat": -31.95,
+      "lon": 115.86,
+      "packId": null
+    },
+    {
+      "name": "Auckland",
+      "country": "New Zealand",
+      "lat": -36.85,
+      "lon": 174.76,
+      "packId": null
+    }
+  ]
+}

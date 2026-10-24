@@ -3,7 +3,9 @@ import { useMemo, useState } from 'react'
 import { queries } from '../../db/queries'
 import { now } from '../../lib/clock'
 import { dayKey } from '../../lib/dates'
+import { placeName } from '../../engine/city'
 import { cleanName, profileStats, sinceLabel } from '../../lib/profile'
+import CityList from '../place/CityList'
 import Stamp from '../stamp/Stamp'
 import './profile.css'
 
@@ -73,14 +75,16 @@ function Card({ settings }) {
               maxLength={40}
               placeholder="Where you post from"
               autoComplete="off"
+              list="postmark-cities"
               onChange={(e) => setCity(e.target.value)}
               onBlur={() => {
-                const clean = cleanName(city)
+                const clean = placeName(cleanName(city)) ?? ''
                 setCity(clean)
                 save('homeCity', clean || null)
               }}
             />
           </label>
+          <CityList />
           <p className="postmaster__since">
             <span className="lbl">Member since</span>
             {stats.memberSince ? sinceLabel(stats.memberSince) : 'your first stamp'}

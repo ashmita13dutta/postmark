@@ -1,7 +1,9 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { useState } from 'react'
 import { queries } from '../../db/queries'
+import { placeName } from '../../engine/city'
 import { cleanName } from '../../lib/profile'
+import CityList from '../place/CityList'
 import Envelope from '../mailbox/Envelope'
 import Postmark from '../postmark/Postmark'
 import Stamp from '../stamp/Stamp'
@@ -30,7 +32,8 @@ export default function Onboarding({ onDone }) {
     try {
       if (save) {
         if (cleanName(name)) await queries.setSetting('name', cleanName(name))
-        if (cleanName(city)) await queries.setSetting('homeCity', cleanName(city))
+        if (placeName(cleanName(city)))
+          await queries.setSetting('homeCity', placeName(cleanName(city)))
       }
       await queries.setSetting('onboarded', true)
       // ask the browser to keep the stamps; harmless if it says no (the You screen explains)
@@ -106,9 +109,11 @@ export default function Onboarding({ onDone }) {
               maxLength={40}
               placeholder="Where you post from"
               autoComplete="off"
+              list="postmark-cities"
               onChange={(e) => setCity(e.target.value)}
             />
           </label>
+          <CityList />
           <p>Everything you write stays on this phone. Nothing is sent anywhere.</p>
         </div>
       ),
