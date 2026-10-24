@@ -1,0 +1,104 @@
+/* "Play my month": the slideshow through a month's postcards. */
+.playmonth {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 24px max(24px, var(--safe-right)) calc(24px + var(--safe-bottom))
+    max(24px, var(--safe-left));
+  background: var(--paper);
+  text-align: center;
+}
+.playmonth__count {
+  margin: 0;
+  color: var(--ink-60);
+  font: 500 12px var(--font-mono);
+  letter-spacing: 0.08em;
+}
+.playmonth__card {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  min-height: 360px;
+  align-content: center;
+}
+.playmonth__stamp {
+  position: relative;
+  padding: 10px;
+}
+.playmonth__mark {
+  position: absolute;
+  top: 4px;
+  right: -20px;
+  width: 84px;
+  color: var(--postmark-faded);
+  mix-blend-mode: multiply;
+  transform: rotate(-12deg);
+}
+.playmonth h2 {
+  margin: 8px 0 0;
+  font: 400 26px var(--font-display);
+}
+.playmonth__none {
+  margin: 10px 0 0;
+  color: var(--ink-45);
+  font: 400 14px var(--font-ui);
+}
+.playmonth__bar {
+  display: block;
+  width: min(280px, 70%);
+  height: 3px;
+  border-radius: 2px;
+  background: var(--ink-12);
+  overflow: hidden;
+}
+.playmonth__bar::after {
+  content: '';
+  display: block;
+  height: 100%;
+  background: var(--postmark);
+  transform-origin: left;
+  animation: playmonth-fill var(--secs) linear forwards;
+}
+@keyframes playmonth-fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+.playmonth__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.playmonth__controls button {
+  min-width: 48px;
+  min-height: var(--tap);
+  padding: 0 16px;
+  border: 1px solid var(--ink-15);
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--ink);
+  font: 500 15px var(--font-ui);
+}
+.playmonth__controls button:disabled {
+  opacity: 0.4;
+}
+.playmonth__close {
+  border-color: var(--postmark) !important;
+  color: var(--postmark) !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .playmonth__bar::after {
+    animation: none;
+    transform: scaleX(1);
+  }
+}

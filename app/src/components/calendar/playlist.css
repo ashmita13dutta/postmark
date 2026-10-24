@@ -1,0 +1,73 @@
+/* The Calendar's playlist strip. */
+.playlist {
+  margin-top: 22px;
+}
+.playlist h2 {
+  margin: 0 0 10px;
+  font: 400 18px var(--font-display);
+}
+.playlist__rings {
+  display: flex;
+  gap: 8px;
+  margin: 0;
+  padding: 2px 2px 8px;
+  overflow-x: auto;
+  list-style: none;
+  scrollbar-width: none;
+}
+.playlist__ring {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--postmark);
+  border-radius: 50%;
+  background: none;
+  color: var(--postmark);
+  box-shadow:
+    inset 0 0 0 3px var(--paper),
+    inset 0 0 0 4px var(--postmark);
+  font: 500 12px var(--font-mono);
+}
+.playlist__ring.on {
+  background: var(--postmark);
+  color: var(--card-warm);
+}
+.playlist__now {
+  padding: 10px 14px 12px;
+  border: 1px solid var(--ink-12);
+  border-radius: 14px;
+  background: var(--card);
+}
+.playlist__now .songline {
+  margin-top: 0;
+}
+.playlist__step {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+.playlist__step button,
+.playlist__play {
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--ink-15);
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--ink);
+  font: 500 13px var(--font-ui);
+}
+.playlist__play {
+  border-color: var(--postmark);
+  color: var(--postmark);
+}
+/* the day being played lights up in the grid */
+.cal__cell--playing .stamp {
+  filter: drop-shadow(0 0 5px var(--postmark));
+}
+.cal__cell--playing .cal__n {
+  color: var(--postmark);
+  font-weight: 700;
+}

@@ -4,6 +4,7 @@ import Screen from '../app/Screen'
 import Envelope from '../components/mailbox/Envelope'
 import LetterView from '../components/mailbox/LetterView'
 import OpenRitual from '../components/mailbox/OpenRitual'
+import PlayMonth from '../components/mailbox/PlayMonth'
 import RewardsShelf from '../components/mailbox/RewardsShelf'
 import Stamp from '../components/stamp/Stamp'
 import { queries } from '../db/queries'
@@ -92,6 +93,8 @@ export default function Mailbox() {
   const seals = loadedSeals ?? NO_SEALS
   const [delayed, setDelayed] = useState(null)
   const [open, setOpen] = useState(null) // { moment, mode }
+  const [shuffle, setShuffle] = useState(false) // the order "Play my month" goes in
+  const [playing, setPlaying] = useState(false)
 
   // decided once per month, the first time the Mailbox is opened (spec 6.5)
   useEffect(() => {
@@ -159,6 +162,27 @@ export default function Mailbox() {
           >
             <i style={{ width: `${(headline.opened / headline.total) * 100}%` }} />
           </div>
+          <div className="mb__play">
+            <div className="palettemode" role="group" aria-label="Order of the slideshow">
+              <button
+                className={shuffle ? '' : 'on'}
+                aria-pressed={!shuffle}
+                onClick={() => setShuffle(false)}
+              >
+                In order
+              </button>
+              <button
+                className={shuffle ? 'on' : ''}
+                aria-pressed={shuffle}
+                onClick={() => setShuffle(true)}
+              >
+                Shuffle
+              </button>
+            </div>
+            <button className="mb__playbtn" onClick={() => setPlaying(true)}>
+              ▶ Play my month
+            </button>
+          </div>
           <MonthGrid group={headline} seals={seals} onOpen={show} />
         </section>
       ) : (
@@ -199,6 +223,15 @@ export default function Mailbox() {
       )}
 
       <RewardsShelf moments={all} today={today} />
+
+      {playing && headline && (
+        <PlayMonth
+          moments={headline.moments}
+          seed={headline.monthKey}
+          shuffle={shuffle}
+          onClose={() => setPlaying(false)}
+        />
+      )}
 
       {open?.mode === 'ritual' && (
         <OpenRitual

@@ -298,3 +298,115 @@ export async function renderStampCard({ moment }) {
   ctx.fillText('Postmark', W / 2, H - 70)
   return toBlob(canvas)
 }
+
+// ---- the "Postmarks story card": twelve rings, one for each month, with its song ----
+
+export const STORY = { width: 1080, height: 1920 }
+const SHORT_MONTHS = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+]
+
+/** Cut a line to `max` characters with an ellipsis, so a long title never runs off the picture. */
+export function fitText(text, max) {
+  const clean = String(text ?? '').trim()
+  return clean.length <= max ? clean : `${clean.slice(0, Math.max(1, max - 1)).trimEnd()}…`
+}
+
+/**
+ * The twelve lines of the story card, from lib/medley.js yearMonths: { month, label, has, title,
+ * artist }. A month with no song says so (has: false).
+ */
+export function storyRows(months) {
+  return months.map(({ month, song }) => ({
+    month,
+    label: SHORT_MONTHS[month - 1],
+    has: Boolean(song),
+    title: song ? fitText(song.title, 26) : '',
+    artist: song?.artist ? fitText(song.artist, 38) : '',
+  }))
+}
+
+/**
+ * A tall picture for a story: "2026 in postmarks", then a ring for each month with its song. It holds
+ * months and song names only, never a note. Returns a PNG Blob.
+ */
+export async function renderPostmarksStory({ year, volumeName, months }) {
+  await fontsReady()
+  const { width: W, height: H } = STORY
+  const canvas = canvasOf(W, H)
+  const ctx = canvas.getContext('2d')
+  ctx.fillStyle = PAPER
+  ctx.fillRect(0, 0, W, H)
+  const pad = 96
+
+  ctx.textBaseline = 'alphabetic'
+  ctx.fillStyle = INK_SOFT
+  ctx.font = `500 26px ${MONO}`
+  ctx.fillText(`${volumeName.toUpperCase()} · YEAR IN POSTMARKS`, pad, 190)
+  ctx.fillStyle = INK
+  ctx.font = `400 170px ${DISPLAY}`
+  ctx.fillText(String(year), pad, 360)
+  ctx.fillStyle = INK_SOFT
+  ctx.font = `400 34px ${UI}`
+  ctx.fillText('the song I chose most each month', pad, 425)
+
+  const top = 520
+  const rowH = 100
+  storyRows(months).forEach((row, i) => {
+    const cy = top + i * rowH + rowH / 2
+    const cx = pad + 46
+    ctx.globalAlpha = row.has ? 1 : 0.35
+    ctx.strokeStyle = POSTMARK
+    ctx.lineWidth = 4
+    ctx.beginPath()
+    ctx.arc(cx, cy, 42, 0, Math.PI * 2)
+    ctx.stroke()
+    ctx.lineWidth = 1.5
+    ctx.beginPath()
+    ctx.arc(cx, cy, 34, 0, Math.PI * 2)
+    ctx.stroke()
+    ctx.fillStyle = POSTMARK
+    ctx.font = `500 22px ${MONO}`
+    ctx.textAlign = 'center'
+    ctx.textBaseline = 'middle'
+    ctx.fillText(row.label.toUpperCase(), cx, cy + 1)
+    ctx.globalAlpha = 1
+
+    ctx.textAlign = 'left'
+    ctx.textBaseline = 'alphabetic'
+    if (row.has) {
+      ctx.fillStyle = INK
+      ctx.font = `400 42px ${DISPLAY}`
+      ctx.fillText(row.title, pad + 120, cy + (row.artist ? -2 : 12))
+      if (row.artist) {
+        ctx.fillStyle = INK_SOFT
+        ctx.font = `400 28px ${UI}`
+        ctx.fillText(row.artist, pad + 120, cy + 36)
+      }
+    } else {
+      ctx.fillStyle = INK_SOFT
+      ctx.globalAlpha = 0.6
+      ctx.font = `italic 400 32px ${DISPLAY}`
+      ctx.fillText('no song', pad + 120, cy + 11)
+      ctx.globalAlpha = 1
+    }
+  })
+
+  ctx.fillStyle = POSTMARK
+  ctx.font = `italic 400 34px ${DISPLAY}`
+  ctx.textAlign = 'right'
+  ctx.fillText('Postmark', W - pad, H - 90)
+  ctx.textAlign = 'left'
+  return toBlob(canvas)
+}

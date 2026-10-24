@@ -3,6 +3,7 @@ import { useLiveQuery } from 'dexie-react-hooks'
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import Screen from '../app/Screen'
+import PlaylistStrip from '../components/calendar/PlaylistStrip'
 import PhotoPeek from '../components/photo/PhotoPeek'
 import { useMomentPhotos } from '../components/photo/useMomentPhoto'
 import Postmark from '../components/postmark/Postmark'
@@ -138,6 +139,7 @@ export default function Calendar() {
     wanted && /^\d{4}-(0[1-9]|1[0-2])$/.test(wanted) && wanted <= thisMonth ? wanted : thisMonth,
   )
   const [open, setOpen] = useState(null) // the moment whose preview is showing
+  const [played, setPlayed] = useState(null) // the day the playlist strip is on
 
   const moments = useLiveQuery(() => queries.momentsInMonth(month), [month], [])
   const allDays = useLiveQuery(async () => (await queries.allMoments()).map((m) => m.day), [], [])
@@ -145,6 +147,8 @@ export default function Calendar() {
 
   const byDay = useMemo(() => new Map(moments.map((m) => [m.day, m])), [moments])
   const photos = useMomentPhotos(moments.map((m) => m.id))
+  // the playlist's day only counts while it is in the month being shown
+  const playing = byDay.has(played) ? played : null
   const { offset } = monthLayout(month)
   const days = monthDays(month)
   const nowMs = now()
@@ -202,7 +206,7 @@ export default function Calendar() {
             return (
               <li key={day}>
                 <button
-                  className="cal__cell cal__cell--stamp"
+                  className={`cal__cell cal__cell--stamp${day === playing ? ' cal__cell--playing' : ''}`}
                   onClick={() => setOpen(moment)}
                   aria-label={`${longDate(day)}, stamped${sealed ? ', sealed' : ''}`}
                 >
@@ -255,6 +259,8 @@ export default function Calendar() {
           )
         })}
       </ol>
+
+      <PlaylistStrip moments={moments} nowMs={nowMs} playing={playing} onPlay={setPlayed} />
 
       <AnimatePresence>
         {open && (

@@ -133,3 +133,18 @@
   font: 400 12px var(--font-ui);
   color: var(--ink-60);
 }
+
+/* "Play my month": the order toggle and the button above the grid */
+.mb__play {
+  display: grid;
+  gap: 10px;
+  margin: 14px 0 4px;
+}
+.mb__playbtn {
+  min-height: var(--tap);
+  border: 1px solid var(--postmark);
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--postmark);
+  font: 500 14px var(--font-ui);
+}
