@@ -17,7 +17,13 @@ function Envelope({ open }) {
       <defs>
         {/* paper grain: fine noise laid over the colour */}
         <filter id="tx-grain" x="0" y="0" width="100%" height="100%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" result="n" />
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency="0.85"
+            numOctaves="2"
+            seed="7"
+            result="n"
+          />
           <feColorMatrix
             in="n"
             type="matrix"
@@ -103,7 +109,13 @@ function Envelope({ open }) {
               />
             </g>
           </g>
-          <path d="M30 70 L170 180" stroke="#fff6e0" strokeOpacity="0.5" strokeWidth="1.2" fill="none" />
+          <path
+            d="M30 70 L170 180"
+            stroke="#fff6e0"
+            strokeOpacity="0.5"
+            strokeWidth="1.2"
+            fill="none"
+          />
         </g>
       </defs>
 
@@ -114,8 +126,25 @@ function Envelope({ open }) {
 
       {/* the letter, peeking out and rising when opened */}
       <g className="tx-env__card">
-        <rect x="52" y="14" width="236" height="170" rx="8" fill="url(#tx-dots)" filter="url(#tx-drop)" />
-        <rect x="52" y="14" width="236" height="170" rx="8" fill="none" stroke="#e9c3cf" strokeWidth="1" />
+        <rect
+          x="52"
+          y="14"
+          width="236"
+          height="170"
+          rx="8"
+          fill="url(#tx-dots)"
+          filter="url(#tx-drop)"
+        />
+        <rect
+          x="52"
+          y="14"
+          width="236"
+          height="170"
+          rx="8"
+          fill="none"
+          stroke="#e9c3cf"
+          strokeWidth="1"
+        />
         <text x="170" y="80" textAnchor="middle" className="tx-env__for">
           for
         </text>
@@ -146,13 +175,19 @@ function Envelope({ open }) {
 
       {/* ribbon: satin bow tied over the seal */}
       <g className="tx-env__ribbon" filter="url(#tx-drop)">
-        <path d="M170 150 C130 188 98 214 74 222 L98 238 C124 222 150 190 170 160 Z" fill="url(#tx-satin)" />
+        <path
+          d="M170 150 C130 188 98 214 74 222 L98 238 C124 222 150 190 170 160 Z"
+          fill="url(#tx-satin)"
+        />
         <path
           d="M170 150 C210 188 242 214 266 222 L242 238 C216 222 190 190 170 160 Z"
           fill="url(#tx-satin)"
         />
         <path d="M170 140 C130 104 96 104 92 128 C90 152 138 156 170 140 Z" fill="url(#tx-satin)" />
-        <path d="M170 140 C210 104 244 104 248 128 C250 152 202 156 170 140 Z" fill="url(#tx-satin)" />
+        <path
+          d="M170 140 C210 104 244 104 248 128 C250 152 202 156 170 140 Z"
+          fill="url(#tx-satin)"
+        />
         <path
           d="M118 118 C136 112 154 120 164 136"
           stroke="#fff"
@@ -173,7 +208,15 @@ function Envelope({ open }) {
 
       {/* the wax seal: a glossy dome */}
       <g className="tx-env__seal">
-        <ellipse cx="173" cy="168" rx="30" ry="9" fill="#5b1530" opacity="0.35" filter="url(#tx-soft)" />
+        <ellipse
+          cx="173"
+          cy="168"
+          rx="30"
+          ry="9"
+          fill="#5b1530"
+          opacity="0.35"
+          filter="url(#tx-soft)"
+        />
         <path
           d="M170 118 c16 -2 32 12 30 30 c4 14 -6 32 -22 34 c-14 6 -32 -4 -34 -18 c-10 -12 -2 -32 14 -38 c4 -4 8 -7 12 -8 Z"
           fill="url(#tx-wax)"
@@ -197,8 +240,24 @@ function Envelope({ open }) {
           strokeLinecap="round"
           opacity="0.9"
         />
-        <ellipse cx="156" cy="128" rx="9" ry="5" transform="rotate(-32 156 128)" fill="#fff" opacity="0.55" />
-        <ellipse cx="190" cy="172" rx="6" ry="2.6" transform="rotate(-30 190 172)" fill="#ff9db4" opacity="0.5" />
+        <ellipse
+          cx="156"
+          cy="128"
+          rx="9"
+          ry="5"
+          transform="rotate(-32 156 128)"
+          fill="#fff"
+          opacity="0.55"
+        />
+        <ellipse
+          cx="190"
+          cy="172"
+          rx="6"
+          ry="2.6"
+          transform="rotate(-30 190 172)"
+          fill="#ff9db4"
+          opacity="0.5"
+        />
       </g>
     </svg>
   )

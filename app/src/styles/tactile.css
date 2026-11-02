@@ -36,8 +36,7 @@
 body {
   background:
     radial-gradient(70% 38% at 0% 0%, var(--tx-blush), transparent 72%),
-    radial-gradient(70% 42% at 100% 100%, var(--tx-lilac), transparent 72%),
-    #f6eedf;
+    radial-gradient(70% 42% at 100% 100%, var(--tx-lilac), transparent 72%), #f6eedf;
   background-attachment: fixed;
 }
 .screen,
@@ -83,9 +82,7 @@ body {
 /* the bars are paper strips too, with the light catching their near edge */
 .tabbar,
 .navbar {
-  background:
-    var(--tx-grain),
-    linear-gradient(180deg, var(--tx-paper-hi), var(--tx-paper) 70%);
+  background: var(--tx-grain), linear-gradient(180deg, var(--tx-paper-hi), var(--tx-paper) 70%);
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
 }
@@ -208,7 +205,12 @@ body {
 .update__btn {
   border: 1px solid var(--tx-paper-edge);
   color: var(--ink);
-  background: linear-gradient(180deg, var(--tx-paper-hi) 0%, var(--tx-paper) 60%, var(--tx-paper-lo) 100%);
+  background: linear-gradient(
+    180deg,
+    var(--tx-paper-hi) 0%,
+    var(--tx-paper) 60%,
+    var(--tx-paper-lo) 100%
+  );
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.95) inset,
     0 -3px 5px rgba(150, 110, 70, 0.12) inset,
@@ -300,4 +302,170 @@ select {
   .pc__sendbtn {
     transition: none;
   }
+}
+
+/* =====================================================================================
+   Second pass: the outlined buttons, segmented toggles, section cards and the calendar
+   ===================================================================================== */
+
+/* ---- RAISED, quiet, with indigo ink: the outlined actions (they act, but gently) ---- */
+.prefs__row button,
+.prefs__action,
+.demo__actions button,
+.mb__playbtn,
+.today__fixbtn,
+.photo__pick,
+.teach__open,
+.reveal__secondary {
+  border: 1px solid var(--tx-paper-edge);
+  color: var(--postmark);
+  background: linear-gradient(
+    180deg,
+    var(--tx-paper-hi) 0%,
+    var(--tx-paper) 60%,
+    var(--tx-paper-lo) 100%
+  );
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 -3px 5px rgba(150, 110, 70, 0.12) inset,
+    0 1px 0 rgba(122, 90, 62, 0.22),
+    0 6px 12px rgba(122, 90, 62, 0.14);
+}
+.prefs__row button:not(:disabled):active,
+.prefs__action:not(:disabled):active,
+.demo__actions button:not(:disabled):active,
+.today__fixbtn:not(:disabled):active,
+.photo__pick:not(:disabled):active,
+.teach__open:active {
+  scale: 1;
+  translate: 0 1px;
+  box-shadow:
+    0 2px 4px rgba(122, 90, 62, 0.22) inset,
+    0 1px 0 rgba(255, 255, 255, 0.8);
+}
+/* a toggle button that is switched on sinks into the paper, like the chips do */
+.today__fixbtn.on {
+  color: #fff;
+  text-shadow: 0 1px 1px rgba(30, 20, 90, 0.4);
+  background: linear-gradient(180deg, #4640a3, var(--postmark) 60%, #5b52c0);
+  border-color: rgba(40, 30, 120, 0.55);
+  box-shadow:
+    0 3px 6px rgba(20, 10, 80, 0.4) inset,
+    0 -1px 0 rgba(255, 255, 255, 0.28) inset,
+    0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+/* ---- segmented toggles: a recessed track with a raised paper thumb ---- */
+.seg {
+  background: linear-gradient(180deg, rgba(122, 90, 62, 0.18), rgba(122, 90, 62, 0.08));
+  box-shadow:
+    0 2px 5px rgba(122, 90, 62, 0.3) inset,
+    0 1px 0 rgba(255, 255, 255, 0.9);
+}
+.seg button.on {
+  color: var(--ink);
+  background: linear-gradient(180deg, var(--tx-paper-hi), var(--tx-paper) 60%, var(--tx-paper-lo));
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 -2px 4px rgba(150, 110, 70, 0.14) inset,
+    0 1px 0 rgba(122, 90, 62, 0.25),
+    0 3px 7px rgba(122, 90, 62, 0.22);
+}
+
+/* ---- the song choices: raised rows, and the chosen one is pressed in ---- */
+.song__options button {
+  border-color: var(--tx-paper-edge);
+  background: linear-gradient(180deg, var(--tx-paper-hi), var(--tx-paper-lo));
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 1px 0 rgba(122, 90, 62, 0.2),
+    0 3px 6px rgba(122, 90, 62, 0.1);
+}
+.song__options button.on {
+  border-color: var(--postmark);
+  background: linear-gradient(180deg, rgba(122, 90, 62, 0.14), var(--tx-paper-lo));
+  box-shadow:
+    0 3px 6px rgba(60, 40, 100, 0.22) inset,
+    0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* ---- PAPER: more section cards (the sheet that slides up over the calendar, collections, songs) ---- */
+.cal__sheet,
+.song,
+.collection,
+.backup,
+.playmonth,
+.cover__sheet {
+  background:
+    var(--tx-grain),
+    linear-gradient(165deg, var(--tx-paper-hi) 0%, var(--tx-paper) 55%, var(--tx-paper-lo) 100%);
+  border: 1px solid var(--tx-paper-edge);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 -2px 6px rgba(150, 110, 70, 0.1) inset,
+    0 2px 3px rgba(122, 90, 62, 0.1),
+    0 12px 26px rgba(122, 90, 62, 0.16);
+}
+.cal__sheet,
+.cover__sheet {
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 -14px 34px rgba(122, 90, 62, 0.14);
+}
+
+/* ---- STITCHED PATCHES: empty states and keepsake tiles keep their dashed edge, now as a sewn patch ---- */
+.album__empty,
+.rw__tile,
+.demo,
+.rw__pack {
+  border: 1.5px dashed rgba(122, 90, 62, 0.34);
+  background: var(--tx-grain), linear-gradient(165deg, var(--tx-paper-hi), var(--tx-paper-lo));
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 5px 12px rgba(122, 90, 62, 0.12);
+}
+
+/* ---- the month arrows: raised round buttons ---- */
+.cal__nav {
+  border: 1px solid var(--tx-paper-edge);
+  background: linear-gradient(180deg, var(--tx-paper-hi), var(--tx-paper-lo));
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 1px 0 rgba(122, 90, 62, 0.2),
+    0 4px 8px rgba(122, 90, 62, 0.14);
+}
+.cal__nav:disabled {
+  box-shadow: none;
+  background: transparent;
+  border-color: transparent;
+}
+.cal__nav:not(:disabled):active {
+  scale: 1;
+  translate: 0 1px;
+  background: linear-gradient(180deg, rgba(122, 90, 62, 0.12), var(--tx-paper-lo));
+  box-shadow: 0 2px 4px rgba(122, 90, 62, 0.22) inset;
+}
+.backup,
+.collection,
+.song,
+.playmonth {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+/* the settings sections on You */
+.prefs,
+.reader-setting,
+.moods {
+  background:
+    var(--tx-grain),
+    linear-gradient(165deg, var(--tx-paper-hi) 0%, var(--tx-paper) 55%, var(--tx-paper-lo) 100%);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  border: 1px solid var(--tx-paper-edge);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 -2px 6px rgba(150, 110, 70, 0.1) inset,
+    0 2px 3px rgba(122, 90, 62, 0.1),
+    0 12px 26px rgba(122, 90, 62, 0.16);
 }
