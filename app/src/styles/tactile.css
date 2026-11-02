@@ -1,0 +1,303 @@
+/*
+ * The tactile look, as one override layer. Imported LAST in main.jsx (after hig.css) so it wins
+ * over every component stylesheet; delete the import (or this file) and the app goes back to how
+ * it was. Styling only: sizes, layout, logic and routes are untouched.
+ *
+ * Every treatment says what a thing IS, one light from the top left:
+ *   raised  = you can press it    (commit buttons: puffy rose; quiet buttons and chips: paper)
+ *   sunken  = it is switched on   (selected chips, tabs, the current tab)
+ *   paper   = it is for reading   (cards, sheets, the bars: grain, a padded rim, a soft shadow)
+ * The wax seal, stamps and stickers already carry their own art, so they are left alone.
+ */
+
+:root {
+  /* the commit colour (rose) and its shades; change these and every commit button follows */
+  --tx-rose-hi: #ee86ad;
+  --tx-rose: #d9578a;
+  --tx-rose-lo: #c4467a;
+  --tx-rose-edge: #a63468;
+  --tx-rose-glow: rgba(177, 58, 106, 0.34);
+
+  /* paper */
+  --tx-paper-hi: #fffaf0;
+  --tx-paper: #fbf3e4;
+  --tx-paper-lo: #f3e8d2;
+  --tx-paper-edge: rgba(122, 90, 62, 0.16);
+  --tx-lilac: rgba(196, 176, 238, 0.5);
+  --tx-blush: rgba(244, 184, 206, 0.55);
+
+  /* paper grain: fine noise baked into one tiny tile, so there is no filter cost at run time */
+  --tx-grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n' x='0' y='0' width='100%25' height='100%25'><feTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' seed='4'/><feColorMatrix values='0 0 0 0 0.36  0 0 0 0 0.28  0 0 0 0 0.2  0 0 0 0.3 -0.07'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+
+  --tx-press: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* ---- the desk: a warm cream with a blush corner and a lilac corner, so paper has something to sit on ---- */
+body {
+  background:
+    radial-gradient(70% 38% at 0% 0%, var(--tx-blush), transparent 72%),
+    radial-gradient(70% 42% at 100% 100%, var(--tx-lilac), transparent 72%),
+    #f6eedf;
+  background-attachment: fixed;
+}
+.screen,
+.screen__body {
+  background-color: transparent;
+}
+
+/* ---- PAPER: everything you read on gets grain, a lit rim and a soft lifted shadow ---- */
+.install,
+.sealseq__card,
+.ritual__card,
+.tray,
+.teach--open,
+.mywords,
+.mb__card,
+.today__mood,
+.today__sealed,
+.today__letter,
+.pc__tools,
+.found,
+.topic,
+.mix,
+.swatches {
+  background:
+    var(--tx-grain),
+    linear-gradient(165deg, var(--tx-paper-hi) 0%, var(--tx-paper) 55%, var(--tx-paper-lo) 100%);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  border: 1px solid var(--tx-paper-edge);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 -2px 6px rgba(150, 110, 70, 0.1) inset,
+    0 2px 3px rgba(122, 90, 62, 0.1),
+    0 12px 26px rgba(122, 90, 62, 0.16);
+}
+.tray {
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 -3px 10px rgba(122, 90, 62, 0.14),
+    0 -14px 34px rgba(122, 90, 62, 0.14);
+}
+
+/* the bars are paper strips too, with the light catching their near edge */
+.tabbar,
+.navbar {
+  background:
+    var(--tx-grain),
+    linear-gradient(180deg, var(--tx-paper-hi), var(--tx-paper) 70%);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+.tabbar {
+  border-top: 1px solid var(--tx-paper-edge);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 -8px 22px rgba(122, 90, 62, 0.13);
+}
+.navbar {
+  border-bottom: 1px solid var(--tx-paper-edge);
+  box-shadow: 0 8px 18px rgba(122, 90, 62, 0.1);
+}
+
+/* ---- SUNKEN: the current tab is pressed into the bar ---- */
+.tab {
+  position: relative;
+}
+.tab.active::before {
+  content: '';
+  position: absolute;
+  inset: 3px 10px;
+  z-index: -1;
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(122, 90, 62, 0.14), rgba(122, 90, 62, 0.05));
+  box-shadow:
+    0 2px 4px rgba(122, 90, 62, 0.22) inset,
+    0 -1px 0 rgba(255, 255, 255, 0.9) inset;
+}
+.tabbar {
+  isolation: isolate;
+}
+
+/* ---- RAISED, loud: the buttons that commit (stamp it, seal it, save, send, next) ---- */
+.today__stamp,
+.welcome__next,
+.reveal__primary,
+.install__btn,
+.sealpick__go,
+.teach__save,
+.reader__yes,
+.letter__close,
+.cover__done,
+.cal__link,
+.pc__sendbtn,
+.demo__actions a,
+.backup__actions .backup__primary,
+.shareyear .shareyear__make,
+.moods__addrow button,
+.reader-setting button.primary {
+  position: relative;
+  border: 0;
+  color: #fff;
+  text-shadow: 0 1px 1px rgba(120, 30, 70, 0.45);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0) 46%),
+    linear-gradient(180deg, var(--tx-rose-hi) 0%, var(--tx-rose) 55%, var(--tx-rose-lo) 100%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.7) inset,
+    0 -5px 8px rgba(150, 30, 80, 0.26) inset,
+    0 2px 0 var(--tx-rose-edge),
+    0 8px 14px var(--tx-rose-glow),
+    0 16px 26px rgba(120, 60, 100, 0.16);
+  transition-property: translate, box-shadow, opacity, background-color, color;
+}
+/* the stitched edge, on the big full-width ones */
+.today__stamp::before,
+.welcome__next::before,
+.reveal__primary::before {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border: 1.5px dashed rgba(255, 255, 255, 0.55);
+  border-radius: inherit;
+  pointer-events: none;
+}
+.today__stamp:not(:disabled):active,
+.welcome__next:not(:disabled):active,
+.reveal__primary:active,
+.install__btn:not(:disabled):active,
+.sealpick__go:not(:disabled):active,
+.teach__save:not(:disabled):active,
+.reader__yes:not(:disabled):active,
+.letter__close:not(:disabled):active,
+.cover__done:not(:disabled):active,
+.cal__link:not(:disabled):active,
+.pc__sendbtn:not(:disabled):active,
+.demo__actions a:active,
+.backup__actions .backup__primary:not(:disabled):active,
+.shareyear .shareyear__make:not(:disabled):active,
+.moods__addrow button:not(:disabled):active,
+.reader-setting button.primary:not(:disabled):active {
+  scale: 1;
+  translate: 0 2px;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.5) inset,
+    0 -3px 6px rgba(150, 30, 80, 0.3) inset,
+    0 0 0 var(--tx-rose-edge),
+    0 3px 6px var(--tx-rose-glow);
+}
+.today__stamp:disabled,
+.welcome__next:disabled,
+.sealpick__go:disabled,
+.teach__save:disabled,
+.cal__link:disabled,
+.backup__actions .backup__primary:disabled,
+.shareyear .shareyear__make:disabled,
+.reader-setting button.primary:disabled {
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset;
+  filter: saturate(0.55);
+}
+
+/* ---- RAISED, quiet: the buttons that back out or offer another way ---- */
+.reader__no,
+.letter__flip,
+.cal__close,
+.sealpick__no,
+.reveal__secondary,
+.mb__playbtn,
+.update__btn {
+  border: 1px solid var(--tx-paper-edge);
+  color: var(--ink);
+  background: linear-gradient(180deg, var(--tx-paper-hi) 0%, var(--tx-paper) 60%, var(--tx-paper-lo) 100%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 -3px 5px rgba(150, 110, 70, 0.12) inset,
+    0 1px 0 rgba(122, 90, 62, 0.22),
+    0 6px 12px rgba(122, 90, 62, 0.14);
+}
+.reader__no:not(:disabled):active,
+.letter__flip:not(:disabled):active,
+.cal__close:not(:disabled):active,
+.sealpick__no:not(:disabled):active,
+.reveal__secondary:active,
+.mb__playbtn:not(:disabled):active {
+  scale: 1;
+  translate: 0 1px;
+  box-shadow:
+    0 2px 4px rgba(122, 90, 62, 0.22) inset,
+    0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* ---- RAISED, small: chips you can switch on ---- */
+.chips button,
+.tray__tabs button,
+.pc__chip,
+.photo__row button,
+.sealpick__chip,
+.word {
+  border-color: var(--tx-paper-edge);
+  background: linear-gradient(180deg, var(--tx-paper-hi), var(--tx-paper-lo));
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 1px 0 rgba(122, 90, 62, 0.2),
+    0 3px 6px rgba(122, 90, 62, 0.1);
+}
+
+/* ---- SUNKEN: the same chips once they are switched on ---- */
+.chips button.on,
+.tray__tabs button.on,
+.pc__chip.on,
+.photo__row button.on,
+.sealpick__chip.on,
+.word--on,
+.teach .chips button.on {
+  color: #fff;
+  text-shadow: 0 1px 1px rgba(30, 20, 90, 0.4);
+  background: linear-gradient(180deg, #4640a3, var(--postmark) 60%, #5b52c0);
+  border-color: rgba(40, 30, 120, 0.55);
+  box-shadow:
+    0 3px 6px rgba(20, 10, 80, 0.4) inset,
+    0 -1px 0 rgba(255, 255, 255, 0.28) inset,
+    0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+/* the on/off switch: a recessed track with a raised, round thumb */
+.prefs input[role='switch'] {
+  box-shadow: 0 2px 5px rgba(20, 10, 80, 0.3) inset;
+}
+.prefs input[role='switch']:checked {
+  background: linear-gradient(180deg, #4640a3, var(--postmark));
+}
+
+/* text boxes are dents in the paper, not stickers on it */
+.today__note,
+textarea,
+input[type='text'],
+input[type='search'],
+input:not([type]),
+select {
+  box-shadow:
+    0 2px 5px rgba(122, 90, 62, 0.16) inset,
+    0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* ---- headings: a script flourish on the small eyebrow labels, the serif stays for titles ---- */
+.screen h1 {
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .today__stamp,
+  .welcome__next,
+  .reveal__primary,
+  .install__btn,
+  .sealpick__go,
+  .teach__save,
+  .reader__yes,
+  .letter__close,
+  .cover__done,
+  .cal__link,
+  .pc__sendbtn {
+    transition: none;
+  }
+}

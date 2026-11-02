@@ -5,6 +5,8 @@ import './styles/base.css'
 import App from './app/App'
 // last, so the Apple-style layer overrides every component stylesheet
 import './styles/hig.css'
+// after that, so the tactile look (raised, sunken, paper) paints over it
+import './styles/tactile.css'
 
 initClockFromUrl()
 

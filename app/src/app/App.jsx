@@ -11,6 +11,7 @@ import Mailbox from '../screens/Mailbox'
 import Palettes from '../screens/Palettes'
 import Postcard from '../screens/Postcard'
 import Reveal from '../screens/Reveal'
+import Tactile from '../screens/Tactile'
 import Today from '../screens/Today'
 import You from '../screens/You'
 import InstallPrompt from './InstallPrompt'
@@ -53,6 +54,7 @@ export default function App() {
         <Route path="/you/demo/:id" element={<DemoPostcard />} />
         <Route path="/you/demo/:id/stickers" element={<Postcard />} />
         <Route path="/palettes" element={<Palettes />} />
+        <Route path="/tactile" element={<Tactile />} />
         <Route path="*" element={<Today />} />
       </Routes>
       <FirstRun />
