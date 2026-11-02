@@ -335,19 +335,6 @@ somewhere from 3 degrees to the left to 4 degrees to the right. Change the range
 
 ---
 
-## feelingHead.json (generated: do not edit)
-
-The note reader (the on-device language model, see the main README) turns a note into 384 numbers.
-`feelingHead.json` holds the last layer that turns those numbers into a probability for each of the
-16 feelings. It is **generated** from the labelled notes in `tests/corpus/`, so it is not edited by
-hand like the other files here. To change what the reader thinks:
-
-1. add or fix labelled notes in `tests/corpus/` (one note per line: `["text", ["feeling", ...], ["topic", ...]]`),
-2. run `npm run train:head` (add `-- --cv` to see a cross-validated score first),
-3. run `npm test`, which checks the file still matches the model in `scripts/model/manifest.json`.
-
-The built-in keyword method (`feelings.json` and the rest of this page) is unaffected. It still
-supplies the topic, color words, anything you taught, and the whole reading when the reader is off.
 ## papers.json: the paper and the frame on the back of a postcard
 
 On the decorate tray, the **Paper** and **Frames** tabs change what the back of a postcard is made of.
@@ -397,14 +384,6 @@ A caption gets the same white edge, shadow and tilt as any sticker, and you can 
 
 ---
 
-## feelingHead.json (generated: do not edit)
-
-The note reader (the on-device language model, see the main README) turns a note into 384 numbers.
-`feelingHead.json` holds the last layer that turns those numbers into a probability for each of the
-16 feelings. It is **generated** from the labelled notes in `tests/corpus/`, so it is not edited by
-hand like the other files here. To change what the reader thinks:
-
-1. add or fix labelled notes in `tests/corpus/` (one note per line: `["text", ["feeling", ...], ["topic", ...]]`),
 ## tapes.json: the washi tapes
 
 The **Tape** tab holds 37 washi tapes: gingham, candy stripes, tiny hearts, daisies, kraft with stitching,
@@ -449,6 +428,14 @@ a bow, pearls, a mushroom, a butterfly, boba, a paper plane, a rainbow and more.
 
 ---
 
+## feelingHead.json (generated: do not edit)
+
+The note reader (the on-device language model, see the main README) turns a note into 384 numbers.
+`feelingHead.json` holds the last layer that turns those numbers into a probability for each of the
+16 feelings. It is **generated** from the labelled notes in `tests/corpus/`, so it is not edited by
+hand like the other files here. To change what the reader thinks:
+
+1. add or fix labelled notes in `tests/corpus/` (one note per line: `["text", ["feeling", ...], ["topic", ...]]`),
 2. run `npm run train:head` (add `-- --cv` to see a cross-validated score first),
 3. run `npm test`, which checks the file still matches the model in `scripts/model/manifest.json`.
 

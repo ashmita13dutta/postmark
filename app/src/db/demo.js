@@ -1,4 +1,4 @@
-import { PACKS, WAX_COLORS, WAX_EMBLEMS } from '../data/stickers'
+import { PACKS, WAX_COLORS } from '../data/stickers'
 import { readNote } from '../engine/readNote'
 import { now } from '../lib/clock'
 import {
@@ -129,12 +129,10 @@ export function makeDemo(db) {
       openedAt: openedAtMs ?? null,
     }
     const rnd = seededRng(`demo-seal:${day}`)
-    const emblem = WAX_EMBLEMS[Math.floor(rnd() * WAX_EMBLEMS.length)].id
     const seal = {
       momentId: moment.id,
       color: WAX_COLORS[Math.floor(rnd() * WAX_COLORS.length)].hex,
-      emblem,
-      ...(emblem === 'initial' ? { initial: 'A' } : {}),
+      emblem: 'rose',
     }
     return { moment, seal }
   }
